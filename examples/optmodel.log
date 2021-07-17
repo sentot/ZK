@@ -1,0 +1,208 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/optmodel.ver"
+OPTIONAL
+NO
+YES
+NO-IS-OPTIONAL
+Beginning proof of NO-IS-OPTIONAL ...
+(= (IN (NO) (OPTIONAL X)) (TRUE))
+Which simplifies
+ when rewriting with SUBSET.NULLSET.LEFT, POWERSET.DEFINITION,
+OPTIONAL.DEFINITION to ...
+(TRUE)
+YES-IS-OPTIONAL
+Beginning proof of YES-IS-OPTIONAL ...
+(= (IN (YES X) (OPTIONAL Y)) (IN X Y))
+Which simplifies
+ with invocation of SUBSET, YES
+ when rewriting with UNIT.DEFINITION, POWERSET.DEFINITION,
+OPTIONAL.DEFINITION to ...
+(TRUE)
+IN-OPTIONAL
+Beginning proof of IN-OPTIONAL ...
+(= (IN X (OPTIONAL Y)) (OR (= X (NO)) (SOME (Z) (AND (= X (YES Z)) (IN Z Y)))))
+Which simplifies
+ with invocation of YES, SUBSET
+ when rewriting with POWERSET.DEFINITION, OPTIONAL.DEFINITION to ...
+(IF (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+ (OR (= X (NULLSET))
+  (IF (SOME (Y$0) (AND (IN Y$0 Y) (= X (UNIT Y$0))))
+   (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y)))
+   (NOT (SOME (Z$0) (AND (= X (UNIT Z$0)) (IN Z$0 Y))))))
+ (AND (NOT (= X (NULLSET)))
+  (NOT (SOME (Z$1) (AND (= X (UNIT Z$1)) (IN Z$1 Y))))))
+Starting case 2 ...
+(IMPLIES (AND (ALL (E) (IMPLIES (IN E X) (IN E Y))) (NOT (= X (NULLSET))))
+ (IF (SOME (Y$0) (AND (IN Y$0 Y) (= X (UNIT Y$0))))
+  (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y)))
+  (NOT (SOME (Z$0) (AND (= X (UNIT Z$0)) (IN Z$0 Y))))))
+Splitting on (IN Z Y) generates ...
+(IMPLIES (AND (ALL (E) (IMPLIES (IN E X) (IN E Y))) (NOT (= X (NULLSET))))
+ (IF (SOME (Y$0) (AND (IN Y$0 Y) (= X (UNIT Y$0))))
+  (SOME (Z)
+   (IF (IN Z Y) (AND (= X (UNIT Z)) (IN Z Y)) (AND (= X (UNIT Z)) (IN Z Y))))
+  (NOT (SOME (Z$0) (AND (= X (UNIT Z$0)) (IN Z$0 Y))))))
+Which simplifies to ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E X) (IN E Y))) (NOT (= X (NULLSET)))
+  (NOT (SOME (Y$0) (AND (IN Y$0 Y) (= X (UNIT Y$0))))))
+ (NOT (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y)))))
+Splitting on (IN Z Y) generates ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E X) (IN E Y))) (NOT (= X (NULLSET)))
+  (NOT (SOME (Y$0) (AND (IN Y$0 Y) (= X (UNIT Y$0))))))
+ (NOT
+  (SOME (Z)
+   (IF (IN Z Y) (AND (= X (UNIT Z)) (IN Z Y)) (AND (= X (UNIT Z)) (IN Z Y))))))
+Which simplifies
+ with the instantiation (= Y$0 Z) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (NOT (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (AND (NOT (= X (NULLSET)))
+  (NOT (SOME (Z$1) (AND (= X (UNIT Z$1)) (IN Z$1 Y))))))
+Applying =.EXTENSIONAL.SUBSET to
+ (= X (NULLSET)) gives ...
+(IMPLIES (NOT (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (AND (NOT (AND (SUBSET X (NULLSET)) (SUBSET (NULLSET) X)))
+  (NOT (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y))))))
+Invoking SUBSET gives ...
+(IMPLIES (NOT (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (AND
+  (NOT
+   (AND (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 (NULLSET))))
+    (ALL (E$1) (IMPLIES (IN E$1 (NULLSET)) (IN E$1 X)))))
+  (NOT (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y))))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION to ...
+(OR (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+ (AND (SOME (E$0) (IN E$0 X)) (NOT (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y))))))
+Instantiating (= E$0 E) gives ...
+(OR (IMPLIES (IN E X) (IN E Y))
+ (AND (OR (IN E X) (SOME (E$0) (IN E$0 X)))
+  (NOT (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y))))))
+Which simplifies to ...
+(IMPLIES (AND (IN E X) (NOT (IN E Y)))
+ (NOT (SOME (Z) (AND (= X (UNIT Z)) (IN Z Y)))))
+Prenexing produces ...
+(IMPLIES (AND (IN E X) (NOT (IN E Y))) (NOT (AND (= X (UNIT Z)) (IN Z Y))))
+Which simplifies to ...
+(IMPLIES (AND (IN E X) (NOT (IN E Y)) (= X (UNIT Z))) (NOT (IN Z Y)))
+Rearranging gives ...
+(IMPLIES (AND (= X (UNIT Z)) (IN E X) (NOT (IN E Y))) (NOT (IN Z Y)))
+Substituting (= X (UNIT Z)) produces ...
+(IMPLIES (AND (= X (UNIT Z)) (IN E (UNIT Z)) (NOT (IN E Y))) (NOT (IN Z Y)))
+Which simplifies
+ when rewriting with UNIT.DEFINITION to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+EQUAL-YES-YES
+Beginning proof of EQUAL-YES-YES ...
+(= (= (YES X) (YES Y)) (= X Y))
+Which simplifies
+ with invocation of YES to ...
+(= (= (UNIT X) (UNIT Y)) (= X Y))
+Applying =.EXTENSIONAL.SUBSET to
+ (= (UNIT X) (UNIT Y)) gives ...
+(= (AND (SUBSET (UNIT X) (UNIT Y)) (SUBSET (UNIT Y) (UNIT X))) (= X Y))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with UNIT.DEFINITION to ...
+(TRUE)
+YES-IS-NOT-NO
+Beginning proof of YES-IS-NOT-NO ...
+(NOT (= (YES X) (NO)))
+Applying =.EXTENSIONAL.SUBSET gives ...
+(NOT (AND (SUBSET (YES X) (NULLSET)) (SUBSET (NULLSET) (YES X))))
+Invoking SUBSET gives ...
+(NOT
+ (AND (ALL (E) (IMPLIES (IN E (YES X)) (IN E (NULLSET))))
+  (ALL (E$0) (IMPLIES (IN E$0 (NULLSET)) (IN E$0 (YES X))))))
+Which simplifies
+ with invocation of YES
+ when rewriting with NULLSET.DEFINITION, UNIT.DEFINITION
+ with the instantiation (= E X) to ...
+(TRUE)
+THE-OPTION
+THE-OPTION-YES
+Beginning proof of THE-OPTION-YES ...
+(= (THE-OPTION (YES X)) X)
+Which simplifies
+ with invocation of THE-OPTION, YES
+ with the assumptions YES-IS-NOT-NO to ...
+(= (CUP (UNIT X)) X)
+Applying =.EXTENSIONAL.SUBSET gives ...
+(AND (SUBSET (CUP (UNIT X)) X) (SUBSET X (CUP (UNIT X))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with UNIT.DEFINITION, CUP.DEFINITION to ...
+(TRUE)
+IN-OPTIONAL-2
+Beginning proof of IN-OPTIONAL-2 ...
+(= (IN X (OPTIONAL S))
+ (OR (= X (NO)) (AND (= X (YES (THE-OPTION X))) (IN (THE-OPTION X) S))))
+Assuming IN-OPTIONAL with the instantiations: (= X X) (= Y S) generates ...
+(IMPLIES
+ (= (IN X (OPTIONAL S))
+  (OR (= X (NO)) (SOME (Z) (AND (= X (YES Z)) (IN Z S)))))
+ (= (IN X (OPTIONAL S))
+  (OR (= X (NULLSET)) (AND (= X (YES (THE-OPTION X))) (IN (THE-OPTION X) S)))))
+Splitting on (IN X (OPTIONAL S)) generates ...
+(IF (IN X (OPTIONAL S))
+ (IMPLIES
+  (= (IN X (OPTIONAL S))
+   (OR (= X (NO)) (SOME (Z) (AND (= X (YES Z)) (IN Z S)))))
+  (= (IN X (OPTIONAL S))
+   (OR (= X (NULLSET))
+    (AND (= X (YES (THE-OPTION X))) (IN (THE-OPTION X) S)))))
+ (IMPLIES
+  (= (IN X (OPTIONAL S))
+   (OR (= X (NO)) (SOME (Z$0) (AND (= X (YES Z$0)) (IN Z$0 S)))))
+  (= (IN X (OPTIONAL S))
+   (OR (= X (NULLSET))
+    (AND (= X (YES (THE-OPTION X))) (IN (THE-OPTION X) S))))))
+Which simplifies
+ with the assumptions YES-IS-NOT-NO, THE-OPTION-YES
+ with the instantiation (= Z$0 (THE-OPTION X)) to ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET)))
+  (SOME (Z) (AND (= X (YES Z)) (IN Z S))))
+ (AND (= X (YES (THE-OPTION X))) (IN (THE-OPTION X) S)))
+Starting case 2 ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET)))
+  (SOME (Z) (AND (= X (YES Z)) (IN Z S))))
+ (= X (YES (THE-OPTION X))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET))) (= X (YES Z)) (IN Z S))
+ (= X (YES (THE-OPTION X))))
+Substituting (= X (YES Z)) produces ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET))) (= X (YES Z)) (IN Z S))
+ (= (YES Z) (YES (THE-OPTION (YES Z)))))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, OPTIONAL.DEFINITION
+ with the assumptions YES-IS-NOT-NO, THE-OPTION-YES to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET)))
+  (SOME (Z) (AND (= X (YES Z)) (IN Z S))))
+ (IN (THE-OPTION X) S))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET))) (= X (YES Z)) (IN Z S))
+ (IN (THE-OPTION X) S))
+Substituting (= X (YES Z)) produces ...
+(IMPLIES
+ (AND (IN X (OPTIONAL S)) (NOT (= X (NULLSET))) (= X (YES Z)) (IN Z S))
+ (IN (THE-OPTION (YES Z)) S))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, OPTIONAL.DEFINITION
+ with the assumptions YES-IS-NOT-NO, THE-OPTION-YES to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+Done.

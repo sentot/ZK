@@ -1,0 +1,40 @@
+;;;
+;;; Tarski's fixedpoint theorem
+;;;
+
+(load fn)
+
+(disabled
+ (function is-monotonic (f x) ()
+   (and (in f (fn!fun (powerset x) (powerset x)))
+	(all (a b)
+	  (implies (and (subset a b)
+			(subset b x))
+		   (subset (fn!apply f a)
+			   (fn!apply f b)))))))
+
+(function-stub fix (f))
+
+(axiom fix-in-dom (f x)
+  (implies (is-monotonic f x)
+	   (in (fix f) (rel!dom f))))
+
+(axiom fix-in-dom-2 (f x)
+  (implies (is-monotonic f x)
+	   (subset (fix f) x)))
+
+(axiom fix-is-fixedpoint (f x)
+  (implies (is-monotonic f x)
+	   (= (fn!apply f (fix f)) (fix f))))
+
+(axiom fix-is-least-fixedpoint (f x a)
+  (implies (and (is-monotonic f x)
+		(subset a x)
+		(= (fn!apply f a) a))
+	   (subset (fix f) a)))
+
+(axiom fix-is-least-superpoint (f x a)
+  (implies (and (is-monotonic f x)
+		(subset a x)
+		(subset (fn!apply f a) a))
+	   (subset (fix f) a)))

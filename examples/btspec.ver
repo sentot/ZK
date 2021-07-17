@@ -1,0 +1,54 @@
+
+;;; Binary trees
+;;;
+;;; Functions introduced:
+;;;
+;;; (cons x y)
+;;; (car x)
+;;; (cdr x)
+;;; (is-cons x)
+;;; (leaf x)
+;;; (leaf-value x)
+;;; (size x)
+
+(function-stub cons (x y))
+(function-stub car (x))
+(function-stub cdr (x))
+(function-stub is-cons (x))
+
+(function-stub leaf (x))
+(function-stub leaf-value (x))
+
+(function-stub size (x))
+
+(grule type-of-is-cons (x)
+  (= (type-of (is-cons x))
+     (bool)))
+
+(grule car-cons (x y)
+  (= (car (cons x y)) x))
+
+(grule cdr-cons (x y)
+  (= (cdr (cons x y)) y))
+
+(grule is-cons-cons (x y)
+  (is-cons (cons x y)))
+
+(frule cons-composition (x)
+  (implies (is-cons x)
+	   (= x (cons (car x) (cdr x)))))
+
+(grule is-cons-leaf (x)
+  (not (is-cons (leaf x))))
+
+(grule leaf-value-leaf (x)
+  (= (leaf-value (leaf x))
+     x))
+
+(grule size-non-negative (x)
+  (>= (size x) 0))
+
+(frule size-cons (x)
+  (implies (is-cons x)
+	   (and (> (size x) (size (car x)))
+		(> (size x) (size (cdr x))))))

@@ -1,0 +1,38 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/btspec.ver"
+CONS
+CAR
+CDR
+IS-CONS
+LEAF
+LEAF-VALUE
+SIZE
+TYPE-OF-IS-CONS
+Beginning proof of TYPE-OF-IS-CONS ...
+(= (TYPE-OF (IS-CONS X)) (BOOL))
+CAR-CONS
+Beginning proof of CAR-CONS ...
+(= (CAR (CONS X Y)) X)
+CDR-CONS
+Beginning proof of CDR-CONS ...
+(= (CDR (CONS X Y)) Y)
+IS-CONS-CONS
+Beginning proof of IS-CONS-CONS ...
+(IS-CONS (CONS X Y))
+CONS-COMPOSITION
+Beginning proof of CONS-COMPOSITION ...
+(IMPLIES (IS-CONS X) (= X (CONS (CAR X) (CDR X))))
+IS-CONS-LEAF
+Beginning proof of IS-CONS-LEAF ...
+(NOT (IS-CONS (LEAF X)))
+LEAF-VALUE-LEAF
+Beginning proof of LEAF-VALUE-LEAF ...
+(= (LEAF-VALUE (LEAF X)) X)
+SIZE-NON-NEGATIVE
+Beginning proof of SIZE-NON-NEGATIVE ...
+(>= (SIZE X) 0)
+SIZE-CONS
+Beginning proof of SIZE-CONS ...
+(IMPLIES (IS-CONS X)
+ (AND (> (SIZE X) (SIZE (CAR X))) (> (SIZE X) (SIZE (CDR X)))))
+Done.

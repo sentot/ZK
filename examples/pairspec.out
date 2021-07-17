@@ -1,0 +1,57 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/pairspec.ver"
+PAIR
+FST
+SND
+IS-PAIR
+IS-PAIR-BOOL
+Beginning proof of IS-PAIR-BOOL ...
+(= (TYPE-OF (IS-PAIR X)) (BOOL))
+FST-PAIR
+Beginning proof of FST-PAIR ...
+(= (FST (PAIR X Y)) X)
+SND-PAIR
+Beginning proof of SND-PAIR ...
+(= (SND (PAIR X Y)) Y)
+PAIR-IS-PAIR
+Beginning proof of PAIR-IS-PAIR ...
+(IS-PAIR (PAIR X Y))
+PAIR-COMPOSITION
+Beginning proof of PAIR-COMPOSITION ...
+(IMPLIES (IS-PAIR X) (= (PAIR (FST X) (SND X)) X))
+CROSS
+IN-CROSS
+Beginning proof of IN-CROSS ...
+(= (IN A (CROSS X Y)) (AND (IS-PAIR A) (IN (FST A) X) (IN (SND A) Y)))
+CROSS-NULLSET-LEFT
+Beginning proof of CROSS-NULLSET-LEFT ...
+(= (CROSS (NULLSET) X) (NULLSET))
+CROSS-NULLSET-RIGHT
+Beginning proof of CROSS-NULLSET-RIGHT ...
+(= (CROSS X (NULLSET)) (NULLSET))
+=-CROSS-NULLSET
+Beginning proof of =-CROSS-NULLSET ...
+(= (= (CROSS X Y) (NULLSET)) (OR (= X (NULLSET)) (= Y (NULLSET))))
+CROSS-UNION-LEFT
+Beginning proof of CROSS-UNION-LEFT ...
+(= (CROSS (UNION X Y) Z) (UNION (CROSS X Z) (CROSS Y Z)))
+CROSS-UNION-RIGHT
+Beginning proof of CROSS-UNION-RIGHT ...
+(= (CROSS X (UNION Y Z)) (UNION (CROSS X Y) (CROSS X Z)))
+CROSS-INTER-LEFT
+Beginning proof of CROSS-INTER-LEFT ...
+(= (CROSS (INTER X Y) Z) (INTER (CROSS X Z) (CROSS Y Z)))
+CROSS-INTER-RIGHT
+Beginning proof of CROSS-INTER-RIGHT ...
+(= (CROSS X (INTER Y Z)) (INTER (CROSS X Y) (CROSS X Z)))
+CROSS-DIFF-LEFT
+Beginning proof of CROSS-DIFF-LEFT ...
+(= (CROSS (DIFF X Y) Z) (DIFF (CROSS X Z) (CROSS Y Z)))
+CROSS-DIFF-RIGHT
+Beginning proof of CROSS-DIFF-RIGHT ...
+(= (CROSS X (DIFF Y Z)) (DIFF (CROSS X Y) (CROSS X Z)))
+SUBSET-CROSS-CROSS
+Beginning proof of SUBSET-CROSS-CROSS ...
+(= (SUBSET (CROSS A B) (CROSS C D))
+ (OR (= A (NULLSET)) (= B (NULLSET)) (AND (SUBSET A C) (SUBSET B D))))
+Done.

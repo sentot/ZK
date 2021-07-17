@@ -1,0 +1,29 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/demo.ver"
+NTH-ODD
+SUM-OF-ODD
+Beginning proof of SUM-OF-ODD ...
+(IF (>= N 1) (M< (- N 1) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+SUM-OF-ODD-IS-SQUARE
+Beginning proof of SUM-OF-ODD-IS-SQUARE ...
+(IMPLIES (>= N 1) (= (SUM-OF-ODD N) (* N N)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (*P* (- N 1))) (*P* N))
+  (IMPLIES (NOT (>= N 1)) (*P* N)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= N 1)
+   (IMPLIES (>= (- N 1) 1) (= (SUM-OF-ODD (- N 1)) (* (- N 1) (- N 1)))))
+  (IMPLIES (>= N 1) (= (SUM-OF-ODD N) (* N N))))
+ (IMPLIES (NOT (>= N 1)) (IMPLIES (>= N 1) (= (SUM-OF-ODD N) (* N N)))))
+Which simplifies
+ with invocation of SUM-OF-ODD, NTH-ODD
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Done.

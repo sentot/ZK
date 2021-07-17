@@ -1,0 +1,96 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/btmodel.ver"
+SIZE
+SIZE-NON-NEGATIVE
+Beginning proof of SIZE-NON-NEGATIVE ...
+(>= (SIZE X) 0)
+Which simplifies
+ with invocation of SIZE
+ forward chaining using >=.SAME.TYPE, PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+CONS
+CAR
+CDR
+IS-CONS
+LEAF
+LEAF-VALUE
+TYPE-OF-IS-CONS
+Beginning proof of TYPE-OF-IS-CONS ...
+(= (TYPE-OF (IS-CONS X)) (BOOL))
+Which simplifies to ...
+(TRUE)
+CAR-CONS
+Beginning proof of CAR-CONS ...
+(= (CAR (CONS X Y)) X)
+Which simplifies
+ with invocation of CAR, CONS
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SIZE-NON-NEGATIVE to ...
+(TRUE)
+CDR-CONS
+Beginning proof of CDR-CONS ...
+(= (CDR (CONS X Y)) Y)
+Which simplifies
+ with invocation of CDR, CONS
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SIZE-NON-NEGATIVE, CAR-CONS to ...
+(TRUE)
+IS-CONS-CONS
+Beginning proof of IS-CONS-CONS ...
+(IS-CONS (CONS X Y))
+Which simplifies
+ with invocation of CDR, CAR, IS-CONS, CONS
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions TYPE-OF-IS-CONS, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, SIZE-NON-NEGATIVE, CAR-CONS, CDR-CONS to ...
+(TRUE)
+CONS-COMPOSITION
+Beginning proof of CONS-COMPOSITION ...
+(IMPLIES (IS-CONS X) (= X (CONS (CAR X) (CDR X))))
+Which simplifies
+ with invocation of CONS, CDR, CAR, IS-CONS
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SIZE-NON-NEGATIVE, CAR-CONS, CDR-CONS, IS-CONS-CONS, TYPE-OF-IS-CONS to ...
+(TRUE)
+IS-CONS-LEAF
+Beginning proof of IS-CONS-LEAF ...
+(NOT (IS-CONS (LEAF X)))
+Which simplifies
+ with invocation of CONS, CDR, CAR, IS-CONS, LEAF
+ forward chaining using >=.SAME.TYPE, CONS-COMPOSITION, PAIR!PAIR-COMPOSITION
+ with the assumptions SIZE-NON-NEGATIVE, CAR-CONS, CDR-CONS, IS-CONS-CONS,
+TYPE-OF-IS-CONS, PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+LEAF-VALUE-LEAF
+Beginning proof of LEAF-VALUE-LEAF ...
+(= (LEAF-VALUE (LEAF X)) X)
+Which simplifies
+ with invocation of LEAF-VALUE, LEAF
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-CONS-LEAF to ...
+(TRUE)
+SIZE-CONS
+Beginning proof of SIZE-CONS ...
+(IMPLIES (IS-CONS X)
+ (AND (> (SIZE X) (SIZE (CAR X))) (> (SIZE X) (SIZE (CDR X)))))
+Invoking (SIZE X) gives ...
+(IMPLIES (IS-CONS X)
+ (AND
+  (>= (IF (AND (PAIR!IS-PAIR X) (>= (PAIR!FST X) 0)) (PAIR!FST X) 0)
+   (SUCC (SIZE (CAR X))))
+  (>= (IF (AND (PAIR!IS-PAIR X) (>= (PAIR!FST X) 0)) (PAIR!FST X) 0)
+   (SUCC (SIZE (CDR X))))))
+Which simplifies
+ with invocation of CONS, IS-CONS
+ when rewriting with SUCC.INT.RULE
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE, CONS-COMPOSITION
+ with the assumptions SUCC.INT, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, SIZE-NON-NEGATIVE, CAR-CONS, CDR-CONS,
+IS-CONS-CONS, TYPE-OF-IS-CONS to ...
+(TRUE)
+Done.

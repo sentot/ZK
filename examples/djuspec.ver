@@ -1,0 +1,115 @@
+
+;;; Disjoint unions
+;;;
+;;; Disjoint unions are formed of elements tagged with an indicator --
+;;; here "left" or "right".
+;;;
+;;; Functions introduced:
+;;;
+;;; (inL x)		-- tag x with "left"
+;;; (inR x)		-- tag x with "right"
+;;;
+;;; (is-L x)		-- is x tagged with "left"?
+;;; (is-R x)		-- is x tagged with "right"?
+;;; (is-dju x)		-- is x tagged?
+;;;
+;;; (out x)		-- x with its tag removed
+;;;
+;;; Also these spaces:
+;;;
+;;; (left X)		-- { (in-L y) | y in X }
+;;; (right X)		-- { (in-R y) | y in X }
+;;; (dju X Y)		-- (union (left X) (right Y))
+
+(function-stub inL (x))
+(function-stub inR (x))
+
+(function-stub is-L (x))
+(function-stub is-R (x))
+(function-stub is-dju (x))
+
+(function-stub out (x))
+
+;;; left axioms
+
+(grule type-of-is-L (x)
+  (= (type-of (is-L x))
+     (bool)))
+
+(grule is-L-inL (x)
+  (is-L (inL x)))
+
+(frule is-L-isnt-R (x)
+  (implies (is-L x)
+	   (not (is-R x))))
+
+(grule out-inL (x)
+  (= (out (inL x))
+     x))
+
+(frule is-L-construction (x)
+  (implies (is-L x)
+	   (= x (inL (out x)))))
+
+;;; right axioms
+
+(grule type-of-is-R (x)
+  (= (type-of (is-R x))
+     (bool)))
+
+(grule is-R-inR (x)
+  (is-R (inR x)))
+
+(frule is-R-isnt-L (x)
+  (implies (is-R x)
+	   (not (is-L x))))
+
+(grule out-inR (x)
+  (= (out (inR x))
+     x))
+
+(frule is-R-construction (x)
+  (implies (is-R x)
+	   (= x (inR (out x)))))
+
+;;; dju axioms
+
+;;; (is-dju x) = (or (is-L x) (is-R x))
+;;;
+;;; The odd rules here let the simplifier make all the deductions:
+;;;
+;;;   (implies (is-L x) (is-dju x))
+;;;   (implies (is-R x) (is-dju x))
+;;;   (implies (and (is-dju x) (not (is-L x))) (is-R x))
+;;;   (implies (and (is-dju x) (not (is-R x))) (is-L x))
+;;;   (implies (and (not (is-L x)) (not (is-R x))) (not (is-dju x)))
+
+(frule is-dju-1 (x)
+  (implies (not (is-L x))
+	   (= (is-dju x) (is-R x))))
+
+	   
+(frule is-dju-2 (x)
+  (implies (not (is-R x))
+	   (= (is-dju x) (is-L x))))
+
+;;; the spaces
+
+(function-stub left (x))
+
+(rule in-left (x y)
+  (= (in x (left y))
+     (and (is-L x)
+	  (in (out x) y))))
+
+(function-stub right (x))
+
+(rule in-right (x y)
+  (= (in x (right y))
+     (and (is-R x)
+	  (in (out x) y))))
+
+(function dju (x y) ()
+  (union (left x) (right y)))
+
+;;; there should be some axioms about these.  Someday...

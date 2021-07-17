@@ -1,0 +1,160 @@
+
+;;; Disjoint unions
+;;;
+;;; Disjoint unions are formed of elements tagged with an indicator --
+;;; here "left" or "right".
+;;;
+;;; Functions introduced:
+;;;
+;;; (inL x)		-- tag x with "left"
+;;; (inR x)		-- tag x with "right"
+;;;
+;;; (is-L x)		-- is x tagged with "left"?
+;;; (is-R x)		-- is x tagged with "right"?
+;;; (is-dju x)		-- is x tagged?
+;;;
+;;; (out x)		-- x with its tag removed
+;;;
+;;; Also these spaces:
+;;;
+;;; (left X)		-- { (in-L y) | y in X }
+;;; (right X)		-- { (in-R y) | y in X }
+;;; (dju X Y)		-- (union (left X) (right Y))
+
+;;; The model tags by pairing with 0 for left, 1 for right.
+
+(load pair)
+
+(function inL (x) ()
+  (pair!pair 0 x))
+
+(function inR (x) ()
+  (pair!pair 1 x))
+
+(function is-L (x) ()
+  (and (pair!is-pair x)
+       (= (pair!fst x) 0)))
+
+(function is-R (x) ()
+  (and (pair!is-pair x)
+       (= (pair!fst x) 1)))
+
+(function is-dju (x) ()
+  (or (is-L x)
+      (is-R x)))
+
+(function out (x) ()
+  (pair!snd x))
+
+;;; left axioms
+
+(grule type-of-is-L (x)
+  (= (type-of (is-L x))
+     (bool)))
+(SIMPLIFY)
+
+(grule is-L-inL (x)
+  (is-L (inL x)))
+(REDUCE)
+
+(frule is-L-isnt-R (x)
+  (implies (is-L x)
+	   (not (is-R x))))
+(REDUCE)
+
+(grule out-inL (x)
+  (= (out (inL x))
+     x))
+(REDUCE)
+
+(frule is-L-construction (x)
+  (implies (is-L x)
+	   (= x (inL (out x)))))
+(REDUCE)
+
+;;; right axioms
+
+(grule type-of-is-R (x)
+  (= (type-of (is-R x))
+     (bool)))
+(SIMPLIFY)
+
+(grule is-R-inR (x)
+  (is-R (inR x)))
+(REDUCE)
+
+(frule is-R-isnt-L (x)
+  (implies (is-R x)
+	   (not (is-L x))))
+(REDUCE)
+
+(grule out-inR (x)
+  (= (out (inR x))
+     x))
+(REDUCE)
+
+(frule is-R-construction (x)
+  (implies (is-R x)
+	   (= x (inR (out x)))))
+(REDUCE)
+
+;;; dju axioms
+
+;;; (is-dju x) = (or (is-L x) (is-R x))
+;;;
+;;; The odd rules here let the simplifier make all the deductions:
+;;;
+;;;   (implies (is-L x) (is-dju x))
+;;;   (implies (is-R x) (is-dju x))
+;;;   (implies (and (is-dju x) (not (is-L x))) (is-R x))
+;;;   (implies (and (is-dju x) (not (is-R x))) (is-L x))
+;;;   (implies (and (not (is-L x)) (not (is-R x))) (not (is-dju x)))
+
+(frule is-dju-1 (x)
+  (implies (not (is-L x))
+	   (= (is-dju x) (is-R x))))
+(REDUCE)
+	   
+(frule is-dju-2 (x)
+  (implies (not (is-R x))
+	   (= (is-dju x) (is-L x))))
+(REDUCE)
+
+;;; the spaces
+
+(zf-function left (x)
+  (map (inL y)
+       ((y) x)))
+
+(rule in-left (x y)
+  (= (in x (left y))
+     (and (is-L x)
+	  (in (out x) y))))
+(USE LEFT.DEFINITION (X Y) (Y$0 X))
+(SPLIT (IN X (LEFT Y)))
+(SIMPLIFY)
+(PRENEX)
+(SIMPLIFY)
+(INSTANTIATE (Y$0 (OUT X)))
+(SIMPLIFY)
+
+(zf-function right (x)
+  (map (inR y)
+       ((y) x)))
+
+(rule in-right (x y)
+  (= (in x (right y))
+     (and (is-R x)
+	  (in (out x) y))))
+(USE RIGHT.DEFINITION (X Y) (Y$0 X))
+(SPLIT (IN X (RIGHT Y)))
+(SIMPLIFY)
+(PRENEX)
+(SIMPLIFY)
+(INSTANTIATE (Y$0 (OUT X)))
+(SIMPLIFY)
+
+(function dju (x y) ()
+  (union (left x) (right y)))
+
+;;; there should be some axioms about these.  Someday...

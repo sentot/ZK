@@ -1,0 +1,108 @@
+
+;;; the theory of ordered pairs
+;;;
+;;; Concepts defined:
+;;;
+;;; (pair x y)		-- pair with first component x and second component y
+;;; (fst p)		-- first component of pair p
+;;; (snd p)		-- second component of pair p
+;;; (is-pair x)		-- true iff x is a pair
+;;; (cross X Y)		-- cross product of sets X and Y
+;;;
+;;; The main axioms about pairs are presented as simplifier rules.  They define
+;;; a decision procedure.
+
+(function-stub pair (x y))
+
+(function-stub fst (x))
+
+(function-stub snd (x))
+
+(function-stub is-pair (x))
+
+(grule is-pair-bool (x)
+  (= (type-of (is-pair x))
+     (bool)))
+
+(grule fst-pair (x y)
+  (= (fst (pair x y)) x))
+
+(grule snd-pair (x y)
+  (= (snd (pair x y)) y))
+
+(grule pair-is-pair (x y)
+  (is-pair (pair x y)))
+
+(frule pair-composition (x)
+  (implies (is-pair x)
+	   (= (pair (fst x) (snd x)) x)))
+
+;;; cross products
+;;;
+;;; (cross x y) is the set of pairs whose first element is in x
+;;; 		and second element is in y
+
+(function-stub cross (x y))
+
+(rule in-cross (a x y)
+  (= (in a (cross x y))
+     (and (is-pair a)
+	  (in (fst a) x)
+	  (in (snd a) y))))
+
+(rule cross-nullset-left (x)
+  (= (cross (nullset) x)
+     (nullset)))
+
+(rule cross-nullset-right (x)
+  (= (cross x (nullset))
+     (nullset)))
+
+(disabled
+ (rule =-cross-nullset (x y)
+  (= (= (cross x y) (nullset))
+     (or (= x (nullset))
+	 (= y (nullset))))))
+
+(rule cross-union-left (x y z)
+  (= (cross (union x y) z)
+     (union (cross x z) (cross y z))))
+
+(rule cross-union-right (x y z)
+  (= (cross x (union y z))
+     (union (cross x y) (cross x z))))
+
+(rule cross-inter-left (x y z)
+  (= (cross (inter x y) z)
+     (inter (cross x z) (cross y z))))
+
+(rule cross-inter-right (x y z)
+  (= (cross x (inter y z))
+     (inter (cross x y) (cross x z))))
+
+(rule cross-diff-left (x y z)
+  (= (cross (diff x y) z)
+     (diff (cross x z) (cross y z))))
+
+(rule cross-diff-right (x y z)
+  (= (cross x (diff y z))
+     (diff (cross x y) (cross x z))))
+
+(rule subset-cross-cross (a b c d)
+  (= (subset (cross a b) (cross c d))
+     (or (= a (nullset))
+	 (= b (nullset))
+	 (and (subset a c)
+	      (subset b d)))))
+
+;;; Not enough rules here to calculate, e.g., we might like to rewrite
+;;; (cross (make-set 1 2) (make-set 3 4)) to (make-set (pair 1 3) ...).
+;;;
+;;; calculation rules are possible, given some auxiliary functions
+;;; e.g. (cross (setadd x y) z) = (union (cross-aux x z) (cross y z))
+;;;      (cross-aux x (nullset)) = (nullset)
+;;;      (cross-aux x (setadd y z)) = (setadd (pair x y) (cross-aux x z))
+;;; alternatively, we could say
+;;;  (= (cross (setadd a b) (setadd c d))
+;;;     (setadd (pair a b) (union (cross b (setadd c d)) (cross (setadd a b) d))))
+;;; but that creates many duplicate pairs in the set terms.

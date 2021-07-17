@@ -1,0 +1,1680 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/trmodel.ver"
+Warning RULE-LOOPS for SEQ!EXTENSIONALITY:
+ The rule SEQ!EXTENSIONALITY loops upon itself.
+IS-EMPTY
+IS-TRACE
+EMPTY
+TACK
+HEAD
+TAIL
+SIZE
+IS-EMPTY-BOOL
+Beginning proof of IS-EMPTY-BOOL ...
+(= (TYPE-OF (IS-EMPTY T)) (BOOL))
+Which simplifies
+ with invocation of IS-EMPTY
+ when rewriting with SEQ!EMPTYP-DEFINITION
+ forward chaining using SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS
+ with the assumptions SEQ!TYPE-OF-IS-TACK to ...
+(TRUE)
+IS-TRACE-BOOL
+Beginning proof of IS-TRACE-BOOL ...
+(= (TYPE-OF (IS-TRACE T)) (BOOL))
+Which simplifies
+ with invocation of IS-TRACE
+ when rewriting with SEQ!SEQP-DEFINITION to ...
+(TRUE)
+IS-TRACE-CONSEQ
+Beginning proof of IS-TRACE-CONSEQ ...
+(IMPLIES (IS-TRACE T) (= (IS-EMPTY T) (= T (EMPTY))))
+Which simplifies
+ with invocation of IS-EMPTY, IS-TRACE
+ when rewriting with SEQ!EMPTYP-DEFINITION, SEQ!SEQP-DEFINITION
+ forward chaining using SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS
+ with the assumptions SEQ!EMPTYP-EMPTY, SEQ!IS-SEQUENCE-EMPTY, IS-EMPTY-BOOL,
+IS-TRACE-BOOL to ...
+(TRUE)
+IS-EMPTY-CONSEQ
+Beginning proof of IS-EMPTY-CONSEQ ...
+(IMPLIES (IS-EMPTY T) (= (IS-TRACE T) (= T (EMPTY))))
+Which simplifies
+ with invocation of SEQ!IS-SEQUENCE, IS-TRACE, IS-EMPTY
+ when rewriting with SEQ!SEQP-DEFINITION, SEQ!EMPTYP-DEFINITION
+ forward chaining using IS-TRACE-CONSEQ, SEQ!TACK-HEAD-TAIL,
+SEQ!NOT-IS-TACK-FACTS
+ with the assumptions SEQ!EMPTYP-EMPTY, SEQ!IS-SEQUENCE-EMPTY, IS-TRACE-BOOL,
+SEQ!TYPE-OF-IS-TACK, IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-TAIL
+Beginning proof of IS-TRACE-TAIL ...
+(IMPLIES (NOT (IS-EMPTY T)) (IS-TRACE (TAIL T)))
+Which simplifies
+ with invocation of IS-TRACE, TAIL, IS-EMPTY
+ when rewriting with SEQ!SEQP-DEFINITION, SEQ!EMPTYP-DEFINITION
+ forward chaining using IS-TRACE-CONSEQ, SEQ!TACK-HEAD-TAIL,
+SEQ!NOT-IS-TACK-FACTS, IS-EMPTY-CONSEQ
+ with the assumptions IS-TRACE-BOOL, SEQ!TYPE-OF-IS-TACK, IS-EMPTY-BOOL to ...
+(IMPLIES (AND (SEQ!IS-TACK T) (SEQ!IS-SEQUENCE T))
+ (SEQ!IS-SEQUENCE (SEQ!TAIL T)))
+Invoking (SEQ!IS-SEQUENCE T) gives ...
+(IMPLIES
+ (AND (SEQ!IS-TACK T)
+  (IF (SEQ!IS-TACK T) (SEQ!IS-SEQUENCE (SEQ!TAIL T)) (= T (SEQ!EMPTY))))
+ (SEQ!IS-SEQUENCE (SEQ!TAIL T)))
+Which simplifies
+ forward chaining using SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS
+ with the assumptions SEQ!TYPE-OF-IS-TACK to ...
+(TRUE)
+NOT-IS-TRACE-IS-EMPTY
+Beginning proof of NOT-IS-TRACE-IS-EMPTY ...
+(IMPLIES (NOT (IS-TRACE T)) (IS-EMPTY T))
+Which simplifies
+ with invocation of IS-EMPTY, IS-TRACE
+ when rewriting with SEQ!EMPTYP-DEFINITION, SEQ!SEQP-DEFINITION
+ forward chaining using SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ
+ with the assumptions IS-EMPTY-BOOL, IS-TRACE-BOOL to ...
+(TRUE)
+TACK-HEAD-TAIL
+Beginning proof of TACK-HEAD-TAIL ...
+(IMPLIES (NOT (IS-EMPTY T)) (AND (IS-TRACE T) (= T (TACK (HEAD T) (TAIL T)))))
+Which simplifies
+ with invocation of TACK, TAIL, HEAD, IS-TRACE, IS-EMPTY
+ when rewriting with SEQ!SEQP-DEFINITION, SEQ!EMPTYP-DEFINITION
+ forward chaining using IS-TRACE-CONSEQ, NOT-IS-TRACE-IS-EMPTY,
+SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS, IS-EMPTY-CONSEQ
+ with the assumptions SEQ!EMPTYP-EMPTY, SEQ!IS-SEQUENCE-EMPTY,
+SEQ!IS-TACK-TACK, SEQ!HEAD-TACK, SEQ!TAIL-TACK, SEQ!IS-SEQUENCE-TACK,
+IS-TRACE-BOOL, SEQ!TYPE-OF-IS-TACK, IS-EMPTY-BOOL to ...
+(IMPLIES (AND (SEQ!IS-TACK T) (SEQ!IS-SEQUENCE T))
+ (SEQ!IS-SEQUENCE (SEQ!TAIL T)))
+Invoking (SEQ!IS-SEQUENCE T) gives ...
+(IMPLIES
+ (AND (SEQ!IS-TACK T)
+  (IF (SEQ!IS-TACK T) (SEQ!IS-SEQUENCE (SEQ!TAIL T)) (= T (SEQ!EMPTY))))
+ (SEQ!IS-SEQUENCE (SEQ!TAIL T)))
+Which simplifies
+ forward chaining using SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS
+ with the assumptions SEQ!TYPE-OF-IS-TACK to ...
+(TRUE)
+IS-EMPTY-EMPTY
+Beginning proof of IS-EMPTY-EMPTY ...
+(IS-EMPTY (EMPTY))
+Which simplifies
+ with invocation of IS-EMPTY
+ when rewriting with SEQ!EMPTYP-DEFINITION
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL,
+SEQ!NOT-IS-TACK-FACTS
+ with the assumptions SEQ!TYPE-OF-IS-TACK, IS-EMPTY-BOOL, SEQ!EMPTYP-EMPTY,
+SEQ!IS-SEQUENCE-EMPTY to ...
+(TRUE)
+IS-TRACE-EMPTY
+Beginning proof of IS-TRACE-EMPTY ...
+(IS-TRACE (EMPTY))
+Which simplifies
+ with invocation of IS-TRACE
+ when rewriting with SEQ!SEQP-DEFINITION
+ forward chaining using IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY, SEQ!NOT-IS-TACK-FACTS
+ with the assumptions IS-TRACE-BOOL, SEQ!EMPTYP-EMPTY,
+SEQ!IS-SEQUENCE-EMPTY to ...
+(TRUE)
+TACK-NOT-EMPTY
+Beginning proof of TACK-NOT-EMPTY ...
+(= (IS-EMPTY (TACK X T)) (FALSE))
+Which simplifies
+ with invocation of IS-EMPTY, TACK
+ when rewriting with SEQ!EMPTYP-DEFINITION, SEQ!SEQP-DEFINITION
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL,
+SEQ!NOT-IS-TACK-FACTS, SEQ!TACK-HEAD-TAIL
+ with the assumptions SEQ!TYPE-OF-IS-TACK, IS-EMPTY-BOOL, SEQ!EMPTYP-EMPTY,
+SEQ!IS-SEQUENCE-EMPTY, SEQ!IS-TACK-TACK, SEQ!HEAD-TACK, SEQ!TAIL-TACK,
+SEQ!IS-SEQUENCE-TACK to ...
+(TRUE)
+IS-TRACE-TACK
+Beginning proof of IS-TRACE-TACK ...
+(IS-TRACE (TACK X T))
+Which simplifies
+ with invocation of IS-TRACE, TACK
+ when rewriting with SEQ!SEQP-DEFINITION
+ forward chaining using IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY,
+SEQ!NOT-IS-TACK-FACTS, SEQ!TACK-HEAD-TAIL, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-BOOL, SEQ!EMPTYP-EMPTY, SEQ!IS-SEQUENCE-EMPTY,
+SEQ!IS-TACK-TACK, SEQ!HEAD-TACK, SEQ!TAIL-TACK, SEQ!IS-SEQUENCE-TACK,
+TACK-NOT-EMPTY to ...
+(TRUE)
+HEAD-TACK
+Beginning proof of HEAD-TACK ...
+(= (HEAD (TACK X T)) X)
+Which simplifies
+ with invocation of HEAD, TACK
+ when rewriting with SEQ!SEQP-DEFINITION
+ forward chaining using SEQ!NOT-IS-TACK-FACTS, SEQ!TACK-HEAD-TAIL,
+TACK-HEAD-TAIL, IS-TRACE-CONSEQ
+ with the assumptions SEQ!EMPTYP-EMPTY, SEQ!IS-SEQUENCE-EMPTY,
+SEQ!IS-TACK-TACK, SEQ!HEAD-TACK, SEQ!TAIL-TACK, SEQ!IS-SEQUENCE-TACK,
+TACK-NOT-EMPTY, IS-TRACE-TACK to ...
+(TRUE)
+TAIL-TACK-SEQ
+Beginning proof of TAIL-TACK-SEQ ...
+(IMPLIES (IS-TRACE T) (= (TAIL (TACK X T)) T))
+Which simplifies
+ with invocation of TAIL, TACK, IS-TRACE
+ when rewriting with SEQ!SEQP-DEFINITION
+ forward chaining using SEQ!TACK-HEAD-TAIL, TACK-HEAD-TAIL, IS-TRACE-CONSEQ,
+IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-EMPTY-BOOL, SEQ!IS-TACK-TACK, SEQ!HEAD-TACK,
+SEQ!TAIL-TACK, SEQ!IS-SEQUENCE-TACK, TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK,
+IS-TRACE-BOOL to ...
+(TRUE)
+TAIL-TACK-EMPTY
+Beginning proof of TAIL-TACK-EMPTY ...
+(IMPLIES (IS-EMPTY T) (= (TAIL (TACK X T)) (EMPTY)))
+Which simplifies
+ with invocation of SEQ!IS-SEQUENCE, TAIL, TACK, IS-EMPTY
+ when rewriting with SEQ!SEQP-DEFINITION, SEQ!EMPTYP-DEFINITION
+ forward chaining using SEQ!TACK-HEAD-TAIL, SEQ!NOT-IS-TACK-FACTS,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions SEQ!IS-TACK-TACK, SEQ!HEAD-TACK, SEQ!TAIL-TACK,
+SEQ!IS-SEQUENCE-TACK, SEQ!EMPTYP-EMPTY, SEQ!IS-SEQUENCE-EMPTY, TACK-NOT-EMPTY,
+IS-TRACE-TACK, HEAD-TACK, IS-TRACE-BOOL, SEQ!TYPE-OF-IS-TACK, IS-EMPTY-BOOL to
+...
+(TRUE)
+TACK-SAME
+Beginning proof of TACK-SAME ...
+(IMPLIES (AND (IS-TRACE Y1) (IS-TRACE Y2))
+ (= (= (TACK X1 Y1) (TACK X2 Y2)) (AND (= X1 X2) (= Y1 Y2))))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-EMPTY-BOOL, IS-TRACE-BOOL to ...
+(TRUE)
+SIZE-TAIL
+Beginning proof of SIZE-TAIL ...
+(IMPLIES (NOT (IS-EMPTY T)) (M< (SIZE (TAIL T)) (SIZE T)))
+Which simplifies
+ with invocation of SEQ!LENGTH, SIZE, TAIL, IS-EMPTY
+ when rewriting with M<.NAT, SUCC.INT.RULE, SEQ!EMPTYP-DEFINITION
+ forward chaining using >=.SAME.TYPE, SEQ!TACK-HEAD-TAIL,
+SEQ!NOT-IS-TACK-FACTS, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, SEQ!LENGTH-NON-NEGATIVE, SEQ!TYPE-OF-IS-TACK,
+IS-EMPTY-BOOL to ...
+(TRUE)
+LENGTH
+Beginning proof of LENGTH ...
+(IF (IS-EMPTY T) (TRUE) (M< (SIZE (TAIL T)) (SIZE T)))
+Which simplifies
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+LENGTH-NON-NEGATIVE
+Beginning proof of LENGTH-NON-NEGATIVE ...
+(>= (LENGTH T) 0)
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T) (*P* T))
+  (IMPLIES (AND (NOT (IS-EMPTY T)) (*P* (TAIL T))) (*P* T)))
+ produces ...
+(AND (IMPLIES (IS-EMPTY T) (>= (LENGTH T) 0))
+ (IMPLIES (AND (NOT (IS-EMPTY T)) (>= (LENGTH (TAIL T)) 0)) (>= (LENGTH T) 0)))
+Which simplifies
+ with invocation of LENGTH
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+INDUCTION-SCHEME-FOR-NAT-AND-TRACE
+Beginning proof of INDUCTION-SCHEME-FOR-NAT-AND-TRACE ...
+(IF (AND (> N 0) (NOT (IS-EMPTY X))) (M< (- N 1) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL,
+>=.SAME.TYPE
+ with the assumptions IS-EMPTY-BOOL, SUCC.INT to ...
+(TRUE)
+INDUCTION-ON-TWO-TRACES
+Beginning proof of INDUCTION-ON-TWO-TRACES ...
+(IF (OR (IS-EMPTY T1) (IS-EMPTY T2)) (TRUE)
+ (M< (LENGTH (TAIL T1)) (LENGTH T1)))
+Which simplifies
+ with invocation of LENGTH
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND
+Beginning proof of APPEND ...
+(IF (IS-EMPTY T1) (TRUE) (M< (LENGTH (TAIL T1)) (LENGTH T1)))
+Which simplifies
+ with invocation of LENGTH
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-APPEND
+Beginning proof of IS-TRACE-APPEND ...
+(IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2)) (IS-TRACE (APPEND T1 T2)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T1) (*P* T1 T2))
+  (IMPLIES (AND (NOT (IS-EMPTY T1)) (*P* (TAIL T1) T2)) (*P* T1 T2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY T1)
+  (IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2)) (IS-TRACE (APPEND T1 T2))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T1))
+   (IMPLIES (AND (IS-TRACE (TAIL T1)) (IS-TRACE T2))
+    (IS-TRACE (APPEND (TAIL T1) T2))))
+  (IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2)) (IS-TRACE (APPEND T1 T2)))))
+Which simplifies
+ with invocation of APPEND
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-BOOL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-EMPTY-LEFT
+Beginning proof of APPEND-EMPTY-LEFT ...
+(IMPLIES (IS-TRACE T) (= (APPEND (EMPTY) T) T))
+Which simplifies
+ with invocation of APPEND
+ forward chaining using IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-EMPTY-BOOL, IS-TRACE-APPEND, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, IS-TRACE-BOOL to ...
+(TRUE)
+APPEND-EMPTY-RIGHT
+Beginning proof of APPEND-EMPTY-RIGHT ...
+(IMPLIES (IS-TRACE T) (= (APPEND T (EMPTY)) T))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T) (*P* T))
+  (IMPLIES (AND (NOT (IS-EMPTY T)) (*P* (TAIL T))) (*P* T)))
+ produces ...
+(AND (IMPLIES (IS-EMPTY T) (IMPLIES (IS-TRACE T) (= (APPEND T (EMPTY)) T)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T))
+   (IMPLIES (IS-TRACE (TAIL T)) (= (APPEND (TAIL T) (EMPTY)) (TAIL T))))
+  (IMPLIES (IS-TRACE T) (= (APPEND T (EMPTY)) T))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND, IS-EMPTY-EMPTY, IS-TRACE-EMPTY,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-IS-EMPTY
+Beginning proof of APPEND-IS-EMPTY ...
+(IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+ (= (= (APPEND S T) (EMPTY)) (AND (= S (EMPTY)) (= T (EMPTY)))))
+Which simplifies
+ when rewriting with APPEND-EMPTY-LEFT, APPEND-EMPTY-RIGHT
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-APPEND,
+IS-TRACE-BOOL to ...
+(IMPLIES (AND (IS-TRACE S) (IS-TRACE T) (NOT (= S (EMPTY))))
+ (= (= (APPEND S T) (EMPTY)) (FALSE)))
+
+ Returning to :
+Beginning proof of APPEND-IS-EMPTY ...
+(IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+ (= (= (APPEND S T) (EMPTY)) (AND (= S (EMPTY)) (= T (EMPTY)))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* S T))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (TAIL S) T)) (*P* S T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+   (= (= (APPEND S T) (EMPTY)) (AND (= S (EMPTY)) (= T (EMPTY))))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (IS-TRACE T))
+    (= (= (APPEND (TAIL S) T) (EMPTY))
+     (AND (= (TAIL S) (EMPTY)) (= T (EMPTY))))))
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+   (= (= (APPEND S T) (EMPTY)) (AND (= S (EMPTY)) (= T (EMPTY)))))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with APPEND-EMPTY-RIGHT, APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+LENGTH-APPEND
+Beginning proof of LENGTH-APPEND ...
+(IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2))
+ (= (LENGTH (APPEND T1 T2)) (+ (LENGTH T1) (LENGTH T2))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T1) (*P* T1 T2))
+  (IMPLIES (AND (NOT (IS-EMPTY T1)) (*P* (TAIL T1) T2)) (*P* T1 T2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY T1)
+  (IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2))
+   (= (LENGTH (APPEND T1 T2)) (+ (LENGTH T1) (LENGTH T2)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T1))
+   (IMPLIES (AND (IS-TRACE (TAIL T1)) (IS-TRACE T2))
+    (= (LENGTH (APPEND (TAIL T1) T2)) (+ (LENGTH (TAIL T1)) (LENGTH T2)))))
+  (IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2))
+   (= (LENGTH (APPEND T1 T2)) (+ (LENGTH T1) (LENGTH T2))))))
+Which simplifies
+ with invocation of APPEND, LENGTH
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, LENGTH-NON-NEGATIVE,
+IS-TRACE-APPEND, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-ASSOCIATIVE
+Beginning proof of APPEND-ASSOCIATIVE ...
+(IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2) (IS-TRACE T3))
+ (= (APPEND (APPEND T1 T2) T3) (APPEND T1 (APPEND T2 T3))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T1) (*P* T1 T2 T3))
+  (IMPLIES (AND (NOT (IS-EMPTY T1)) (*P* (TAIL T1) T2 T3)) (*P* T1 T2 T3)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY T1)
+  (IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2) (IS-TRACE T3))
+   (= (APPEND (APPEND T1 T2) T3) (APPEND T1 (APPEND T2 T3)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T1))
+   (IMPLIES (AND (IS-TRACE (TAIL T1)) (IS-TRACE T2) (IS-TRACE T3))
+    (= (APPEND (APPEND (TAIL T1) T2) T3) (APPEND (TAIL T1) (APPEND T2 T3)))))
+  (IMPLIES (AND (IS-TRACE T1) (IS-TRACE T2) (IS-TRACE T3))
+   (= (APPEND (APPEND T1 T2) T3) (APPEND T1 (APPEND T2 T3))))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-NOT-EMPTY-LEFT
+Beginning proof of APPEND-NOT-EMPTY-LEFT ...
+(IMPLIES (AND (NOT (IS-EMPTY S)) (IS-TRACE T)) (NOT (IS-EMPTY (APPEND S T))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* S T))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (TAIL S) T)) (*P* S T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (IS-TRACE T))
+   (NOT (IS-EMPTY (APPEND S T)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (NOT (IS-EMPTY (TAIL S))) (IS-TRACE T))
+    (NOT (IS-EMPTY (APPEND (TAIL S) T)))))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (IS-TRACE T))
+   (NOT (IS-EMPTY (APPEND S T))))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-APPEND, IS-TRACE-BOOL, IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-NOT-EMPTY-RIGHT
+Beginning proof of APPEND-NOT-EMPTY-RIGHT ...
+(IMPLIES (AND (IS-TRACE S) (NOT (IS-EMPTY T))) (NOT (IS-EMPTY (APPEND S T))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* S T))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (TAIL S) T)) (*P* S T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE S) (NOT (IS-EMPTY T)))
+   (NOT (IS-EMPTY (APPEND S T)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (NOT (IS-EMPTY T)))
+    (NOT (IS-EMPTY (APPEND (TAIL S) T)))))
+  (IMPLIES (AND (IS-TRACE S) (NOT (IS-EMPTY T)))
+   (NOT (IS-EMPTY (APPEND S T))))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-EQUALITY-LEMMA
+Beginning proof of APPEND-EQUALITY-LEMMA ...
+(IMPLIES
+ (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T1) (IS-TRACE T2)
+  (= (APPEND S1 S2) (APPEND T1 T2)))
+ (OR (SOME (U1) (AND (IS-TRACE U1) (= S1 (APPEND T1 U1))))
+  (SOME (U2) (AND (IS-TRACE U2) (= T1 (APPEND S1 U2))))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (OR (IS-EMPTY S1) (IS-EMPTY T1)) (*P* S1 S2 T1 T2))
+  (IMPLIES
+   (AND (NOT (OR (IS-EMPTY S1) (IS-EMPTY T1)))
+    (*P* (TAIL S1) S2 (TAIL T1) T2))
+   (*P* S1 S2 T1 T2)))
+ produces ...
+(AND
+ (IMPLIES (OR (IS-EMPTY S1) (IS-EMPTY T1))
+  (IMPLIES
+   (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T1) (IS-TRACE T2)
+    (= (APPEND S1 S2) (APPEND T1 T2)))
+   (OR (SOME (U1) (AND (IS-TRACE U1) (= S1 (APPEND T1 U1))))
+    (SOME (U2) (AND (IS-TRACE U2) (= T1 (APPEND S1 U2)))))))
+ (IMPLIES
+  (AND (NOT (OR (IS-EMPTY S1) (IS-EMPTY T1)))
+   (IMPLIES
+    (AND (IS-TRACE (TAIL S1)) (IS-TRACE S2) (IS-TRACE (TAIL T1)) (IS-TRACE T2)
+     (= (APPEND (TAIL S1) S2) (APPEND (TAIL T1) T2)))
+    (OR (SOME (U1) (AND (IS-TRACE U1) (= (TAIL S1) (APPEND (TAIL T1) U1))))
+     (SOME (U2) (AND (IS-TRACE U2) (= (TAIL T1) (APPEND (TAIL S1) U2)))))))
+  (IMPLIES
+   (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T1) (IS-TRACE T2)
+    (= (APPEND S1 S2) (APPEND T1 T2)))
+   (OR (SOME (U1) (AND (IS-TRACE U1) (= S1 (APPEND T1 U1))))
+    (SOME (U2) (AND (IS-TRACE U2) (= T1 (APPEND S1 U2))))))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with TACK-SAME, APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND, APPEND-NOT-EMPTY-LEFT,
+IS-TRACE-BOOL, IS-EMPTY-BOOL
+ with the instantiations (= U1 S1) (= U2 T1) to ...
+(IMPLIES
+ (AND (NOT (IS-EMPTY S1)) (NOT (IS-EMPTY T1)) (IS-TRACE S2) (IS-TRACE T2)
+  (= (APPEND (TAIL S1) S2) (APPEND (TAIL T1) T2)))
+ (IF (SOME (U1) (AND (IS-TRACE U1) (= (TAIL S1) (APPEND (TAIL T1) U1))))
+  (IMPLIES
+   (AND (= (HEAD S1) (HEAD T1))
+    (NOT
+     (SOME (U1$0)
+      (AND (IS-TRACE U1$0) (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1$0)))))))
+   (SOME (U2)
+    (AND (IS-TRACE U2) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2))))))
+  (IMPLIES
+   (AND
+    (SOME (U2$0) (AND (IS-TRACE U2$0) (= (TAIL T1) (APPEND (TAIL S1) U2$0))))
+    (= (HEAD S1) (HEAD T1))
+    (NOT
+     (SOME (U1$1)
+      (AND (IS-TRACE U1$1) (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1$1)))))))
+   (SOME (U2$1)
+    (AND (IS-TRACE U2$1) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2$1))))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (NOT (IS-EMPTY S1)) (NOT (IS-EMPTY T1)) (IS-TRACE S2) (IS-TRACE T2)
+  (= (APPEND (TAIL S1) S2) (APPEND (TAIL T1) T2))
+  (SOME (U1) (AND (IS-TRACE U1) (= (TAIL S1) (APPEND (TAIL T1) U1))))
+  (= (HEAD S1) (HEAD T1))
+  (NOT
+   (SOME (U1$0)
+    (AND (IS-TRACE U1$0) (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1$0)))))))
+ (SOME (U2) (AND (IS-TRACE U2) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2))))))
+Instantiating (= U1$0 U1) gives ...
+(IMPLIES
+ (AND (NOT (IS-EMPTY S1)) (NOT (IS-EMPTY T1)) (IS-TRACE S2) (IS-TRACE T2)
+  (= (APPEND (TAIL S1) S2) (APPEND (TAIL T1) T2))
+  (SOME (U1)
+   (AND (IS-TRACE U1) (= (TAIL S1) (APPEND (TAIL T1) U1))
+    (= (HEAD S1) (HEAD T1))
+    (NOT
+     (OR (AND (IS-TRACE U1) (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1))))
+      (SOME (U1$0)
+       (AND (IS-TRACE U1$0)
+        (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1$0))))))))))
+ (SOME (U2) (AND (IS-TRACE U2) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2))))))
+Which simplifies
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-APPEND, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (IS-EMPTY S1)) (NOT (IS-EMPTY T1)) (IS-TRACE S2) (IS-TRACE T2)
+  (= (APPEND (TAIL S1) S2) (APPEND (TAIL T1) T2))
+  (NOT (SOME (U1) (AND (IS-TRACE U1) (= (TAIL S1) (APPEND (TAIL T1) U1)))))
+  (SOME (U2$0) (AND (IS-TRACE U2$0) (= (TAIL T1) (APPEND (TAIL S1) U2$0))))
+  (= (HEAD S1) (HEAD T1))
+  (NOT
+   (SOME (U1$1)
+    (AND (IS-TRACE U1$1) (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1$1)))))))
+ (SOME (U2$1)
+  (AND (IS-TRACE U2$1) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2$1))))))
+Instantiating (= U2$1 U2$0) gives ...
+(IMPLIES
+ (AND (NOT (IS-EMPTY S1)) (NOT (IS-EMPTY T1)) (IS-TRACE S2) (IS-TRACE T2)
+  (= (APPEND (TAIL S1) S2) (APPEND (TAIL T1) T2))
+  (NOT (SOME (U1) (AND (IS-TRACE U1) (= (TAIL S1) (APPEND (TAIL T1) U1)))))
+  (IS-TRACE U2) (= (TAIL T1) (APPEND (TAIL S1) U2)) (= (HEAD S1) (HEAD T1))
+  (NOT
+   (SOME (U1$0)
+    (AND (IS-TRACE U1$0) (= S1 (TACK (HEAD T1) (APPEND (TAIL T1) U1$0))))))
+  (NOT (AND (IS-TRACE U2) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2))))))
+ (SOME (U2$0)
+  (AND (IS-TRACE U2$0) (= T1 (TACK (HEAD S1) (APPEND (TAIL S1) U2$0))))))
+Which simplifies
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-APPEND, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+APPEND-LEFT-CANCELLATION
+Beginning proof of APPEND-LEFT-CANCELLATION ...
+(IMPLIES (AND (IS-TRACE S) (IS-TRACE T1) (IS-TRACE T2))
+ (= (= (APPEND S T1) (APPEND S T2)) (= T1 T2)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* S T1 T2))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (TAIL S) T1 T2)) (*P* S T1 T2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T1) (IS-TRACE T2))
+   (= (= (APPEND S T1) (APPEND S T2)) (= T1 T2))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (IS-TRACE T1) (IS-TRACE T2))
+    (= (= (APPEND (TAIL S) T1) (APPEND (TAIL S) T2)) (= T1 T2))))
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T1) (IS-TRACE T2))
+   (= (= (APPEND S T1) (APPEND S T2)) (= T1 T2)))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with TACK-SAME, APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-RIGHT-CANCELLATION
+Beginning proof of APPEND-RIGHT-CANCELLATION ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+ (= (= (APPEND S1 T) (APPEND S2 T)) (= S1 S2)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (OR (IS-EMPTY S1) (IS-EMPTY S2)) (*P* S1 S2 T))
+  (IMPLIES
+   (AND (NOT (OR (IS-EMPTY S1) (IS-EMPTY S2))) (*P* (TAIL S1) (TAIL S2) T))
+   (*P* S1 S2 T)))
+ produces ...
+(AND
+ (IMPLIES (OR (IS-EMPTY S1) (IS-EMPTY S2))
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+   (= (= (APPEND S1 T) (APPEND S2 T)) (= S1 S2))))
+ (IMPLIES
+  (AND (NOT (OR (IS-EMPTY S1) (IS-EMPTY S2)))
+   (IMPLIES (AND (IS-TRACE (TAIL S1)) (IS-TRACE (TAIL S2)) (IS-TRACE T))
+    (= (= (APPEND (TAIL S1) T) (APPEND (TAIL S2) T))
+     (= (TAIL S1) (TAIL S2)))))
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+   (= (= (APPEND S1 T) (APPEND S2 T)) (= S1 S2)))))
+Which simplifies
+ with invocation of APPEND
+ when rewriting with TACK-SAME, APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND, APPEND-NOT-EMPTY-LEFT,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(IF (IS-EMPTY S1)
+ (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+  (= (= T (APPEND S2 T)) (= (EMPTY) S2)))
+ (IMPLIES (AND (IS-EMPTY S2) (IS-TRACE S2) (IS-TRACE T))
+  (= (= (APPEND S1 T) T) (FALSE))))
+Starting case 2 ...
+(IMPLIES (AND (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+ (= (= T (APPEND S2 T)) (= (EMPTY) S2)))
+Splitting on (IS-EMPTY S2) generates ...
+(IF (IS-EMPTY S2)
+ (IMPLIES (AND (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+  (= (= T (APPEND S2 T)) (= (EMPTY) S2)))
+ (IMPLIES (AND (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE S2) (IS-TRACE T))
+  (= (= T (APPEND S2 T)) (= (EMPTY) S2))))
+Which simplifies
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions APPEND-NOT-EMPTY-LEFT, IS-EMPTY-EMPTY, IS-TRACE-EMPTY,
+IS-TRACE-APPEND, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(IMPLIES (AND (NOT (IS-EMPTY S2)) (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE T))
+ (= (= T (APPEND S2 T)) (FALSE)))
+Splitting on (= (LENGTH T) (LENGTH (APPEND S2 T))) generates ...
+(IF (= (LENGTH T) (LENGTH (APPEND S2 T)))
+ (IMPLIES (AND (NOT (IS-EMPTY S2)) (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE T))
+  (= (= T (APPEND S2 T)) (FALSE)))
+ (IMPLIES (AND (NOT (IS-EMPTY S2)) (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE T))
+  (= (= T (APPEND S2 T)) (FALSE))))
+Which simplifies
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL, >=.SAME.TYPE
+ with the assumptions IS-TRACE-APPEND, APPEND-NOT-EMPTY-LEFT, IS-EMPTY-BOOL,
+IS-TRACE-BOOL, LENGTH-NON-NEGATIVE to ...
+(IMPLIES
+ (AND (= (LENGTH T) (LENGTH (APPEND S2 T))) (NOT (IS-EMPTY S2)) (IS-EMPTY S1)
+  (IS-TRACE S1) (IS-TRACE T))
+ (NOT (= T (APPEND S2 T))))
+Applying LENGTH-APPEND gives ...
+(IMPLIES
+ (AND
+  (= (LENGTH T)
+   (IF (AND (IS-TRACE S2) (IS-TRACE T)) (+ (LENGTH S2) (LENGTH T))
+    (LENGTH (APPEND S2 T))))
+  (NOT (IS-EMPTY S2)) (IS-EMPTY S1) (IS-TRACE S1) (IS-TRACE T))
+ (NOT (= T (APPEND S2 T))))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY, >=.SAME.TYPE
+ with the assumptions IS-TRACE-APPEND, APPEND-NOT-EMPTY-LEFT, IS-EMPTY-BOOL,
+IS-TRACE-BOOL, LENGTH-NON-NEGATIVE to ...
+(IMPLIES
+ (AND (IS-TRACE S2) (IS-TRACE T) (= (LENGTH T) (+ (LENGTH S2) (LENGTH T)))
+  (NOT (IS-EMPTY S2)) (IS-EMPTY S1) (IS-TRACE S1))
+ (NOT (= T (APPEND S2 T))))
+Invoking (LENGTH S2) gives ...
+(IMPLIES
+ (AND (IS-TRACE S2) (IS-TRACE T)
+  (= (LENGTH T) (+ (IF (IS-EMPTY S2) 0 (+ 1 (LENGTH (TAIL S2)))) (LENGTH T)))
+  (NOT (IS-EMPTY S2)) (IS-EMPTY S1) (IS-TRACE S1))
+ (NOT (= T (APPEND S2 T))))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, >=.SAME.TYPE, IS-TRACE-CONSEQ,
+IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL,
+LENGTH-NON-NEGATIVE, IS-TRACE-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (AND (NOT (IS-EMPTY S1)) (IS-EMPTY S2) (IS-TRACE S2) (IS-TRACE T))
+ (= (= (APPEND S1 T) T) (FALSE)))
+Splitting on (= (LENGTH T) (LENGTH (APPEND S1 T))) generates ...
+(IF (= (LENGTH T) (LENGTH (APPEND S1 T)))
+ (IMPLIES (AND (NOT (IS-EMPTY S1)) (IS-EMPTY S2) (IS-TRACE S2) (IS-TRACE T))
+  (= (= (APPEND S1 T) T) (FALSE)))
+ (IMPLIES (AND (NOT (IS-EMPTY S1)) (IS-EMPTY S2) (IS-TRACE S2) (IS-TRACE T))
+  (= (= (APPEND S1 T) T) (FALSE))))
+Which simplifies
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL, >=.SAME.TYPE
+ with the assumptions IS-TRACE-APPEND, APPEND-NOT-EMPTY-LEFT, IS-EMPTY-BOOL,
+IS-TRACE-BOOL, LENGTH-NON-NEGATIVE to ...
+(IMPLIES
+ (AND (= (LENGTH T) (LENGTH (APPEND S1 T))) (NOT (IS-EMPTY S1)) (IS-EMPTY S2)
+  (IS-TRACE S2) (IS-TRACE T))
+ (NOT (= (APPEND S1 T) T)))
+Applying LENGTH-APPEND gives ...
+(IMPLIES
+ (AND
+  (= (LENGTH T)
+   (IF (AND (IS-TRACE S1) (IS-TRACE T)) (+ (LENGTH S1) (LENGTH T))
+    (LENGTH (APPEND S1 T))))
+  (NOT (IS-EMPTY S1)) (IS-EMPTY S2) (IS-TRACE S2) (IS-TRACE T))
+ (NOT (= (APPEND S1 T) T)))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY, >=.SAME.TYPE
+ with the assumptions IS-TRACE-APPEND, APPEND-NOT-EMPTY-LEFT, IS-EMPTY-BOOL,
+IS-TRACE-BOOL, LENGTH-NON-NEGATIVE to ...
+(IMPLIES
+ (AND (IS-TRACE S1) (IS-TRACE T) (= (LENGTH T) (+ (LENGTH S1) (LENGTH T)))
+  (NOT (IS-EMPTY S1)) (IS-EMPTY S2) (IS-TRACE S2))
+ (NOT (= (APPEND S1 T) T)))
+Invoking (LENGTH S1) gives ...
+(IMPLIES
+ (AND (IS-TRACE S1) (IS-TRACE T)
+  (= (LENGTH T) (+ (IF (IS-EMPTY S1) 0 (+ 1 (LENGTH (TAIL S1)))) (LENGTH T)))
+  (NOT (IS-EMPTY S1)) (IS-EMPTY S2) (IS-TRACE S2))
+ (NOT (= (APPEND S1 T) T)))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, >=.SAME.TYPE, IS-TRACE-CONSEQ,
+IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL,
+LENGTH-NON-NEGATIVE, IS-TRACE-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+ALL-TRACES
+TACKALL
+IN-TACKALL
+Beginning proof of IN-TACKALL ...
+(IMPLIES (ALL-TRACES S)
+ (= (IN A (TACKALL X S))
+  (AND (NOT (IS-EMPTY A)) (IN (HEAD A) X) (IN (TAIL A) S))))
+Which simplifies
+ with invocation of ALL-TRACES
+ when rewriting with TACKALL.DEFINITION
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, TACK-NOT-EMPTY, IS-TRACE-TACK,
+HEAD-TACK, IS-EMPTY-BOOL, IS-TRACE-BOOL to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRACE X$0))) (NOT (IS-EMPTY A))
+  (IN (HEAD A) X) (NOT (IN (TAIL A) S)))
+ (= (SOME (A$0 B) (AND (IN A$0 X) (IN B S) (= A (TACK A$0 B)))) (FALSE)))
+Splitting on (IN (TAIL A) S) generates ...
+(IF (IN (TAIL A) S)
+ (IMPLIES
+  (AND (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRACE X$0))) (NOT (IS-EMPTY A))
+   (IN (HEAD A) X) (NOT (IN (TAIL A) S)))
+  (= (SOME (A$0 B) (AND (IN A$0 X) (IN B S) (= A (TACK A$0 B)))) (FALSE)))
+ (IMPLIES
+  (AND (ALL (X$1) (IMPLIES (IN X$1 S) (IS-TRACE X$1))) (NOT (IS-EMPTY A))
+   (IN (HEAD A) X) (NOT (IN (TAIL A) S)))
+  (= (SOME (A$1 B$0) (AND (IN A$1 X) (IN B$0 S) (= A (TACK A$1 B$0))))
+   (FALSE))))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, IS-TRACE-TAIL,
+SIZE-TAIL, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(IMPLIES
+ (AND (NOT (IN (TAIL A) S)) (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRACE X$0)))
+  (NOT (IS-EMPTY A)) (IN (HEAD A) X))
+ (NOT
+  (SOME (A$0) (AND (IN A$0 X) (SOME (B) (AND (IN B S) (= A (TACK A$0 B))))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (NOT (IN (TAIL A) S)) (NOT (IS-EMPTY A)) (IN (HEAD A) X)
+  (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRACE X$0))))
+ (NOT
+  (SOME (A$0) (AND (IN A$0 X) (SOME (B) (AND (= A (TACK A$0 B)) (IN B S)))))))
+Instantiating (= X$0 B) gives ...
+(IMPLIES
+ (AND (NOT (IN (TAIL A) S)) (NOT (IS-EMPTY A)) (IN (HEAD A) X)
+  (IMPLIES (IN B S) (IS-TRACE B))
+  (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRACE X$0))))
+ (NOT (SOME (A$0) (AND (IN A$0 X) (= A (TACK A$0 B)) (IN B S)))))
+Which simplifies
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+ALL-TRACES-TACKALL
+Beginning proof of ALL-TRACES-TACKALL ...
+(= (ALL-TRACES (TACKALL X S)) (TRUE))
+Which simplifies
+ with invocation of ALL-TRACES
+ when rewriting with TACKALL.DEFINITION
+ forward chaining using IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY,
+TACK-HEAD-TAIL, IS-TRACE-CONSEQ
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, IS-TRACE-BOOL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+TRACE-N-OF
+Beginning proof of TRACE-N-OF ...
+(IF (> N 0) (M< (- N 1) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+ALL-TRACES-TRACE-N-OF
+Beginning proof of ALL-TRACES-TRACE-N-OF ...
+(= (ALL-TRACES (TRACE-N-OF N S)) (TRUE))
+Which simplifies
+ with invocation of ALL-TRACES
+ forward chaining using IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-TRACE-BOOL to ...
+(IMPLIES (IN X (TRACE-N-OF N S)) (IS-TRACE X))
+
+ Returning to :
+Beginning proof of ALL-TRACES-TRACE-N-OF ...
+(= (ALL-TRACES (TRACE-N-OF N S)) (TRUE))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (> N 0) (*P* (- N 1) S)) (*P* N S))
+  (IMPLIES (NOT (> N 0)) (*P* N S)))
+ produces ...
+(AND
+ (IMPLIES (AND (> N 0) (= (ALL-TRACES (TRACE-N-OF (- N 1) S)) (TRUE)))
+  (= (ALL-TRACES (TRACE-N-OF N S)) (TRUE)))
+ (IMPLIES (NOT (> N 0)) (= (ALL-TRACES (TRACE-N-OF N S)) (TRUE))))
+Which simplifies
+ with invocation of TRACE-N-OF, ALL-TRACES
+ when rewriting with UNIT.DEFINITION, ALL-TRACES-TACKALL
+ forward chaining using IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY, >=.SAME.TYPE
+ with the assumptions IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-BOOL,
+SUCC.INT to ...
+(TRUE)
+TRACE-N-OF-LENGTH
+Beginning proof of TRACE-N-OF-LENGTH ...
+(IMPLIES (IN X (TRACE-N-OF N S)) (= (LENGTH X) (IF (>= N 0) N 0)))
+Inducting using the following scheme ...
+ (AND
+  (IMPLIES (AND (> N 0) (NOT (IS-EMPTY X)) (*P* (- N 1) S (TAIL X)))
+   (*P* N S X))
+  (IMPLIES (NOT (AND (> N 0) (NOT (IS-EMPTY X)))) (*P* N S X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (> N 0) (NOT (IS-EMPTY X))
+   (IMPLIES (IN (TAIL X) (TRACE-N-OF (- N 1) S))
+    (= (LENGTH (TAIL X)) (IF (>= (- N 1) 0) (- N 1) 0))))
+  (IMPLIES (IN X (TRACE-N-OF N S)) (= (LENGTH X) (IF (>= N 0) N 0))))
+ (IMPLIES (NOT (AND (> N 0) (NOT (IS-EMPTY X))))
+  (IMPLIES (IN X (TRACE-N-OF N S)) (= (LENGTH X) (IF (>= N 0) N 0)))))
+Which simplifies
+ with invocation of TRACE-N-OF, LENGTH
+ when rewriting with UNIT.DEFINITION, IN-TACKALL, ALL-TRACES-TRACE-N-OF
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL,
+>=.SAME.TYPE
+ with the assumptions IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-TAIL,
+SIZE-TAIL, LENGTH-NON-NEGATIVE, IS-EMPTY-BOOL, SUCC.INT to ...
+(IMPLIES (AND (>= N 1) (IS-EMPTY X)) (NOT (IN X (TRACE-N-OF N S))))
+Invoking TRACE-N-OF gives ...
+(IMPLIES (AND (>= N 1) (IS-EMPTY X))
+ (NOT
+  (IN X
+   (IF (>= N (SUCC 0)) (TACKALL S (TRACE-N-OF (- N 1) S)) (UNIT (EMPTY))))))
+Which simplifies
+ when rewriting with IN-TACKALL, ALL-TRACES-TRACE-N-OF
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL,
+>=.SAME.TYPE
+ with the assumptions SUCC.INT, IS-EMPTY-BOOL to ...
+(TRUE)
+SETS-OF-TRACE-N-OF
+IN-SETS-OF-TRACE-N-OF
+Beginning proof of IN-SETS-OF-TRACE-N-OF ...
+(= (IN X (SETS-OF-TRACE-N-OF S))
+ (SOME (N) (AND (IN N (INT)) (= X (TRACE-N-OF N S)))))
+Splitting on (IN X (SETS-OF-TRACE-N-OF S)) generates ...
+(IF (IN X (SETS-OF-TRACE-N-OF S))
+ (= (IN X (SETS-OF-TRACE-N-OF S))
+  (SOME (N) (AND (IN N (INT)) (= X (TRACE-N-OF N S)))))
+ (= (IN X (SETS-OF-TRACE-N-OF S))
+  (SOME (N$0) (AND (IN N$0 (INT)) (= X (TRACE-N-OF N$0 S))))))
+Applying SETS-OF-TRACE-N-OF.DEFINITION gives ...
+(IF (SOME (N) (AND (IN N (INT)) (= X (TRACE-N-OF N S))))
+ (= (SOME (N$0) (AND (IN N$0 (INT)) (= X (TRACE-N-OF N$0 S))))
+  (SOME (N$1) (AND (IN N$1 (INT)) (= X (TRACE-N-OF N$1 S)))))
+ (= (SOME (N$2) (AND (IN N$2 (INT)) (= X (TRACE-N-OF N$2 S))))
+  (SOME (N$3) (AND (IN N$3 (INT)) (= X (TRACE-N-OF N$3 S))))))
+Which simplifies
+ with the instantiations (= N N$2) (= N N$3) to ...
+(TRUE)
+TRACE-OF
+IS-TRACE-OF
+Beginning proof of IS-TRACE-OF ...
+(IF (IS-EMPTY X) (TRUE) (M< (LENGTH (TAIL X)) (LENGTH X)))
+Invoking (LENGTH X) gives ...
+(OR (IS-EMPTY X)
+ (M< (LENGTH (TAIL X)) (IF (IS-EMPTY X) 0 (+ 1 (LENGTH (TAIL X))))))
+Which simplifies
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-OF-EMPTY
+Beginning proof of IS-TRACE-OF-EMPTY ...
+(= (IS-TRACE-OF (EMPTY) A) (TRUE))
+Which simplifies
+ with invocation of IS-TRACE-OF
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ
+ with the assumptions IS-EMPTY-BOOL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY to ...
+(TRUE)
+IS-TRACE-OF-RULE
+Beginning proof of IS-TRACE-OF-RULE ...
+(= (IS-TRACE-OF X S) (IN X (TRACE-N-OF (LENGTH X) S)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY X) (*P* S X))
+  (IMPLIES (AND (NOT (IS-EMPTY X)) (*P* S (TAIL X))) (*P* S X)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY X) (= (IS-TRACE-OF X S) (IN X (TRACE-N-OF (LENGTH X) S))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY X))
+   (= (IS-TRACE-OF (TAIL X) S)
+    (IN (TAIL X) (TRACE-N-OF (LENGTH (TAIL X)) S))))
+  (= (IS-TRACE-OF X S) (IN X (TRACE-N-OF (LENGTH X) S)))))
+Which simplifies
+ with invocation of TRACE-N-OF, LENGTH, IS-TRACE-OF
+ when rewriting with IN-TACKALL, ALL-TRACES-TRACE-N-OF, UNIT.DEFINITION
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, SUCC.INT, LENGTH-NON-NEGATIVE,
+IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-EMPTY-BOOL to ...
+(TRUE)
+IN-TRACE-OF
+Beginning proof of IN-TRACE-OF ...
+(= (IN X (TRACE-OF S)) (IS-TRACE-OF X S))
+Applying IS-TRACE-OF-RULE gives ...
+(= (IN X (TRACE-OF S)) (IN X (TRACE-N-OF (LENGTH X) S)))
+Which simplifies
+ with invocation of TRACE-OF
+ when rewriting with IN-SETS-OF-TRACE-N-OF, CUP.DEFINITION
+ forward chaining using >=.SAME.TYPE
+ with the assumptions LENGTH-NON-NEGATIVE to ...
+(= (SOME (N) (AND (IN X (TRACE-N-OF N S)) (IN N (INT))))
+ (IN X (TRACE-N-OF (LENGTH X) S)))
+Instantiating (= N (LENGTH X)) gives ...
+(=
+ (OR (AND (IN X (TRACE-N-OF (LENGTH X) S)) (IN (LENGTH X) (INT)))
+  (SOME (N) (AND (IN X (TRACE-N-OF N S)) (IN N (INT)))))
+ (IN X (TRACE-N-OF (LENGTH X) S)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions LENGTH-NON-NEGATIVE to ...
+(OR (IN X (TRACE-N-OF (LENGTH X) S))
+ (NOT (SOME (N) (AND (IN X (TRACE-N-OF N S)) (IN N (INT))))))
+Prenexing produces ...
+(OR (IN X (TRACE-N-OF (LENGTH X) S))
+ (NOT (AND (IN X (TRACE-N-OF N S)) (IN N (INT)))))
+Assuming TRACE-N-OF-LENGTH with the
+instantiations: (= N N) (= S S) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IN X (TRACE-N-OF N S)) (= (LENGTH X) (IF (>= N 0) N 0)))
+  (NOT (IN X (TRACE-N-OF (LENGTH X) S))))
+ (NOT (AND (IN X (TRACE-N-OF N S)) (IN N (INT)))))
+Which simplifies
+ with invocation of TRACE-N-OF
+ when rewriting with UNIT.DEFINITION
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, >=.SAME.TYPE
+ with the assumptions IS-EMPTY-EMPTY, IS-TRACE-EMPTY, LENGTH-NON-NEGATIVE to
+...
+(TRUE)
+IS-TRACE-OF-TACK
+Beginning proof of IS-TRACE-OF-TACK ...
+(IMPLIES (AND (IN X A) (IS-TRACE S) (IS-TRACE-OF S A))
+ (= (IS-TRACE-OF (TACK X S) A) (TRUE)))
+Which simplifies
+ with invocation of IS-TRACE-OF
+ forward chaining using TACK-HEAD-TAIL, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ,
+NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL, TACK-NOT-EMPTY,
+IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ, IS-TRACE-BOOL to ...
+(TRUE)
+IS-TRACE-OF-IS-TRACE
+Beginning proof of IS-TRACE-OF-IS-TRACE ...
+(IMPLIES (IS-TRACE-OF S A) (IS-TRACE S))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* A S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* A (TAIL S))) (*P* A S)))
+ produces ...
+(AND (IMPLIES (IS-EMPTY S) (IMPLIES (IS-TRACE-OF S A) (IS-TRACE S)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (IS-TRACE-OF (TAIL S) A) (IS-TRACE (TAIL S))))
+  (IMPLIES (IS-TRACE-OF S A) (IS-TRACE S))))
+Which simplifies
+ with invocation of IS-TRACE-OF
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-BOOL, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-OF-APPEND-LEMMA
+Beginning proof of IS-TRACE-OF-APPEND-LEMMA ...
+(IMPLIES
+ (AND (IS-TRACE-OF S A) (IS-TRACE-OF S1 A) (IS-TRACE S2) (= S1 (APPEND S S2)))
+ (IS-TRACE-OF S2 A))
+Inducting using the following scheme ...
+ (AND (IMPLIES (OR (IS-EMPTY S1) (IS-EMPTY S)) (*P* A S S1 S2))
+  (IMPLIES
+   (AND (NOT (OR (IS-EMPTY S1) (IS-EMPTY S))) (*P* A (TAIL S) (TAIL S1) S2))
+   (*P* A S S1 S2)))
+ produces ...
+(AND
+ (IMPLIES (OR (IS-EMPTY S1) (IS-EMPTY S))
+  (IMPLIES
+   (AND (IS-TRACE-OF S A) (IS-TRACE-OF S1 A) (IS-TRACE S2)
+    (= S1 (APPEND S S2)))
+   (IS-TRACE-OF S2 A)))
+ (IMPLIES
+  (AND (NOT (OR (IS-EMPTY S1) (IS-EMPTY S)))
+   (IMPLIES
+    (AND (IS-TRACE-OF (TAIL S) A) (IS-TRACE-OF (TAIL S1) A) (IS-TRACE S2)
+     (= (TAIL S1) (APPEND (TAIL S) S2)))
+    (IS-TRACE-OF S2 A)))
+  (IMPLIES
+   (AND (IS-TRACE-OF S A) (IS-TRACE-OF S1 A) (IS-TRACE S2)
+    (= S1 (APPEND S S2)))
+   (IS-TRACE-OF S2 A))))
+Which simplifies
+ with invocation of APPEND, IS-TRACE-OF
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-TRACE-OF-IS-TRACE,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-EMPTY-BOOL to ...
+(IMPLIES
+ (AND (IS-EMPTY S1) (IS-TRACE-OF S A) (= S1 (EMPTY)) (IS-TRACE S2)
+  (= (EMPTY) (APPEND S S2)))
+ (IS-TRACE-OF S2 A))
+Invoking (APPEND S S2) gives ...
+(IMPLIES
+ (AND (IS-EMPTY S1) (IS-TRACE-OF S A) (= S1 (EMPTY)) (IS-TRACE S2)
+  (= (EMPTY) (IF (IS-EMPTY S) S2 (TACK (HEAD S) (APPEND (TAIL S) S2)))))
+ (IS-TRACE-OF S2 A))
+Which simplifies
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-TRACE-OF-IS-TRACE,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-APPEND, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-BOOL, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-OF-APPEND
+Beginning proof of IS-TRACE-OF-APPEND ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+ (= (IS-TRACE-OF (APPEND S1 S2) A)
+  (AND (IS-TRACE-OF S1 A) (IS-TRACE-OF S2 A))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S1) (*P* A S1 S2))
+  (IMPLIES (AND (NOT (IS-EMPTY S1)) (*P* A (TAIL S1) S2)) (*P* A S1 S2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S1)
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (IS-TRACE-OF (APPEND S1 S2) A)
+    (AND (IS-TRACE-OF S1 A) (IS-TRACE-OF S2 A)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S1))
+   (IMPLIES (AND (IS-TRACE (TAIL S1)) (IS-TRACE S2))
+    (= (IS-TRACE-OF (APPEND (TAIL S1) S2) A)
+     (AND (IS-TRACE-OF (TAIL S1) A) (IS-TRACE-OF S2 A)))))
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (IS-TRACE-OF (APPEND S1 S2) A)
+    (AND (IS-TRACE-OF S1 A) (IS-TRACE-OF S2 A))))))
+Which simplifies
+ with invocation of IS-TRACE-OF, APPEND
+ when rewriting with IS-TRACE-OF-EMPTY, APPEND-EMPTY-LEFT
+ forward chaining using IS-TRACE-OF-IS-TRACE, NOT-IS-TRACE-IS-EMPTY,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+BEGIN-WITH
+DELETE-INITIAL-SUBSEQUENCE
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE ...
+(IF (>= N 1) (M< (- N 1) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+DELETE-INITIAL-SUBSEQUENCE-IS-TRACE
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE-IS-TRACE ...
+(IMPLIES (AND (IS-TRACE S) (>= (LENGTH S) N))
+ (IS-TRACE (DELETE-INITIAL-SUBSEQUENCE S N)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* N S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (- N 1) (TAIL S)) (*P* N (TAIL S)))
+   (*P* N S)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE S) (>= (LENGTH S) N))
+   (IS-TRACE (DELETE-INITIAL-SUBSEQUENCE S N))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (>= (LENGTH (TAIL S)) (- N 1)))
+    (IS-TRACE (DELETE-INITIAL-SUBSEQUENCE (TAIL S) (- N 1))))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (>= (LENGTH (TAIL S)) N))
+    (IS-TRACE (DELETE-INITIAL-SUBSEQUENCE (TAIL S) N))))
+  (IMPLIES (AND (IS-TRACE S) (>= (LENGTH S) N))
+   (IS-TRACE (DELETE-INITIAL-SUBSEQUENCE S N)))))
+Which simplifies
+ with invocation of DELETE-INITIAL-SUBSEQUENCE, LENGTH
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, LENGTH-NON-NEGATIVE, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+SELECT-AFTER
+DELETE-INITIAL-SUBSEQUENCE-APPEND
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE-APPEND ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+ (= (DELETE-INITIAL-SUBSEQUENCE (APPEND S1 S2) (LENGTH S1)) S2))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S1) (*P* S1 S2))
+  (IMPLIES (AND (NOT (IS-EMPTY S1)) (*P* (TAIL S1) S2)) (*P* S1 S2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S1)
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (DELETE-INITIAL-SUBSEQUENCE (APPEND S1 S2) (LENGTH S1)) S2)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S1))
+   (IMPLIES (AND (IS-TRACE (TAIL S1)) (IS-TRACE S2))
+    (= (DELETE-INITIAL-SUBSEQUENCE (APPEND (TAIL S1) S2) (LENGTH (TAIL S1)))
+     S2)))
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (DELETE-INITIAL-SUBSEQUENCE (APPEND S1 S2) (LENGTH S1)) S2))))
+Which simplifies
+ with invocation of APPEND, DELETE-INITIAL-SUBSEQUENCE, LENGTH
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, LENGTH-NON-NEGATIVE, IS-TRACE-APPEND, IS-TRACE-BOOL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+DELETE-INITIAL-SUBSEQUENCE-LENGTH
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE-LENGTH ...
+(IMPLIES (IS-TRACE S) (= (DELETE-INITIAL-SUBSEQUENCE S (LENGTH S)) (EMPTY)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (TAIL S))) (*P* S)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (IS-TRACE S)
+   (= (DELETE-INITIAL-SUBSEQUENCE S (LENGTH S)) (EMPTY))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (IS-TRACE (TAIL S))
+    (= (DELETE-INITIAL-SUBSEQUENCE (TAIL S) (LENGTH (TAIL S))) (EMPTY))))
+  (IMPLIES (IS-TRACE S)
+   (= (DELETE-INITIAL-SUBSEQUENCE S (LENGTH S)) (EMPTY)))))
+Which simplifies
+ with invocation of DELETE-INITIAL-SUBSEQUENCE, LENGTH
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL,
+DELETE-INITIAL-SUBSEQUENCE-IS-TRACE, IS-EMPTY-EMPTY, IS-TRACE-EMPTY,
+LENGTH-NON-NEGATIVE, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+DELETE-INITIAL-SUBSEQUENCE-APPEND-LENGTH
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE-APPEND-LENGTH ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+ (= (DELETE-INITIAL-SUBSEQUENCE (APPEND S1 S2) (LENGTH S1)) S2))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S1) (*P* S1 S2))
+  (IMPLIES (AND (NOT (IS-EMPTY S1)) (*P* (TAIL S1) S2)) (*P* S1 S2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S1)
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (DELETE-INITIAL-SUBSEQUENCE (APPEND S1 S2) (LENGTH S1)) S2)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S1))
+   (IMPLIES (AND (IS-TRACE (TAIL S1)) (IS-TRACE S2))
+    (= (DELETE-INITIAL-SUBSEQUENCE (APPEND (TAIL S1) S2) (LENGTH (TAIL S1)))
+     S2)))
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (DELETE-INITIAL-SUBSEQUENCE (APPEND S1 S2) (LENGTH S1)) S2))))
+Which simplifies
+ with invocation of DELETE-INITIAL-SUBSEQUENCE, LENGTH
+ when rewriting with DELETE-INITIAL-SUBSEQUENCE-APPEND, APPEND-EMPTY-LEFT
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-EMPTY, IS-TRACE-EMPTY, LENGTH-NON-NEGATIVE, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+DELETE-INITIAL-SUBSEQUENCE-IS-TRACE-OF
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE-IS-TRACE-OF ...
+(IMPLIES (AND (IS-TRACE-OF S A) (>= (LENGTH S) N))
+ (= (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE S N) A) (TRUE)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, IS-TRACE-CONSEQ, IS-TRACE-OF-IS-TRACE
+ with the assumptions DELETE-INITIAL-SUBSEQUENCE-IS-TRACE, IS-TRACE-BOOL,
+LENGTH-NON-NEGATIVE to ...
+(IMPLIES (AND (IS-TRACE-OF S A) (>= (LENGTH S) N))
+ (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE S N) A))
+
+ Returning to :
+Beginning proof of DELETE-INITIAL-SUBSEQUENCE-IS-TRACE-OF ...
+(IMPLIES (AND (IS-TRACE-OF S A) (>= (LENGTH S) N))
+ (= (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE S N) A) (TRUE)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* A N S))
+  (IMPLIES
+   (AND (NOT (IS-EMPTY S)) (*P* A (- N 1) (TAIL S)) (*P* A N (TAIL S)))
+   (*P* A N S)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE-OF S A) (>= (LENGTH S) N))
+   (= (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE S N) A) (TRUE))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (IS-TRACE-OF (TAIL S) A) (>= (LENGTH (TAIL S)) (- N 1)))
+    (= (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE (TAIL S) (- N 1)) A) (TRUE)))
+   (IMPLIES (AND (IS-TRACE-OF (TAIL S) A) (>= (LENGTH (TAIL S)) N))
+    (= (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE (TAIL S) N) A) (TRUE))))
+  (IMPLIES (AND (IS-TRACE-OF S A) (>= (LENGTH S) N))
+   (= (IS-TRACE-OF (DELETE-INITIAL-SUBSEQUENCE S N) A) (TRUE)))))
+Which simplifies
+ with invocation of DELETE-INITIAL-SUBSEQUENCE, LENGTH, IS-TRACE-OF
+ when rewriting with IS-TRACE-OF-EMPTY
+ forward chaining using >=.SAME.TYPE, NOT-IS-TRACE-IS-EMPTY,
+IS-TRACE-OF-IS-TRACE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL,
+DELETE-INITIAL-SUBSEQUENCE-IS-TRACE, IS-TRACE-BOOL, LENGTH-NON-NEGATIVE,
+IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-EMPTY-BOOL to ...
+(TRUE)
+RESTRICT
+Beginning proof of RESTRICT ...
+(IF (IS-EMPTY S) (TRUE) (M< (LENGTH (TAIL S)) (LENGTH S)))
+Which simplifies
+ with invocation of LENGTH
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-RESTRICT
+Beginning proof of IS-TRACE-RESTRICT ...
+(IMPLIES (IS-TRACE S) (IS-TRACE (RESTRICT S A)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* A S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A) (*P* A (TAIL S)))
+   (*P* A S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A)) (*P* A (TAIL S)))
+   (*P* A S)))
+ produces ...
+(AND (IMPLIES (IS-EMPTY S) (IMPLIES (IS-TRACE S) (IS-TRACE (RESTRICT S A))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A)
+   (IMPLIES (IS-TRACE (TAIL S)) (IS-TRACE (RESTRICT (TAIL S) A))))
+  (IMPLIES (IS-TRACE S) (IS-TRACE (RESTRICT S A))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A))
+   (IMPLIES (IS-TRACE (TAIL S)) (IS-TRACE (RESTRICT (TAIL S) A))))
+  (IMPLIES (IS-TRACE S) (IS-TRACE (RESTRICT S A)))))
+Which simplifies
+ with invocation of RESTRICT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-BOOL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+IS-TRACE-OF-RESTRICT
+Beginning proof of IS-TRACE-OF-RESTRICT ...
+(IMPLIES (IS-TRACE S) (IS-TRACE-OF (RESTRICT S A) A))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* A S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A) (*P* A (TAIL S)))
+   (*P* A S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A)) (*P* A (TAIL S)))
+   (*P* A S)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S) (IMPLIES (IS-TRACE S) (IS-TRACE-OF (RESTRICT S A) A)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A)
+   (IMPLIES (IS-TRACE (TAIL S)) (IS-TRACE-OF (RESTRICT (TAIL S) A) A)))
+  (IMPLIES (IS-TRACE S) (IS-TRACE-OF (RESTRICT S A) A)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A))
+   (IMPLIES (IS-TRACE (TAIL S)) (IS-TRACE-OF (RESTRICT (TAIL S) A) A)))
+  (IMPLIES (IS-TRACE S) (IS-TRACE-OF (RESTRICT S A) A))))
+Which simplifies
+ with invocation of RESTRICT
+ when rewriting with IS-TRACE-OF-TACK, IS-TRACE-OF-EMPTY
+ forward chaining using IS-TRACE-OF-IS-TRACE, NOT-IS-TRACE-IS-EMPTY,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-RESTRICT,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+RESTRICT-APPEND
+Beginning proof of RESTRICT-APPEND ...
+(IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+ (= (RESTRICT (APPEND S T) A) (APPEND (RESTRICT S A) (RESTRICT T A))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* A S T))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A) (*P* A (TAIL S) T))
+   (*P* A S T))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A)) (*P* A (TAIL S) T))
+   (*P* A S T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+   (= (RESTRICT (APPEND S T) A) (APPEND (RESTRICT S A) (RESTRICT T A)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A)
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (IS-TRACE T))
+    (= (RESTRICT (APPEND (TAIL S) T) A)
+     (APPEND (RESTRICT (TAIL S) A) (RESTRICT T A)))))
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+   (= (RESTRICT (APPEND S T) A) (APPEND (RESTRICT S A) (RESTRICT T A)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (IS-TRACE T))
+    (= (RESTRICT (APPEND (TAIL S) T) A)
+     (APPEND (RESTRICT (TAIL S) A) (RESTRICT T A)))))
+  (IMPLIES (AND (IS-TRACE S) (IS-TRACE T))
+   (= (RESTRICT (APPEND S T) A) (APPEND (RESTRICT S A) (RESTRICT T A))))))
+Which simplifies
+ with invocation of APPEND, RESTRICT
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using IS-TRACE-OF-IS-TRACE, NOT-IS-TRACE-IS-EMPTY,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, IS-TRACE-RESTRICT, IS-TRACE-OF-RESTRICT, IS-TRACE-APPEND,
+IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+OCCURS
+Beginning proof of OCCURS ...
+(IF (IS-EMPTY T) (TRUE) (M< (LENGTH (TAIL T)) (LENGTH T)))
+Which simplifies
+ with invocation of LENGTH
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+OCCURS-IMPLIES-NOT-EMPTY
+Beginning proof of OCCURS-IMPLIES-NOT-EMPTY ...
+(IMPLIES (OCCURS E T) (NOT (IS-EMPTY T)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T) (*P* E T))
+  (IMPLIES (AND (NOT (IS-EMPTY T)) (*P* E (TAIL T))) (*P* E T)))
+ produces ...
+(AND (IMPLIES (IS-EMPTY T) (IMPLIES (OCCURS E T) (NOT (IS-EMPTY T))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T))
+   (IMPLIES (OCCURS E (TAIL T)) (NOT (IS-EMPTY (TAIL T)))))
+  (IMPLIES (OCCURS E T) (NOT (IS-EMPTY T)))))
+Which simplifies
+ with invocation of OCCURS
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+OCCURS-APPEND
+Beginning proof of OCCURS-APPEND ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+ (= (OCCURS E (APPEND S1 S2)) (OR (OCCURS E S1) (OCCURS E S2))))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, OCCURS-IMPLIES-NOT-EMPTY,
+IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions APPEND-NOT-EMPTY-RIGHT, APPEND-NOT-EMPTY-LEFT,
+IS-TRACE-APPEND, IS-EMPTY-BOOL, IS-TRACE-BOOL to ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+ (IF (OCCURS E S1) (= (OCCURS E (APPEND S1 S2)) (TRUE))
+  (IF (OCCURS E S2) (= (OCCURS E (APPEND S1 S2)) (TRUE))
+   (= (OCCURS E (APPEND S1 S2)) (FALSE)))))
+
+ Returning to :
+Beginning proof of OCCURS-APPEND ...
+(IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+ (= (OCCURS E (APPEND S1 S2)) (OR (OCCURS E S1) (OCCURS E S2))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S1) (*P* E S1 S2))
+  (IMPLIES (AND (NOT (IS-EMPTY S1)) (*P* E (TAIL S1) S2)) (*P* E S1 S2)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S1)
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (OCCURS E (APPEND S1 S2)) (OR (OCCURS E S1) (OCCURS E S2)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S1))
+   (IMPLIES (AND (IS-TRACE (TAIL S1)) (IS-TRACE S2))
+    (= (OCCURS E (APPEND (TAIL S1) S2))
+     (OR (OCCURS E (TAIL S1)) (OCCURS E S2)))))
+  (IMPLIES (AND (IS-TRACE S1) (IS-TRACE S2))
+   (= (OCCURS E (APPEND S1 S2)) (OR (OCCURS E S1) (OCCURS E S2))))))
+Which simplifies
+ with invocation of OCCURS, APPEND
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using OCCURS-IMPLIES-NOT-EMPTY, NOT-IS-TRACE-IS-EMPTY,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions APPEND-NOT-EMPTY-RIGHT, TACK-NOT-EMPTY, IS-TRACE-TACK,
+HEAD-TACK, TAIL-TACK-SEQ, APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL,
+IS-TRACE-APPEND, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+OCCURS-RESTRICT
+Beginning proof of OCCURS-RESTRICT ...
+(IMPLIES (IS-TRACE S)
+ (= (OCCURS E (RESTRICT S A)) (AND (IN E A) (OCCURS E S))))
+Which simplifies
+ forward chaining using TACK-HEAD-TAIL, OCCURS-IMPLIES-NOT-EMPTY,
+IS-TRACE-OF-IS-TRACE, IS-TRACE-CONSEQ, IS-EMPTY-CONSEQ, NOT-IS-TRACE-IS-EMPTY
+ with the assumptions IS-TRACE-RESTRICT, IS-TRACE-OF-RESTRICT,
+IS-TRACE-BOOL to ...
+(IMPLIES (IS-TRACE S)
+ (IF (IN E A)
+  (IF (OCCURS E S) (= (OCCURS E (RESTRICT S A)) (TRUE))
+   (= (OCCURS E (RESTRICT S A)) (FALSE)))
+  (= (OCCURS E (RESTRICT S A)) (FALSE))))
+
+ Returning to :
+Beginning proof of OCCURS-RESTRICT ...
+(IMPLIES (IS-TRACE S)
+ (= (OCCURS E (RESTRICT S A)) (AND (IN E A) (OCCURS E S))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* A E S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A) (*P* A E (TAIL S)))
+   (*P* A E S))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A)) (*P* A E (TAIL S)))
+   (*P* A E S)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (IS-TRACE S)
+   (= (OCCURS E (RESTRICT S A)) (AND (IN E A) (OCCURS E S)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (IN (HEAD S) A)
+   (IMPLIES (IS-TRACE (TAIL S))
+    (= (OCCURS E (RESTRICT (TAIL S) A)) (AND (IN E A) (OCCURS E (TAIL S))))))
+  (IMPLIES (IS-TRACE S)
+   (= (OCCURS E (RESTRICT S A)) (AND (IN E A) (OCCURS E S)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S)) (NOT (IN (HEAD S) A))
+   (IMPLIES (IS-TRACE (TAIL S))
+    (= (OCCURS E (RESTRICT (TAIL S) A)) (AND (IN E A) (OCCURS E (TAIL S))))))
+  (IMPLIES (IS-TRACE S)
+   (= (OCCURS E (RESTRICT S A)) (AND (IN E A) (OCCURS E S))))))
+Which simplifies
+ with invocation of OCCURS, RESTRICT
+ forward chaining using OCCURS-IMPLIES-NOT-EMPTY, IS-TRACE-OF-IS-TRACE,
+NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-RESTRICT,
+IS-TRACE-OF-RESTRICT, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+LAST-EVENT
+Beginning proof of LAST-EVENT ...
+(IF (IS-EMPTY T) (TRUE)
+ (IF (IS-EMPTY (TAIL T)) (TRUE) (M< (LENGTH (TAIL T)) (LENGTH T))))
+Which simplifies
+ with invocation of LENGTH
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+BUT-LAST
+Beginning proof of BUT-LAST ...
+(IF (OR (IS-EMPTY T) (IS-EMPTY (TAIL T))) (TRUE)
+ (M< (LENGTH (TAIL T)) (LENGTH T)))
+Which simplifies
+ with invocation of LENGTH
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions SUCC.INT, LENGTH-NON-NEGATIVE, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+BUT-LAST-IS-TRACE
+Beginning proof of BUT-LAST-IS-TRACE ...
+(IS-TRACE (BUT-LAST T))
+Inducting using the following scheme ...
+ (AND (IMPLIES (OR (IS-EMPTY T) (IS-EMPTY (TAIL T))) (*P* T))
+  (IMPLIES (AND (NOT (OR (IS-EMPTY T) (IS-EMPTY (TAIL T)))) (*P* (TAIL T)))
+   (*P* T)))
+ produces ...
+(AND (IMPLIES (OR (IS-EMPTY T) (IS-EMPTY (TAIL T))) (IS-TRACE (BUT-LAST T)))
+ (IMPLIES
+  (AND (NOT (OR (IS-EMPTY T) (IS-EMPTY (TAIL T))))
+   (IS-TRACE (BUT-LAST (TAIL T))))
+  (IS-TRACE (BUT-LAST T))))
+Which simplifies
+ with invocation of BUT-LAST
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-BOOL, IS-EMPTY-EMPTY, IS-TRACE-EMPTY, IS-TRACE-TAIL, SIZE-TAIL,
+IS-EMPTY-BOOL to ...
+(TRUE)
+BUT-LAST-IS-TRACE-OF
+Beginning proof of BUT-LAST-IS-TRACE-OF ...
+(IMPLIES (IS-TRACE-OF T A) (= (IS-TRACE-OF (BUT-LAST T) A) (TRUE)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T) (*P* A T))
+  (IMPLIES (AND (NOT (IS-EMPTY T)) (*P* A (TAIL T))) (*P* A T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY T)
+  (IMPLIES (IS-TRACE-OF T A) (= (IS-TRACE-OF (BUT-LAST T) A) (TRUE))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T))
+   (IMPLIES (IS-TRACE-OF (TAIL T) A)
+    (= (IS-TRACE-OF (BUT-LAST (TAIL T)) A) (TRUE))))
+  (IMPLIES (IS-TRACE-OF T A) (= (IS-TRACE-OF (BUT-LAST T) A) (TRUE)))))
+Which simplifies
+ with invocation of BUT-LAST, IS-TRACE-OF
+ when rewriting with IS-TRACE-OF-TACK, IS-TRACE-OF-EMPTY
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-TRACE-OF-IS-TRACE,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-BOOL, IS-TRACE-TAIL, SIZE-TAIL, BUT-LAST-IS-TRACE, IS-EMPTY-EMPTY,
+IS-TRACE-EMPTY, IS-EMPTY-BOOL to ...
+(TRUE)
+APPEND-BUT-LAST-LAST
+Beginning proof of APPEND-BUT-LAST-LAST ...
+(IMPLIES (NOT (IS-EMPTY T))
+ (= (APPEND (BUT-LAST T) (TACK (LAST-EVENT T) (EMPTY))) T))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY T) (*P* T))
+  (IMPLIES (AND (NOT (IS-EMPTY T)) (IS-EMPTY (TAIL T))) (*P* T))
+  (IMPLIES (AND (NOT (IS-EMPTY T)) (NOT (IS-EMPTY (TAIL T))) (*P* (TAIL T)))
+   (*P* T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY T)
+  (IMPLIES (NOT (IS-EMPTY T))
+   (= (APPEND (BUT-LAST T) (TACK (LAST-EVENT T) (EMPTY))) T)))
+ (IMPLIES (AND (NOT (IS-EMPTY T)) (IS-EMPTY (TAIL T)))
+  (IMPLIES (NOT (IS-EMPTY T))
+   (= (APPEND (BUT-LAST T) (TACK (LAST-EVENT T) (EMPTY))) T)))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY T)) (NOT (IS-EMPTY (TAIL T)))
+   (IMPLIES (NOT (IS-EMPTY (TAIL T)))
+    (= (APPEND (BUT-LAST (TAIL T)) (TACK (LAST-EVENT (TAIL T)) (EMPTY)))
+     (TAIL T))))
+  (IMPLIES (NOT (IS-EMPTY T))
+   (= (APPEND (BUT-LAST T) (TACK (LAST-EVENT T) (EMPTY))) T))))
+Which simplifies
+ with invocation of APPEND, LAST-EVENT, BUT-LAST
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions APPEND-NOT-EMPTY-LEFT, IS-TRACE-APPEND,
+APPEND-NOT-EMPTY-RIGHT, TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK,
+TAIL-TACK-SEQ, IS-TRACE-BOOL, TAIL-TACK-EMPTY, IS-EMPTY-EMPTY, IS-TRACE-EMPTY,
+BUT-LAST-IS-TRACE, IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+BUT-LAST-APPEND
+Beginning proof of BUT-LAST-APPEND ...
+(IMPLIES (AND (IS-TRACE S) (NOT (IS-EMPTY T)))
+ (= (BUT-LAST (APPEND S T)) (APPEND S (BUT-LAST T))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (IS-EMPTY S) (*P* S T))
+  (IMPLIES (AND (NOT (IS-EMPTY S)) (*P* (TAIL S) T)) (*P* S T)))
+ produces ...
+(AND
+ (IMPLIES (IS-EMPTY S)
+  (IMPLIES (AND (IS-TRACE S) (NOT (IS-EMPTY T)))
+   (= (BUT-LAST (APPEND S T)) (APPEND S (BUT-LAST T)))))
+ (IMPLIES
+  (AND (NOT (IS-EMPTY S))
+   (IMPLIES (AND (IS-TRACE (TAIL S)) (NOT (IS-EMPTY T)))
+    (= (BUT-LAST (APPEND (TAIL S) T)) (APPEND (TAIL S) (BUT-LAST T)))))
+  (IMPLIES (AND (IS-TRACE S) (NOT (IS-EMPTY T)))
+   (= (BUT-LAST (APPEND S T)) (APPEND S (BUT-LAST T))))))
+Which simplifies
+ with invocation of BUT-LAST, APPEND
+ when rewriting with APPEND-EMPTY-LEFT
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, IS-EMPTY-CONSEQ,
+IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+APPEND-NOT-EMPTY-LEFT, IS-TRACE-TAIL, SIZE-TAIL, BUT-LAST-IS-TRACE,
+IS-TRACE-APPEND, APPEND-NOT-EMPTY-RIGHT, IS-TRACE-BOOL, IS-EMPTY-BOOL to ...
+(TRUE)
+LENGTH-BUT-LAST
+Beginning proof of LENGTH-BUT-LAST ...
+(IMPLIES (NOT (IS-EMPTY S)) (= (LENGTH (BUT-LAST S)) (- (LENGTH S) 1)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (OR (IS-EMPTY S) (IS-EMPTY (TAIL S))) (*P* S))
+  (IMPLIES (AND (NOT (OR (IS-EMPTY S) (IS-EMPTY (TAIL S)))) (*P* (TAIL S)))
+   (*P* S)))
+ produces ...
+(AND
+ (IMPLIES (OR (IS-EMPTY S) (IS-EMPTY (TAIL S)))
+  (IMPLIES (NOT (IS-EMPTY S)) (= (LENGTH (BUT-LAST S)) (- (LENGTH S) 1))))
+ (IMPLIES
+  (AND (NOT (OR (IS-EMPTY S) (IS-EMPTY (TAIL S))))
+   (IMPLIES (NOT (IS-EMPTY (TAIL S)))
+    (= (LENGTH (BUT-LAST (TAIL S))) (- (LENGTH (TAIL S)) 1))))
+  (IMPLIES (NOT (IS-EMPTY S)) (= (LENGTH (BUT-LAST S)) (- (LENGTH S) 1)))))
+Which simplifies
+ with invocation of LENGTH, BUT-LAST
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-TRACE-BOOL, LENGTH-NON-NEGATIVE, IS-EMPTY-EMPTY, IS-TRACE-EMPTY,
+BUT-LAST-IS-TRACE, IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(IMPLIES (AND (NOT (IS-EMPTY S)) (IS-EMPTY (TAIL S))) (= 0 (+ -1 (LENGTH S))))
+Invoking LENGTH gives ...
+(IMPLIES (AND (NOT (IS-EMPTY S)) (IS-EMPTY (TAIL S)))
+ (= 0 (+ -1 (IF (IS-EMPTY S) 0 (+ 1 (LENGTH (TAIL S)))))))
+Which simplifies
+ with invocation of LENGTH
+ forward chaining using >=.SAME.TYPE, IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ,
+TACK-HEAD-TAIL
+ with the assumptions IS-EMPTY-EMPTY, IS-TRACE-EMPTY, LENGTH-NON-NEGATIVE,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+OCCURS-BUT-LAST
+Beginning proof of OCCURS-BUT-LAST ...
+(IMPLIES (AND (IS-TRACE T) (OCCURS E (BUT-LAST T))) (OCCURS E T))
+Inducting using the following scheme ...
+ (AND (IMPLIES (OR (IS-EMPTY T) (IS-EMPTY (TAIL T))) (*P* E T))
+  (IMPLIES (AND (NOT (OR (IS-EMPTY T) (IS-EMPTY (TAIL T)))) (*P* E (TAIL T)))
+   (*P* E T)))
+ produces ...
+(AND
+ (IMPLIES (OR (IS-EMPTY T) (IS-EMPTY (TAIL T)))
+  (IMPLIES (AND (IS-TRACE T) (OCCURS E (BUT-LAST T))) (OCCURS E T)))
+ (IMPLIES
+  (AND (NOT (OR (IS-EMPTY T) (IS-EMPTY (TAIL T))))
+   (IMPLIES (AND (IS-TRACE (TAIL T)) (OCCURS E (BUT-LAST (TAIL T))))
+    (OCCURS E (TAIL T))))
+  (IMPLIES (AND (IS-TRACE T) (OCCURS E (BUT-LAST T))) (OCCURS E T))))
+Which simplifies
+ with invocation of OCCURS, BUT-LAST
+ forward chaining using NOT-IS-TRACE-IS-EMPTY, OCCURS-IMPLIES-NOT-EMPTY,
+IS-EMPTY-CONSEQ, IS-TRACE-CONSEQ, TACK-HEAD-TAIL
+ with the assumptions TACK-NOT-EMPTY, IS-TRACE-TACK, HEAD-TACK, TAIL-TACK-SEQ,
+IS-EMPTY-EMPTY, IS-TRACE-EMPTY, BUT-LAST-IS-TRACE, IS-TRACE-BOOL,
+IS-TRACE-TAIL, SIZE-TAIL, IS-EMPTY-BOOL to ...
+(TRUE)
+Done.

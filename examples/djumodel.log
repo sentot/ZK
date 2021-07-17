@@ -1,0 +1,202 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/djumodel.ver"
+INL
+INR
+IS-L
+IS-R
+IS-DJU
+OUT
+TYPE-OF-IS-L
+Beginning proof of TYPE-OF-IS-L ...
+(= (TYPE-OF (IS-L X)) (BOOL))
+Which simplifies to ...
+(TRUE)
+IS-L-INL
+Beginning proof of IS-L-INL ...
+(IS-L (INL X))
+Which simplifies
+ with invocation of IS-L, INL
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, TYPE-OF-IS-L, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IS-L-ISNT-R
+Beginning proof of IS-L-ISNT-R ...
+(IMPLIES (IS-L X) (NOT (IS-R X)))
+Which simplifies
+ with invocation of IS-R, IS-L
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, TYPE-OF-IS-L to ...
+(TRUE)
+OUT-INL
+Beginning proof of OUT-INL ...
+(= (OUT (INL X)) X)
+Which simplifies
+ with invocation of OUT, INL
+ forward chaining using PAIR!PAIR-COMPOSITION, IS-L-ISNT-R
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-L-INL to ...
+(TRUE)
+IS-L-CONSTRUCTION
+Beginning proof of IS-L-CONSTRUCTION ...
+(IMPLIES (IS-L X) (= X (INL (OUT X))))
+Which simplifies
+ with invocation of INL, OUT, IS-L
+ forward chaining using PAIR!PAIR-COMPOSITION, IS-L-ISNT-R
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-L-INL, OUT-INL, PAIR!IS-PAIR-BOOL, TYPE-OF-IS-L to ...
+(TRUE)
+TYPE-OF-IS-R
+Beginning proof of TYPE-OF-IS-R ...
+(= (TYPE-OF (IS-R X)) (BOOL))
+Which simplifies to ...
+(TRUE)
+IS-R-INR
+Beginning proof of IS-R-INR ...
+(IS-R (INR X))
+Which simplifies
+ with invocation of IS-R, INR
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, TYPE-OF-IS-R, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IS-R-ISNT-L
+Beginning proof of IS-R-ISNT-L ...
+(IMPLIES (IS-R X) (NOT (IS-L X)))
+Which simplifies
+ with invocation of IS-L, IS-R
+ forward chaining using IS-L-ISNT-R, IS-L-CONSTRUCTION, PAIR!PAIR-COMPOSITION
+ with the assumptions TYPE-OF-IS-L, PAIR!IS-PAIR-BOOL, TYPE-OF-IS-R to ...
+(TRUE)
+OUT-INR
+Beginning proof of OUT-INR ...
+(= (OUT (INR X)) X)
+Which simplifies
+ with invocation of OUT, INR
+ forward chaining using PAIR!PAIR-COMPOSITION, IS-R-ISNT-L
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-R-INR to ...
+(TRUE)
+IS-R-CONSTRUCTION
+Beginning proof of IS-R-CONSTRUCTION ...
+(IMPLIES (IS-R X) (= X (INR (OUT X))))
+Which simplifies
+ with invocation of INR, OUT, IS-R
+ forward chaining using PAIR!PAIR-COMPOSITION, IS-R-ISNT-L
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-R-INR, OUT-INR, PAIR!IS-PAIR-BOOL, TYPE-OF-IS-R to ...
+(TRUE)
+IS-DJU-1
+Beginning proof of IS-DJU-1 ...
+(IMPLIES (NOT (IS-L X)) (= (IS-DJU X) (IS-R X)))
+Which simplifies
+ with invocation of IS-R, IS-DJU, IS-L
+ forward chaining using IS-R-ISNT-L, IS-R-CONSTRUCTION, PAIR!PAIR-COMPOSITION,
+IS-L-ISNT-R, IS-L-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-R, PAIR!IS-PAIR-BOOL, TYPE-OF-IS-L to ...
+(TRUE)
+IS-DJU-2
+Beginning proof of IS-DJU-2 ...
+(IMPLIES (NOT (IS-R X)) (= (IS-DJU X) (IS-L X)))
+Which simplifies
+ with invocation of IS-L, IS-DJU, IS-R
+ forward chaining using IS-L-ISNT-R, IS-L-CONSTRUCTION, PAIR!PAIR-COMPOSITION,
+IS-DJU-1, IS-R-ISNT-L, IS-R-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-L, PAIR!IS-PAIR-BOOL, TYPE-OF-IS-R to ...
+(TRUE)
+LEFT
+IN-LEFT
+Beginning proof of IN-LEFT ...
+(= (IN X (LEFT Y)) (AND (IS-L X) (IN (OUT X) Y)))
+Assuming LEFT.DEFINITION with the instantiations: (= X Y) (= Y$0 X) generates
+...
+(IMPLIES (= (IN X (LEFT Y)) (SOME (Y$0) (AND (IN Y$0 Y) (= X (INL Y$0)))))
+ (= (IN X (LEFT Y)) (AND (IS-L X) (IN (OUT X) Y))))
+Splitting on (IN X (LEFT Y)) generates ...
+(IF (IN X (LEFT Y))
+ (IMPLIES (= (IN X (LEFT Y)) (SOME (Y$0) (AND (IN Y$0 Y) (= X (INL Y$0)))))
+  (= (IN X (LEFT Y)) (AND (IS-L X) (IN (OUT X) Y))))
+ (IMPLIES (= (IN X (LEFT Y)) (SOME (Y$1) (AND (IN Y$1 Y) (= X (INL Y$1)))))
+  (= (IN X (LEFT Y)) (AND (IS-L X) (IN (OUT X) Y)))))
+Which simplifies
+ forward chaining using IS-DJU-1, IS-DJU-2, IS-L-ISNT-R, IS-L-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-L, IS-L-INL, OUT-INL to ...
+(IF (IN X (LEFT Y))
+ (IMPLIES (= (TRUE) (SOME (Y$0) (AND (IN Y$0 Y) (= X (INL Y$0)))))
+  (AND (IS-L X) (IN (OUT X) Y)))
+ (IMPLIES
+  (AND (= (FALSE) (SOME (Y$1) (AND (IN Y$1 Y) (= X (INL Y$1))))) (IS-L X))
+  (NOT (IN (OUT X) Y))))
+Prenexing produces ...
+(IF (IN X (LEFT Y))
+ (IMPLIES (AND (IN Y$0 Y) (= X (INL Y$0))) (AND (IS-L X) (IN (OUT X) Y)))
+ (IMPLIES (AND (NOT (SOME (Y$1) (AND (IN Y$1 Y) (= X (INL Y$1))))) (IS-L X))
+  (NOT (IN (OUT X) Y))))
+Which simplifies
+ forward chaining using IS-DJU-1, IS-DJU-2, IS-L-ISNT-R, IS-L-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-L, IS-L-INL, OUT-INL to ...
+(IMPLIES
+ (AND (NOT (IN X (LEFT Y)))
+  (NOT (SOME (Y$0) (AND (IN Y$0 Y) (= X (INL Y$0))))) (IS-L X))
+ (NOT (IN (OUT X) Y)))
+Instantiating (= Y$0 (OUT X)) gives ...
+(IMPLIES
+ (AND (NOT (IN X (LEFT Y)))
+  (NOT
+   (OR (AND (IN (OUT X) Y) (= X (INL (OUT X))))
+    (SOME (Y$0) (AND (IN Y$0 Y) (= X (INL Y$0))))))
+  (IS-L X))
+ (NOT (IN (OUT X) Y)))
+Which simplifies
+ forward chaining using IS-DJU-1, IS-DJU-2, IS-L-ISNT-R, IS-L-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-L, IS-L-INL, OUT-INL to ...
+(TRUE)
+RIGHT
+IN-RIGHT
+Beginning proof of IN-RIGHT ...
+(= (IN X (RIGHT Y)) (AND (IS-R X) (IN (OUT X) Y)))
+Assuming RIGHT.DEFINITION with the instantiations: (= X Y) (= Y$0 X) generates
+...
+(IMPLIES (= (IN X (RIGHT Y)) (SOME (Y$0) (AND (IN Y$0 Y) (= X (INR Y$0)))))
+ (= (IN X (RIGHT Y)) (AND (IS-R X) (IN (OUT X) Y))))
+Splitting on (IN X (RIGHT Y)) generates ...
+(IF (IN X (RIGHT Y))
+ (IMPLIES (= (IN X (RIGHT Y)) (SOME (Y$0) (AND (IN Y$0 Y) (= X (INR Y$0)))))
+  (= (IN X (RIGHT Y)) (AND (IS-R X) (IN (OUT X) Y))))
+ (IMPLIES (= (IN X (RIGHT Y)) (SOME (Y$1) (AND (IN Y$1 Y) (= X (INR Y$1)))))
+  (= (IN X (RIGHT Y)) (AND (IS-R X) (IN (OUT X) Y)))))
+Which simplifies
+ forward chaining using IS-DJU-2, IS-DJU-1, IS-R-ISNT-L, IS-R-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-R, IS-R-INR, OUT-INR to ...
+(IF (IN X (RIGHT Y))
+ (IMPLIES (= (TRUE) (SOME (Y$0) (AND (IN Y$0 Y) (= X (INR Y$0)))))
+  (AND (IS-R X) (IN (OUT X) Y)))
+ (IMPLIES
+  (AND (= (FALSE) (SOME (Y$1) (AND (IN Y$1 Y) (= X (INR Y$1))))) (IS-R X))
+  (NOT (IN (OUT X) Y))))
+Prenexing produces ...
+(IF (IN X (RIGHT Y))
+ (IMPLIES (AND (IN Y$0 Y) (= X (INR Y$0))) (AND (IS-R X) (IN (OUT X) Y)))
+ (IMPLIES (AND (NOT (SOME (Y$1) (AND (IN Y$1 Y) (= X (INR Y$1))))) (IS-R X))
+  (NOT (IN (OUT X) Y))))
+Which simplifies
+ forward chaining using IS-DJU-2, IS-DJU-1, IS-R-ISNT-L, IS-R-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-R, IS-R-INR, OUT-INR to ...
+(IMPLIES
+ (AND (NOT (IN X (RIGHT Y)))
+  (NOT (SOME (Y$0) (AND (IN Y$0 Y) (= X (INR Y$0))))) (IS-R X))
+ (NOT (IN (OUT X) Y)))
+Instantiating (= Y$0 (OUT X)) gives ...
+(IMPLIES
+ (AND (NOT (IN X (RIGHT Y)))
+  (NOT
+   (OR (AND (IN (OUT X) Y) (= X (INR (OUT X))))
+    (SOME (Y$0) (AND (IN Y$0 Y) (= X (INR Y$0))))))
+  (IS-R X))
+ (NOT (IN (OUT X) Y)))
+Which simplifies
+ forward chaining using IS-DJU-2, IS-DJU-1, IS-R-ISNT-L, IS-R-CONSTRUCTION
+ with the assumptions TYPE-OF-IS-R, IS-R-INR, OUT-INR to ...
+(TRUE)
+DJU
+Done.

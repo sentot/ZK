@@ -1,0 +1,2208 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/lambdamodel.ver"
+Warning RULE-LOOPS for FN!FUNCTION-EXTENSIONALITY:
+ The rule FN!FUNCTION-EXTENSIONALITY loops upon itself.
+DB-CONST
+DB-VAR
+DB-AP
+DB-LAM
+NTH
+Beginning proof of NTH ...
+(IF (> N 0) (M< (- N 1) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+NTH-FN
+IN-NTH-FN
+Beginning proof of IN-NTH-FN ...
+(= (IN Y (NTH-FN X N))
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y) (NTH (PAIR!FST Y) N))))
+Assuming NTH-FN.DEFINITION with the
+instantiations: (= X X) (= N N) (= B$0 Y) generates ...
+(IMPLIES
+ (= (IN Y (NTH-FN X N))
+  (SOME (B) (AND (IN B X) (= Y (PAIR!PAIR B (NTH B N))))))
+ (= (IN Y (NTH-FN X N))
+  (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+   (= (PAIR!SND Y) (NTH (PAIR!FST Y) N)))))
+Splitting
+on (AND (PAIR!IS-PAIR Y)
+    (AND (IN (PAIR!FST Y) X) (= (PAIR!SND Y) (NTH (PAIR!FST Y) N)))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y) (NTH (PAIR!FST Y) N)))
+ (IMPLIES
+  (= (IN Y (NTH-FN X N))
+   (SOME (B) (AND (IN B X) (= Y (PAIR!PAIR B (NTH B N))))))
+  (= (IN Y (NTH-FN X N))
+   (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+    (= (PAIR!SND Y) (NTH (PAIR!FST Y) N)))))
+ (IMPLIES
+  (= (IN Y (NTH-FN X N))
+   (SOME (B$0) (AND (IN B$0 X) (= Y (PAIR!PAIR B$0 (NTH B$0 N))))))
+  (= (IN Y (NTH-FN X N))
+   (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+    (= (PAIR!SND Y) (NTH (PAIR!FST Y) N))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y) (NTH (PAIR!FST Y) N))
+  (= (IN Y (NTH-FN X N))
+   (SOME (B) (AND (IN B X) (= Y (PAIR!PAIR B (NTH B N)))))))
+ (= (IN Y (NTH-FN X N)) (TRUE)))
+Instantiating (= B (PAIR!FST Y)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y) (NTH (PAIR!FST Y) N))
+  (= (IN Y (NTH-FN X N))
+   (OR
+    (AND (IN (PAIR!FST Y) X)
+     (= Y (PAIR!PAIR (PAIR!FST Y) (NTH (PAIR!FST Y) N))))
+    (SOME (B) (AND (IN B X) (= Y (PAIR!PAIR B (NTH B N))))))))
+ (IN Y (NTH-FN X N)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-NTH-FN
+Beginning proof of IS-FUNCTION-NTH-FN ...
+(FN!IS-FUNCTION (NTH-FN X N))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-NTH-FN
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-NTH-FN
+Beginning proof of DOM-NTH-FN ...
+(= (REL!DOM (NTH-FN X N)) X)
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (REL!DOM (NTH-FN X N))) (IN E X) (NOT (IN E X)))
+Which simplifies
+ when rewriting with IN-NTH-FN, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, IS-FUNCTION-NTH-FN to ...
+(TRUE)
+APPLY-NTH-FN
+Beginning proof of APPLY-NTH-FN ...
+(IMPLIES (IN Y X) (= (FN!APPLY (NTH-FN X N) Y) (NTH Y N)))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (NTH-FN X N)) (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION (NTH-FN X N)) (IN Y (REL!DOM (NTH-FN X N))))
+   (IN (PAIR!PAIR Y (FN!APPLY (NTH-FN X N) Y)) (NTH-FN X N)))
+  (IN Y X))
+ (= (FN!APPLY (NTH-FN X N) Y) (NTH Y N)))
+Which simplifies
+ when rewriting with IN-NTH-FN, DOM-NTH-FN
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL, IS-FUNCTION-NTH-FN to ...
+(TRUE)
+NTH-FUNCTION-MONOTONIC
+Beginning proof of NTH-FUNCTION-MONOTONIC ...
+(IMPLIES (SUBSET X Y) (= (SUBSET (NTH-FN X N) (NTH-FN Y N)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-NTH-FN
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, IS-FUNCTION-NTH-FN to ...
+(TRUE)
+S2
+IN-S2
+Beginning proof of IN-S2 ...
+(= (IN Y (S2 F G X))
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y)
+   (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y))))))
+Assuming S2.DEFINITION with the
+instantiations: (= F F) (= G G) (= X X) (= Y$0 Y) generates ...
+(IMPLIES
+ (= (IN Y (S2 F G X))
+  (SOME (Y$0)
+   (AND (IN Y$0 X)
+    (= Y (PAIR!PAIR Y$0 (FN!APPLY (FN!APPLY F Y$0) (FN!APPLY G Y$0)))))))
+ (= (IN Y (S2 F G X))
+  (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+   (= (PAIR!SND Y)
+    (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y)))))))
+Splitting
+on (AND (PAIR!IS-PAIR Y)
+    (AND (IN (PAIR!FST Y) X)
+     (= (PAIR!SND Y)
+      (FN!APPLY (FN!APPLY F (PAIR!FST Y))
+       (FN!APPLY G (PAIR!FST Y)))))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y)
+   (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y)))))
+ (IMPLIES
+  (= (IN Y (S2 F G X))
+   (SOME (Y$0)
+    (AND (IN Y$0 X)
+     (= Y (PAIR!PAIR Y$0 (FN!APPLY (FN!APPLY F Y$0) (FN!APPLY G Y$0)))))))
+  (= (IN Y (S2 F G X))
+   (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+    (= (PAIR!SND Y)
+     (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y)))))))
+ (IMPLIES
+  (= (IN Y (S2 F G X))
+   (SOME (Y$1)
+    (AND (IN Y$1 X)
+     (= Y (PAIR!PAIR Y$1 (FN!APPLY (FN!APPLY F Y$1) (FN!APPLY G Y$1)))))))
+  (= (IN Y (S2 F G X))
+   (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+    (= (PAIR!SND Y)
+     (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y))))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y)
+   (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y))))
+  (= (IN Y (S2 F G X))
+   (SOME (Y$0)
+    (AND (IN Y$0 X)
+     (= Y (PAIR!PAIR Y$0 (FN!APPLY (FN!APPLY F Y$0) (FN!APPLY G Y$0))))))))
+ (= (IN Y (S2 F G X)) (TRUE)))
+Instantiating (= Y$0 (PAIR!FST Y)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)
+  (= (PAIR!SND Y)
+   (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y))))
+  (= (IN Y (S2 F G X))
+   (OR
+    (AND (IN (PAIR!FST Y) X)
+     (= Y
+      (PAIR!PAIR (PAIR!FST Y)
+       (FN!APPLY (FN!APPLY F (PAIR!FST Y)) (FN!APPLY G (PAIR!FST Y))))))
+    (SOME (Y$0)
+     (AND (IN Y$0 X)
+      (= Y (PAIR!PAIR Y$0 (FN!APPLY (FN!APPLY F Y$0) (FN!APPLY G Y$0)))))))))
+ (IN Y (S2 F G X)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-S2
+Beginning proof of IS-FUNCTION-S2 ...
+(FN!IS-FUNCTION (S2 F G X))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-S2
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-S2
+Beginning proof of DOM-S2 ...
+(= (REL!DOM (S2 F G X)) X)
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (REL!DOM (S2 F G X))) (IN E X) (NOT (IN E X)))
+Which simplifies
+ when rewriting with IN-S2, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, IS-FUNCTION-S2 to ...
+(TRUE)
+APPLY-S2
+Beginning proof of APPLY-S2 ...
+(IMPLIES (IN Y X)
+ (= (FN!APPLY (S2 F G X) Y) (FN!APPLY (FN!APPLY F Y) (FN!APPLY G Y))))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (S2 F G X)) (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION (S2 F G X)) (IN Y (REL!DOM (S2 F G X))))
+   (IN (PAIR!PAIR Y (FN!APPLY (S2 F G X) Y)) (S2 F G X)))
+  (IN Y X))
+ (= (FN!APPLY (S2 F G X) Y) (FN!APPLY (FN!APPLY F Y) (FN!APPLY G Y))))
+Which simplifies
+ when rewriting with IN-S2, DOM-S2
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL, IS-FUNCTION-S2 to ...
+(TRUE)
+S2-MONOTONIC
+Beginning proof of S2-MONOTONIC ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1)))
+ (= (SUBSET (S2 F1 G1 X1) (S2 F2 G2 X2)) (TRUE)))
+Invoking (SUBSET (S2 F1 G1 X1) (S2 F2 G2 X2)) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1)))
+ (ALL (E) (IMPLIES (IN E (S2 F1 G1 X1)) (IN E (S2 F2 G2 X2)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1))
+  (IN E (S2 F1 G1 X1)))
+ (IN E (S2 F2 G2 X2)))
+Assuming FN!APPLY-SUBSET with the
+instantiations: (= F F1) (= G F2) (= X (PAIR!FST E)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (IN (PAIR!FST E) (REL!DOM F1)))
+   (= (FN!APPLY F1 (PAIR!FST E)) (FN!APPLY F2 (PAIR!FST E))))
+  (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1))
+  (IN E (S2 F1 G1 X1)))
+ (IN E (S2 F2 G2 X2)))
+Assuming FN!APPLY-SUBSET with the
+instantiations: (= F G1) (= G G2) (= X (PAIR!FST E)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION G2) (SUBSET G1 G2) (IN (PAIR!FST E) (REL!DOM G1)))
+   (= (FN!APPLY G1 (PAIR!FST E)) (FN!APPLY G2 (PAIR!FST E))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (IN (PAIR!FST E) (REL!DOM F1)))
+   (= (FN!APPLY F1 (PAIR!FST E)) (FN!APPLY F2 (PAIR!FST E))))
+  (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1))
+  (IN E (S2 F1 G1 X1)))
+ (IN E (S2 F2 G2 X2)))
+Rearranging gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1))
+  (IN E (S2 F1 G1 X1))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION G2) (SUBSET G1 G2) (IN (PAIR!FST E) (REL!DOM G1)))
+   (= (FN!APPLY G1 (PAIR!FST E)) (FN!APPLY G2 (PAIR!FST E))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (IN (PAIR!FST E) (REL!DOM F1)))
+   (= (FN!APPLY F1 (PAIR!FST E)) (FN!APPLY F2 (PAIR!FST E)))))
+ (IN E (S2 F2 G2 X2)))
+Which simplifies
+ when rewriting with IN-S2
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, IS-FUNCTION-S2,
+FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (FN!IS-FUNCTION G2) (SUBSET F1 F2) (SUBSET G1 G2)
+  (SUBSET X1 X2) (SUBSET X1 (REL!DOM F1)) (SUBSET X1 (REL!DOM G1))
+  (PAIR!IS-PAIR E) (IN (PAIR!FST E) X1)
+  (= (PAIR!SND E)
+   (FN!APPLY (FN!APPLY F1 (PAIR!FST E)) (FN!APPLY G1 (PAIR!FST E)))))
+ (IF (IN (PAIR!FST E) (REL!DOM G1))
+  (IMPLIES (= (FN!APPLY G1 (PAIR!FST E)) (FN!APPLY G2 (PAIR!FST E)))
+   (IF (IN (PAIR!FST E) (REL!DOM F1))
+    (IMPLIES (= (FN!APPLY F1 (PAIR!FST E)) (FN!APPLY F2 (PAIR!FST E)))
+     (IN (PAIR!FST E) X2))
+    (AND (IN (PAIR!FST E) X2)
+     (= (PAIR!SND E)
+      (FN!APPLY (FN!APPLY F2 (PAIR!FST E)) (FN!APPLY G2 (PAIR!FST E)))))))
+  (IF (IN (PAIR!FST E) (REL!DOM F1))
+   (IMPLIES (= (FN!APPLY F1 (PAIR!FST E)) (FN!APPLY F2 (PAIR!FST E)))
+    (AND (IN (PAIR!FST E) X2)
+     (= (PAIR!SND E)
+      (FN!APPLY (FN!APPLY F2 (PAIR!FST E)) (FN!APPLY G2 (PAIR!FST E))))))
+   (AND (IN (PAIR!FST E) X2)
+    (= (PAIR!SND E)
+     (FN!APPLY (FN!APPLY F2 (PAIR!FST E)) (FN!APPLY G2 (PAIR!FST E))))))))
+Which simplifies
+ with invocation of SUBSET
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+CONST-FN
+IS-FUNCTION-CONST-FN
+Beginning proof of IS-FUNCTION-CONST-FN ...
+(FN!IS-FUNCTION (CONST-FN V X))
+Which simplifies
+ with invocation of FN!IS-FUNCTION, CONST-FN
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, PAIR!IN-CROSS,
+REL!IS-RELATION-CROSS
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-CONST-FN
+Beginning proof of DOM-CONST-FN ...
+(= (REL!DOM (CONST-FN V X)) X)
+Which simplifies
+ with invocation of CONST-FN
+ when rewriting with SETRULES!SETADD-LEFT-EQUALITY-TEST, NULLSET.DEFINITION,
+REL!DOM-CROSS
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions IS-FUNCTION-CONST-FN to ...
+(TRUE)
+APPLY-CONST-FN
+Beginning proof of APPLY-CONST-FN ...
+(IMPLIES (IN Y X) (= (FN!APPLY (CONST-FN V X) Y) V))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (CONST-FN V X)) (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (CONST-FN V X)) (IN Y (REL!DOM (CONST-FN V X))))
+   (IN (PAIR!PAIR Y (FN!APPLY (CONST-FN V X) Y)) (CONST-FN V X)))
+  (IN Y X))
+ (= (FN!APPLY (CONST-FN V X) Y) V))
+Which simplifies
+ when rewriting with DOM-CONST-FN
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+FN!IS-FUNCTION-BOOL, IS-FUNCTION-CONST-FN to ...
+(IMPLIES
+ (AND (IN Y X) (IN (PAIR!PAIR Y (FN!APPLY (CONST-FN V X) Y)) (CONST-FN V X)))
+ (= (FN!APPLY (CONST-FN V X) Y) V))
+Which simplifies
+ with invocation of CONST-FN
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, PAIR!IN-CROSS
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, IS-FUNCTION-CONST-FN to ...
+(TRUE)
+CONST-FN-MONOTONIC
+Beginning proof of CONST-FN-MONOTONIC ...
+(IMPLIES (SUBSET X Y) (= (SUBSET (CONST-FN V X) (CONST-FN V Y)) (TRUE)))
+Which simplifies
+ with invocation of CONST-FN, SUBSET
+ when rewriting with SUBSET.NULLSET.LEFT, SETADD.DEFINITION,
+SETRULES!SUBSET-SETADD, SETRULES!SETADD-LEFT-EQUALITY-TEST,
+NULLSET.DEFINITION, PAIR!SUBSET-CROSS-CROSS
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions IS-FUNCTION-CONST-FN to ...
+(TRUE)
+CURRY-1
+IN-CURRY-1
+Beginning proof of IN-CURRY-1 ...
+(= (IN Z (CURRY-1 F X Y))
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+  (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y)))))
+Assuming CURRY-1.DEFINITION with the
+instantiations: (= F F) (= X X) (= Y Y) (= Z$0 Z) generates ...
+(IMPLIES
+ (= (IN Z (CURRY-1 F X Y))
+  (SOME (Z$0)
+   (AND (IN Z$0 X) (= Z (PAIR!PAIR Z$0 (FN!APPLY F (PAIR!PAIR Z$0 Y)))))))
+ (= (IN Z (CURRY-1 F X Y))
+  (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+   (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y))))))
+Splitting
+on (AND (PAIR!IS-PAIR Z)
+    (AND (IN (PAIR!FST Z) X)
+     (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y))))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+  (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y))))
+ (IMPLIES
+  (= (IN Z (CURRY-1 F X Y))
+   (SOME (Z$0)
+    (AND (IN Z$0 X) (= Z (PAIR!PAIR Z$0 (FN!APPLY F (PAIR!PAIR Z$0 Y)))))))
+  (= (IN Z (CURRY-1 F X Y))
+   (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+    (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y))))))
+ (IMPLIES
+  (= (IN Z (CURRY-1 F X Y))
+   (SOME (Z$1)
+    (AND (IN Z$1 X) (= Z (PAIR!PAIR Z$1 (FN!APPLY F (PAIR!PAIR Z$1 Y)))))))
+  (= (IN Z (CURRY-1 F X Y))
+   (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+    (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+  (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y)))
+  (= (IN Z (CURRY-1 F X Y))
+   (SOME (Z$0)
+    (AND (IN Z$0 X) (= Z (PAIR!PAIR Z$0 (FN!APPLY F (PAIR!PAIR Z$0 Y))))))))
+ (= (IN Z (CURRY-1 F X Y)) (TRUE)))
+Instantiating (= Z$0 (PAIR!FST Z)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) X)
+  (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y)))
+  (= (IN Z (CURRY-1 F X Y))
+   (OR
+    (AND (IN (PAIR!FST Z) X)
+     (= Z (PAIR!PAIR (PAIR!FST Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y)))))
+    (SOME (Z$0)
+     (AND (IN Z$0 X) (= Z (PAIR!PAIR Z$0 (FN!APPLY F (PAIR!PAIR Z$0 Y)))))))))
+ (IN Z (CURRY-1 F X Y)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-CURRY-1
+Beginning proof of IS-FUNCTION-CURRY-1 ...
+(FN!IS-FUNCTION (CURRY-1 F X Y))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-CURRY-1
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-CURRY-1
+Beginning proof of DOM-CURRY-1 ...
+(= (REL!DOM (CURRY-1 F X Y)) X)
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (REL!DOM (CURRY-1 F X Y))) (IN E X) (NOT (IN E X)))
+Which simplifies
+ when rewriting with IN-CURRY-1, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, IS-FUNCTION-CURRY-1 to ...
+(TRUE)
+APPLY-CURRY-1
+Beginning proof of APPLY-CURRY-1 ...
+(IMPLIES (IN Z X)
+ (= (FN!APPLY (CURRY-1 F X Y) Z) (FN!APPLY F (PAIR!PAIR Z Y))))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (CURRY-1 F X Y)) (= X Z) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (CURRY-1 F X Y)) (IN Z (REL!DOM (CURRY-1 F X Y))))
+   (IN (PAIR!PAIR Z (FN!APPLY (CURRY-1 F X Y) Z)) (CURRY-1 F X Y)))
+  (IN Z X))
+ (= (FN!APPLY (CURRY-1 F X Y) Z) (FN!APPLY F (PAIR!PAIR Z Y))))
+Which simplifies
+ when rewriting with IN-CURRY-1, DOM-CURRY-1
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL, IS-FUNCTION-CURRY-1 to ...
+(TRUE)
+CURRY-1-MONOTONIC
+Beginning proof of CURRY-1-MONOTONIC ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1)))
+ (= (SUBSET (CURRY-1 F1 X1 Y) (CURRY-1 F2 X2 Y)) (TRUE)))
+Invoking (SUBSET (CURRY-1 F1 X1 Y) (CURRY-1 F2 X2 Y)) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1)))
+ (ALL (E) (IMPLIES (IN E (CURRY-1 F1 X1 Y)) (IN E (CURRY-1 F2 X2 Y)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1))
+  (IN E (CURRY-1 F1 X1 Y)))
+ (IN E (CURRY-1 F2 X2 Y)))
+Which simplifies
+ when rewriting with IN-CURRY-1
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, IS-FUNCTION-CURRY-1, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) X1)
+  (= (PAIR!SND E) (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y))))
+ (AND (IN (PAIR!FST E) X2)
+  (= (PAIR!SND E) (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y)))))
+Assuming FN!APPLY-SUBSET with the
+instantiations: (= F F1) (= G F2) (= X (PAIR!PAIR (PAIR!FST E) Y)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+    (IN (PAIR!PAIR (PAIR!FST E) Y) (REL!DOM F1)))
+   (= (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y))
+    (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y))))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) X1)
+  (= (PAIR!SND E) (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y))))
+ (AND (IN (PAIR!FST E) X2)
+  (= (PAIR!SND E) (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (PAIR!SND E) (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y)))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) X1)
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+    (IN (PAIR!PAIR (PAIR!FST E) Y) (REL!DOM F1)))
+   (= (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y))
+    (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y)))))
+ (AND (= (PAIR!SND E) (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y)))
+  (IN (PAIR!FST E) X2)))
+Which simplifies
+ forward chaining using FN!FUNCTION-IS-RELATION, PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND (= (PAIR!SND E) (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y)))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET X1 X2)
+  (SUBSET (PAIR!CROSS X1 (SETADD Y (NULLSET))) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) X1))
+ (IF (IN (PAIR!PAIR (PAIR!FST E) Y) (REL!DOM F1))
+  (IMPLIES
+   (= (FN!APPLY F1 (PAIR!PAIR (PAIR!FST E) Y))
+    (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y)))
+   (IN (PAIR!FST E) X2))
+  (AND (= (PAIR!SND E) (FN!APPLY F2 (PAIR!PAIR (PAIR!FST E) Y)))
+   (IN (PAIR!FST E) X2))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, PAIR!IN-CROSS
+ forward chaining using FN!FUNCTION-IS-RELATION, PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+CURRY
+IN-CURRY
+Beginning proof of IN-CURRY ...
+(= (IN Z (CURRY F X Y))
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+  (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z)))))
+Assuming CURRY.DEFINITION with the
+instantiations: (= F F) (= X X) (= Y Y) (= Z$0 Z) generates ...
+(IMPLIES
+ (= (IN Z (CURRY F X Y))
+  (SOME (Z$0) (AND (IN Z$0 Y) (= Z (PAIR!PAIR Z$0 (CURRY-1 F X Z$0))))))
+ (= (IN Z (CURRY F X Y))
+  (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+   (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z))))))
+Splitting
+on (AND (PAIR!IS-PAIR Z)
+    (AND (IN (PAIR!FST Z) Y)
+     (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z))))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+  (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z))))
+ (IMPLIES
+  (= (IN Z (CURRY F X Y))
+   (SOME (Z$0) (AND (IN Z$0 Y) (= Z (PAIR!PAIR Z$0 (CURRY-1 F X Z$0))))))
+  (= (IN Z (CURRY F X Y))
+   (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+    (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z))))))
+ (IMPLIES
+  (= (IN Z (CURRY F X Y))
+   (SOME (Z$1) (AND (IN Z$1 Y) (= Z (PAIR!PAIR Z$1 (CURRY-1 F X Z$1))))))
+  (= (IN Z (CURRY F X Y))
+   (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+    (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z)))))))
+Which simplifies
+ forward chaining using FN!FUNCTION-IS-RELATION, PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+  (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z)))
+  (= (IN Z (CURRY F X Y))
+   (SOME (Z$0) (AND (IN Z$0 Y) (= Z (PAIR!PAIR Z$0 (CURRY-1 F X Z$0)))))))
+ (= (IN Z (CURRY F X Y)) (TRUE)))
+Instantiating (= Z$0 (PAIR!FST Z)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR Z) (IN (PAIR!FST Z) Y)
+  (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z)))
+  (= (IN Z (CURRY F X Y))
+   (OR
+    (AND (IN (PAIR!FST Z) Y)
+     (= Z (PAIR!PAIR (PAIR!FST Z) (CURRY-1 F X (PAIR!FST Z)))))
+    (SOME (Z$0) (AND (IN Z$0 Y) (= Z (PAIR!PAIR Z$0 (CURRY-1 F X Z$0))))))))
+ (IN Z (CURRY F X Y)))
+Which simplifies
+ forward chaining using FN!FUNCTION-IS-RELATION, PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-CURRY
+Beginning proof of IS-FUNCTION-CURRY ...
+(FN!IS-FUNCTION (CURRY F X Y))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-CURRY
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-CURRY
+Beginning proof of DOM-CURRY ...
+(= (REL!DOM (CURRY F X Y)) Y)
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (REL!DOM (CURRY F X Y))) (IN E Y) (NOT (IN E Y)))
+Which simplifies
+ when rewriting with IN-CURRY, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, IS-FUNCTION-CURRY to ...
+(TRUE)
+APPLY-CURRY
+Beginning proof of APPLY-CURRY ...
+(IMPLIES (IN Z Y) (= (FN!APPLY (CURRY F X Y) Z) (CURRY-1 F X Z)))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (CURRY F X Y)) (= X Z) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION (CURRY F X Y)) (IN Z (REL!DOM (CURRY F X Y))))
+   (IN (PAIR!PAIR Z (FN!APPLY (CURRY F X Y) Z)) (CURRY F X Y)))
+  (IN Z Y))
+ (= (FN!APPLY (CURRY F X Y) Z) (CURRY-1 F X Z)))
+Which simplifies
+ when rewriting with IN-CURRY, DOM-CURRY
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL, IS-FUNCTION-CURRY to ...
+(TRUE)
+CURRY-MONOTONIC
+Beginning proof of CURRY-MONOTONIC ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)))
+ (= (SUBSET (CURRY F1 X Y1) (CURRY F2 X Y2)) (TRUE)))
+Invoking (SUBSET (CURRY F1 X Y1) (CURRY F2 X Y2)) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)))
+ (ALL (E) (IMPLIES (IN E (CURRY F1 X Y1)) (IN E (CURRY F2 X Y2)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (IN E (CURRY F1 X Y1)))
+ (IN E (CURRY F2 X Y2)))
+Assuming FN!FUNCTION-EXTENSIONALITY with the
+instantiations: (= F (CURRY-1 F1 X (PAIR!FST E)))
+                (= G (CURRY-1 F2 X (PAIR!FST E))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (CURRY-1 F1 X (PAIR!FST E)))
+    (FN!IS-FUNCTION (CURRY-1 F2 X (PAIR!FST E))))
+   (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E)))
+    (AND
+     (= (REL!DOM (CURRY-1 F1 X (PAIR!FST E)))
+      (REL!DOM (CURRY-1 F2 X (PAIR!FST E))))
+     (ALL (X$0)
+      (IMPLIES (IN X$0 (REL!DOM (CURRY-1 F1 X (PAIR!FST E))))
+       (= (FN!APPLY (CURRY-1 F1 X (PAIR!FST E)) X$0)
+        (FN!APPLY (CURRY-1 F2 X (PAIR!FST E)) X$0)))))))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (IN E (CURRY F1 X Y1)))
+ (IN E (CURRY F2 X Y2)))
+Rearranging gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (IN E (CURRY F1 X Y1))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (CURRY-1 F1 X (PAIR!FST E)))
+    (FN!IS-FUNCTION (CURRY-1 F2 X (PAIR!FST E))))
+   (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E)))
+    (AND
+     (= (REL!DOM (CURRY-1 F1 X (PAIR!FST E)))
+      (REL!DOM (CURRY-1 F2 X (PAIR!FST E))))
+     (ALL (X$0)
+      (IMPLIES (IN X$0 (REL!DOM (CURRY-1 F1 X (PAIR!FST E))))
+       (= (FN!APPLY (CURRY-1 F1 X (PAIR!FST E)) X$0)
+        (FN!APPLY (CURRY-1 F2 X (PAIR!FST E)) X$0))))))))
+ (IN E (CURRY F2 X Y2)))
+Which simplifies
+ when rewriting with APPLY-CURRY-1, DOM-CURRY-1, IN-CURRY
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL, IS-FUNCTION-CURRY,
+FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E))))
+ (IF
+  (ALL (X$0)
+   (IMPLIES (IN X$0 X)
+    (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+     (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E))))))
+  (IMPLIES
+   (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) (TRUE))
+   (IN (PAIR!FST E) Y2))
+  (NOT
+   (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) (FALSE)))))
+Starting case 2 ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+  (ALL (X$0)
+   (IMPLIES (IN X$0 X)
+    (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+     (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E))))))
+  (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) (TRUE)))
+ (IN (PAIR!FST E) Y2))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with PAIR!IN-CROSS
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-FUNCTION-CURRY-1, PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+  (NOT
+   (ALL (X$0)
+    (IMPLIES (IN X$0 X)
+     (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+      (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E))))))))
+ (NOT (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) (FALSE))))
+Splitting
+on (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) generates ...
+(IF (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E)))
+ (IMPLIES
+  (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+   (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+   (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+   (NOT
+    (ALL (X$0)
+     (IMPLIES (IN X$0 X)
+      (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+       (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E))))))))
+  (NOT
+   (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) (FALSE))))
+ (IMPLIES
+  (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+   (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+   (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+   (NOT
+    (ALL (X$1)
+     (IMPLIES (IN X$1 X)
+      (= (FN!APPLY F1 (PAIR!PAIR X$1 (PAIR!FST E)))
+       (FN!APPLY F2 (PAIR!PAIR X$1 (PAIR!FST E))))))))
+  (NOT
+   (= (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))) (FALSE)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL, IS-FUNCTION-CURRY-1 to ...
+(IMPLIES
+ (AND (NOT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E))))
+ (ALL (X$0)
+  (IMPLIES (IN X$0 X)
+   (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+    (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+  (IN X$0 X))
+ (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+  (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))
+Assuming FN!APPLY-SUBSET with the
+instantiations: (= F F1) (= G F2) (= X (PAIR!PAIR X$0 (PAIR!FST E))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+    (IN (PAIR!PAIR X$0 (PAIR!FST E)) (REL!DOM F1)))
+   (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+    (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))
+  (NOT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+  (FN!IS-FUNCTION F2) (SUBSET F1 F2) (SUBSET Y1 Y2)
+  (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+  (IN X$0 X))
+ (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+  (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, IS-FUNCTION-CURRY-1, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+  (NOT (IN (PAIR!PAIR X$0 (PAIR!FST E)) (REL!DOM F1)))
+  (NOT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+  (SUBSET Y1 Y2) (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) (PAIR!IS-PAIR E)
+  (IN (PAIR!FST E) Y1) (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E)))
+  (IN X$0 X))
+ (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+  (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))
+Invoking (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+  (NOT (IN (PAIR!PAIR X$0 (PAIR!FST E)) (REL!DOM F1)))
+  (NOT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+  (SUBSET Y1 Y2)
+  (ALL (E$0) (IMPLIES (IN E$0 (PAIR!CROSS X Y1)) (IN E$0 (REL!DOM F1))))
+  (PAIR!IS-PAIR E) (IN (PAIR!FST E) Y1)
+  (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E))) (IN X$0 X))
+ (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+  (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))
+Which simplifies
+ when rewriting with PAIR!IN-CROSS
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, IS-FUNCTION-CURRY-1, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+  (NOT (IN (PAIR!PAIR X$0 (PAIR!FST E)) (REL!DOM F1)))
+  (NOT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+  (SUBSET Y1 Y2)
+  (ALL (E$0)
+   (IMPLIES
+    (AND (PAIR!IS-PAIR E$0) (IN (PAIR!FST E$0) X) (IN (PAIR!SND E$0) Y1))
+    (IN E$0 (REL!DOM F1))))
+  (PAIR!IS-PAIR E) (IN (PAIR!FST E) Y1)
+  (= (PAIR!SND E) (CURRY-1 F1 X (PAIR!FST E))) (IN X$0 X))
+ (= (FN!APPLY F1 (PAIR!PAIR X$0 (PAIR!FST E)))
+  (FN!APPLY F2 (PAIR!PAIR X$0 (PAIR!FST E)))))
+Instantiating (= E$0 (PAIR!PAIR X$0 (PAIR!FST E))) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F2) (SUBSET F1 F2)
+  (NOT (IN (PAIR!PAIR X (PAIR!FST E)) (REL!DOM F1)))
+  (NOT (= (CURRY-1 F1 X$0 (PAIR!FST E)) (CURRY-1 F2 X$0 (PAIR!FST E))))
+  (SUBSET Y1 Y2)
+  (IMPLIES
+   (AND (PAIR!IS-PAIR (PAIR!PAIR X (PAIR!FST E)))
+    (IN (PAIR!FST (PAIR!PAIR X (PAIR!FST E))) X$0)
+    (IN (PAIR!SND (PAIR!PAIR X (PAIR!FST E))) Y1))
+   (IN (PAIR!PAIR X (PAIR!FST E)) (REL!DOM F1)))
+  (ALL (E$0)
+   (IMPLIES
+    (AND (PAIR!IS-PAIR E$0) (IN (PAIR!FST E$0) X$0) (IN (PAIR!SND E$0) Y1))
+    (IN E$0 (REL!DOM F1))))
+  (PAIR!IS-PAIR E) (IN (PAIR!FST E) Y1)
+  (= (PAIR!SND E) (CURRY-1 F1 X$0 (PAIR!FST E))) (IN X X$0))
+ (= (FN!APPLY F1 (PAIR!PAIR X (PAIR!FST E)))
+  (FN!APPLY F2 (PAIR!PAIR X (PAIR!FST E)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, IS-FUNCTION-CURRY-1, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+F
+Beginning proof of F ...
+(IF (NOT (BT!IS-CONS E)) (TRUE)
+ (IF (= (BT!CAR E) 0) (TRUE)
+  (IF (= (BT!CAR E) 1) (TRUE)
+   (IF (NOT (BT!IS-CONS (BT!CDR E))) (TRUE)
+    (IF (= (BT!CAR E) 2)
+     (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+      (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E)))
+     (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E)))))))
+Assuming BT!SIZE-CONS with the instantiations: (= X (BT!CDR E)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (> (BT!SIZE (BT!CDR E)) (BT!SIZE (BT!CAR (BT!CDR E))))
+    (> (BT!SIZE (BT!CDR E)) (BT!SIZE (BT!CDR (BT!CDR E))))))
+  (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+  (BT!IS-CONS (BT!CDR E)))
+ (IF (= (BT!CAR E) 2)
+  (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+   (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E)))
+  (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+Assuming BT!SIZE-CONS with the instantiations: (= X E) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS E)
+   (AND (> (BT!SIZE E) (BT!SIZE (BT!CAR E)))
+    (> (BT!SIZE E) (BT!SIZE (BT!CDR E)))))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (>= (BT!SIZE (BT!CDR E)) (SUCC (BT!SIZE (BT!CAR (BT!CDR E)))))
+    (>= (BT!SIZE (BT!CDR E)) (SUCC (BT!SIZE (BT!CDR (BT!CDR E)))))))
+  (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+  (BT!IS-CONS (BT!CDR E)))
+ (IF (= (BT!CAR E) 2)
+  (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+   (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E)))
+  (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+Which simplifies
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION
+ with the assumptions SUCC.INT, BT!SIZE-NON-NEGATIVE, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+IS-FUNCTION-F
+Beginning proof of IS-FUNCTION-F ...
+(FN!IS-FUNCTION (F E X))
+Invoking F gives ...
+(FN!IS-FUNCTION
+ (IF (NOT (BT!IS-CONS E)) (CONST-FN 0 X)
+  (IF (= (BT!CAR E) 0) (CONST-FN (BT!CDR E) X)
+   (IF (= (BT!CAR E) 1) (NTH-FN X (BT!CDR E))
+    (IF (NOT (BT!IS-CONS (BT!CDR E))) (CONST-FN 0 X)
+     (IF (= (BT!CAR E) 2)
+      (S2 (F (BT!CAR (BT!CDR E)) X) (F (BT!CDR (BT!CDR E)) X) X)
+      (CURRY (F (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) X))
+       (BT!CAR (BT!CDR E)) X)))))))
+Which simplifies
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions FN!IS-FUNCTION-BOOL, IS-FUNCTION-CURRY, IS-FUNCTION-S2,
+IS-FUNCTION-NTH-FN, IS-FUNCTION-CONST-FN, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+DOM-F
+Beginning proof of DOM-F ...
+(= (REL!DOM (F E X)) X)
+Invoking F gives ...
+(=
+ (REL!DOM
+  (IF (NOT (BT!IS-CONS E)) (CONST-FN 0 X)
+   (IF (= (BT!CAR E) 0) (CONST-FN (BT!CDR E) X)
+    (IF (= (BT!CAR E) 1) (NTH-FN X (BT!CDR E))
+     (IF (NOT (BT!IS-CONS (BT!CDR E))) (CONST-FN 0 X)
+      (IF (= (BT!CAR E) 2)
+       (S2 (F (BT!CAR (BT!CDR E)) X) (F (BT!CDR (BT!CDR E)) X) X)
+       (CURRY (F (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) X))
+        (BT!CAR (BT!CDR E)) X)))))))
+ X)
+Which simplifies
+ when rewriting with DOM-CURRY, DOM-S2, DOM-NTH-FN, DOM-CONST-FN
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions IS-FUNCTION-CURRY, IS-FUNCTION-S2, IS-FUNCTION-F,
+IS-FUNCTION-NTH-FN, IS-FUNCTION-CONST-FN, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+F-MONOTONIC
+Beginning proof of F-MONOTONIC ...
+(IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (NOT (BT!IS-CONS E)) (*P* E X Y))
+  (IMPLIES (AND (BT!IS-CONS E) (= (BT!CAR E) 0)) (*P* E X Y))
+  (IMPLIES (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (= (BT!CAR E) 1))
+   (*P* E X Y))
+  (IMPLIES
+   (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+    (NOT (BT!IS-CONS (BT!CDR E))))
+   (*P* E X Y))
+  (IMPLIES
+   (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+    (BT!IS-CONS (BT!CDR E)) (= (BT!CAR E) 2) (*P* (BT!CAR (BT!CDR E)) X Y)
+    (*P* (BT!CDR (BT!CDR E)) X (PAIR!CROSS (BT!CAR (BT!CDR E)) Y))
+    (*P* (BT!CDR (BT!CDR E)) X Y))
+   (*P* E X Y))
+  (IMPLIES
+   (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+    (BT!IS-CONS (BT!CDR E)) (NOT (= (BT!CAR E) 2))
+    (*P* (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) X)
+     (PAIR!CROSS (BT!CAR (BT!CDR E)) Y))
+    (*P* (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) X) Y))
+   (*P* E X Y)))
+ produces ...
+(AND
+ (IMPLIES (NOT (BT!IS-CONS E))
+  (IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y))))
+ (IMPLIES (AND (BT!IS-CONS E) (= (BT!CAR E) 0))
+  (IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y))))
+ (IMPLIES (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (= (BT!CAR E) 1))
+  (IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y))))
+ (IMPLIES
+  (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+   (NOT (BT!IS-CONS (BT!CDR E))))
+  (IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y))))
+ (IMPLIES
+  (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+   (BT!IS-CONS (BT!CDR E)) (= (BT!CAR E) 2)
+   (IMPLIES (SUBSET X Y)
+    (SUBSET (F (BT!CAR (BT!CDR E)) X) (F (BT!CAR (BT!CDR E)) Y)))
+   (IMPLIES (SUBSET X (PAIR!CROSS (BT!CAR (BT!CDR E)) Y))
+    (SUBSET (F (BT!CDR (BT!CDR E)) X)
+     (F (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) Y))))
+   (IMPLIES (SUBSET X Y)
+    (SUBSET (F (BT!CDR (BT!CDR E)) X) (F (BT!CDR (BT!CDR E)) Y))))
+  (IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y))))
+ (IMPLIES
+  (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) 0)) (NOT (= (BT!CAR E) 1))
+   (BT!IS-CONS (BT!CDR E)) (NOT (= (BT!CAR E) 2))
+   (IMPLIES
+    (SUBSET (PAIR!CROSS (BT!CAR (BT!CDR E)) X)
+     (PAIR!CROSS (BT!CAR (BT!CDR E)) Y))
+    (SUBSET (F (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) X))
+     (F (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) Y))))
+   (IMPLIES (SUBSET (PAIR!CROSS (BT!CAR (BT!CDR E)) X) Y)
+    (SUBSET (F (BT!CDR (BT!CDR E)) (PAIR!CROSS (BT!CAR (BT!CDR E)) X))
+     (F (BT!CDR (BT!CDR E)) Y))))
+  (IMPLIES (SUBSET X Y) (SUBSET (F E X) (F E Y)))))
+Which simplifies
+ with invocation of F
+ when rewriting with PAIR!CROSS-NULLSET-LEFT, SUBSET.NULLSET.LEFT,
+PAIR!CROSS-NULLSET-RIGHT, CURRY-MONOTONIC, PAIR!SUBSET-CROSS-CROSS,
+S2-MONOTONIC, SUBSET.SELF, DOM-F, NTH-FUNCTION-MONOTONIC, CONST-FN-MONOTONIC
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions IS-FUNCTION-CURRY, FN!IS-FUNCTION-BOOL, IS-FUNCTION-S2,
+IS-FUNCTION-NTH-FN, IS-FUNCTION-CONST-FN, IS-FUNCTION-F, BT!TYPE-OF-IS-CONS to
+...
+(TRUE)
+DB-VALUE
+DB-VALUE-DB-CONST
+Beginning proof of DB-VALUE-DB-CONST ...
+(= (DB-VALUE (DB-CONST X) B) X)
+Which simplifies
+ with invocation of F, DB-VALUE, DB-CONST
+ when rewriting with APPLY-CONST-FN, SETADD.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions IS-FUNCTION-CONST-FN, BT!TYPE-OF-IS-CONS, IS-FUNCTION-F,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS to ...
+(TRUE)
+DB-VALUE-DB-VAR-0
+Beginning proof of DB-VALUE-DB-VAR-0 ...
+(= (DB-VALUE (DB-VAR 0) B) (PAIR!FST B))
+Which simplifies
+ with invocation of NTH, F, DB-VALUE, DB-VAR
+ when rewriting with APPLY-NTH-FN, SETADD.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions SUCC.INT, IS-FUNCTION-NTH-FN, BT!TYPE-OF-IS-CONS,
+IS-FUNCTION-F, BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS to ...
+(TRUE)
+Warning RULE-LOOPS for DB-VALUE-DB-VAR-POSITIVE:
+ The rule DB-VALUE-DB-VAR-POSITIVE loops upon itself.
+DB-VALUE-DB-VAR-POSITIVE
+Beginning proof of DB-VALUE-DB-VAR-POSITIVE ...
+(IMPLIES (> N 0)
+ (= (DB-VALUE (DB-VAR N) B) (DB-VALUE (DB-VAR (+ -1 N)) (PAIR!SND B))))
+Which simplifies
+ with invocation of F, DB-VALUE, DB-VAR
+ when rewriting with APPLY-NTH-FN, SETADD.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, BT!CONS-COMPOSITION,
+BT!SIZE-CONS, >=.SAME.TYPE
+ with the assumptions IS-FUNCTION-NTH-FN, BT!TYPE-OF-IS-CONS, IS-FUNCTION-F,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, SUCC.INT to ...
+(IMPLIES (>= N 1) (= (NTH B N) (NTH (PAIR!SND B) (+ -1 N))))
+Invoking (NTH B N) gives ...
+(IMPLIES (>= N 1)
+ (= (IF (>= N (SUCC 0)) (NTH (PAIR!SND B) (- N 1)) (PAIR!FST B))
+  (NTH (PAIR!SND B) (+ -1 N))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+DB-VALUE-DB-AP
+Beginning proof of DB-VALUE-DB-AP ...
+(= (DB-VALUE (DB-AP E1 E2) B) (FN!APPLY (DB-VALUE E1 B) (DB-VALUE E2 B)))
+Which simplifies
+ with invocation of F, DB-VALUE, DB-AP
+ when rewriting with APPLY-S2, SETADD.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions IS-FUNCTION-S2, BT!TYPE-OF-IS-CONS, IS-FUNCTION-F,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS to ...
+(TRUE)
+IS-FUNCTION-DB-VALUE-DB-LAM
+Beginning proof of IS-FUNCTION-DB-VALUE-DB-LAM ...
+(= (FN!IS-FUNCTION (DB-VALUE (DB-LAM S E) B)) (TRUE))
+Which simplifies
+ with invocation of F, DB-VALUE, DB-LAM
+ when rewriting with APPLY-CURRY, SETADD.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions FN!IS-FUNCTION-BOOL, IS-FUNCTION-CURRY-1,
+IS-FUNCTION-CURRY, BT!TYPE-OF-IS-CONS, IS-FUNCTION-F, BT!CAR-CONS,
+BT!CDR-CONS, BT!IS-CONS-CONS to ...
+(TRUE)
+DOM-DB-VALUE-DB-LAM
+Beginning proof of DOM-DB-VALUE-DB-LAM ...
+(= (REL!DOM (DB-VALUE (DB-LAM S E) B)) S)
+Which simplifies
+ with invocation of F, DB-VALUE, DB-LAM
+ when rewriting with DOM-CURRY-1, APPLY-CURRY, SETADD.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions IS-FUNCTION-CURRY-1, IS-FUNCTION-CURRY,
+BT!TYPE-OF-IS-CONS, IS-FUNCTION-F, BT!CAR-CONS, BT!CDR-CONS,
+BT!IS-CONS-CONS to ...
+(TRUE)
+APPLY-DB-VALUE-DB-LAM
+Beginning proof of APPLY-DB-VALUE-DB-LAM ...
+(IMPLIES (IN X S)
+ (= (FN!APPLY (DB-VALUE (DB-LAM S E) B) X) (DB-VALUE E (PAIR!PAIR X B))))
+Which simplifies
+ with invocation of F, DB-VALUE, DB-LAM
+ when rewriting with APPLY-CURRY-1, APPLY-CURRY, SETADD.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION,
+>=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+IS-FUNCTION-CURRY-1, IS-FUNCTION-CURRY, BT!TYPE-OF-IS-CONS, IS-FUNCTION-F,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS to ...
+(IMPLIES (IN X S)
+ (= (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B))
+  (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))))
+Assuming FN!APPLY-SUBSET with the
+instantiations: (= F (F E (SETADD (PAIR!PAIR X B) (NULLSET))))
+                (= G (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+                (= X (PAIR!PAIR X B)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+    (SUBSET (F E (SETADD (PAIR!PAIR X B) (NULLSET)))
+     (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+    (IN (PAIR!PAIR X B) (REL!DOM (F E (SETADD (PAIR!PAIR X B) (NULLSET))))))
+   (= (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))
+    (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B))))
+  (IN X S))
+ (= (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B))
+  (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))))
+Assuming F-MONOTONIC with the
+instantiations: (= E E) (= X (SETADD (PAIR!PAIR X B) (NULLSET)))
+                (= Y (PAIR!CROSS S (SETADD B (NULLSET)))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (SUBSET (SETADD (PAIR!PAIR X B) (NULLSET))
+    (PAIR!CROSS S (SETADD B (NULLSET))))
+   (SUBSET (F E (SETADD (PAIR!PAIR X B) (NULLSET)))
+    (F E (PAIR!CROSS S (SETADD B (NULLSET))))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+    (SUBSET (F E (SETADD (PAIR!PAIR X B) (NULLSET)))
+     (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+    (IN (PAIR!PAIR X B) (REL!DOM (F E (SETADD (PAIR!PAIR X B) (NULLSET))))))
+   (= (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))
+    (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B))))
+  (IN X S))
+ (= (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B))
+  (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN X S)
+  (IMPLIES
+   (SUBSET (SETADD (PAIR!PAIR X B) (NULLSET))
+    (PAIR!CROSS S (SETADD B (NULLSET))))
+   (SUBSET (F E (SETADD (PAIR!PAIR X B) (NULLSET)))
+    (F E (PAIR!CROSS S (SETADD B (NULLSET))))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+    (SUBSET (F E (SETADD (PAIR!PAIR X B) (NULLSET)))
+     (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+    (IN (PAIR!PAIR X B) (REL!DOM (F E (SETADD (PAIR!PAIR X B) (NULLSET))))))
+   (= (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))
+    (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B)))))
+ (= (FN!APPLY (F E (PAIR!CROSS S (SETADD B (NULLSET)))) (PAIR!PAIR X B))
+  (FN!APPLY (F E (SETADD (PAIR!PAIR X B) (NULLSET))) (PAIR!PAIR X B))))
+Which simplifies
+ when rewriting with DOM-F, SUBSET.NULLSET.LEFT, SETADD.DEFINITION,
+PAIR!IN-CROSS, SETRULES!SUBSET-SETADD
+ forward chaining using FN!FUNCTION-IS-RELATION, PAIR!PAIR-COMPOSITION
+ with the assumptions FN!IS-FUNCTION-BOOL, IS-FUNCTION-F, PAIR!IS-PAIR-BOOL,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+NULL
+BIND
+LOOKUP
+LOOKUP-BIND
+Beginning proof of LOOKUP-BIND ...
+(= (LOOKUP VAR1 (BIND VAR2 VAL RHO)) (IF (= VAR1 VAR2) VAL (LOOKUP VAR1 RHO)))
+Which simplifies
+ with invocation of LOOKUP, BIND
+ when rewriting with FN!APPLY-SETADD, FN!APPLY-OVERRIDE, SETADD.DEFINITION,
+SETRULES!UNION-SUBSET-LEFT, SUBSET.NULLSET.LEFT, SETRULES!SETADD-UNION-RIGHT,
+REL!DOM-SETADD, FN!DOM-OVERRIDE, FN!IS-FUNCTION-OVERRIDE, NULLSET.DEFINITION,
+REL!DOM-NULLSET, FN!IS-FUNCTION-NULLSET, FN!IS-FUNCTION-SETADD,
+SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+SET-S
+CAR-INT-IN-S
+Beginning proof of CAR-INT-IN-S ...
+(IMPLIES (IN X (INT)) (IN (BT!CAR X) (SET-S)))
+Which simplifies
+ when rewriting with SET-S.DEFINITION to ...
+(TRUE)
+LABEL
+LABEL-NOT-IN-SET-S
+Beginning proof of LABEL-NOT-IN-SET-S ...
+(NOT (IN (LABEL N) (SET-S)))
+Assuming SETRULES!NO-2-CYCLE with the
+instantiations: (= S (SET-S)) (= T (LABEL N)) generates ...
+(IMPLIES (NOT (AND (IN (SET-S) (LABEL N)) (IN (LABEL N) (SET-S))))
+ (NOT (IN (LABEL N) (SET-S))))
+Which simplifies
+ with invocation of LABEL
+ when rewriting with SETADD.DEFINITION, SETRULES!SETADD-COMMUTES to ...
+(TRUE)
+=-LABEL-LABEL
+Beginning proof of =-LABEL-LABEL ...
+(= (= (LABEL K) (LABEL N)) (= K N))
+Applying =.EXTENSIONAL.SUBSET to
+ (= (LABEL K) (LABEL N)) gives ...
+(= (AND (SUBSET (LABEL K) (LABEL N)) (SUBSET (LABEL N) (LABEL K))) (= K N))
+Which simplifies
+ with invocation of LABEL
+ when rewriting with SETRULES!SETADD-IDEMPOTENT, SUBSET.NULLSET.LEFT,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!SUBSET-SETADD,
+SETRULES!SETADD-COMMUTES
+ with the assumptions LABEL-NOT-IN-SET-S to ...
+(TRUE)
+CONST-LABEL
+AP-LABEL
+LAMBDA-LABEL
+CONST
+AP
+LAM
+IS-VAR
+IS-CONST
+CONST-VAL
+IS-AP
+RATOR
+RAND
+IS-LAM
+LAM-VAR
+LAM-SET
+LAM-BODY
+IS-VAR-LABELLED
+Beginning proof of IS-VAR-LABELLED ...
+(= (IS-VAR (BT!CONS (LABEL X) Y)) (FALSE))
+Which simplifies
+ with invocation of IS-VAR
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS,
+LABEL-NOT-IN-SET-S to ...
+(= (IN (BT!CONS (LABEL X) Y) (INT)) (FALSE))
+Assuming CAR-INT-IN-S with the
+instantiations: (= X (BT!CONS (LABEL X) Y)) generates ...
+(IMPLIES
+ (IMPLIES (IN (BT!CONS (LABEL X) Y) (INT))
+  (IN (BT!CAR (BT!CONS (LABEL X) Y)) (SET-S)))
+ (NOT (IN (BT!CONS (LABEL X) Y) (INT))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS,
+LABEL-NOT-IN-SET-S to ...
+(TRUE)
+TR-AUX
+Beginning proof of TR-AUX ...
+(IF (BT!IS-CONS BV)
+ (IF (= VAR (BT!CAR BV)) (TRUE) (M< (BT!SIZE (BT!CDR BV)) (BT!SIZE BV)))
+ (TRUE))
+Which simplifies
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions SUCC.INT, BT!SIZE-NON-NEGATIVE, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+TR
+Beginning proof of TR ...
+(IF (IS-VAR E) (TRUE)
+ (IF (IS-CONST E) (TRUE)
+  (IF (IS-AP E)
+   (AND (M< (BT!SIZE (RATOR E)) (BT!SIZE E))
+    (M< (BT!SIZE (RAND E)) (BT!SIZE E)))
+   (IF (IS-LAM E) (M< (BT!SIZE (LAM-BODY E)) (BT!SIZE E)) (TRUE)))))
+Which simplifies
+ with invocation of LAM-BODY, IS-LAM, RAND, RATOR, IS-AP, IS-CONST
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!SIZE-NON-NEGATIVE, LABEL-NOT-IN-SET-S,
+BT!TYPE-OF-IS-CONS to ...
+(IMPLIES (AND (NOT (IS-VAR E)) (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 0))))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Assuming BT!SIZE-CONS with the
+instantiations: (= X (BT!CDR (BT!CDR E))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS (BT!CDR (BT!CDR E)))
+   (AND
+    (> (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE (BT!CAR (BT!CDR (BT!CDR E)))))
+    (> (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))))))
+  (NOT (IS-VAR E)) (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 0))))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Assuming BT!SIZE-CONS with the instantiations: (= X (BT!CDR E)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (> (BT!SIZE (BT!CDR E)) (BT!SIZE (BT!CAR (BT!CDR E))))
+    (> (BT!SIZE (BT!CDR E)) (BT!SIZE (BT!CDR (BT!CDR E))))))
+  (IMPLIES (BT!IS-CONS (BT!CDR (BT!CDR E)))
+   (AND
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CAR (BT!CDR (BT!CDR E))))))
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E))))))))
+  (NOT (IS-VAR E)) (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 0))))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Assuming BT!SIZE-CONS with the instantiations: (= X E) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS E)
+   (AND (> (BT!SIZE E) (BT!SIZE (BT!CAR E)))
+    (> (BT!SIZE E) (BT!SIZE (BT!CDR E)))))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (>= (BT!SIZE (BT!CDR E)) (SUCC (BT!SIZE (BT!CAR (BT!CDR E)))))
+    (>= (BT!SIZE (BT!CDR E)) (SUCC (BT!SIZE (BT!CDR (BT!CDR E)))))))
+  (IMPLIES (BT!IS-CONS (BT!CDR (BT!CDR E)))
+   (AND
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CAR (BT!CDR (BT!CDR E))))))
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E))))))))
+  (NOT (IS-VAR E)) (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 0))))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Which simplifies
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION
+ with the assumptions LABEL-NOT-IN-SET-S, SUCC.INT, BT!SIZE-NON-NEGATIVE,
+BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+NEW-RHO
+Beginning proof of NEW-RHO ...
+(IF (BT!IS-CONS BV) (M< (BT!SIZE (BT!CDR BV)) (BT!SIZE BV)) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions SUCC.INT, BT!SIZE-NON-NEGATIVE, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+TR-AUX-LEMMA
+Beginning proof of TR-AUX-LEMMA ...
+(IMPLIES (>= N 1)
+ (= (DB-VALUE (TR-AUX E BV RHO N) VALS)
+  (DB-VALUE (TR-AUX E BV RHO (- N 1)) (PAIR!SND VALS))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (>= N 1)
+ (= (DB-VALUE (TR-AUX E BV RHO N) VALS)
+  (DB-VALUE (TR-AUX E BV RHO (+ -1 N)) (PAIR!SND VALS))))
+
+ Returning to :
+Beginning proof of TR-AUX-LEMMA ...
+(IMPLIES (>= N 1)
+ (= (DB-VALUE (TR-AUX E BV RHO N) VALS)
+  (DB-VALUE (TR-AUX E BV RHO (- N 1)) (PAIR!SND VALS))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (BT!IS-CONS BV) (= E (BT!CAR BV))) (*P* BV E N RHO VALS))
+  (IMPLIES
+   (AND (BT!IS-CONS BV) (NOT (= E (BT!CAR BV)))
+    (*P* (BT!CDR BV) E (+ N 1) RHO VALS))
+   (*P* BV E N RHO VALS))
+  (IMPLIES (NOT (BT!IS-CONS BV)) (*P* BV E N RHO VALS)))
+ produces ...
+(AND
+ (IMPLIES (AND (BT!IS-CONS BV) (= E (BT!CAR BV)))
+  (IMPLIES (>= N 1)
+   (= (DB-VALUE (TR-AUX E BV RHO N) VALS)
+    (DB-VALUE (TR-AUX E BV RHO (- N 1)) (PAIR!SND VALS)))))
+ (IMPLIES
+  (AND (BT!IS-CONS BV) (NOT (= E (BT!CAR BV)))
+   (IMPLIES (>= (+ N 1) 1)
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO (+ N 1)) VALS)
+     (DB-VALUE (TR-AUX E (BT!CDR BV) RHO (- (+ N 1) 1)) (PAIR!SND VALS)))))
+  (IMPLIES (>= N 1)
+   (= (DB-VALUE (TR-AUX E BV RHO N) VALS)
+    (DB-VALUE (TR-AUX E BV RHO (- N 1)) (PAIR!SND VALS)))))
+ (IMPLIES (NOT (BT!IS-CONS BV))
+  (IMPLIES (>= N 1)
+   (= (DB-VALUE (TR-AUX E BV RHO N) VALS)
+    (DB-VALUE (TR-AUX E BV RHO (- N 1)) (PAIR!SND VALS))))))
+Which simplifies
+ with invocation of TR-AUX
+ when rewriting with DB-VALUE-DB-CONST, DB-VALUE-DB-VAR-POSITIVE
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions SUCC.INT, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+MAIN-STEP-VAR-CASE-LEMMA
+Beginning proof of MAIN-STEP-VAR-CASE-LEMMA ...
+(IMPLIES (IS-VAR E)
+ (= (DB-VALUE (TR-AUX E BV RHO 0) VALS) (LOOKUP E (NEW-RHO RHO BV VALS))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (BT!IS-CONS BV) (= E (BT!CAR BV))) (*P* BV E RHO VALS))
+  (IMPLIES
+   (AND (BT!IS-CONS BV) (NOT (= E (BT!CAR BV)))
+    (*P* (BT!CDR BV) E RHO (PAIR!SND VALS)) (*P* (BT!CDR BV) E RHO VALS))
+   (*P* BV E RHO VALS))
+  (IMPLIES (NOT (BT!IS-CONS BV)) (*P* BV E RHO VALS)))
+ produces ...
+(AND
+ (IMPLIES (AND (BT!IS-CONS BV) (= E (BT!CAR BV)))
+  (IMPLIES (IS-VAR E)
+   (= (DB-VALUE (TR-AUX E BV RHO 0) VALS) (LOOKUP E (NEW-RHO RHO BV VALS)))))
+ (IMPLIES
+  (AND (BT!IS-CONS BV) (NOT (= E (BT!CAR BV)))
+   (IMPLIES (IS-VAR E)
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) (PAIR!SND VALS))
+     (LOOKUP E (NEW-RHO RHO (BT!CDR BV) (PAIR!SND VALS)))))
+   (IMPLIES (IS-VAR E)
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) VALS)
+     (LOOKUP E (NEW-RHO RHO (BT!CDR BV) VALS)))))
+  (IMPLIES (IS-VAR E)
+   (= (DB-VALUE (TR-AUX E BV RHO 0) VALS) (LOOKUP E (NEW-RHO RHO BV VALS)))))
+ (IMPLIES (NOT (BT!IS-CONS BV))
+  (IMPLIES (IS-VAR E)
+   (= (DB-VALUE (TR-AUX E BV RHO 0) VALS) (LOOKUP E (NEW-RHO RHO BV VALS))))))
+Which simplifies
+ with invocation of NEW-RHO, TR-AUX
+ when rewriting with DB-VALUE-DB-CONST, LOOKUP-BIND, DB-VALUE-DB-VAR-0
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!TYPE-OF-IS-CONS to ...
+(IMPLIES (BT!IS-CONS BV)
+ (IF (= E (BT!CAR BV))
+  (IMPLIES (IS-VAR E) (= (PAIR!FST VALS) (LOOKUP E (NEW-RHO RHO BV VALS))))
+  (IMPLIES
+   (AND (IS-VAR E)
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) (PAIR!SND VALS))
+     (LOOKUP E (NEW-RHO RHO (BT!CDR BV) (PAIR!SND VALS))))
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) VALS)
+     (LOOKUP E (NEW-RHO RHO (BT!CDR BV) VALS))))
+   (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 1) VALS)
+    (LOOKUP E (NEW-RHO RHO (BT!CDR BV) (PAIR!SND VALS)))))))
+Assuming TR-AUX-LEMMA with the
+instantiations: (= E E) (= BV (BT!CDR BV)) (= RHO RHO) (= N 1)
+                (= VALS VALS) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (>= 1 1)
+   (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 1) VALS)
+    (DB-VALUE (TR-AUX E (BT!CDR BV) RHO (- 1 1)) (PAIR!SND VALS))))
+  (BT!IS-CONS BV))
+ (IF (= E (BT!CAR BV))
+  (IMPLIES (IS-VAR E) (= (PAIR!FST VALS) (LOOKUP E (NEW-RHO RHO BV VALS))))
+  (IMPLIES
+   (AND (IS-VAR E)
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) (PAIR!SND VALS))
+     (LOOKUP E (NEW-RHO RHO (BT!CDR BV) (PAIR!SND VALS))))
+    (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) VALS)
+     (LOOKUP E (NEW-RHO RHO (BT!CDR BV) VALS))))
+   (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 1) VALS)
+    (LOOKUP E (NEW-RHO RHO (BT!CDR BV) (PAIR!SND VALS)))))))
+Which simplifies
+ forward chaining using BT!CONS-COMPOSITION, BT!SIZE-CONS, >=.SAME.TYPE
+ with the assumptions BT!TYPE-OF-IS-CONS to ...
+(IMPLIES
+ (AND
+  (= (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 1) VALS)
+   (DB-VALUE (TR-AUX E (BT!CDR BV) RHO 0) (PAIR!SND VALS)))
+  (BT!IS-CONS BV) (= E (BT!CAR BV)) (IS-VAR E))
+ (= (PAIR!FST VALS) (LOOKUP E (NEW-RHO RHO BV VALS))))
+Which simplifies
+ with invocation of NEW-RHO
+ when rewriting with LOOKUP-BIND
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+MAIN-INDUCTION
+Beginning proof of MAIN-INDUCTION ...
+(IF (IS-AP E)
+ (AND (M< (BT!SIZE (RATOR E)) (BT!SIZE E))
+  (M< (BT!SIZE (RAND E)) (BT!SIZE E)))
+ (IF (IS-LAM E)
+  (AND (M< (BT!SIZE (LAM-BODY E)) (BT!SIZE E))
+   (M< (BT!SIZE (LAM-BODY E)) (BT!SIZE E)))
+  (TRUE)))
+Which simplifies
+ with invocation of LAM-BODY, IS-LAM, RAND, RATOR, IS-AP
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!SIZE-NON-NEGATIVE, LABEL-NOT-IN-SET-S,
+BT!TYPE-OF-IS-CONS to ...
+(IMPLIES (BT!IS-CONS E)
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Assuming BT!SIZE-CONS with the
+instantiations: (= X (BT!CDR (BT!CDR E))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS (BT!CDR (BT!CDR E)))
+   (AND
+    (> (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE (BT!CAR (BT!CDR (BT!CDR E)))))
+    (> (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))))))
+  (BT!IS-CONS E))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Assuming BT!SIZE-CONS with the instantiations: (= X (BT!CDR E)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (> (BT!SIZE (BT!CDR E)) (BT!SIZE (BT!CAR (BT!CDR E))))
+    (> (BT!SIZE (BT!CDR E)) (BT!SIZE (BT!CDR (BT!CDR E))))))
+  (IMPLIES (BT!IS-CONS (BT!CDR (BT!CDR E)))
+   (AND
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CAR (BT!CDR (BT!CDR E))))))
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E))))))))
+  (BT!IS-CONS E))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Assuming BT!SIZE-CONS with the instantiations: (= X E) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (BT!IS-CONS E)
+   (AND (> (BT!SIZE E) (BT!SIZE (BT!CAR E)))
+    (> (BT!SIZE E) (BT!SIZE (BT!CDR E)))))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (>= (BT!SIZE (BT!CDR E)) (SUCC (BT!SIZE (BT!CAR (BT!CDR E)))))
+    (>= (BT!SIZE (BT!CDR E)) (SUCC (BT!SIZE (BT!CDR (BT!CDR E)))))))
+  (IMPLIES (BT!IS-CONS (BT!CDR (BT!CDR E)))
+   (AND
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CAR (BT!CDR (BT!CDR E))))))
+    (>= (BT!SIZE (BT!CDR (BT!CDR E)))
+     (SUCC (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E))))))))
+  (BT!IS-CONS E))
+ (IF (= (BT!CAR E) (LABEL 1))
+  (IMPLIES (BT!IS-CONS (BT!CDR E))
+   (AND (M< (BT!SIZE (BT!CAR (BT!CDR E))) (BT!SIZE E))
+    (M< (BT!SIZE (BT!CDR (BT!CDR E))) (BT!SIZE E))))
+  (IMPLIES
+   (AND (= (BT!CAR E) (LABEL 2)) (BT!IS-CONS (BT!CDR E))
+    (BT!IS-CONS (BT!CDR (BT!CDR E))))
+   (M< (BT!SIZE (BT!CDR (BT!CDR (BT!CDR E)))) (BT!SIZE E)))))
+Which simplifies
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION
+ with the assumptions LABEL-NOT-IN-SET-S, SUCC.INT, BT!SIZE-NON-NEGATIVE,
+BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+MAIN-STEP
+Beginning proof of MAIN-STEP ...
+(= (DB-VALUE (TR E BV RHO) VALS)
+ (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0))
+Inducting using the following scheme ...
+ (AND
+  (IMPLIES
+   (AND (IS-AP E) (*P* BV (RATOR E) RHO VALS) (*P* BV (RAND E) RHO VALS))
+   (*P* BV E RHO VALS))
+  (IMPLIES
+   (AND (NOT (IS-AP E)) (IS-LAM E)
+    (ALL (X)
+     (AND
+      (*P* (BT!CONS (BT!CAR (BT!CDR E)) BV) (LAM-BODY E) RHO
+       (PAIR!PAIR X VALS))
+      (*P* (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (LAM-BODY E)
+       (NEW-RHO RHO BV VALS) (PAIR!PAIR X 0)))))
+   (*P* BV E RHO VALS))
+  (IMPLIES (AND (NOT (IS-AP E)) (NOT (IS-LAM E))) (*P* BV E RHO VALS)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (IS-AP E)
+   (= (DB-VALUE (TR (RATOR E) BV RHO) VALS)
+    (DB-VALUE (TR (RATOR E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0))
+   (= (DB-VALUE (TR (RAND E) BV RHO) VALS)
+    (DB-VALUE (TR (RAND E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+  (= (DB-VALUE (TR E BV RHO) VALS)
+   (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+ (IMPLIES
+  (AND (NOT (IS-AP E)) (IS-LAM E)
+   (ALL (X)
+    (AND
+     (=
+      (DB-VALUE (TR (LAM-BODY E) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+       (PAIR!PAIR X VALS))
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!LEAF 0)
+        (NEW-RHO RHO (BT!CONS (BT!CAR (BT!CDR E)) BV) (PAIR!PAIR X VALS)))
+       0))
+     (=
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+        (NEW-RHO RHO BV VALS))
+       (PAIR!PAIR X 0))
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!LEAF 0)
+        (NEW-RHO (NEW-RHO RHO BV VALS)
+         (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (PAIR!PAIR X 0)))
+       0)))))
+  (= (DB-VALUE (TR E BV RHO) VALS)
+   (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+ (IMPLIES (AND (NOT (IS-AP E)) (NOT (IS-LAM E)))
+  (= (DB-VALUE (TR E BV RHO) VALS)
+   (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0))))
+Invoking (TR E BV RHO) gives ...
+(AND
+ (IMPLIES
+  (AND (IS-AP E)
+   (= (DB-VALUE (TR (RATOR E) BV RHO) VALS)
+    (DB-VALUE (TR (RATOR E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0))
+   (= (DB-VALUE (TR (RAND E) BV RHO) VALS)
+    (DB-VALUE (TR (RAND E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+  (=
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E BV RHO 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E) (DB-AP (TR (RATOR E) BV RHO) (TR (RAND E) BV RHO))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E) (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) BV) RHO))
+        (DB-CONST 0)))))
+    VALS)
+   (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+ (IMPLIES
+  (AND (NOT (IS-AP E)) (IS-LAM E)
+   (ALL (X)
+    (AND
+     (=
+      (DB-VALUE (TR (LAM-BODY E) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+       (PAIR!PAIR X VALS))
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!LEAF 0)
+        (NEW-RHO RHO (BT!CONS (BT!CAR (BT!CDR E)) BV) (PAIR!PAIR X VALS)))
+       0))
+     (=
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+        (NEW-RHO RHO BV VALS))
+       (PAIR!PAIR X 0))
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!LEAF 0)
+        (NEW-RHO (NEW-RHO RHO BV VALS)
+         (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (PAIR!PAIR X 0)))
+       0)))))
+  (=
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E BV RHO 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E) (DB-AP (TR (RATOR E) BV RHO) (TR (RAND E) BV RHO))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E) (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) BV) RHO))
+        (DB-CONST 0)))))
+    VALS)
+   (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+ (IMPLIES (AND (NOT (IS-AP E)) (NOT (IS-LAM E)))
+  (=
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E BV RHO 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E) (DB-AP (TR (RATOR E) BV RHO) (TR (RAND E) BV RHO))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E) (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) BV) RHO))
+        (DB-CONST 0)))))
+    VALS)
+   (DB-VALUE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0))))
+Invoking (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)) gives ...
+(AND
+ (IMPLIES
+  (AND (IS-AP E)
+   (= (DB-VALUE (TR (RATOR E) BV RHO) VALS)
+    (DB-VALUE (TR (RATOR E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0))
+   (= (DB-VALUE (TR (RAND E) BV RHO) VALS)
+    (DB-VALUE (TR (RAND E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)) 0)))
+  (=
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E BV RHO 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E) (DB-AP (TR (RATOR E) BV RHO) (TR (RAND E) BV RHO))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E) (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) BV) RHO))
+        (DB-CONST 0)))))
+    VALS)
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E (BT!LEAF 0) (NEW-RHO RHO BV VALS) 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E)
+       (DB-AP (TR (RATOR E) (BT!LEAF 0) (NEW-RHO RHO BV VALS))
+        (TR (RAND E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E)
+         (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) (BT!LEAF 0))
+          (NEW-RHO RHO BV VALS)))
+        (DB-CONST 0)))))
+    0)))
+ (IMPLIES
+  (AND (NOT (IS-AP E)) (IS-LAM E)
+   (ALL (X)
+    (AND
+     (=
+      (DB-VALUE (TR (LAM-BODY E) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+       (PAIR!PAIR X VALS))
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!LEAF 0)
+        (NEW-RHO RHO (BT!CONS (BT!CAR (BT!CDR E)) BV) (PAIR!PAIR X VALS)))
+       0))
+     (=
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+        (NEW-RHO RHO BV VALS))
+       (PAIR!PAIR X 0))
+      (DB-VALUE
+       (TR (LAM-BODY E) (BT!LEAF 0)
+        (NEW-RHO (NEW-RHO RHO BV VALS)
+         (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (PAIR!PAIR X 0)))
+       0)))))
+  (=
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E BV RHO 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E) (DB-AP (TR (RATOR E) BV RHO) (TR (RAND E) BV RHO))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E) (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) BV) RHO))
+        (DB-CONST 0)))))
+    VALS)
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E (BT!LEAF 0) (NEW-RHO RHO BV VALS) 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E)
+       (DB-AP (TR (RATOR E) (BT!LEAF 0) (NEW-RHO RHO BV VALS))
+        (TR (RAND E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E)
+         (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) (BT!LEAF 0))
+          (NEW-RHO RHO BV VALS)))
+        (DB-CONST 0)))))
+    0)))
+ (IMPLIES (AND (NOT (IS-AP E)) (NOT (IS-LAM E)))
+  (=
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E BV RHO 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E) (DB-AP (TR (RATOR E) BV RHO) (TR (RAND E) BV RHO))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E) (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) BV) RHO))
+        (DB-CONST 0)))))
+    VALS)
+   (DB-VALUE
+    (IF (IS-VAR E) (TR-AUX E (BT!LEAF 0) (NEW-RHO RHO BV VALS) 0)
+     (IF (IS-CONST E) (DB-CONST (CONST-VAL E))
+      (IF (IS-AP E)
+       (DB-AP (TR (RATOR E) (BT!LEAF 0) (NEW-RHO RHO BV VALS))
+        (TR (RAND E) (BT!LEAF 0) (NEW-RHO RHO BV VALS)))
+       (IF (IS-LAM E)
+        (DB-LAM (LAM-SET E)
+         (TR (LAM-BODY E) (BT!CONS (LAM-VAR E) (BT!LEAF 0))
+          (NEW-RHO RHO BV VALS)))
+        (DB-CONST 0)))))
+    0))))
+Which simplifies
+ with invocation of LAM-VAR, LAM-SET, NEW-RHO, LAM-BODY, IS-LAM, TR-AUX,
+CONST-VAL, IS-CONST, RAND, RATOR, IS-AP
+ when rewriting with DB-VALUE-DB-AP, DB-VALUE-DB-CONST,
+MAIN-STEP-VAR-CASE-LEMMA
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, BT!IS-CONS-LEAF,
+BT!LEAF-VALUE-LEAF, LABEL-NOT-IN-SET-S, BT!TYPE-OF-IS-CONS to ...
+(IMPLIES
+ (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 1))) (= (BT!CAR E) (LABEL 2))
+  (BT!IS-CONS (BT!CDR E)) (BT!IS-CONS (BT!CDR (BT!CDR E)))
+  (ALL (X)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+     (PAIR!PAIR X VALS))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X (NEW-RHO RHO BV VALS)))
+     0)))
+  (ALL (X$0)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS))
+     (PAIR!PAIR X$0 0))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$0 (NEW-RHO RHO BV VALS)))
+     0)))
+  (NOT (IS-VAR E)) (NOT (= (BT!CAR E) (LABEL 0))))
+ (=
+  (DB-VALUE
+   (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO))
+   VALS)
+  (DB-VALUE
+   (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+     (NEW-RHO RHO BV VALS)))
+   0)))
+Applying FN!FUNCTION-EXTENSIONALITY to
+ (=
+  (DB-VALUE
+   (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO))
+   VALS)
+  (DB-VALUE
+   (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+     (NEW-RHO RHO BV VALS)))
+   0)) gives
+...
+(IMPLIES
+ (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 1))) (= (BT!CAR E) (LABEL 2))
+  (BT!IS-CONS (BT!CDR E)) (BT!IS-CONS (BT!CDR (BT!CDR E)))
+  (ALL (X)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+     (PAIR!PAIR X VALS))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X (NEW-RHO RHO BV VALS)))
+     0)))
+  (ALL (X$0)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS))
+     (PAIR!PAIR X$0 0))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$0 (NEW-RHO RHO BV VALS)))
+     0)))
+  (NOT (IS-VAR E)) (NOT (= (BT!CAR E) (LABEL 0))))
+ (IF
+  (AND
+   (FN!IS-FUNCTION
+    (DB-VALUE
+     (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+      (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO))
+     VALS))
+   (FN!IS-FUNCTION
+    (DB-VALUE
+     (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+      (TR (BT!CDR (BT!CDR (BT!CDR E)))
+       (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS)))
+     0)))
+  (AND
+   (=
+    (REL!DOM
+     (DB-VALUE
+      (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+       (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO))
+      VALS))
+    (REL!DOM
+     (DB-VALUE
+      (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+       (TR (BT!CDR (BT!CDR (BT!CDR E)))
+        (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS)))
+      0)))
+   (ALL (X$1)
+    (IMPLIES
+     (IN X$1
+      (REL!DOM
+       (DB-VALUE
+        (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+         (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV)
+          RHO))
+        VALS)))
+     (=
+      (FN!APPLY
+       (DB-VALUE
+        (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+         (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV)
+          RHO))
+        VALS)
+       X$1)
+      (FN!APPLY
+       (DB-VALUE
+        (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+         (TR (BT!CDR (BT!CDR (BT!CDR E)))
+          (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS)))
+        0)
+       X$1)))))
+  (=
+   (DB-VALUE
+    (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO))
+    VALS)
+   (DB-VALUE
+    (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS)))
+    0))))
+Which simplifies
+ when rewriting with APPLY-DB-VALUE-DB-LAM, DOM-DB-VALUE-DB-LAM,
+IS-FUNCTION-DB-VALUE-DB-LAM
+ forward chaining using FN!FUNCTION-IS-RELATION, PAIR!PAIR-COMPOSITION,
+>=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions FN!IS-FUNCTION-BOOL, BT!IS-CONS-LEAF,
+BT!LEAF-VALUE-LEAF, PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, LABEL-NOT-IN-SET-S,
+BT!TYPE-OF-IS-CONS to ...
+(IMPLIES
+ (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 1))) (= (BT!CAR E) (LABEL 2))
+  (BT!IS-CONS (BT!CDR E)) (BT!IS-CONS (BT!CDR (BT!CDR E)))
+  (ALL (X)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+     (PAIR!PAIR X VALS))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X (NEW-RHO RHO BV VALS)))
+     0)))
+  (ALL (X$0)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS))
+     (PAIR!PAIR X$0 0))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$0 (NEW-RHO RHO BV VALS)))
+     0)))
+  (NOT (IS-VAR E)) (NOT (= (BT!CAR E) (LABEL 0))))
+ (ALL (X$1)
+  (IMPLIES (IN X$1 (BT!CAR (BT!CDR (BT!CDR E))))
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+     (PAIR!PAIR X$1 VALS))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS))
+     (PAIR!PAIR X$1 0))))))
+Instantiating (= X X$1) gives ...
+(IMPLIES
+ (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 1))) (= (BT!CAR E) (LABEL 2))
+  (BT!IS-CONS (BT!CDR E)) (BT!IS-CONS (BT!CDR (BT!CDR E)))
+  (=
+   (DB-VALUE
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+    (PAIR!PAIR X VALS))
+   (DB-VALUE
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+     (BIND (BT!CAR (BT!CDR E)) X (NEW-RHO RHO BV VALS)))
+    0))
+  (ALL (X$0)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+     (PAIR!PAIR X$0 VALS))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$0 (NEW-RHO RHO BV VALS)))
+     0)))
+  (ALL (X$1)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS))
+     (PAIR!PAIR X$1 0))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$1 (NEW-RHO RHO BV VALS)))
+     0)))
+  (NOT (IS-VAR E)) (NOT (= (BT!CAR E) (LABEL 0)))
+  (IN X (BT!CAR (BT!CDR (BT!CDR E)))))
+ (=
+  (DB-VALUE
+   (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+   (PAIR!PAIR X VALS))
+  (DB-VALUE
+   (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+    (NEW-RHO RHO BV VALS))
+   (PAIR!PAIR X 0))))
+Instantiating (= X$1 X) gives ...
+(IMPLIES
+ (AND (BT!IS-CONS E) (NOT (= (BT!CAR E) (LABEL 1))) (= (BT!CAR E) (LABEL 2))
+  (BT!IS-CONS (BT!CDR E)) (BT!IS-CONS (BT!CDR (BT!CDR E)))
+  (=
+   (DB-VALUE
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+    (PAIR!PAIR X VALS))
+   (DB-VALUE
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+     (BIND (BT!CAR (BT!CDR E)) X (NEW-RHO RHO BV VALS)))
+    0))
+  (ALL (X$0)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+     (PAIR!PAIR X$0 VALS))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$0 (NEW-RHO RHO BV VALS)))
+     0)))
+  (=
+   (DB-VALUE
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+     (NEW-RHO RHO BV VALS))
+    (PAIR!PAIR X 0))
+   (DB-VALUE
+    (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+     (BIND (BT!CAR (BT!CDR E)) X (NEW-RHO RHO BV VALS)))
+    0))
+  (ALL (X$1)
+   (=
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E)))
+      (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0)) (NEW-RHO RHO BV VALS))
+     (PAIR!PAIR X$1 0))
+    (DB-VALUE
+     (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!LEAF 0)
+      (BIND (BT!CAR (BT!CDR E)) X$1 (NEW-RHO RHO BV VALS)))
+     0)))
+  (NOT (IS-VAR E)) (NOT (= (BT!CAR E) (LABEL 0)))
+  (IN X (BT!CAR (BT!CDR (BT!CDR E)))))
+ (=
+  (DB-VALUE
+   (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) BV) RHO)
+   (PAIR!PAIR X VALS))
+  (DB-VALUE
+   (TR (BT!CDR (BT!CDR (BT!CDR E))) (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+    (NEW-RHO RHO BV VALS))
+   (PAIR!PAIR X 0))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS,
+LABEL-NOT-IN-SET-S, BT!TYPE-OF-IS-CONS to ...
+(TRUE)
+VALUE
+VALUE-VAR
+Beginning proof of VALUE-VAR ...
+(IMPLIES (= (TYPE-OF V) (INT)) (= (VALUE V R) (LOOKUP V R)))
+Which simplifies
+ with invocation of VALUE
+ with the assumptions BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF to ...
+(IMPLIES (= (TYPE-OF V) (INT))
+ (= (DB-VALUE (TR V (BT!LEAF 0) R) 0) (LOOKUP V R)))
+Which simplifies
+ with invocation of TR, TR-AUX, IS-VAR
+ when rewriting with DB-VALUE-DB-CONST
+ with the assumptions BT!TYPE-OF-IS-CONS, BT!IS-CONS-LEAF,
+BT!LEAF-VALUE-LEAF to ...
+(TRUE)
+VALUE-CONST
+Beginning proof of VALUE-CONST ...
+(= (VALUE (CONST X) R) X)
+Which simplifies
+ with invocation of TR, CONST-VAL, IS-CONST, VALUE, CONST
+ when rewriting with DB-VALUE-DB-CONST, IS-VAR-LABELLED
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!TYPE-OF-IS-CONS, BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, LABEL-NOT-IN-SET-S to ...
+(TRUE)
+VALUE-AP
+Beginning proof of VALUE-AP ...
+(= (VALUE (AP E1 E2) R) (FN!APPLY (VALUE E1 R) (VALUE E2 R)))
+Which simplifies
+ with invocation of TR, RAND, RATOR, IS-AP, IS-CONST, VALUE, AP
+ when rewriting with DB-VALUE-DB-AP, =-LABEL-LABEL, IS-VAR-LABELLED
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!TYPE-OF-IS-CONS, BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, LABEL-NOT-IN-SET-S to ...
+(TRUE)
+IS-FUNCTION-VALUE-LAM
+Beginning proof of IS-FUNCTION-VALUE-LAM ...
+(= (FN!IS-FUNCTION (VALUE (LAM V S E) R)) (TRUE))
+Which simplifies
+ with invocation of TR, LAM-VAR, LAM-BODY, LAM-SET, IS-LAM, IS-AP, IS-CONST,
+VALUE, LAM
+ when rewriting with IS-FUNCTION-DB-VALUE-DB-LAM, =-LABEL-LABEL,
+IS-VAR-LABELLED
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions FN!IS-FUNCTION-BOOL, BT!TYPE-OF-IS-CONS,
+BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF, BT!CAR-CONS, BT!CDR-CONS,
+BT!IS-CONS-CONS, LABEL-NOT-IN-SET-S to ...
+(TRUE)
+DOM-VALUE-LAM
+Beginning proof of DOM-VALUE-LAM ...
+(= (REL!DOM (VALUE (LAM V S E) R)) S)
+Which simplifies
+ with invocation of TR, LAM-VAR, LAM-BODY, LAM-SET, IS-LAM, IS-AP, IS-CONST,
+VALUE, LAM
+ when rewriting with DOM-DB-VALUE-DB-LAM, =-LABEL-LABEL, IS-VAR-LABELLED
+ forward chaining using >=.SAME.TYPE, BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!TYPE-OF-IS-CONS, BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF,
+BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, LABEL-NOT-IN-SET-S to ...
+(TRUE)
+APPLY-VALUE-LAM
+Beginning proof of APPLY-VALUE-LAM ...
+(IMPLIES (IN X S)
+ (= (FN!APPLY (VALUE (LAM V S E) R) X) (VALUE E (BIND V X R))))
+Which simplifies
+ with invocation of TR, LAM-VAR, LAM-BODY, LAM-SET, IS-LAM, IS-AP, IS-CONST,
+VALUE, LAM
+ when rewriting with APPLY-DB-VALUE-DB-LAM, =-LABEL-LABEL, IS-VAR-LABELLED
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+BT!TYPE-OF-IS-CONS, BT!IS-CONS-LEAF, BT!LEAF-VALUE-LEAF, BT!CAR-CONS,
+BT!CDR-CONS, BT!IS-CONS-CONS, LABEL-NOT-IN-SET-S to ...
+(IMPLIES (IN X S)
+ (= (DB-VALUE (TR E (BT!CONS V (BT!LEAF 0)) R) (PAIR!PAIR X 0))
+  (DB-VALUE (TR E (BT!LEAF 0) (BIND V X R)) 0)))
+Assuming MAIN-STEP with the
+instantiations: (= E E) (= BV (BT!CONS V (BT!LEAF 0))) (= RHO R)
+                (= VALS (PAIR!PAIR X 0)) generates
+...
+(IMPLIES
+ (AND
+  (= (DB-VALUE (TR E (BT!CONS V (BT!LEAF 0)) R) (PAIR!PAIR X 0))
+   (DB-VALUE
+    (TR E (BT!LEAF 0) (NEW-RHO R (BT!CONS V (BT!LEAF 0)) (PAIR!PAIR X 0))) 0))
+  (IN X S))
+ (= (DB-VALUE (TR E (BT!CONS V (BT!LEAF 0)) R) (PAIR!PAIR X 0))
+  (DB-VALUE (TR E (BT!LEAF 0) (BIND V X R)) 0)))
+Which simplifies
+ with invocation of NEW-RHO
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE,
+BT!CONS-COMPOSITION, BT!SIZE-CONS
+ with the assumptions BT!TYPE-OF-IS-CONS, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, BT!CAR-CONS, BT!CDR-CONS, BT!IS-CONS-CONS, BT!IS-CONS-LEAF,
+BT!LEAF-VALUE-LEAF to ...
+(TRUE)
+VALUE-OF
+Done.

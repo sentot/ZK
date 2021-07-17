@@ -1,0 +1,405 @@
+;;;
+;;; Sequences
+;;;
+;;; Adapted from the Z toolkit
+;;;
+
+(load fn)
+(load finite)
+(load intfn)
+
+(disabled
+  (function is-sequence (x) ()
+     (and (fn!is-function x)
+	  (finite!is-finite x)
+	  (= (rel!dom x) (range 1 (finite!card x))))))
+
+(grule type-of-is-sequence (x)
+  (= (type-of (is-sequence x))
+     (bool)))
+
+(frule is-sequence-facts (x)
+  (implies (is-sequence x)
+	   (and (fn!is-function x)
+		(finite!is-finite x)
+		(= (rel!dom x) (range 1 (finite!card x))))))
+
+(axiom is-sequence-subgoal (n x)
+  (implies (and (in n (nat!nat))
+		(fn!is-function x)
+		(= (rel!dom x) (range 1 n)))
+	   (and (is-sequence x)
+		(= (finite!card x) n))))
+
+(rule is-sequence-nullset ()
+  (= (is-sequence (nullset)) (true)))
+
+;;; sequence "types"
+
+(function-stub sequence-of (x))
+
+(rule in-sequence-of (s x)
+  (= (in s (sequence-of x))
+     (and (is-sequence s)
+	  (subset (rel!ran s) x))))
+
+(disabled
+ (function nonempty-sequence-of (x) ()
+  (diff (sequence-of x) (unit (nullset)))))
+
+(rule in-nonempty-sequence-of (s x)
+  (= (in s (nonempty-sequence-of x))
+     (and (is-sequence s)
+	  (not (= s (nullset)))
+	  (subset (rel!ran s) x))))
+
+;;; concatenation
+
+(disabled
+  (function append (x y) ()
+     (union x (rel!comp (intfn!add (negate (finite!card x))) y))))
+
+(rule is-function-append (x y)
+  (implies (and (is-sequence x)
+		(is-sequence y))
+	   (= (fn!is-function (append x y)) (true))))
+
+(rule dom-append (x y)
+  (implies (and (is-sequence x)
+		(is-sequence y))
+	   (= (rel!dom (append x y))
+	      (range 1 (+ (finite!card x) (finite!card y))))))
+
+(rule ran-append (x y)
+  (implies (and (is-sequence x) (is-sequence y))
+	   (= (rel!ran (append x y))
+	      (union (rel!ran x) (rel!ran y)))))
+
+(rule apply-append (x y n)
+  (implies (and (is-sequence x)
+		(is-sequence y)
+		(in n (range 1 (finite!card (append x y)))))
+	   (= (fn!apply (append x y) n)
+	      (if (<= n (finite!card x))
+		  (fn!apply x n)
+		  (fn!apply y (- n (finite!card x)))))))
+
+(rule finite-append (x y)
+  (implies (and (is-sequence x) (is-sequence y))
+	   (= (finite!is-finite (append x y)) (true))))
+
+(rule card-append (x y)
+  (implies (and (is-sequence x)(is-sequence y))
+	   (= (finite!card (append x y))
+	      (+ (finite!card x) (finite!card y)))))
+
+(rule is-sequence-append (x y)
+  (implies (and (is-sequence x) (is-sequence y))
+	   (= (is-sequence (append x y)) (true))))
+
+(rule append-nullset-left (x)
+  (implies (is-sequence x)
+	   (= (append (nullset) x)
+	      x)))
+
+(rule append-nullset-right (x)
+    (implies (is-sequence x)
+	   (= (append x (nullset))
+	      x)))
+
+(rule append-associative (x y z)
+  (implies (and (is-sequence x) (is-sequence y)(is-sequence z))
+	   (= (append (append x y) z)
+	      (append x (append y z)))))
+
+
+;;; unit sequences
+
+(disabled 
+  (function unit-seq (x) ()
+     (unit (pair!pair 1 x))))
+
+(rule is-function-unit-seq (x)
+  (= (fn!is-function (unit-seq x)) (true)))
+
+(rule dom-unit-seq (x)
+  (= (rel!dom (unit-seq x))
+     (unit 1)))
+
+(rule ran-unit-seq (x)
+  (= (rel!ran (unit-seq x))
+     (unit x)))
+
+(rule apply-unit-seq (x)
+  (= (fn!apply (unit-seq x) 1)
+     x))
+
+(rule finite-unit-seq (x)
+  (= (finite!is-finite (unit-seq x)) (true)))
+
+(rule card-unit-seq (x)
+  (= (finite!card (unit-seq x))
+     1))
+
+(rule is-sequence-unit-seq (x)
+  (= (is-sequence (unit-seq x)) (true)))
+
+;;; head, last, tail, and front
+;;; "last" is an elementary function defined in the EVES initial theory,
+;;; so we use "zlast" here.
+
+(disabled
+ (function head (s) ()
+   (fn!apply s 1)))
+
+(disabled
+ (function zlast (s) ()
+  (fn!apply s (finite!card s))))
+
+(disabled
+  (function tail (s) ()
+     (rel!dom-restrict (range 1 (- (finite!card s) 1))
+		       (rel!comp (intfn!add 1) s))))
+
+(disabled
+  (function front (s) ()
+     (rel!dom-restrict (range 1 (- (finite!card s) 1)) s)))
+
+(rule is-function-tail (s)
+  (implies (is-sequence s)
+	   (= (fn!is-function (tail s)) (true))))
+
+(rule dom-tail (s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset))))
+	   (= (rel!dom (tail s))
+	      (range 1 (- (finite!card s) 1)))))
+
+(axiom ran-tail (s)
+  (subset (rel!ran (tail s)) (rel!ran s)))
+
+(rule apply-tail (n s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset)))
+		(in n (rel!dom (tail s))))
+	   (= (fn!apply (tail s) n)
+	      (fn!apply s (+ n 1)))))
+
+(rule finite-tail (s)
+  (implies (is-sequence s)
+	   (= (finite!is-finite (tail s)) (true))))
+
+(rule card-tail (s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset))))
+	   (= (finite!card (tail s))
+	      (- (finite!card s) 1))))
+
+(rule is-sequence-tail (s)
+  (implies (is-sequence s)
+	   (= (is-sequence (tail s)) (true))))
+
+
+(rule is-function-front (s)
+  (implies (is-sequence s)
+	   (= (fn!is-function (front s)) (true))))
+
+(rule dom-front (s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset))))
+	   (= (rel!dom (front s))
+	      (range 1 (- (finite!card s) 1)))))
+
+(axiom ran-front (s)
+  (subset (rel!ran (front s)) (rel!ran s)))
+
+(rule apply-front (n s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset)))
+		(in n (rel!dom (front s))))
+	   (= (fn!apply (front s) n)
+	      (fn!apply s n))))
+
+(rule finite-front (s)
+  (implies (is-sequence s)
+	   (= (finite!is-finite (front s)) (true))))
+
+(rule card-front (s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset))))
+	   (= (finite!card (front s))
+	      (- (finite!card s) 1))))
+
+(rule is-sequence-front (s)
+  (implies (is-sequence s)
+	   (= (is-sequence (front s)) (true))))
+
+
+(rule front-nullset ()
+  (= (front (nullset))
+     (nullset)))
+
+(rule tail-nullset ()
+  (= (tail (nullset))
+     (nullset)))
+
+(rule head-append-unit (x s)
+  (implies (is-sequence s)
+	   (= (head (append (unit-seq x) s))
+	      x)))
+
+(rule tail-append-unit (x s)
+  (implies (is-sequence s)
+	   (= (tail (append (unit-seq x) s)) s)))
+
+(rule zlast-append-unit (x s)
+  (implies (is-sequence s)
+	   (= (zlast (append s (unit-seq x)))
+	      x)))
+
+(rule front-append-unit (x s)
+  (implies (is-sequence s)
+	   (= (front (append s (unit-seq x)))
+	      s)))
+
+(axiom seq-head-tail (s)
+  (implies (is-sequence s)
+	   (or (= s (nullset))
+	       (= s (append (unit-seq (head s)) (tail s))))))
+
+(axiom seq-front-last (s)
+  (implies (is-sequence s)
+	   (or (= s (nullset))
+	       (= s (append (front s) (unit-seq (zlast s)))))))
+
+
+;;; reversal
+
+(disabled
+  (function reverse (s) ()
+    (rel!comp (intfn!multiply-by -1)
+	     (rel!comp (intfn!add (+ (finite!card s) 1)) s))))
+
+(rule is-function-reverse (s)
+  (implies (is-sequence s)
+	   (= (fn!is-function (reverse s)) (true))))
+
+(rule dom-reverse (s)
+  (implies (is-sequence s)
+	   (= (rel!dom (reverse s))
+	      (rel!dom s))))
+
+(rule ran-reverse (s)
+  (implies (is-sequence s)
+	   (= (rel!ran (reverse s))
+	      (rel!ran s))))
+
+(rule finite-reverse (s)
+  (implies (is-sequence s)
+	   (= (finite!is-finite (reverse s)) (true))))
+
+(rule card-reverse (s)
+  (implies (is-sequence s)
+	   (= (finite!card (reverse s))
+	      (finite!card s))))
+
+(rule is-sequence-reverse (s)
+  (implies (is-sequence s)
+	   (= (is-sequence (reverse s)) (true))))
+
+(rule reverse-nullset ()
+  (= (reverse (nullset))
+     (nullset)))
+
+(rule reverse-unit (x)
+  (= (reverse (unit-seq x))
+     (unit-seq x)))
+
+(rule reverse-append (x y)
+  (implies (and (is-sequence x) (is-sequence y))
+	   (= (reverse (append x y))
+	      (append (reverse y) (reverse x)))))
+
+(rule reverse-reverse (s)
+  (implies (is-sequence s)
+	   (= (reverse (reverse s)) s)))
+
+(rule head-reverse (s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset))))
+	   (= (head (reverse s)) (zlast s))))
+
+(rule last-reverse (s)
+  (implies (and (is-sequence s)
+		(not (= s (nullset))))
+	   (= (zlast (reverse s)) (head s))))
+
+(rule reverse-front (s)
+  (implies (is-sequence s)
+	   (= (reverse (front s)) (tail (reverse s)))))
+
+(rule reverse-tail (s)
+  (implies (is-sequence s)
+	   (= (reverse (tail s)) (front (reverse s)))))
+
+;;; filtering
+
+(function-stub filter (s x))
+
+(rule is-function-filter (s x)
+  (implies (is-sequence s)
+	   (= (fn!is-function (filter s x)) (true))))
+
+(rule ran-filter (s x)
+  (implies (is-sequence s)
+	   (= (rel!ran (filter s x))
+	      (inter (rel!ran s) x))))
+
+(rule finite-filter (s x)
+  (implies (is-sequence s)
+	   (= (finite!is-finite (filter s x)) (true))))
+
+(rule is-sequence-filter (s x)
+  (implies (is-sequence s)
+	   (= (is-sequence (filter s x)) (true))))
+
+(rule filter-by-superset-ran (s x)
+  (implies (and (is-sequence s)
+		(subset (rel!ran s) x))
+	   (= (filter s x) s)))
+
+(rule filter-nullset (x)
+  (= (filter (nullset) x)
+     (nullset)))
+
+(rule filter-unit (x y)
+  (= (filter (unit-seq x) y)
+     (if (in x y)
+	 (unit-seq x)
+	 (nullset))))
+
+(rule filter-append (x y z)
+  (implies (and (is-sequence x)
+		(is-sequence y))
+	   (= (filter (append x y) z)
+	      (append (filter x z) (filter y z)))))
+
+(rule reverse-filter (s x)
+  (implies (is-sequence s)
+	   (= (reverse (filter s x))
+	      (filter (reverse s) x))))
+
+(rule filter-filter (s x y)
+  (implies (is-sequence s)
+	   (= (filter (filter s x) y)
+	      (filter s (inter x y)))))
+
+(rule filter-by-nullset (s)
+  (implies (is-sequence s)
+	   (= (filter s (nullset))
+	      (nullset))))
+
+(axiom card-filter (s x)
+  (implies (is-sequence s)
+	   (<= (finite!card (filter s x))
+	       (finite!card s))))

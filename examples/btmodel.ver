@@ -1,0 +1,83 @@
+
+;;; Binary trees
+;;;
+;;; Functions introduced:
+;;;
+;;; (cons x y)
+;;; (car x)
+;;; (cdr x)
+;;; (is-cons x)
+;;; (leaf x)
+;;; (leaf-value x)
+;;; (size x)
+
+(load pair)
+
+(disabled
+ (function size (x) ()
+  (if (and (pair!is-pair x)
+	   (>= (pair!fst x) 0))
+      (pair!fst x)
+      0)))
+
+(grule size-non-negative (x)
+  (>= (size x) 0))
+(WITH-ENABLED (SIZE) (REDUCE))
+
+(function cons (x y) ()
+  (pair!pair (+ 1 (size x) (size y))
+	     (pair!pair x y)))
+
+(function car (x) ()
+  (pair!fst (pair!snd x)))
+
+(function cdr (x) ()
+  (pair!snd (pair!snd x)))
+
+(function is-cons (x) ()
+  (= x (cons (car x) (cdr x))))
+
+(function leaf (x) ()
+  (pair!pair 0 x))
+  
+(function leaf-value (x) ()
+  (pair!snd x))
+
+(grule type-of-is-cons (x)
+  (= (type-of (is-cons x))
+     (bool)))
+(SIMPLIFY)
+
+(grule car-cons (x y)
+  (= (car (cons x y)) x))
+(REDUCE)
+
+(grule cdr-cons (x y)
+  (= (cdr (cons x y)) y))
+(REDUCE)
+
+(grule is-cons-cons (x y)
+  (is-cons (cons x y)))
+(REDUCE)
+
+(frule cons-composition (x)
+  (implies (is-cons x)
+	   (= x (cons (car x) (cdr x)))))
+(REDUCE)
+
+(grule is-cons-leaf (x)
+  (not (is-cons (leaf x))))
+(REDUCE)
+
+(grule leaf-value-leaf (x)
+  (= (leaf-value (leaf x))
+     x))
+(REDUCE)
+
+(frule size-cons (x)
+  (implies (is-cons x)
+	   (and (> (size x) (size (car x)))
+		(> (size x) (size (cdr x))))))
+(INVOKE (SIZE X))
+(WITH-DISABLED (CAR CDR) (REDUCE))
+

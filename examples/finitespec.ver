@@ -1,0 +1,144 @@
+;;;
+;;;  finiteness
+;;;
+
+(load nat)
+(load fn)
+
+(disabled
+ (function is-finite (x) ()
+   (some (n f)
+     (and (in n (nat!nat))
+	  (in f (fn!surj (range 1 n) x))))))
+
+(grule type-of-is-finite (x)
+  (= (type-of (is-finite x))
+     (bool)))
+
+(function-stub card (x))
+
+(frule finite-card-nat (x)
+  (implies (is-finite x)
+	   (>= (card x) 0)))
+
+(axiom finite-has-enumeration (x)
+  (implies (is-finite x)
+	   (some (f) (in f (fn!surj (range 1 (card x)) x)))))
+
+(axiom is-finite-monotonic (x y)
+  (implies (and (is-finite y)
+		(subset x y))
+	   (and (is-finite x)
+		(<= (card x) (card y)))))
+
+(axiom card-strictly-monotonic (x y)
+  (implies (and (is-finite y)
+		(subset x y)
+		(= (card x)(card y)))
+	   (= x y)))
+
+;;; finiteness of particular sets
+
+(rule is-finite-nullset ()
+  (= (is-finite (nullset))
+     (true)))
+
+(rule card-nullset ()
+  (= (card (nullset))
+     0))
+
+(axiom card-0-iff-nullset (x)
+  (implies (is-finite x)
+	   (= (= (card x) 0)
+	      (= x (nullset)))))
+
+(rule is-finite-unit (x)
+  (= (is-finite (unit x))
+     (true)))
+
+(rule card-unit (x)
+  (= (card (unit x))
+     1))
+
+(rule is-finite-union (x y)
+  (= (is-finite (union x y))
+     (and (is-finite x)
+	  (is-finite y))))
+
+(axiom card-union (x y)
+  (implies (and (is-finite x)
+		(is-finite y))
+	   (= (+ (card x) (card y))
+	      (+ (card (union x y)) (card (inter x y))))))
+
+(rule is-finite-setadd (x y)
+  (= (is-finite (setadd x y))
+     (is-finite y)))
+
+(disabled
+ (rule card-setadd (x y)
+   (implies (is-finite y)
+	    (= (card (setadd x y))
+	       (if (in x y)
+		   (card y)
+		   (+ 1 (card y)))))))
+
+(rule is-finite-diff (x y)
+  (implies (is-finite x)
+	   (= (is-finite (diff x y)) (true))))
+
+(axiom card-diff (x y)
+  (implies (is-finite x)
+	   (= (card (diff x y))
+	      (- (card x) (card (inter x y))))))
+
+(rule is-finite-simple-range (n)
+  (= (is-finite (range 1 n)) (true)))
+
+(rule card-simple-range (n)
+  (= (card (range 1 n))
+     (if (nat!zerop n)
+	 0
+	 n)))
+
+;;; finiteness and functions
+
+(axiom finite-function-dom-ran (f)
+  (implies (and (fn!is-function f)
+		(is-finite (rel!dom f)))
+	   (and (is-finite (rel!ran f))
+		(<= (card (rel!ran f)) (card (rel!dom f))))))
+
+(axiom finite-function-dom (f)
+  (implies (and (fn!is-function f)
+		(is-finite (rel!dom f)))
+	   (and (is-finite f)
+		(= (card f) (card (rel!dom f))))))
+
+(axiom finite-implies-dom-finite (x)
+  (implies (is-finite x)
+	   (and (is-finite (rel!dom x))
+		(<= (card (rel!dom x)) (card x)))))
+
+(axiom finite-implies-ran-finite (x)
+  (implies (is-finite x)
+	   (and (is-finite (rel!ran x))
+		(<= (card (rel!ran x)) (card x)))))
+
+;;; finite powerset
+
+(zf-function finite-subsets (x)
+  (select (y (powerset x))
+    (is-finite y)))
+
+(rule finite-subsets-of-finite-set (x)
+  (implies (is-finite x)
+	   (= (finite-subsets x)
+	      (powerset x))))
+
+(axiom finite-subsets-induction (x y)
+  (implies (and (in (nullset) y)
+		(all (a b) (implies (and (in a x)
+					 (in b y))
+				    (in (setadd a b) y))))
+	   (subset (finite-subsets x) y)))

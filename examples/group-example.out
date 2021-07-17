@@ -1,0 +1,89 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/group-example.ver"
+G0
+G+
+G-
+LEFT-ZERO
+Beginning proof of LEFT-ZERO ...
+(= (G+ (G0) X) X)
+RIGHT-ZERO
+Beginning proof of RIGHT-ZERO ...
+(= (G+ X (G0)) X)
+LEFT-INVERSE
+Beginning proof of LEFT-INVERSE ...
+(= (G+ (G- X) X) (G0))
+RIGHT-INVERSE
+Beginning proof of RIGHT-INVERSE ...
+(= (G+ X (G- X)) (G0))
+ASSOCIATIVITY
+Beginning proof of ASSOCIATIVITY ...
+(= (G+ (G+ X Y) Z) (G+ X (G+ Y Z)))
+Beginning proof of ...
+(= (G- (G- X)) X)
+Assuming ASSOCIATIVITY with the
+instantiations: (= X (G- (G- X))) (= Y (G- X)) (= Z X) generates ...
+(IMPLIES (= (G+ (G+ (G- (G- X)) (G- X)) X) (G+ (G- (G- X)) (G+ (G- X) X)))
+ (= (G- (G- X)) X))
+Which simplifies
+ when rewriting with RIGHT-ZERO, LEFT-ZERO, LEFT-INVERSE to ...
+(TRUE)
+Beginning proof of ...
+(= (G- (G+ X Y)) (G+ (G- Y) (G- X)))
+Assuming ASSOCIATIVITY with the
+instantiations: (= X (G- Y)) (= Y Y) (= Z (G- (G+ X Y))) generates ...
+(IMPLIES (= (G+ (G+ (G- Y) Y) (G- (G+ X Y))) (G+ (G- Y) (G+ Y (G- (G+ X Y)))))
+ (= (G- (G+ X Y)) (G+ (G- Y) (G- X))))
+Assuming ASSOCIATIVITY with the
+instantiations: (= X (G- X)) (= Y X) (= Z (G+ Y (G- (G+ X Y)))) generates ...
+(IMPLIES
+ (AND
+  (= (G+ (G+ (G- X) X) (G+ Y (G- (G+ X Y))))
+   (G+ (G- X) (G+ X (G+ Y (G- (G+ X Y))))))
+  (= (G+ (G+ (G- Y) Y) (G- (G+ X Y))) (G+ (G- Y) (G+ Y (G- (G+ X Y))))))
+ (= (G- (G+ X Y)) (G+ (G- Y) (G- X))))
+Assuming RIGHT-INVERSE with the instantiations: (= X (G+ X Y)) generates ...
+(IMPLIES
+ (AND (= (G+ (G+ X Y) (G- (G+ X Y))) (G0))
+  (= (G+ (G+ (G- X) X) (G+ Y (G- (G+ X Y))))
+   (G+ (G- X) (G+ X (G+ Y (G- (G+ X Y))))))
+  (= (G+ (G+ (G- Y) Y) (G- (G+ X Y))) (G+ (G- Y) (G+ Y (G- (G+ X Y))))))
+ (= (G- (G+ X Y)) (G+ (G- Y) (G- X))))
+Which simplifies
+ when rewriting with RIGHT-ZERO, LEFT-ZERO, LEFT-INVERSE, ASSOCIATIVITY to ...
+(TRUE)
+LEFT-INVERSE-2
+Beginning proof of LEFT-INVERSE-2 ...
+(= (G+ (G- X) (G+ X Y)) Y)
+Assuming ASSOCIATIVITY with the
+instantiations: (= X (G- X)) (= Y X) (= Z Y) generates ...
+(IMPLIES (= (G+ (G+ (G- X) X) Y) (G+ (G- X) (G+ X Y)))
+ (= (G+ (G- X) (G+ X Y)) Y))
+Which simplifies
+ when rewriting with LEFT-ZERO, LEFT-INVERSE to ...
+(TRUE)
+INVERSE-SUM-LEMMA-1
+Beginning proof of INVERSE-SUM-LEMMA-1 ...
+(= (G+ X (G+ Y (G- (G+ X Y)))) (G0))
+Assuming RIGHT-INVERSE with the instantiations: (= X (G+ X Y)) generates ...
+(IMPLIES (= (G+ (G+ X Y) (G- (G+ X Y))) (G0))
+ (= (G+ X (G+ Y (G- (G+ X Y)))) (G0)))
+Which simplifies
+ when rewriting with ASSOCIATIVITY to ...
+(TRUE)
+INVERSE-SUM-LEMMA-2
+Beginning proof of INVERSE-SUM-LEMMA-2 ...
+(= (G+ Y (G- (G+ X Y))) (G- X))
+Assuming LEFT-INVERSE-2 with the
+instantiations: (= X X) (= Y (G+ Y (G- (G+ X Y)))) generates ...
+(IMPLIES (= (G+ (G- X) (G+ X (G+ Y (G- (G+ X Y))))) (G+ Y (G- (G+ X Y))))
+ (= (G+ Y (G- (G+ X Y))) (G- X)))
+Assuming INVERSE-SUM-LEMMA-1 with the
+instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND (= (G+ X (G+ Y (G- (G+ X Y)))) (G0))
+  (= (G+ (G- X) (G+ X (G+ Y (G- (G+ X Y))))) (G+ Y (G- (G+ X Y)))))
+ (= (G+ Y (G- (G+ X Y))) (G- X)))
+Which simplifies
+ when rewriting with RIGHT-ZERO to ...
+(TRUE)
+Done.

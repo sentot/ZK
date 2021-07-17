@@ -1,0 +1,3080 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/fnmodel.ver"
+IS-FUNCTION
+IS-FUNCTION-BOOL
+Beginning proof of IS-FUNCTION-BOOL ...
+(= (TYPE-OF (IS-FUNCTION F)) (BOOL))
+Which simplifies to ...
+(TRUE)
+FUNCTION-IS-RELATION
+Beginning proof of FUNCTION-IS-RELATION ...
+(IMPLIES (IS-FUNCTION F) (REL!IS-RELATION F))
+Which simplifies
+ with invocation of IS-FUNCTION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(TRUE)
+FUNCTION-IS-RELATION-2
+Beginning proof of FUNCTION-IS-RELATION-2 ...
+(IMPLIES (NOT (REL!IS-RELATION F)) (= (IS-FUNCTION F) (FALSE)))
+Which simplifies
+ with invocation of IS-FUNCTION
+ with the assumptions REL!IS-RELATION-BOOL to ...
+(TRUE)
+FUNCTION-PROPERTY
+Beginning proof of FUNCTION-PROPERTY ...
+(IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F))
+ (= B C))
+Invoking IS-FUNCTION gives ...
+(IMPLIES
+ (AND (REL!IS-RELATION F)
+  (ALL (A$0 B$0 C$0)
+   (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) F) (IN (PAIR!PAIR A$0 C$0) F))
+    (= B$0 C$0)))
+  (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F))
+ (= B C))
+Rearranging gives ...
+(IMPLIES
+ (AND (REL!IS-RELATION F) (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F)
+  (ALL (A$0 B$0 C$0)
+   (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) F) (IN (PAIR!PAIR A$0 C$0) F))
+    (= B$0 C$0))))
+ (= B C))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL
+ with the instantiations (= A$0 A) (= B$0 B) (= C$0 C) to ...
+(TRUE)
+IS-FUNCTION-SUBSET
+Beginning proof of IS-FUNCTION-SUBSET ...
+(IMPLIES (AND (IS-FUNCTION Y) (SUBSET X Y)) (IS-FUNCTION X))
+Which simplifies
+ with invocation of SUBSET, IS-FUNCTION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(IMPLIES
+ (AND (REL!IS-RELATION Y)
+  (ALL (A B C)
+   (IMPLIES (AND (IN (PAIR!PAIR A B) Y) (IN (PAIR!PAIR A C) Y)) (= B C)))
+  (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (AND (REL!IS-RELATION X)
+  (ALL (A$0 B$0 C$0)
+   (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) X) (IN (PAIR!PAIR A$0 C$0) X))
+    (= B$0 C$0)))))
+Instantiating (= A A$0) (= B B$0) (= C C$0) gives ...
+(IMPLIES
+ (AND (REL!IS-RELATION Y)
+  (IMPLIES (AND (IN (PAIR!PAIR A B) Y) (IN (PAIR!PAIR A C) Y)) (= B C))
+  (ALL (A$0 B$0 C$0)
+   (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) Y) (IN (PAIR!PAIR A$0 C$0) Y))
+    (= B$0 C$0)))
+  (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (AND (REL!IS-RELATION X)
+  (IMPLIES (AND (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X)) (= B C))))
+Assuming REL!IS-RELATION-MONOTONIC with the
+instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (REL!IS-RELATION Y) (SUBSET X Y)) (REL!IS-RELATION X))
+  (REL!IS-RELATION Y)
+  (IMPLIES (AND (IN (PAIR!PAIR A B) Y) (IN (PAIR!PAIR A C) Y)) (= B C))
+  (ALL (A$0 B$0 C$0)
+   (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) Y) (IN (PAIR!PAIR A$0 C$0) Y))
+    (= B$0 C$0)))
+  (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (AND (REL!IS-RELATION X)
+  (IMPLIES (AND (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X)) (= B C))))
+Which simplifies
+ with invocation of SUBSET
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(IMPLIES
+ (AND (REL!IS-RELATION Y) (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+  (REL!IS-RELATION X))
+ (IF (IN (PAIR!PAIR A B) Y)
+  (IMPLIES
+   (AND (NOT (IN (PAIR!PAIR A C) Y))
+    (ALL (A$0 B$0 C$0)
+     (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) Y) (IN (PAIR!PAIR A$0 C$0) Y))
+      (= B$0 C$0)))
+    (IN (PAIR!PAIR A B) X))
+   (NOT (IN (PAIR!PAIR A C) X)))
+  (IMPLIES
+   (AND
+    (ALL (A$1 B$1 C$1)
+     (IMPLIES (AND (IN (PAIR!PAIR A$1 B$1) Y) (IN (PAIR!PAIR A$1 C$1) Y))
+      (= B$1 C$1)))
+    (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X))
+   (= B C))))
+Splitting on (AND (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X)) generates ...
+(IF (AND (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X))
+ (IMPLIES
+  (AND (REL!IS-RELATION Y) (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+   (REL!IS-RELATION X))
+  (IF (IN (PAIR!PAIR A B) Y)
+   (IMPLIES
+    (AND (NOT (IN (PAIR!PAIR A C) Y))
+     (ALL (A$0 B$0 C$0)
+      (IMPLIES (AND (IN (PAIR!PAIR A$0 B$0) Y) (IN (PAIR!PAIR A$0 C$0) Y))
+       (= B$0 C$0)))
+     (IN (PAIR!PAIR A B) X))
+    (NOT (IN (PAIR!PAIR A C) X)))
+   (IMPLIES
+    (AND
+     (ALL (A$1 B$1 C$1)
+      (IMPLIES (AND (IN (PAIR!PAIR A$1 B$1) Y) (IN (PAIR!PAIR A$1 C$1) Y))
+       (= B$1 C$1)))
+     (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X))
+    (= B C))))
+ (IMPLIES
+  (AND (REL!IS-RELATION Y) (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 Y)))
+   (REL!IS-RELATION X))
+  (IF (IN (PAIR!PAIR A B) Y)
+   (IMPLIES
+    (AND (NOT (IN (PAIR!PAIR A C) Y))
+     (ALL (A$2 B$2 C$2)
+      (IMPLIES (AND (IN (PAIR!PAIR A$2 B$2) Y) (IN (PAIR!PAIR A$2 C$2) Y))
+       (= B$2 C$2)))
+     (IN (PAIR!PAIR A B) X))
+    (NOT (IN (PAIR!PAIR A C) X)))
+   (IMPLIES
+    (AND
+     (ALL (A$3 B$3 C$3)
+      (IMPLIES (AND (IN (PAIR!PAIR A$3 B$3) Y) (IN (PAIR!PAIR A$3 C$3) Y))
+       (= B$3 C$3)))
+     (IN (PAIR!PAIR A B) X) (IN (PAIR!PAIR A C) X))
+    (= B C)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions REL!IS-RELATION-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR
+ with the
+instantiations (= E (PAIR!PAIR A B)) (= E (PAIR!PAIR A C))
+               (= E$0 (PAIR!PAIR A B)) to
+...
+(TRUE)
+APPLY
+Beginning proof of APPLY ...
+(SOME (Y)
+ (ALL (Y-0)
+  (=
+   (IF (AND (IS-FUNCTION F) (IN X (REL!DOM F))) (IN (PAIR!PAIR X Y-0) F)
+    (= Y-0 (NULLSET)))
+   (= Y-0 Y))))
+Splitting on (AND (IS-FUNCTION F) (IN X (REL!DOM F))) generates ...
+(IF (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (SOME (Y)
+  (ALL (Y-0)
+   (=
+    (IF (AND (IS-FUNCTION F) (IN X (REL!DOM F))) (IN (PAIR!PAIR X Y-0) F)
+     (= Y-0 (NULLSET)))
+    (= Y-0 Y))))
+ (SOME (Y$0)
+  (ALL (Y-0$0)
+   (=
+    (IF (AND (IS-FUNCTION F) (IN X (REL!DOM F))) (IN (PAIR!PAIR X Y-0$0) F)
+     (= Y-0$0 (NULLSET)))
+    (= Y-0$0 Y$0)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (IS-FUNCTION F)
+ (IF (IN X (REL!DOM F))
+  (SOME (Y) (ALL (Y-0) (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 Y))))
+  (SOME (Y$0) (ALL (Y-0$0) (= (= Y-0$0 (NULLSET)) (= Y-0$0 Y$0)))))
+ (SOME (Y$1) (ALL (Y-0$1) (= (= Y-0$1 (NULLSET)) (= Y-0$1 Y$1)))))
+Instantiating (= Y$1 (NULLSET)) gives ...
+(IF (IS-FUNCTION F)
+ (IF (IN X (REL!DOM F))
+  (SOME (Y) (ALL (Y-0) (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 Y))))
+  (SOME (Y$0) (ALL (Y-0$0) (= (= Y-0$0 (NULLSET)) (= Y-0$0 Y$0)))))
+ (OR (ALL (Y-0$1) (= (= Y-0$1 (NULLSET)) (= Y-0$1 (NULLSET))))
+  (SOME (Y$1) (ALL (Y-0$2) (= (= Y-0$2 (NULLSET)) (= Y-0$2 Y$1))))))
+Instantiating (= Y$0 (NULLSET)) gives ...
+(IF (IS-FUNCTION F)
+ (IF (IN X (REL!DOM F))
+  (SOME (Y) (ALL (Y-0) (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 Y))))
+  (OR (ALL (Y-0$0) (= (= Y-0$0 (NULLSET)) (= Y-0$0 (NULLSET))))
+   (SOME (Y$0) (ALL (Y-0$1) (= (= Y-0$1 (NULLSET)) (= Y-0$1 Y$0))))))
+ (OR (ALL (Y-0$2) (= (= Y-0$2 (NULLSET)) (= Y-0$2 (NULLSET))))
+  (SOME (Y$1) (ALL (Y-0$3) (= (= Y-0$3 (NULLSET)) (= Y-0$3 Y$1))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (SOME (Y) (ALL (Y-0) (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 Y)))))
+Which simplifies
+ with invocation of IS-FUNCTION
+ when rewriting with REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(IMPLIES
+ (AND (REL!IS-RELATION F)
+  (ALL (A B C)
+   (IMPLIES (AND (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F)) (= B C)))
+  (SOME (B$0) (IN (PAIR!PAIR X B$0) F)))
+ (SOME (Y) (ALL (Y-0) (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 Y)))))
+Instantiating (= Y B$0) gives ...
+(IMPLIES
+ (AND (REL!IS-RELATION F)
+  (ALL (A B$0 C)
+   (IMPLIES (AND (IN (PAIR!PAIR A B$0) F) (IN (PAIR!PAIR A C) F)) (= B$0 C)))
+  (IN (PAIR!PAIR X B) F)
+  (NOT (ALL (Y-0) (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 B)))))
+ (SOME (Y) (ALL (Y-0$0) (= (IN (PAIR!PAIR X Y-0$0) F) (= Y-0$0 Y)))))
+Instantiating (= A X) (= B$0 B) (= C Y-0) gives ...
+(IMPLIES
+ (AND (REL!IS-RELATION F)
+  (SOME (Y-0)
+   (AND
+    (IMPLIES (AND (IN (PAIR!PAIR X B) F) (IN (PAIR!PAIR X Y-0) F)) (= B Y-0))
+    (ALL (A B$0 C)
+     (IMPLIES (AND (IN (PAIR!PAIR A B$0) F) (IN (PAIR!PAIR A C) F))
+      (= B$0 C)))
+    (IN (PAIR!PAIR X B) F) (NOT (= (IN (PAIR!PAIR X Y-0) F) (= Y-0 B))))))
+ (SOME (Y) (ALL (Y-0$0) (= (IN (PAIR!PAIR X Y-0$0) F) (= Y-0$0 Y)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(TRUE)
+APPLY-DEFINITION
+Beginning proof of APPLY-DEFINITION ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (IN (PAIR!PAIR X (APPLY F X)) F))
+Assuming APPLY.DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (=
+   (IF (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+    (IN (PAIR!PAIR X (APPLY F X)) F) (= (APPLY F X) (NULLSET)))
+   (TRUE))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (IN (PAIR!PAIR X (APPLY F X)) F))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+APPLY-UNIQUE
+Beginning proof of APPLY-UNIQUE ...
+(IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X Y) F)) (= Y (APPLY F X)))
+Assuming APPLY.DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (=
+   (IF (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+    (IN (PAIR!PAIR X (APPLY F X)) F) (= (APPLY F X) (NULLSET)))
+   (TRUE))
+  (IS-FUNCTION F) (IN (PAIR!PAIR X Y) F))
+ (= Y (APPLY F X)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (IS-FUNCTION F)
+ (IF (IN X (REL!DOM F))
+  (IMPLIES (AND (IN (PAIR!PAIR X (APPLY F X)) F) (IN (PAIR!PAIR X Y) F))
+   (= Y (APPLY F X)))
+  (IMPLIES (AND (= (APPLY F X) (NULLSET)) (IN (PAIR!PAIR X Y) F))
+   (= Y (NULLSET)))))
+Which simplifies
+ with invocation of IS-FUNCTION
+ when rewriting with REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(TRUE)
+APPLY-IN-RAN
+Beginning proof of APPLY-IN-RAN ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F))) (IN (APPLY F X) (REL!RAN F)))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (IN (APPLY F X) (REL!RAN F)))
+Which simplifies
+ when rewriting with REL!IN-RAN-1
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+FUNCTION-ELEMENT
+Beginning proof of FUNCTION-ELEMENT ...
+(IMPLIES (IS-FUNCTION F)
+ (= (IN X F)
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (REL!DOM F))
+   (= (PAIR!SND X) (APPLY F (PAIR!FST X))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X (PAIR!FST X)) (= Y (PAIR!SND X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F))
+   (= (PAIR!SND X) (APPLY F (PAIR!FST X))))
+  (IS-FUNCTION F))
+ (= (IN X F)
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (REL!DOM F))
+   (= (PAIR!SND X) (APPLY F (PAIR!FST X))))))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F F) (= X (PAIR!FST X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!FST X) (REL!DOM F)))
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F))
+   (= (PAIR!SND X) (APPLY F (PAIR!FST X))))
+  (IS-FUNCTION F))
+ (= (IN X F)
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (REL!DOM F))
+   (= (PAIR!SND X) (APPLY F (PAIR!FST X))))))
+Splitting on (AND (IN X F) (IS-FUNCTION F)) generates ...
+(IF (AND (IN X F) (IS-FUNCTION F))
+ (IMPLIES
+  (AND
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!FST X) (REL!DOM F)))
+    (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F))
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F))
+    (= (PAIR!SND X) (APPLY F (PAIR!FST X))))
+   (IS-FUNCTION F))
+  (= (IN X F)
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (REL!DOM F))
+    (= (PAIR!SND X) (APPLY F (PAIR!FST X))))))
+ (IMPLIES
+  (AND
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!FST X) (REL!DOM F)))
+    (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F))
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F))
+    (= (PAIR!SND X) (APPLY F (PAIR!FST X))))
+   (IS-FUNCTION F))
+  (= (IN X F)
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (REL!DOM F))
+    (= (PAIR!SND X) (APPLY F (PAIR!FST X)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (IS-FUNCTION F)
+ (IF (IN (PAIR!FST X) (REL!DOM F))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (IF (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F)
+    (IMPLIES
+     (AND (= (PAIR!SND X) (APPLY F (PAIR!FST X))) (NOT (PAIR!IS-PAIR X)))
+     (= (IN X F) (FALSE)))
+    (= (IN X F) (FALSE))))
+  (IF (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F)
+   (IMPLIES (= (PAIR!SND X) (APPLY F (PAIR!FST X))) (= (IN X F) (FALSE)))
+   (= (IN X F) (FALSE)))))
+Which simplifies
+ with invocation of REL!IS-RELATION, IS-FUNCTION
+ when rewriting with REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, REL!IS-RELATION-BOOL to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 F) (PAIR!IS-PAIR X$0)))
+  (ALL (A B C)
+   (IMPLIES (AND (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F)) (= B C))))
+ (IF (SOME (B$0) (IN (PAIR!PAIR (PAIR!FST X) B$0) F))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (IF (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F)
+    (OR (PAIR!IS-PAIR X) (NOT (IN X F))) (NOT (IN X F))))
+  (NOT (IN X F))))
+Instantiating (= X$0 X) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN X F) (PAIR!IS-PAIR X))
+  (ALL (X$0) (IMPLIES (IN X$0 F) (PAIR!IS-PAIR X$0)))
+  (ALL (A B C)
+   (IMPLIES (AND (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F)) (= B C))))
+ (IF (SOME (B$0) (IN (PAIR!PAIR (PAIR!FST X) B$0) F))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (IF (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F)
+    (OR (PAIR!IS-PAIR X) (NOT (IN X F))) (NOT (IN X F))))
+  (NOT (IN X F))))
+Instantiating (= B$0 (PAIR!SND X)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN X F) (PAIR!IS-PAIR X))
+  (ALL (X$0) (IMPLIES (IN X$0 F) (PAIR!IS-PAIR X$0)))
+  (ALL (A B C)
+   (IMPLIES (AND (IN (PAIR!PAIR A B) F) (IN (PAIR!PAIR A C) F)) (= B C))))
+ (IF
+  (OR (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F)
+   (SOME (B$0) (IN (PAIR!PAIR (PAIR!FST X) B$0) F)))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (IF (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) F)
+    (OR (PAIR!IS-PAIR X) (NOT (IN X F))) (NOT (IN X F))))
+  (NOT (IN X F))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+FUNCTION-EXTENSIONALITY
+Beginning proof of FUNCTION-EXTENSIONALITY ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (= (= F G)
+  (AND (= (REL!DOM F) (REL!DOM G))
+   (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X)))))))
+Assuming =.EXTENSIONAL with the instantiations: (= X F) (= Y G) generates ...
+(IMPLIES
+ (AND (= (= F G) (ALL (E) (= (IN E F) (IN E G)))) (IS-FUNCTION F)
+  (IS-FUNCTION G))
+ (= (= F G)
+  (AND (= (REL!DOM F) (REL!DOM G))
+   (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X)))))))
+Splitting on (= F G) generates ...
+(IF (= F G)
+ (IMPLIES
+  (AND (= (= F G) (ALL (E) (= (IN E F) (IN E G)))) (IS-FUNCTION F)
+   (IS-FUNCTION G))
+  (= (= F G)
+   (AND (= (REL!DOM F) (REL!DOM G))
+    (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X)))))))
+ (IMPLIES
+  (AND (= (= F G) (ALL (E$0) (= (IN E$0 F) (IN E$0 G)))) (IS-FUNCTION F)
+   (IS-FUNCTION G))
+  (= (= F G)
+   (AND (= (REL!DOM F) (REL!DOM G))
+    (ALL (X$0)
+     (IMPLIES (IN X$0 (REL!DOM F)) (= (APPLY F X$0) (APPLY G X$0))))))))
+Which simplifies to ...
+(IMPLIES
+ (AND (NOT (= F G)) (= (FALSE) (ALL (E) (= (IN E F) (IN E G))))
+  (IS-FUNCTION F) (IS-FUNCTION G) (= (REL!DOM F) (REL!DOM G)))
+ (NOT (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= F G)) (NOT (= (IN E F) (IN E G))) (IS-FUNCTION F)
+  (IS-FUNCTION G) (= (REL!DOM F) (REL!DOM G)))
+ (NOT (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X))))))
+Assuming FUNCTION-ELEMENT with the instantiations: (= F F) (= X E) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FUNCTION F)
+   (= (IN E F)
+    (AND (PAIR!IS-PAIR E) (IN (PAIR!FST E) (REL!DOM F))
+     (= (PAIR!SND E) (APPLY F (PAIR!FST E))))))
+  (NOT (= F G)) (NOT (= (IN E F) (IN E G))) (IS-FUNCTION F) (IS-FUNCTION G)
+  (= (REL!DOM F) (REL!DOM G)))
+ (NOT (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X))))))
+Assuming FUNCTION-ELEMENT with the instantiations: (= F G) (= X E) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FUNCTION G)
+   (= (IN E G)
+    (AND (PAIR!IS-PAIR E) (IN (PAIR!FST E) (REL!DOM G))
+     (= (PAIR!SND E) (APPLY G (PAIR!FST E))))))
+  (IMPLIES (IS-FUNCTION F)
+   (= (IN E F)
+    (AND (PAIR!IS-PAIR E) (IN (PAIR!FST E) (REL!DOM F))
+     (= (PAIR!SND E) (APPLY F (PAIR!FST E))))))
+  (NOT (= F G)) (NOT (= (IN E F) (IN E G))) (IS-FUNCTION F) (IS-FUNCTION G)
+  (= (REL!DOM F) (REL!DOM G)))
+ (NOT (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= X (PAIR!FST E)) to ...
+(IMPLIES
+ (AND (IS-FUNCTION G) (PAIR!IS-PAIR E) (IN (PAIR!FST E) (REL!DOM G))
+  (= (PAIR!SND E) (APPLY G (PAIR!FST E))) (= (IN E G) (TRUE)) (IS-FUNCTION F)
+  (IN (PAIR!FST E) (REL!DOM F)) (NOT (= (PAIR!SND E) (APPLY F (PAIR!FST E))))
+  (= (IN E F) (FALSE)) (= (REL!DOM F) (REL!DOM G)))
+ (NOT (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X))))))
+Instantiating (= X (PAIR!FST E)) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION G) (PAIR!IS-PAIR E) (IN (PAIR!FST E) (REL!DOM G))
+  (= (PAIR!SND E) (APPLY G (PAIR!FST E))) (IN E G) (IS-FUNCTION F)
+  (IN (PAIR!FST E) (REL!DOM F)) (NOT (= (PAIR!SND E) (APPLY F (PAIR!FST E))))
+  (NOT (IN E F)) (= (REL!DOM F) (REL!DOM G)))
+ (NOT
+  (AND
+   (IMPLIES (IN (PAIR!FST E) (REL!DOM F))
+    (= (APPLY F (PAIR!FST E)) (APPLY G (PAIR!FST E))))
+   (ALL (X) (IMPLIES (IN X (REL!DOM F)) (= (APPLY F X) (APPLY G X)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IN-RAN-FUNCTION
+Beginning proof of IN-RAN-FUNCTION ...
+(IMPLIES (IS-FUNCTION F)
+ (= (IN X (REL!RAN F)) (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y))))))
+Splitting on (IN X (REL!RAN F)) generates ...
+(IF (IN X (REL!RAN F))
+ (IMPLIES (IS-FUNCTION F)
+  (= (IN X (REL!RAN F))
+   (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y))))))
+ (IMPLIES (IS-FUNCTION F)
+  (= (IN X (REL!RAN F))
+   (SOME (Y$0) (AND (IN Y$0 (REL!DOM F)) (= X (APPLY F Y$0)))))))
+Which simplifies to ...
+(IF (IN X (REL!RAN F))
+ (IMPLIES (IS-FUNCTION F)
+  (= (TRUE) (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y))))))
+ (IMPLIES (IS-FUNCTION F)
+  (= (FALSE) (SOME (Y$0) (AND (IN Y$0 (REL!DOM F)) (= X (APPLY F Y$0)))))))
+Which simplifies
+ when rewriting with REL!IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (A) (IN (PAIR!PAIR A X) F))
+ (IMPLIES (IS-FUNCTION F)
+  (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y)))))
+ (IMPLIES (IS-FUNCTION F)
+  (NOT (SOME (Y$0) (AND (IN Y$0 (REL!DOM F)) (= X (APPLY F Y$0)))))))
+Starting case 2 ...
+(IMPLIES (AND (SOME (A) (IN (PAIR!PAIR A X) F)) (IS-FUNCTION F))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y)))))
+Instantiating (= Y A) gives ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR A X) F) (IS-FUNCTION F)
+  (NOT (AND (IN A (REL!DOM F)) (= X (APPLY F A)))))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y)))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X A) (= Y X) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR A X) F)) (= X (APPLY F A)))
+  (IN (PAIR!PAIR A X) F) (IS-FUNCTION F)
+  (NOT (AND (IN A (REL!DOM F)) (= X (APPLY F A)))))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= X (APPLY F Y)))))
+Which simplifies
+ when rewriting with REL!IN-DOM-1
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (AND (NOT (SOME (A) (IN (PAIR!PAIR A X) F))) (IS-FUNCTION F))
+ (NOT (SOME (Y$0) (AND (IN Y$0 (REL!DOM F)) (= X (APPLY F Y$0))))))
+Prenexing produces ...
+(IMPLIES (AND (NOT (SOME (A) (IN (PAIR!PAIR A X) F))) (IS-FUNCTION F))
+ (NOT (AND (IN Y (REL!DOM F)) (= X (APPLY F Y)))))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X Y) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN Y (REL!DOM F)))
+   (IN (PAIR!PAIR Y (APPLY F Y)) F))
+  (NOT (SOME (A) (IN (PAIR!PAIR A X) F))) (IS-FUNCTION F))
+ (NOT (AND (IN Y (REL!DOM F)) (= X (APPLY F Y)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IN Y (REL!DOM F)) (IN (PAIR!PAIR Y (APPLY F Y)) F)
+  (NOT (SOME (A) (IN (PAIR!PAIR A X) F))))
+ (NOT (= X (APPLY F Y))))
+Instantiating (= A Y) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IN Y (REL!DOM F)) (IN (PAIR!PAIR Y (APPLY F Y)) F)
+  (NOT (OR (IN (PAIR!PAIR Y X) F) (SOME (A) (IN (PAIR!PAIR A X) F)))))
+ (NOT (= X (APPLY F Y))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+FUNCTION-RAN-SUBSET
+Beginning proof of FUNCTION-RAN-SUBSET ...
+(IMPLIES (IS-FUNCTION F)
+ (= (SUBSET (REL!RAN F) S)
+  (ALL (X) (IMPLIES (IN X (REL!DOM F)) (IN (APPLY F X) S)))))
+Splitting on (AND (IS-FUNCTION F) (SUBSET (REL!RAN F) S)) generates ...
+(IF (AND (IS-FUNCTION F) (SUBSET (REL!RAN F) S))
+ (IMPLIES (IS-FUNCTION F)
+  (= (SUBSET (REL!RAN F) S)
+   (ALL (X) (IMPLIES (IN X (REL!DOM F)) (IN (APPLY F X) S)))))
+ (IMPLIES (IS-FUNCTION F)
+  (= (SUBSET (REL!RAN F) S)
+   (ALL (X$0) (IMPLIES (IN X$0 (REL!DOM F)) (IN (APPLY F X$0) S))))))
+Which simplifies to ...
+(IMPLIES (IS-FUNCTION F)
+ (IF (SUBSET (REL!RAN F) S)
+  (= (TRUE) (ALL (X) (IMPLIES (IN X (REL!DOM F)) (IN (APPLY F X) S))))
+  (= (FALSE) (ALL (X$0) (IMPLIES (IN X$0 (REL!DOM F)) (IN (APPLY F X$0) S))))))
+Assuming APPLY-UNIQUE with the instantiations: (= F F) generates ...
+(IMPLIES
+ (AND
+  (ALL (X Y)
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X Y) F)) (= Y (APPLY F X))))
+  (IS-FUNCTION F))
+ (IF (SUBSET (REL!RAN F) S)
+  (ALL (X$0) (IMPLIES (IN X$0 (REL!DOM F)) (IN (APPLY F X$0) S)))
+  (NOT (ALL (X$1) (IMPLIES (IN X$1 (REL!DOM F)) (IN (APPLY F X$1) S))))))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND
+  (ALL (X Y)
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X Y) F)) (= Y (APPLY F X))))
+  (IS-FUNCTION F))
+ (IF (ALL (E) (IMPLIES (IN E (REL!RAN F)) (IN E S)))
+  (ALL (X$0) (IMPLIES (IN X$0 (REL!DOM F)) (IN (APPLY F X$0) S)))
+  (NOT (ALL (X$1) (IMPLIES (IN X$1 (REL!DOM F)) (IN (APPLY F X$1) S))))))
+Which simplifies
+ when rewriting with REL!IN-DOM, REL!IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND (IS-FUNCTION F)
+  (ALL (X Y) (IMPLIES (IN (PAIR!PAIR X Y) F) (= Y (APPLY F X)))))
+ (IF (ALL (E A) (IMPLIES (IN (PAIR!PAIR A E) F) (IN E S)))
+  (ALL (X$0 B) (IMPLIES (IN (PAIR!PAIR X$0 B) F) (IN (APPLY F X$0) S)))
+  (NOT
+   (ALL (X$1 B$0) (IMPLIES (IN (PAIR!PAIR X$1 B$0) F) (IN (APPLY F X$1) S))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IS-FUNCTION F)
+  (ALL (X Y) (IMPLIES (IN (PAIR!PAIR X Y) F) (= Y (APPLY F X))))
+  (ALL (E A) (IMPLIES (IN (PAIR!PAIR A E) F) (IN E S))))
+ (ALL (X$0 B) (IMPLIES (IN (PAIR!PAIR X$0 B) F) (IN (APPLY F X$0) S))))
+Instantiating (= X X$0) (= Y B) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IMPLIES (IN (PAIR!PAIR X B) F) (= B (APPLY F X)))
+  (ALL (X$0 Y) (IMPLIES (IN (PAIR!PAIR X$0 Y) F) (= Y (APPLY F X$0))))
+  (ALL (E A) (IMPLIES (IN (PAIR!PAIR A E) F) (IN E S)))
+  (IN (PAIR!PAIR X B) F))
+ (IN (APPLY F X) S))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiations (= E (APPLY F X)) (= A X) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IS-FUNCTION F)
+  (ALL (X Y) (IMPLIES (IN (PAIR!PAIR X Y) F) (= Y (APPLY F X))))
+  (NOT (ALL (E A) (IMPLIES (IN (PAIR!PAIR A E) F) (IN E S)))))
+ (NOT
+  (ALL (X$1 B$0) (IMPLIES (IN (PAIR!PAIR X$1 B$0) F) (IN (APPLY F X$1) S)))))
+Instantiating (= X A) (= Y E) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F)
+  (SOME (E A)
+   (AND (IMPLIES (IN (PAIR!PAIR A E) F) (= E (APPLY F A)))
+    (ALL (X Y) (IMPLIES (IN (PAIR!PAIR X Y) F) (= Y (APPLY F X))))
+    (NOT (IMPLIES (IN (PAIR!PAIR A E) F) (IN E S))))))
+ (NOT (ALL (X$0 B) (IMPLIES (IN (PAIR!PAIR X$0 B) F) (IN (APPLY F X$0) S)))))
+Instantiating (= X$0 A) (= B E) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IMPLIES (IN (PAIR!PAIR A E) F) (= E (APPLY F A)))
+  (ALL (X Y) (IMPLIES (IN (PAIR!PAIR X Y) F) (= Y (APPLY F X))))
+  (NOT (IMPLIES (IN (PAIR!PAIR A E) F) (IN E S))))
+ (NOT
+  (AND (IMPLIES (IN (PAIR!PAIR A E) F) (IN (APPLY F A) S))
+   (ALL (X$0 B) (IMPLIES (IN (PAIR!PAIR X$0 B) F) (IN (APPLY F X$0) S))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+FUNCTION-IMAGE-UNIT
+Beginning proof of FUNCTION-IMAGE-UNIT ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (= (REL!IMAGE F (UNIT X)) (UNIT (APPLY F X))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE F (UNIT X))) (IN E (UNIT (APPLY F X)))
+   (NOT (IN E (UNIT (APPLY F X)))))))
+Assuming APPLY-UNIQUE with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (ALL (Y)
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X Y) F)) (= Y (APPLY F X))))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE F (UNIT X))) (IN E (UNIT (APPLY F X)))
+   (NOT (IN E (UNIT (APPLY F X)))))))
+Assuming APPLY.DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (=
+   (IF (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+    (IN (PAIR!PAIR X (APPLY F X)) F) (= (APPLY F X) (NULLSET)))
+   (TRUE))
+  (ALL (Y)
+   (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X Y) F)) (= Y (APPLY F X))))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE F (UNIT X))) (IN E (UNIT (APPLY F X)))
+   (NOT (IN E (UNIT (APPLY F X)))))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, REL!IN-IMAGE,
+SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Y E) to ...
+(TRUE)
+FUNCTION-IMAGE-SETADD
+Beginning proof of FUNCTION-IMAGE-SETADD ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (= (REL!IMAGE F (SETADD X Y)) (SETADD (APPLY F X) (REL!IMAGE F Y))))
+Assuming REL!IMAGE-OF-UNION with the
+instantiations: (= R F) (= X (UNIT X)) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (= (REL!IMAGE F (UNION (UNIT X) Y))
+   (UNION (REL!IMAGE F (UNIT X)) (REL!IMAGE F Y)))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (= (REL!IMAGE F (SETADD X Y)) (SETADD (APPLY F X) (REL!IMAGE F Y))))
+Assuming FUNCTION-IMAGE-UNIT with the
+instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (= (REL!IMAGE F (UNIT X)) (UNIT (APPLY F X))))
+  (= (REL!IMAGE F (UNION (UNIT X) Y))
+   (UNION (REL!IMAGE F (UNIT X)) (REL!IMAGE F Y)))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (= (REL!IMAGE F (SETADD X Y)) (SETADD (APPLY F X) (REL!IMAGE F Y))))
+Which simplifies
+ when rewriting with UNION.COMMUTATIVE, SETRULES!UNION-SUBSET-RIGHT,
+SUBSET.NULLSET.LEFT, SETRULES!SETADD-UNION-LEFT, SETRULES!UNIT-TO-SETADD
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IN X (REL!DOM F))
+  (= (REL!IMAGE F (SETADD X (NULLSET))) (SETADD (APPLY F X) (NULLSET)))
+  (= (REL!IMAGE F (SETADD X Y))
+   (UNION (REL!IMAGE F Y) (REL!IMAGE F (SETADD X (NULLSET))))))
+ (= (REL!IMAGE F (SETADD X Y)) (SETADD (APPLY F X) (REL!IMAGE F Y))))
+Substituting (= (REL!IMAGE F (SETADD X (NULLSET)))
+              (SETADD (APPLY F X) (NULLSET))) produces
+...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IN X (REL!DOM F))
+  (= (REL!IMAGE F (SETADD X (NULLSET))) (SETADD (APPLY F X) (NULLSET)))
+  (= (REL!IMAGE F (SETADD X Y))
+   (UNION (REL!IMAGE F Y) (SETADD (APPLY F X) (NULLSET)))))
+ (= (REL!IMAGE F (SETADD X Y)) (SETADD (APPLY F X) (REL!IMAGE F Y))))
+Which simplifies
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETRULES!SETADD-UNION-RIGHT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+IN-PRE-IMAGE-OF-FUNCTION
+Beginning proof of IN-PRE-IMAGE-OF-FUNCTION ...
+(IMPLIES (IS-FUNCTION F)
+ (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+  (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y))))
+Assuming REL!IN-IMAGE with the
+instantiations: (= R (REL!INVERSE F)) (= X Y) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+   (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z X) (REL!INVERSE F)))))
+  (IS-FUNCTION F))
+ (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+  (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y))))
+Splitting on (IN X (REL!IMAGE (REL!INVERSE F) Y)) generates ...
+(IF (IN X (REL!IMAGE (REL!INVERSE F) Y))
+ (IMPLIES
+  (AND
+   (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+    (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z X) (REL!INVERSE F)))))
+   (IS-FUNCTION F))
+  (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+   (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y))))
+ (IMPLIES
+  (AND
+   (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+    (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 X) (REL!INVERSE F)))))
+   (IS-FUNCTION F))
+  (= (IN X (REL!IMAGE (REL!INVERSE F) Y))
+   (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y)))))
+Which simplifies
+ when rewriting with REL!FLIP-PAIR-PAIR, REL!IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions REL!FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, REL!INVERSE-INVERSE to ...
+(IF (IN X (REL!IMAGE (REL!INVERSE F) Y))
+ (IMPLIES
+  (AND (= (TRUE) (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR X Z) F))))
+   (IS-FUNCTION F))
+  (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y)))
+ (IMPLIES
+  (AND (= (FALSE) (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR X Z$0) F))))
+   (IS-FUNCTION F) (IN X (REL!DOM F)))
+  (NOT (IN (APPLY F X) Y))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IN X (REL!IMAGE (REL!INVERSE F) Y))
+  (= (TRUE) (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR X Z) F)))) (IS-FUNCTION F))
+ (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y)))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN X (REL!IMAGE (REL!INVERSE F) Y)) (IN Z Y) (IN (PAIR!PAIR X Z) F)
+  (IS-FUNCTION F))
+ (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y)))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X X) (= Y Z) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X Z) F)) (= Z (APPLY F X)))
+  (IN X (REL!IMAGE (REL!INVERSE F) Y)) (IN Z Y) (IN (PAIR!PAIR X Z) F)
+  (IS-FUNCTION F))
+ (AND (IN X (REL!DOM F)) (IN (APPLY F X) Y)))
+Which simplifies
+ when rewriting with REL!IN-DOM-1
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions REL!INVERSE-INVERSE, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (IN X (REL!IMAGE (REL!INVERSE F) Y)))
+  (= (FALSE) (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR X Z$0) F))))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (NOT (IN (APPLY F X) Y)))
+Instantiating (= Z$0 (APPLY F X)) gives ...
+(IMPLIES
+ (AND (NOT (IN X (REL!IMAGE (REL!INVERSE F) Y)))
+  (NOT
+   (OR (AND (IN (APPLY F X) Y) (IN (PAIR!PAIR X (APPLY F X)) F))
+    (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR X Z) F)))))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (NOT (IN (APPLY F X) Y)))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (NOT (IN X (REL!IMAGE (REL!INVERSE F) Y)))
+  (NOT
+   (OR (AND (IN (APPLY F X) Y) (IN (PAIR!PAIR X (APPLY F X)) F))
+    (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR X Z) F)))))
+  (IS-FUNCTION F) (IN X (REL!DOM F)))
+ (NOT (IN (APPLY F X) Y)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions REL!INVERSE-INVERSE, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+RAN-DOM-REMOVE-FUNCTION
+Beginning proof of RAN-DOM-REMOVE-FUNCTION ...
+(IMPLIES (IS-FUNCTION (REL!INVERSE R))
+ (= (REL!RAN (REL!DOM-REMOVE X R)) (DIFF (REL!RAN R) (REL!IMAGE R X))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IS-FUNCTION (REL!INVERSE R))
+ (ALL (E)
+  (IF (IN E (REL!RAN (REL!DOM-REMOVE X R)))
+   (IN E (DIFF (REL!RAN R) (REL!IMAGE R X)))
+   (NOT (IN E (DIFF (REL!RAN R) (REL!IMAGE R X)))))))
+Which simplifies
+ when rewriting with REL!IN-IMAGE, DIFF.DEFINITION, REL!IN-DOM-REMOVE,
+REL!IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!IS-PAIR-BOOL,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, REL!INVERSE-INVERSE to ...
+(IMPLIES (IS-FUNCTION (REL!INVERSE R))
+ (ALL (E Z A)
+  (IF (SOME (A$0) (AND (IN (PAIR!PAIR A$0 E) R) (NOT (IN A$0 X))))
+   (AND (SOME (A$1) (IN (PAIR!PAIR A$1 E) R))
+    (NOT (AND (IN Z X) (IN (PAIR!PAIR Z E) R))))
+   (IMPLIES (IN (PAIR!PAIR A E) R)
+    (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))))))
+Prenexing produces ...
+(IMPLIES (IS-FUNCTION (REL!INVERSE R))
+ (IF (SOME (A$0) (AND (IN (PAIR!PAIR A$0 E) R) (NOT (IN A$0 X))))
+  (AND (SOME (A$1) (IN (PAIR!PAIR A$1 E) R))
+   (NOT (AND (IN Z X) (IN (PAIR!PAIR Z E) R))))
+  (IMPLIES (IN (PAIR!PAIR A E) R)
+   (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IS-FUNCTION (REL!INVERSE R))
+  (SOME (A$0) (AND (IN (PAIR!PAIR A$0 E) R) (NOT (IN A$0 X)))))
+ (AND (SOME (A$1) (IN (PAIR!PAIR A$1 E) R))
+  (NOT (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FUNCTION (REL!INVERSE R)) (IN (PAIR!PAIR A E) R) (NOT (IN A X)))
+ (AND (SOME (A$0) (IN (PAIR!PAIR A$0 E) R))
+  (NOT (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))))
+Assuming FUNCTION-PROPERTY with the
+instantiations: (= F (REL!INVERSE R)) (= A E) (= B A) (= C Z) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (REL!INVERSE R)) (IN (PAIR!PAIR E A) (REL!INVERSE R))
+    (IN (PAIR!PAIR E Z) (REL!INVERSE R)))
+   (= A Z))
+  (IS-FUNCTION (REL!INVERSE R)) (IN (PAIR!PAIR A E) R) (NOT (IN A X)))
+ (AND (SOME (A$0) (IN (PAIR!PAIR A$0 E) R))
+  (NOT (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))))
+Which simplifies
+ when rewriting with REL!FLIP-PAIR-PAIR, REL!IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions REL!FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, REL!INVERSE-INVERSE
+ with the instantiation (= A$0 A) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IS-FUNCTION (REL!INVERSE R))
+  (NOT (SOME (A$0) (AND (IN (PAIR!PAIR A$0 E) R) (NOT (IN A$0 X)))))
+  (IN (PAIR!PAIR A E) R))
+ (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R))))
+Instantiating (= Z$0 A) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION (REL!INVERSE R))
+  (NOT (SOME (A$0) (AND (IN (PAIR!PAIR A$0 E) R) (NOT (IN A$0 X)))))
+  (IN (PAIR!PAIR A E) R) (NOT (AND (IN A X) (IN (PAIR!PAIR A E) R))))
+ (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z E) R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!INVERSE-INVERSE
+ with the instantiation (= A$0 A) to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+DOM-RAN-REMOVE-FUNCTION
+Beginning proof of DOM-RAN-REMOVE-FUNCTION ...
+(IMPLIES (IS-FUNCTION R)
+ (= (REL!DOM (REL!RAN-REMOVE R X))
+  (DIFF (REL!DOM R) (REL!IMAGE (REL!INVERSE R) X))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IS-FUNCTION R)
+ (ALL (E)
+  (IF (IN E (REL!DOM (REL!RAN-REMOVE R X)))
+   (IN E (DIFF (REL!DOM R) (REL!IMAGE (REL!INVERSE R) X)))
+   (NOT (IN E (DIFF (REL!DOM R) (REL!IMAGE (REL!INVERSE R) X)))))))
+Which simplifies
+ when rewriting with IN-PRE-IMAGE-OF-FUNCTION, DIFF.DEFINITION,
+REL!IN-RAN-REMOVE, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, REL!INVERSE-INVERSE,
+PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (IS-FUNCTION R)
+ (ALL (E B)
+  (IF (SOME (B$0) (AND (IN (PAIR!PAIR E B$0) R) (NOT (IN B$0 X))))
+   (AND (SOME (B$1) (IN (PAIR!PAIR E B$1) R)) (NOT (IN (APPLY R E) X)))
+   (IMPLIES (IN (PAIR!PAIR E B) R) (IN (APPLY R E) X)))))
+Prenexing produces ...
+(IMPLIES (IS-FUNCTION R)
+ (IF (SOME (B$0) (AND (IN (PAIR!PAIR E B$0) R) (NOT (IN B$0 X))))
+  (AND (SOME (B$1) (IN (PAIR!PAIR E B$1) R)) (NOT (IN (APPLY R E) X)))
+  (IMPLIES (IN (PAIR!PAIR E B) R) (IN (APPLY R E) X))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IS-FUNCTION R)
+  (SOME (B$0) (AND (IN (PAIR!PAIR E B$0) R) (NOT (IN B$0 X)))))
+ (AND (SOME (B$1) (IN (PAIR!PAIR E B$1) R)) (NOT (IN (APPLY R E) X))))
+Prenexing produces ...
+(IMPLIES (AND (IS-FUNCTION R) (IN (PAIR!PAIR E B) R) (NOT (IN B X)))
+ (AND (SOME (B$0) (IN (PAIR!PAIR E B$0) R)) (NOT (IN (APPLY R E) X))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F R) (= X E) (= Y B) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION R) (IN (PAIR!PAIR E B) R)) (= B (APPLY R E)))
+  (IS-FUNCTION R) (IN (PAIR!PAIR E B) R) (NOT (IN B X)))
+ (AND (SOME (B$0) (IN (PAIR!PAIR E B$0) R)) (NOT (IN (APPLY R E) X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= B$0 B) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IS-FUNCTION R)
+  (NOT (SOME (B$0) (AND (IN (PAIR!PAIR E B$0) R) (NOT (IN B$0 X)))))
+  (IN (PAIR!PAIR E B) R))
+ (IN (APPLY R E) X))
+Instantiating (= B$0 B) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION R)
+  (NOT
+   (OR (AND (IN (PAIR!PAIR E B) R) (NOT (IN B X)))
+    (SOME (B$0) (AND (IN (PAIR!PAIR E B$0) R) (NOT (IN B$0 X))))))
+  (IN (PAIR!PAIR E B) R))
+ (IN (APPLY R E) X))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F R) (= X E) (= Y B) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION R) (IN (PAIR!PAIR E B) R)) (= B (APPLY R E)))
+  (IS-FUNCTION R)
+  (NOT
+   (OR (AND (IN (PAIR!PAIR E B) R) (NOT (IN B X)))
+    (SOME (B$0) (AND (IN (PAIR!PAIR E B$0) R) (NOT (IN B$0 X))))))
+  (IN (PAIR!PAIR E B) R))
+ (IN (APPLY R E) X))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+APPLY-SUBSET
+Beginning proof of APPLY-SUBSET ...
+(IMPLIES (AND (IS-FUNCTION G) (SUBSET F G) (IN X (REL!DOM F)))
+ (= (APPLY F X) (APPLY G X)))
+Assuming IS-FUNCTION-SUBSET with the instantiations: (= X F) (= Y G) generates
+...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION G) (SUBSET F G)) (IS-FUNCTION F))
+  (IS-FUNCTION G) (SUBSET F G) (IN X (REL!DOM F)))
+ (= (APPLY F X) (APPLY G X)))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F G) (= X X) (= Y (APPLY F X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY F X)) G))
+   (= (APPLY F X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION G) (SUBSET F G)) (IS-FUNCTION F)) (IS-FUNCTION G)
+  (SUBSET F G) (IN X (REL!DOM F)))
+ (= (APPLY F X) (APPLY G X)))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY F X)) G))
+   (= (APPLY F X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION G) (SUBSET F G)) (IS-FUNCTION F)) (IS-FUNCTION G)
+  (SUBSET F G) (IN X (REL!DOM F)))
+ (= (APPLY F X) (APPLY G X)))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION G) (SUBSET F G) (IN X (REL!DOM F))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY F X)) G))
+   (= (APPLY F X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION G) (SUBSET F G)) (IS-FUNCTION F)))
+ (= (APPLY F X) (APPLY G X)))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (IS-FUNCTION G) (ALL (E) (IMPLIES (IN E F) (IN E G))) (IN X (REL!DOM F))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY F X)) G))
+   (= (APPLY F X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION G) (ALL (E$0) (IMPLIES (IN E$0 F) (IN E$0 G))))
+   (IS-FUNCTION F)))
+ (= (APPLY F X) (APPLY G X)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiations (= E (PAIR!PAIR X (APPLY F X))) (= E E$0) to ...
+(TRUE)
+IS-FUNCTION-NULLSET
+Beginning proof of IS-FUNCTION-NULLSET ...
+(= (IS-FUNCTION (NULLSET)) (TRUE))
+Which simplifies
+ with invocation of IS-FUNCTION
+ when rewriting with NULLSET.DEFINITION, REL!IS-RELATION-NULLSET
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!IS-RELATION-BOOL to ...
+(TRUE)
+IS-FUNCTION-UNIT
+Beginning proof of IS-FUNCTION-UNIT ...
+(= (IS-FUNCTION (UNIT X)) (PAIR!IS-PAIR X))
+Which simplifies
+ with invocation of IS-FUNCTION
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION,
+REL!IS-RELATION-NULLSET, REL!IS-RELATION-SETADD, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, REL!IS-RELATION-BOOL to ...
+(TRUE)
+APPLY-UNIT-PAIR
+Beginning proof of APPLY-UNIT-PAIR ...
+(IMPLIES (= Z X) (= (APPLY (UNIT (PAIR!PAIR X Y)) Z) Y))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F (UNIT (PAIR!PAIR X Y))) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (UNIT (PAIR!PAIR X Y)))
+    (IN X (REL!DOM (UNIT (PAIR!PAIR X Y)))))
+   (IN (PAIR!PAIR X (APPLY (UNIT (PAIR!PAIR X Y)) X)) (UNIT (PAIR!PAIR X Y))))
+  (= Z X))
+ (= (APPLY (UNIT (PAIR!PAIR X Y)) Z) Y))
+Which simplifies
+ when rewriting with UNIT.DEFINITION, REL!DOM-UNIT, IS-FUNCTION-UNIT
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IS-FUNCTION-UNION
+Beginning proof of IS-FUNCTION-UNION ...
+(= (IS-FUNCTION (UNION F G))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Splitting on (IS-FUNCTION (UNION F G)) generates ...
+(IF (IS-FUNCTION (UNION F G))
+ (= (IS-FUNCTION (UNION F G))
+  (AND (IS-FUNCTION F) (IS-FUNCTION G)
+   (ALL (X)
+    (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+     (= (APPLY F X) (APPLY G X))))))
+ (= (IS-FUNCTION (UNION F G))
+  (AND (IS-FUNCTION F) (IS-FUNCTION G)
+   (ALL (X$0)
+    (IMPLIES (IN X$0 (INTER (REL!DOM F) (REL!DOM G)))
+     (= (APPLY F X$0) (APPLY G X$0)))))))
+Starting case 2 ...
+(IMPLIES (IS-FUNCTION (UNION F G))
+ (= (IS-FUNCTION (UNION F G))
+  (AND (IS-FUNCTION F) (IS-FUNCTION G)
+   (ALL (X)
+    (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+     (= (APPLY F X) (APPLY G X)))))))
+Which simplifies
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES (IS-FUNCTION (UNION F G))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X F) (= Y (UNION F G)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IS-FUNCTION (UNION F G)))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X G) (= Y (UNION F G)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IS-FUNCTION (UNION F G)))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IS-FUNCTION (UNION F G)))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+   (= (APPLY F X) (APPLY G X)))))
+Assuming APPLY-SUBSET with the
+instantiations: (= F F) (= G (UNION F G)) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)) (IN X (REL!DOM F)))
+   (= (APPLY F X) (APPLY (UNION F G) X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IS-FUNCTION (UNION F G)))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+   (= (APPLY F X) (APPLY G X)))))
+Assuming APPLY-SUBSET with the
+instantiations: (= F G) (= G (UNION F G)) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)) (IN X (REL!DOM G)))
+   (= (APPLY G X) (APPLY (UNION F G) X)))
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)) (IN X (REL!DOM F)))
+   (= (APPLY F X) (APPLY (UNION F G) X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IS-FUNCTION (UNION F G)))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+   (= (APPLY F X) (APPLY G X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION (UNION F G))
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)) (IN X (REL!DOM G)))
+   (= (APPLY G X) (APPLY (UNION F G) X)))
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)) (IN X (REL!DOM F)))
+   (= (APPLY F X) (APPLY (UNION F G) X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F)))
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+   (= (APPLY F X) (APPLY G X)))))
+Which simplifies
+ when rewriting with INTER.DEFINITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (NOT (IS-FUNCTION (UNION F G)))
+ (= (IS-FUNCTION (UNION F G))
+  (AND (IS-FUNCTION F) (IS-FUNCTION G)
+   (ALL (X$0)
+    (IMPLIES (IN X$0 (INTER (REL!DOM F) (REL!DOM G)))
+     (= (APPLY F X$0) (APPLY G X$0)))))))
+Which simplifies
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES (AND (NOT (IS-FUNCTION (UNION F G))) (IS-FUNCTION F) (IS-FUNCTION G))
+ (NOT
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Splitting on (AND (IS-FUNCTION F) (IS-FUNCTION G)) generates ...
+(IF (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (IMPLIES
+  (AND (NOT (IS-FUNCTION (UNION F G))) (IS-FUNCTION F) (IS-FUNCTION G))
+  (NOT
+   (ALL (X)
+    (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+     (= (APPLY F X) (APPLY G X))))))
+ (IMPLIES
+  (AND (NOT (IS-FUNCTION (UNION F G))) (IS-FUNCTION F) (IS-FUNCTION G))
+  (NOT
+   (ALL (X$0)
+    (IMPLIES (IN X$0 (INTER (REL!DOM F) (REL!DOM G)))
+     (= (APPLY F X$0) (APPLY G X$0)))))))
+Which simplifies
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IS-FUNCTION (UNION F G))))
+ (NOT
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Invoking (IS-FUNCTION (UNION F G)) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (NOT
+   (AND (REL!IS-RELATION (UNION F G))
+    (ALL (A B C)
+     (IMPLIES
+      (AND (IN (PAIR!PAIR A B) (UNION F G)) (IN (PAIR!PAIR A C) (UNION F G)))
+      (= B C))))))
+ (NOT
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (NOT
+   (AND (REL!IS-RELATION (UNION F G))
+    (IMPLIES
+     (AND (IN (PAIR!PAIR A B) (UNION F G)) (IN (PAIR!PAIR A C) (UNION F G)))
+     (= B C)))))
+ (NOT
+  (ALL (X)
+   (IMPLIES (IN X (INTER (REL!DOM F) (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Which simplifies
+ when rewriting with INTER.DEFINITION, UNION.DEFINITION, REL!IS-RELATION-UNION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FUNCTION-IS-RELATION, REL!IS-RELATION-BOOL,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (IF (IN (PAIR!PAIR A B) F)
+  (IF (IN (PAIR!PAIR A C) F)
+   (OR (= B C)
+    (NOT
+     (ALL (X)
+      (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+       (= (APPLY F X) (APPLY G X))))))
+   (IMPLIES (IN (PAIR!PAIR A C) G)
+    (NOT
+     (ALL (X$0)
+      (IMPLIES (AND (IN X$0 (REL!DOM F)) (IN X$0 (REL!DOM G)))
+       (= (APPLY F X$0) (APPLY G X$0)))))))
+  (IMPLIES (IN (PAIR!PAIR A B) G)
+   (IF (IN (PAIR!PAIR A C) F)
+    (NOT
+     (ALL (X$1)
+      (IMPLIES (AND (IN X$1 (REL!DOM F)) (IN X$1 (REL!DOM G)))
+       (= (APPLY F X$1) (APPLY G X$1)))))
+    (IMPLIES (AND (IN (PAIR!PAIR A C) G) (NOT (= B C)))
+     (NOT
+      (ALL (X$2)
+       (IMPLIES (AND (IN X$2 (REL!DOM F)) (IN X$2 (REL!DOM G)))
+        (= (APPLY F X$2) (APPLY G X$2))))))))))
+Starting case 1.2 ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F))
+ (IF (IN (PAIR!PAIR A C) F)
+  (OR (= B C)
+   (NOT
+    (ALL (X)
+     (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+      (= (APPLY F X) (APPLY G X))))))
+  (IMPLIES (IN (PAIR!PAIR A C) G)
+   (NOT
+    (ALL (X$0)
+     (IMPLIES (AND (IN X$0 (REL!DOM F)) (IN X$0 (REL!DOM G)))
+      (= (APPLY F X$0) (APPLY G X$0))))))))
+Starting case 1.2.2 ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (IN (PAIR!PAIR A C) F) (NOT (= B C)))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X A) (= Y B) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR A B) F)) (= B (APPLY F A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (IN (PAIR!PAIR A C) F) (NOT (= B C)))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X A) (= Y C) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR A C) F)) (= C (APPLY F A)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR A B) F)) (= B (APPLY F A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (IN (PAIR!PAIR A C) F) (NOT (= B C)))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1.2.1 ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G))
+ (NOT
+  (ALL (X$0)
+   (IMPLIES (AND (IN X$0 (REL!DOM F)) (IN X$0 (REL!DOM G)))
+    (= (APPLY F X$0) (APPLY G X$0))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F G) (= X A) (= Y C) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A C) G)) (= C (APPLY G A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X A) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN A (REL!DOM F)))
+   (IN (PAIR!PAIR A (APPLY F A)) F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A C) G)) (= C (APPLY G A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Instantiating (= X A) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN A (REL!DOM F)))
+   (IN (PAIR!PAIR A (APPLY F A)) F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A C) G)) (= C (APPLY G A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A B) F)
+  (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G))
+ (NOT
+  (AND
+   (IMPLIES (AND (IN A (REL!DOM F)) (IN A (REL!DOM G)))
+    (= (APPLY F A) (APPLY G A)))
+   (ALL (X)
+    (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+     (= (APPLY F X) (APPLY G X)))))))
+Which simplifies
+ when rewriting with REL!IN-DOM-1, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1.1 ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G))
+ (IF (IN (PAIR!PAIR A C) F)
+  (NOT
+   (ALL (X$1)
+    (IMPLIES (AND (IN X$1 (REL!DOM F)) (IN X$1 (REL!DOM G)))
+     (= (APPLY F X$1) (APPLY G X$1)))))
+  (IMPLIES (AND (IN (PAIR!PAIR A C) G) (NOT (= B C)))
+   (NOT
+    (ALL (X$2)
+     (IMPLIES (AND (IN X$2 (REL!DOM F)) (IN X$2 (REL!DOM G)))
+      (= (APPLY F X$2) (APPLY G X$2))))))))
+Starting case 1.1.2 ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (IN (PAIR!PAIR A C) F))
+ (NOT
+  (ALL (X$1)
+   (IMPLIES (AND (IN X$1 (REL!DOM F)) (IN X$1 (REL!DOM G)))
+    (= (APPLY F X$1) (APPLY G X$1))))))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X A) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN A (REL!DOM F)))
+   (IN (PAIR!PAIR A (APPLY F A)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (IN (PAIR!PAIR A C) F))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F G) (= X A) (= Y B) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A B) G)) (= B (APPLY G A)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN A (REL!DOM F)))
+   (IN (PAIR!PAIR A (APPLY F A)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (IN (PAIR!PAIR A C) F))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (IN (PAIR!PAIR A C) F)
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A B) G)) (= B (APPLY G A)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN A (REL!DOM F)))
+   (IN (PAIR!PAIR A (APPLY F A)) F)))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Instantiating (= X A) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (IN (PAIR!PAIR A C) F)
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A B) G)) (= B (APPLY G A)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN A (REL!DOM F)))
+   (IN (PAIR!PAIR A (APPLY F A)) F)))
+ (NOT
+  (AND
+   (IMPLIES (AND (IN A (REL!DOM F)) (IN A (REL!DOM G)))
+    (= (APPLY F A) (APPLY G A)))
+   (ALL (X)
+    (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+     (= (APPLY F X) (APPLY G X)))))))
+Which simplifies
+ when rewriting with REL!IN-DOM-1
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1.1.1 ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G)
+  (NOT (= B C)))
+ (NOT
+  (ALL (X$2)
+   (IMPLIES (AND (IN X$2 (REL!DOM F)) (IN X$2 (REL!DOM G)))
+    (= (APPLY F X$2) (APPLY G X$2))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F G) (= X A) (= Y B) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A B) G)) (= B (APPLY G A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G)
+  (NOT (= B C)))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F G) (= X A) (= Y C) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A C) G)) (= C (APPLY G A)))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR A B) G)) (= B (APPLY G A)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (NOT (IN (PAIR!PAIR A B) F))
+  (IN (PAIR!PAIR A B) G) (NOT (IN (PAIR!PAIR A C) F)) (IN (PAIR!PAIR A C) G)
+  (NOT (= B C)))
+ (NOT
+  (ALL (X)
+   (IMPLIES (AND (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+    (= (APPLY F X) (APPLY G X))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+APPLY-UNION-LEMMA
+Beginning proof of APPLY-UNION-LEMMA ...
+(IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+ (= (APPLY F X) (APPLY G X)))
+Which simplifies
+ when rewriting with INTER.DEFINITION, IS-FUNCTION-UNION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+APPLY-UNION
+Beginning proof of APPLY-UNION ...
+(IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F (UNION F G)) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+   (IN (PAIR!PAIR X (APPLY (UNION F G) X)) (UNION F G)))
+  (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X X) (= Y (APPLY (UNION F G) X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+   (IN (PAIR!PAIR X (APPLY (UNION F G) X)) (UNION F G)))
+  (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F G) (= X X) (= Y (APPLY (UNION F G) X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+   (= (APPLY (UNION F G) X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+   (IN (PAIR!PAIR X (APPLY (UNION F G) X)) (UNION F G)))
+  (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X F) (= Y (UNION F G)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+   (= (APPLY (UNION F G) X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+   (IN (PAIR!PAIR X (APPLY (UNION F G) X)) (UNION F G)))
+  (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X G) (= Y (UNION F G)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+   (= (APPLY (UNION F G) X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+   (IN (PAIR!PAIR X (APPLY (UNION F G) X)) (UNION F G)))
+  (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET G (UNION F G)))
+   (IS-FUNCTION G))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (SUBSET F (UNION F G)))
+   (IS-FUNCTION F))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+   (= (APPLY (UNION F G) X) (APPLY G X)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM (UNION F G))))
+   (IN (PAIR!PAIR X (APPLY (UNION F G) X)) (UNION F G))))
+ (= (APPLY (UNION F G) X) (IF (IN X (REL!DOM F)) (APPLY F X) (APPLY G X))))
+Which simplifies
+ when rewriting with UNION.DEFINITION, REL!DOM-UNION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES (IS-FUNCTION (UNION F G))
+ (IF (IN X (REL!DOM F))
+  (IMPLIES
+   (AND (IS-FUNCTION G) (IS-FUNCTION F)
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G)
+    (= (APPLY (UNION F G) X) (APPLY G X))
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES
+   (AND (IN X (REL!DOM G)) (IS-FUNCTION G) (IS-FUNCTION F)
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)
+    (= (APPLY (UNION F G) X) (APPLY F X)))
+   (= (APPLY (UNION F G) X) (APPLY G X)))))
+Assuming REL!IN-DOM-1 with the
+instantiations: (= A X) (= B (APPLY (UNION F G) X)) (= X F) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)
+   (= (IN X (REL!DOM F)) (TRUE)))
+  (IS-FUNCTION (UNION F G)))
+ (IF (IN X (REL!DOM F))
+  (IMPLIES
+   (AND (IS-FUNCTION G) (IS-FUNCTION F)
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G)
+    (= (APPLY (UNION F G) X) (APPLY G X))
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES
+   (AND (IN X (REL!DOM G)) (IS-FUNCTION G) (IS-FUNCTION F)
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)
+    (= (APPLY (UNION F G) X) (APPLY F X)))
+   (= (APPLY (UNION F G) X) (APPLY G X)))))
+Assuming REL!IN-DOM-1 with the
+instantiations: (= A X) (= B (APPLY (UNION F G) X)) (= X G) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G)
+   (= (IN X (REL!DOM G)) (TRUE)))
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F) (IN X (REL!DOM F)))
+  (IS-FUNCTION (UNION F G)))
+ (IF (IN X (REL!DOM F))
+  (IMPLIES
+   (AND (IS-FUNCTION G) (IS-FUNCTION F)
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G)
+    (= (APPLY (UNION F G) X) (APPLY G X))
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES
+   (AND (IN X (REL!DOM G)) (IS-FUNCTION G) (IS-FUNCTION F)
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)
+    (= (APPLY (UNION F G) X) (APPLY F X)))
+   (= (APPLY (UNION F G) X) (APPLY G X)))))
+Assuming APPLY-UNION-LEMMA with the
+instantiations: (= F F) (= G G) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+   (= (APPLY F X) (APPLY G X)))
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G) (IN X (REL!DOM G)))
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F) (IN X (REL!DOM F)))
+  (IS-FUNCTION (UNION F G)))
+ (IF (IN X (REL!DOM F))
+  (IMPLIES
+   (AND (IS-FUNCTION G) (IS-FUNCTION F)
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G)
+    (= (APPLY (UNION F G) X) (APPLY G X))
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES
+   (AND (IN X (REL!DOM G)) (IS-FUNCTION G) (IS-FUNCTION F)
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)
+    (= (APPLY (UNION F G) X) (APPLY F X)))
+   (= (APPLY (UNION F G) X) (APPLY G X)))))
+Assuming REL!IN-DOM with the instantiations: (= A X) (= X F) generates ...
+(IMPLIES
+ (AND (= (IN X (REL!DOM F)) (SOME (B) (IN (PAIR!PAIR X B) F)))
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION F G)) (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+   (= (APPLY F X) (APPLY G X)))
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G) (IN X (REL!DOM G)))
+  (IMPLIES (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F) (IN X (REL!DOM F)))
+  (IS-FUNCTION (UNION F G)))
+ (IF (IN X (REL!DOM F))
+  (IMPLIES
+   (AND (IS-FUNCTION G) (IS-FUNCTION F)
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G)
+    (= (APPLY (UNION F G) X) (APPLY G X))
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)))
+   (= (APPLY (UNION F G) X) (APPLY F X)))
+  (IMPLIES
+   (AND (IN X (REL!DOM G)) (IS-FUNCTION G) (IS-FUNCTION F)
+    (NOT (IN (PAIR!PAIR X (APPLY (UNION F G) X)) G))
+    (IN (PAIR!PAIR X (APPLY (UNION F G) X)) F)
+    (= (APPLY (UNION F G) X) (APPLY F X)))
+   (= (APPLY (UNION F G) X) (APPLY G X)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IS-FUNCTION-SETADD
+Beginning proof of IS-FUNCTION-SETADD ...
+(= (IS-FUNCTION (SETADD X F))
+ (AND (IS-FUNCTION F) (PAIR!IS-PAIR X)
+  (IMPLIES (IN (PAIR!FST X) (REL!DOM F)) (IN X F))))
+Assuming IS-FUNCTION-UNION with the
+instantiations: (= F (UNIT X)) (= G F) generates ...
+(IMPLIES
+ (= (IS-FUNCTION (UNION (UNIT X) F))
+  (AND (IS-FUNCTION (UNIT X)) (IS-FUNCTION F)
+   (ALL (X$0)
+    (IMPLIES (IN X$0 (INTER (REL!DOM (UNIT X)) (REL!DOM F)))
+     (= (APPLY (UNIT X) X$0) (APPLY F X$0))))))
+ (= (IS-FUNCTION (SETADD X F))
+  (AND (IS-FUNCTION F) (PAIR!IS-PAIR X)
+   (IMPLIES (IN (PAIR!FST X) (REL!DOM F)) (IN X F)))))
+Assuming IS-FUNCTION-UNIT with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (= (IS-FUNCTION (UNIT X)) (PAIR!IS-PAIR X))
+  (= (IS-FUNCTION (UNION (UNIT X) F))
+   (AND (IS-FUNCTION (UNIT X)) (IS-FUNCTION F)
+    (ALL (X$0)
+     (IMPLIES (IN X$0 (INTER (REL!DOM (UNIT X)) (REL!DOM F)))
+      (= (APPLY (UNIT X) X$0) (APPLY F X$0)))))))
+ (= (IS-FUNCTION (SETADD X F))
+  (AND (IS-FUNCTION F) (PAIR!IS-PAIR X)
+   (IMPLIES (IN (PAIR!FST X) (REL!DOM F)) (IN X F)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, INTER.DEFINITION,
+REL!DOM-NULLSET, REL!DOM-SETADD, SETRULES!UNION-SUBSET-RIGHT,
+SUBSET.NULLSET.LEFT, SETRULES!SETADD-UNION-LEFT, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F)))
+ (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+  (IMPLIES (= (IS-FUNCTION (SETADD X F)) (TRUE)) (IN X F))
+  (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F)))))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F F) (= X (PAIR!FST X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!FST X) (REL!DOM F)))
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F))
+  (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F)))
+ (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+  (IMPLIES (IS-FUNCTION (SETADD X F)) (IN X F))
+  (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F)))))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F (UNIT X)) (= X (PAIR!FST X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNIT X)) (IN (PAIR!FST X) (REL!DOM (UNIT X))))
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY (UNIT X) (PAIR!FST X))) (UNIT X)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!FST X) (REL!DOM F)))
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F))
+  (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F)))
+ (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+  (IMPLIES (IS-FUNCTION (SETADD X F)) (IN X F))
+  (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F))
+  (IMPLIES (AND (IS-FUNCTION (UNIT X)) (IN (PAIR!FST X) (REL!DOM (UNIT X))))
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY (UNIT X) (PAIR!FST X))) (UNIT X)))
+  (IMPLIES (AND (IS-FUNCTION F) (IN (PAIR!FST X) (REL!DOM F)))
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)))
+ (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+  (IMPLIES (IS-FUNCTION (SETADD X F)) (IN X F))
+  (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F)))))
+Substituting  produces ...
+(IMPLIES
+ (AND (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F)))
+ (IF (IS-FUNCTION (UNIT X))
+  (IF (IN (PAIR!FST X) (REL!DOM (UNIT X)))
+   (IMPLIES
+    (AND (IN (PAIR!PAIR (PAIR!FST X) (APPLY (UNIT X) (PAIR!FST X))) (UNIT X))
+     (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F))
+    (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+     (IMPLIES (IS-FUNCTION (SETADD X F)) (IN X F))
+     (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F)))))
+   (IMPLIES (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+    (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+     (IMPLIES (IS-FUNCTION (SETADD X F)) (IN X F))
+     (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F))))))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (IF (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X)))
+    (IMPLIES (IS-FUNCTION (SETADD X F)) (IN X F))
+    (IMPLIES (= (IS-FUNCTION (SETADD X F)) (FALSE)) (NOT (IN X F)))))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, REL!DOM-NULLSET,
+REL!DOM-SETADD, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F))
+  (= (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) X)
+  (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+  (NOT (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+  (= (IS-FUNCTION (SETADD X F)) (FALSE)))
+ (NOT (IN X F)))
+Splitting on (IS-FUNCTION (SETADD X F)) generates ...
+(IF (IS-FUNCTION (SETADD X F))
+ (IMPLIES
+  (AND (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+   (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+   (IN (PAIR!FST X) (REL!DOM F))
+   (= (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) X)
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (NOT (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+   (= (IS-FUNCTION (SETADD X F)) (FALSE)))
+  (NOT (IN X F)))
+ (IMPLIES
+  (AND (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+   (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+   (IN (PAIR!FST X) (REL!DOM F))
+   (= (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) X)
+   (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+   (NOT (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+   (= (IS-FUNCTION (SETADD X F)) (FALSE)))
+  (NOT (IN X F))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F F) (= X (PAIR!FST X))
+                (= Y (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION F)
+    (IN (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) F))
+   (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+  (IF (IS-FUNCTION (SETADD X F))
+   (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+   (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X)))
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F))
+  (= (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) X)
+  (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+  (NOT (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+  (= (IS-FUNCTION (SETADD X F)) (FALSE)))
+ (NOT (IN X F)))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) X)
+  (IS-FUNCTION (SETADD X (NULLSET))) (IS-FUNCTION F)
+  (IN (PAIR!FST X) (REL!DOM F))
+  (IN (PAIR!PAIR (PAIR!FST X) (APPLY F (PAIR!FST X))) F)
+  (NOT (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+  (= (IS-FUNCTION (SETADD X F)) (FALSE))
+  (IMPLIES
+   (AND (IS-FUNCTION F)
+    (IN (PAIR!PAIR (PAIR!FST X) (APPLY (SETADD X (NULLSET)) (PAIR!FST X))) F))
+   (= (APPLY (SETADD X (NULLSET)) (PAIR!FST X)) (APPLY F (PAIR!FST X))))
+  (IF (IS-FUNCTION (SETADD X F))
+   (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))
+   (= (IS-FUNCTION (SETADD X (NULLSET))) (PAIR!IS-PAIR X))))
+ (NOT (IN X F)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+APPLY-SETADD
+Beginning proof of APPLY-SETADD ...
+(IMPLIES (AND (IS-FUNCTION (SETADD X F)) (IN Y (REL!DOM (SETADD X F))))
+ (= (APPLY (SETADD X F) Y) (IF (= Y (PAIR!FST X)) (PAIR!SND X) (APPLY F Y))))
+Assuming APPLY-UNION with the
+instantiations: (= F (UNIT X)) (= G F) (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION (UNIT X) F)) (IN Y (REL!DOM (UNION (UNIT X) F))))
+   (= (APPLY (UNION (UNIT X) F) Y)
+    (IF (IN Y (REL!DOM (UNIT X))) (APPLY (UNIT X) Y) (APPLY F Y))))
+  (IS-FUNCTION (SETADD X F)) (IN Y (REL!DOM (SETADD X F))))
+ (= (APPLY (SETADD X F) Y) (IF (= Y (PAIR!FST X)) (PAIR!SND X) (APPLY F Y))))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F (UNIT X)) (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (UNIT X)) (IN Y (REL!DOM (UNIT X))))
+   (IN (PAIR!PAIR Y (APPLY (UNIT X) Y)) (UNIT X)))
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION (UNIT X) F)) (IN Y (REL!DOM (UNION (UNIT X) F))))
+   (= (APPLY (UNION (UNIT X) F) Y)
+    (IF (IN Y (REL!DOM (UNIT X))) (APPLY (UNIT X) Y) (APPLY F Y))))
+  (IS-FUNCTION (SETADD X F)) (IN Y (REL!DOM (SETADD X F))))
+ (= (APPLY (SETADD X F) Y) (IF (= Y (PAIR!FST X)) (PAIR!SND X) (APPLY F Y))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION (SETADD X F)) (IN Y (REL!DOM (SETADD X F)))
+  (IMPLIES (AND (IS-FUNCTION (UNIT X)) (IN Y (REL!DOM (UNIT X))))
+   (IN (PAIR!PAIR Y (APPLY (UNIT X) Y)) (UNIT X)))
+  (IMPLIES
+   (AND (IS-FUNCTION (UNION (UNIT X) F)) (IN Y (REL!DOM (UNION (UNIT X) F))))
+   (= (APPLY (UNION (UNIT X) F) Y)
+    (IF (IN Y (REL!DOM (UNIT X))) (APPLY (UNIT X) Y) (APPLY F Y)))))
+ (= (APPLY (SETADD X F) Y) (IF (= Y (PAIR!FST X)) (PAIR!SND X) (APPLY F Y))))
+Which simplifies
+ when rewriting with SETRULES!UNION-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETRULES!SETADD-UNION-LEFT, NULLSET.DEFINITION, REL!DOM-NULLSET,
+IS-FUNCTION-NULLSET, SETRULES!UNIT-TO-SETADD, SETADD.DEFINITION,
+REL!DOM-SETADD, IS-FUNCTION-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-COMP-FUNCTIONS
+Beginning proof of IS-FUNCTION-COMP-FUNCTIONS ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (= (IS-FUNCTION (REL!COMP F G)) (TRUE)))
+Invoking (IS-FUNCTION (REL!COMP F G)) gives ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (AND (REL!IS-RELATION (REL!COMP F G))
+  (ALL (A B C)
+   (IMPLIES
+    (AND (IN (PAIR!PAIR A B) (REL!COMP F G))
+     (IN (PAIR!PAIR A C) (REL!COMP F G)))
+    (= B C)))))
+Which simplifies
+ when rewriting with REL!IN-COMP, REL!IS-RELATION-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, REL!IS-RELATION-BOOL to ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (ALL (A B Y C Y$0)
+  (IMPLIES
+   (AND (IN (PAIR!PAIR A Y) F) (IN (PAIR!PAIR Y B) G) (IN (PAIR!PAIR A Y$0) F)
+    (IN (PAIR!PAIR Y$0 C) G))
+   (= B C))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A Y) F)
+  (IN (PAIR!PAIR Y B) G) (IN (PAIR!PAIR A Y$0) F) (IN (PAIR!PAIR Y$0 C) G))
+ (= B C))
+Assuming FUNCTION-PROPERTY with the
+instantiations: (= F F) (= A A) (= B Y) (= C Y$0) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION F) (IN (PAIR!PAIR A Y) F) (IN (PAIR!PAIR A Y$0) F))
+   (= Y Y$0))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A Y) F)
+  (IN (PAIR!PAIR Y B) G) (IN (PAIR!PAIR A Y$0) F) (IN (PAIR!PAIR Y$0 C) G))
+ (= B C))
+Assuming FUNCTION-PROPERTY with the
+instantiations: (= F G) (= A Y) (= B B) (= C C) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION G) (IN (PAIR!PAIR Y B) G) (IN (PAIR!PAIR Y C) G))
+   (= B C))
+  (IMPLIES
+   (AND (IS-FUNCTION F) (IN (PAIR!PAIR A Y) F) (IN (PAIR!PAIR A Y$0) F))
+   (= Y Y$0))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN (PAIR!PAIR A Y) F)
+  (IN (PAIR!PAIR Y B) G) (IN (PAIR!PAIR A Y$0) F) (IN (PAIR!PAIR Y$0 C) G))
+ (= B C))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+APPLY-COMP
+Beginning proof of APPLY-COMP ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G)))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G)))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F G) (= X (APPLY F X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION G) (IN (APPLY F X) (REL!DOM G)))
+   (IN (PAIR!PAIR (APPLY F X) (APPLY G (APPLY F X))) G))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G)))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F (REL!COMP F G)) (= X X)
+                (= Y (APPLY G (APPLY F X))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (REL!COMP F G))
+    (IN (PAIR!PAIR X (APPLY G (APPLY F X))) (REL!COMP F G)))
+   (= (APPLY G (APPLY F X)) (APPLY (REL!COMP F G) X)))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (APPLY F X) (REL!DOM G)))
+   (IN (PAIR!PAIR (APPLY F X) (APPLY G (APPLY F X))) G))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G)))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G))
+  (IMPLIES
+   (AND (IS-FUNCTION (REL!COMP F G))
+    (IN (PAIR!PAIR X (APPLY G (APPLY F X))) (REL!COMP F G)))
+   (= (APPLY G (APPLY F X)) (APPLY (REL!COMP F G) X)))
+  (IMPLIES (AND (IS-FUNCTION G) (IN (APPLY F X) (REL!DOM G)))
+   (IN (PAIR!PAIR (APPLY F X) (APPLY G (APPLY F X))) G))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F)))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Which simplifies
+ when rewriting with REL!IN-COMP, IS-FUNCTION-COMP-FUNCTIONS
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G))
+  (NOT
+   (SOME (Y)
+    (AND (IN (PAIR!PAIR X Y) F) (IN (PAIR!PAIR Y (APPLY G (APPLY F X))) G))))
+  (IN (PAIR!PAIR (APPLY F X) (APPLY G (APPLY F X))) G)
+  (IN (PAIR!PAIR X (APPLY F X)) F))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Instantiating (= Y (APPLY F X)) gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G) (IN X (REL!DOM F))
+  (IN (APPLY F X) (REL!DOM G))
+  (NOT
+   (OR
+    (AND (IN (PAIR!PAIR X (APPLY F X)) F)
+     (IN (PAIR!PAIR (APPLY F X) (APPLY G (APPLY F X))) G))
+    (SOME (Y)
+     (AND (IN (PAIR!PAIR X Y) F)
+      (IN (PAIR!PAIR Y (APPLY G (APPLY F X))) G)))))
+  (IN (PAIR!PAIR (APPLY F X) (APPLY G (APPLY F X))) G)
+  (IN (PAIR!PAIR X (APPLY F X)) F))
+ (= (APPLY (REL!COMP F G) X) (APPLY G (APPLY F X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IS-FUNCTION-ID
+Beginning proof of IS-FUNCTION-ID ...
+(= (IS-FUNCTION (REL!ID X)) (TRUE))
+Which simplifies
+ with invocation of IS-FUNCTION
+ when rewriting with REL!IN-ID, REL!IS-RELATION-ID
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, REL!IS-RELATION-BOOL to ...
+(TRUE)
+APPLY-ID
+Beginning proof of APPLY-ID ...
+(IMPLIES (IN Y X) (= (APPLY (REL!ID X) Y) Y))
+Assuming APPLY-DEFINITION with the
+instantiations: (= F (REL!ID X)) (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION (REL!ID X)) (IN Y (REL!DOM (REL!ID X))))
+   (IN (PAIR!PAIR Y (APPLY (REL!ID X) Y)) (REL!ID X)))
+  (IN Y X))
+ (= (APPLY (REL!ID X) Y) Y))
+Which simplifies
+ when rewriting with REL!IN-ID, REL!DOM-ID, IS-FUNCTION-ID
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IS-FUNCTION-DOM-RESTRICT
+Beginning proof of IS-FUNCTION-DOM-RESTRICT ...
+(IMPLIES (IS-FUNCTION F) (= (IS-FUNCTION (REL!DOM-RESTRICT X F)) (TRUE)))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X (REL!DOM-RESTRICT X F)) (= Y F) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!DOM-RESTRICT X F) F))
+   (IS-FUNCTION (REL!DOM-RESTRICT X F)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!DOM-RESTRICT X F)))
+Assuming REL!DOM-RESTRICT-SUBSET with the
+instantiations: (= X X) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!DOM-RESTRICT X F) F)
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!DOM-RESTRICT X F) F))
+   (IS-FUNCTION (REL!DOM-RESTRICT X F)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!DOM-RESTRICT X F)))
+Which simplifies to ...
+(TRUE)
+APPLY-DOM-RESTRICT-FUNCTION
+Beginning proof of APPLY-DOM-RESTRICT-FUNCTION ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X S) (IN X (REL!DOM F)))
+ (= (APPLY (REL!DOM-RESTRICT S F) X) (APPLY F X)))
+Assuming APPLY-SUBSET with the
+instantiations: (= F (REL!DOM-RESTRICT S F)) (= G F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!DOM-RESTRICT S F) F)
+    (IN X (REL!DOM (REL!DOM-RESTRICT S F))))
+   (= (APPLY (REL!DOM-RESTRICT S F) X) (APPLY F X)))
+  (IS-FUNCTION F) (IN X S) (IN X (REL!DOM F)))
+ (= (APPLY (REL!DOM-RESTRICT S F) X) (APPLY F X)))
+Assuming REL!DOM-RESTRICT-SUBSET with the
+instantiations: (= X S) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!DOM-RESTRICT S F) F)
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!DOM-RESTRICT S F) F)
+    (IN X (REL!DOM (REL!DOM-RESTRICT S F))))
+   (= (APPLY (REL!DOM-RESTRICT S F) X) (APPLY F X)))
+  (IS-FUNCTION F) (IN X S) (IN X (REL!DOM F)))
+ (= (APPLY (REL!DOM-RESTRICT S F) X) (APPLY F X)))
+Which simplifies
+ when rewriting with INTER.DEFINITION, REL!DOM-DOM-RESTRICT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+IS-FUNCTION-RAN-RESTRICT
+Beginning proof of IS-FUNCTION-RAN-RESTRICT ...
+(IMPLIES (IS-FUNCTION F) (= (IS-FUNCTION (REL!RAN-RESTRICT F X)) (TRUE)))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X (REL!RAN-RESTRICT F X)) (= Y F) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!RAN-RESTRICT F X) F))
+   (IS-FUNCTION (REL!RAN-RESTRICT F X)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!RAN-RESTRICT F X)))
+Assuming REL!RAN-RESTRICT-SUBSET with the
+instantiations: (= X X) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!RAN-RESTRICT F X) F)
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!RAN-RESTRICT F X) F))
+   (IS-FUNCTION (REL!RAN-RESTRICT F X)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!RAN-RESTRICT F X)))
+Which simplifies to ...
+(TRUE)
+APPLY-RAN-RESTRICT-FUNCTION
+Beginning proof of APPLY-RAN-RESTRICT-FUNCTION ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)) (IN (APPLY F X) S))
+ (= (APPLY (REL!RAN-RESTRICT F S) X) (APPLY F X)))
+Assuming APPLY-SUBSET with the
+instantiations: (= F (REL!RAN-RESTRICT F S)) (= G F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!RAN-RESTRICT F S) F)
+    (IN X (REL!DOM (REL!RAN-RESTRICT F S))))
+   (= (APPLY (REL!RAN-RESTRICT F S) X) (APPLY F X)))
+  (IS-FUNCTION F) (IN X (REL!DOM F)) (IN (APPLY F X) S))
+ (= (APPLY (REL!RAN-RESTRICT F S) X) (APPLY F X)))
+Assuming REL!RAN-RESTRICT-SUBSET with the
+instantiations: (= X S) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!RAN-RESTRICT F S) F)
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!RAN-RESTRICT F S) F)
+    (IN X (REL!DOM (REL!RAN-RESTRICT F S))))
+   (= (APPLY (REL!RAN-RESTRICT F S) X) (APPLY F X)))
+  (IS-FUNCTION F) (IN X (REL!DOM F)) (IN (APPLY F X) S))
+ (= (APPLY (REL!RAN-RESTRICT F S) X) (APPLY F X)))
+Which simplifies
+ when rewriting with IN-PRE-IMAGE-OF-FUNCTION, REL!DOM-RAN-RESTRICT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+IS-FUNCTION-DOM-REMOVE
+Beginning proof of IS-FUNCTION-DOM-REMOVE ...
+(IMPLIES (IS-FUNCTION F) (= (IS-FUNCTION (REL!DOM-REMOVE X F)) (TRUE)))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X (REL!DOM-REMOVE X F)) (= Y F) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!DOM-REMOVE X F) F))
+   (IS-FUNCTION (REL!DOM-REMOVE X F)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!DOM-REMOVE X F)))
+Assuming REL!DOM-REMOVE-SUBSET with the
+instantiations: (= X X) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!DOM-REMOVE X F) F)
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!DOM-REMOVE X F) F))
+   (IS-FUNCTION (REL!DOM-REMOVE X F)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!DOM-REMOVE X F)))
+Which simplifies to ...
+(TRUE)
+APPLY-DOM-REMOVE-FUNCTION
+Beginning proof of APPLY-DOM-REMOVE-FUNCTION ...
+(IMPLIES (AND (IS-FUNCTION F) (NOT (IN X S)) (IN X (REL!DOM F)))
+ (= (APPLY (REL!DOM-REMOVE S F) X) (APPLY F X)))
+Assuming APPLY-SUBSET with the
+instantiations: (= F (REL!DOM-REMOVE S F)) (= G F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!DOM-REMOVE S F) F)
+    (IN X (REL!DOM (REL!DOM-REMOVE S F))))
+   (= (APPLY (REL!DOM-REMOVE S F) X) (APPLY F X)))
+  (IS-FUNCTION F) (NOT (IN X S)) (IN X (REL!DOM F)))
+ (= (APPLY (REL!DOM-REMOVE S F) X) (APPLY F X)))
+Assuming REL!DOM-REMOVE-SUBSET with the
+instantiations: (= X S) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!DOM-REMOVE S F) F)
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!DOM-REMOVE S F) F)
+    (IN X (REL!DOM (REL!DOM-REMOVE S F))))
+   (= (APPLY (REL!DOM-REMOVE S F) X) (APPLY F X)))
+  (IS-FUNCTION F) (NOT (IN X S)) (IN X (REL!DOM F)))
+ (= (APPLY (REL!DOM-REMOVE S F) X) (APPLY F X)))
+Which simplifies
+ when rewriting with DIFF.DEFINITION, REL!DOM-DOM-REMOVE
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+IS-FUNCTION-RAN-REMOVE
+Beginning proof of IS-FUNCTION-RAN-REMOVE ...
+(IMPLIES (IS-FUNCTION F) (= (IS-FUNCTION (REL!RAN-REMOVE F X)) (TRUE)))
+Assuming IS-FUNCTION-SUBSET with the
+instantiations: (= X (REL!RAN-REMOVE F X)) (= Y F) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!RAN-REMOVE F X) F))
+   (IS-FUNCTION (REL!RAN-REMOVE F X)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!RAN-REMOVE F X)))
+Assuming REL!RAN-REMOVE-SUBSET with the
+instantiations: (= X X) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!RAN-REMOVE F X) F)
+  (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!RAN-REMOVE F X) F))
+   (IS-FUNCTION (REL!RAN-REMOVE F X)))
+  (IS-FUNCTION F))
+ (IS-FUNCTION (REL!RAN-REMOVE F X)))
+Which simplifies to ...
+(TRUE)
+APPLY-RAN-REMOVE-FUNCTION
+Beginning proof of APPLY-RAN-REMOVE-FUNCTION ...
+(IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)) (NOT (IN (APPLY F X) S)))
+ (= (APPLY (REL!RAN-REMOVE F S) X) (APPLY F X)))
+Assuming APPLY-SUBSET with the
+instantiations: (= F (REL!RAN-REMOVE F S)) (= G F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!RAN-REMOVE F S) F)
+    (IN X (REL!DOM (REL!RAN-REMOVE F S))))
+   (= (APPLY (REL!RAN-REMOVE F S) X) (APPLY F X)))
+  (IS-FUNCTION F) (IN X (REL!DOM F)) (NOT (IN (APPLY F X) S)))
+ (= (APPLY (REL!RAN-REMOVE F S) X) (APPLY F X)))
+Assuming REL!RAN-REMOVE-SUBSET with the
+instantiations: (= X S) (= R F) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!RAN-REMOVE F S) F)
+  (IMPLIES
+   (AND (IS-FUNCTION F) (SUBSET (REL!RAN-REMOVE F S) F)
+    (IN X (REL!DOM (REL!RAN-REMOVE F S))))
+   (= (APPLY (REL!RAN-REMOVE F S) X) (APPLY F X)))
+  (IS-FUNCTION F) (IN X (REL!DOM F)) (NOT (IN (APPLY F X) S)))
+ (= (APPLY (REL!RAN-REMOVE F S) X) (APPLY F X)))
+Which simplifies
+ when rewriting with IN-PRE-IMAGE-OF-FUNCTION, DIFF.DEFINITION,
+DOM-RAN-REMOVE-FUNCTION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, REL!INVERSE-INVERSE to ...
+(TRUE)
+OVERRIDE
+IS-RELATION-OVERRIDE
+Beginning proof of IS-RELATION-OVERRIDE ...
+(IMPLIES (AND (REL!IS-RELATION F) (REL!IS-RELATION G))
+ (= (REL!IS-RELATION (OVERRIDE F G)) (TRUE)))
+Which simplifies
+ with invocation of OVERRIDE
+ when rewriting with REL!IS-RELATION-DOM-REMOVE, REL!IS-RELATION-UNION,
+UNION.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, REL!IS-RELATION-BOOL to ...
+(TRUE)
+IS-FUNCTION-OVERRIDE
+Beginning proof of IS-FUNCTION-OVERRIDE ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (= (IS-FUNCTION (OVERRIDE F G)) (TRUE)))
+Invoking OVERRIDE gives ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (IS-FUNCTION (UNION (REL!DOM-REMOVE (REL!DOM G) F) G)))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETRULES!DIFF-SUPERSET,
+INTER.COMMUTATIVE, SETRULES!INTER-DIFF-RIGHT, REL!DOM-DOM-REMOVE,
+IS-FUNCTION-DOM-REMOVE, IS-FUNCTION-UNION, UNION.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+DOM-OVERRIDE
+Beginning proof of DOM-OVERRIDE ...
+(= (REL!DOM (OVERRIDE F G)) (UNION (REL!DOM F) (REL!DOM G)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (REL!DOM (OVERRIDE F G))) (IN E (UNION (REL!DOM F) (REL!DOM G)))
+ (NOT (IN E (UNION (REL!DOM F) (REL!DOM G)))))
+Which simplifies
+ with invocation of OVERRIDE
+ when rewriting with DIFF.DEFINITION, UNION.DEFINITION, REL!DOM-DOM-REMOVE,
+REL!DOM-UNION, UNION.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+RAN-OVERRIDE
+Beginning proof of RAN-OVERRIDE ...
+(SUBSET (REL!RAN (OVERRIDE F G)) (UNION (REL!RAN F) (REL!RAN G)))
+Invoking OVERRIDE gives ...
+(SUBSET (REL!RAN (UNION (REL!DOM-REMOVE (REL!DOM G) F) G))
+ (UNION (REL!RAN F) (REL!RAN G)))
+Assuming REL!DOM-REMOVE-SUBSET with the
+instantiations: (= R F) (= X (REL!DOM G)) generates ...
+(IMPLIES (SUBSET (REL!DOM-REMOVE (REL!DOM G) F) F)
+ (SUBSET (REL!RAN (UNION (REL!DOM-REMOVE (REL!DOM G) F) G))
+  (UNION (REL!RAN F) (REL!RAN G))))
+Which simplifies
+ when rewriting with SETRULES!SUBSET-UNION-RIGHT, REL!RAN-SUBSET,
+SETRULES!SUBSET-UNION-LEFT, REL!RAN-UNION, UNION.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+APPLY-OVERRIDE
+Beginning proof of APPLY-OVERRIDE ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (OR (IN X (REL!DOM F)) (IN X (REL!DOM G))))
+ (= (APPLY (OVERRIDE F G) X) (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X))))
+Assuming APPLY-UNIQUE with the
+instantiations: (= F (OVERRIDE F G)) (= X X)
+                (= Y
+                 (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FUNCTION (OVERRIDE F G))
+    (IN (PAIR!PAIR X (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X)))
+     (OVERRIDE F G)))
+   (= (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X))
+    (APPLY (OVERRIDE F G) X)))
+  (IS-FUNCTION F) (IS-FUNCTION G) (OR (IN X (REL!DOM F)) (IN X (REL!DOM G))))
+ (= (APPLY (OVERRIDE F G) X) (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (OR (IN X (REL!DOM F)) (IN X (REL!DOM G)))
+  (IMPLIES
+   (AND (IS-FUNCTION (OVERRIDE F G))
+    (IN (PAIR!PAIR X (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X)))
+     (OVERRIDE F G)))
+   (= (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X))
+    (APPLY (OVERRIDE F G) X))))
+ (= (APPLY (OVERRIDE F G) X) (IF (IN X (REL!DOM G)) (APPLY G X) (APPLY F X))))
+Which simplifies
+ when rewriting with IS-FUNCTION-OVERRIDE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (AND (IS-FUNCTION F) (IS-FUNCTION G))
+ (IF (IN X (REL!DOM F))
+  (IF (IN X (REL!DOM G))
+   (OR (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))
+    (= (APPLY (OVERRIDE F G) X) (APPLY G X)))
+   (OR (IN (PAIR!PAIR X (APPLY F X)) (OVERRIDE F G))
+    (= (APPLY (OVERRIDE F G) X) (APPLY F X))))
+  (IMPLIES
+   (AND (IN X (REL!DOM G))
+    (NOT (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))))
+   (= (APPLY (OVERRIDE F G) X) (APPLY G X)))))
+Assuming APPLY-DEFINITION with the instantiations: (= F F) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G))
+ (IF (IN X (REL!DOM F))
+  (IF (IN X (REL!DOM G))
+   (OR (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))
+    (= (APPLY (OVERRIDE F G) X) (APPLY G X)))
+   (OR (IN (PAIR!PAIR X (APPLY F X)) (OVERRIDE F G))
+    (= (APPLY (OVERRIDE F G) X) (APPLY F X))))
+  (IMPLIES
+   (AND (IN X (REL!DOM G))
+    (NOT (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))))
+   (= (APPLY (OVERRIDE F G) X) (APPLY G X)))))
+Assuming APPLY-DEFINITION with the instantiations: (= F G) (= X X) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FUNCTION G) (IN X (REL!DOM G)))
+   (IN (PAIR!PAIR X (APPLY G X)) G))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F))
+  (IS-FUNCTION F) (IS-FUNCTION G))
+ (IF (IN X (REL!DOM F))
+  (IF (IN X (REL!DOM G))
+   (OR (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))
+    (= (APPLY (OVERRIDE F G) X) (APPLY G X)))
+   (OR (IN (PAIR!PAIR X (APPLY F X)) (OVERRIDE F G))
+    (= (APPLY (OVERRIDE F G) X) (APPLY F X))))
+  (IMPLIES
+   (AND (IN X (REL!DOM G))
+    (NOT (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))))
+   (= (APPLY (OVERRIDE F G) X) (APPLY G X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (IMPLIES (AND (IS-FUNCTION G) (IN X (REL!DOM G)))
+   (IN (PAIR!PAIR X (APPLY G X)) G))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F)))
+ (IF (IN X (REL!DOM F))
+  (IF (IN X (REL!DOM G))
+   (OR (= (APPLY (OVERRIDE F G) X) (APPLY G X))
+    (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G)))
+   (OR (= (APPLY (OVERRIDE F G) X) (APPLY F X))
+    (IN (PAIR!PAIR X (APPLY F X)) (OVERRIDE F G))))
+  (IMPLIES
+   (AND (IN X (REL!DOM G))
+    (NOT (IN (PAIR!PAIR X (APPLY G X)) (OVERRIDE F G))))
+   (= (APPLY (OVERRIDE F G) X) (APPLY G X)))))
+Invoking OVERRIDE gives ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (IS-FUNCTION G)
+  (IMPLIES (AND (IS-FUNCTION G) (IN X (REL!DOM G)))
+   (IN (PAIR!PAIR X (APPLY G X)) G))
+  (IMPLIES (AND (IS-FUNCTION F) (IN X (REL!DOM F)))
+   (IN (PAIR!PAIR X (APPLY F X)) F)))
+ (IF (IN X (REL!DOM F))
+  (IF (IN X (REL!DOM G))
+   (OR (= (APPLY (UNION (REL!DOM-REMOVE (REL!DOM G) F) G) X) (APPLY G X))
+    (IN (PAIR!PAIR X (APPLY G X)) (UNION (REL!DOM-REMOVE (REL!DOM G) F) G)))
+   (OR (= (APPLY (UNION (REL!DOM-REMOVE (REL!DOM G) F) G) X) (APPLY F X))
+    (IN (PAIR!PAIR X (APPLY F X)) (UNION (REL!DOM-REMOVE (REL!DOM G) F) G))))
+  (IMPLIES
+   (AND (IN X (REL!DOM G))
+    (NOT
+     (IN (PAIR!PAIR X (APPLY G X)) (UNION (REL!DOM-REMOVE (REL!DOM G) F) G))))
+   (= (APPLY (UNION (REL!DOM-REMOVE (REL!DOM G) F) G) X) (APPLY G X)))))
+Which simplifies
+ when rewriting with APPLY-DOM-REMOVE-FUNCTION, DIFF.DEFINITION, APPLY-UNION,
+UNION.DEFINITION, REL!DOM-UNION, NULLSET.DEFINITION, SETRULES!DIFF-SUPERSET,
+INTER.COMMUTATIVE, SETRULES!INTER-DIFF-RIGHT, REL!DOM-DOM-REMOVE,
+IS-FUNCTION-DOM-REMOVE, IS-FUNCTION-UNION, UNION.COMMUTATIVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+OVERRIDE-IDEMPOTENT
+Beginning proof of OVERRIDE-IDEMPOTENT ...
+(= (OVERRIDE F F) F)
+Which simplifies
+ with invocation of SUBSET, OVERRIDE
+ when rewriting with SETRULES!UNION-SUBSET-RIGHT, REL!IN-DOM-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+OVERRIDE-ASSOCIATIVE
+Beginning proof of OVERRIDE-ASSOCIATIVE ...
+(= (OVERRIDE (OVERRIDE F G) H) (OVERRIDE F (OVERRIDE G H)))
+Invoking OVERRIDE gives ...
+(=
+ (UNION (REL!DOM-REMOVE (REL!DOM H) (UNION (REL!DOM-REMOVE (REL!DOM G) F) G))
+  H)
+ (UNION (REL!DOM-REMOVE (REL!DOM (UNION (REL!DOM-REMOVE (REL!DOM H) G) H)) F)
+  (UNION (REL!DOM-REMOVE (REL!DOM H) G) H)))
+Which simplifies
+ when rewriting with REL!DOM-DOM-REMOVE, REL!DOM-UNION, UNION.PERMUTATIVE,
+UNION.ASSOCIATIVE, REL!DOM-REMOVE-DOM-REMOVE, REL!DOM-REMOVE-UNION,
+UNION.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(=
+ (UNION H
+  (UNION (REL!DOM-REMOVE (REL!DOM H) G)
+   (REL!DOM-REMOVE (UNION (REL!DOM G) (REL!DOM H)) F)))
+ (UNION H
+  (UNION (REL!DOM-REMOVE (REL!DOM H) G)
+   (REL!DOM-REMOVE (UNION (REL!DOM H) (DIFF (REL!DOM G) (REL!DOM H))) F))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (UNION (REL!DOM G) (REL!DOM H)))
+                (= Y
+                 (UNION (DIFF (REL!DOM G) (REL!DOM H)) (REL!DOM H))) generates
+...
+(IMPLIES
+ (=
+  (= (UNION (REL!DOM G) (REL!DOM H))
+   (UNION (DIFF (REL!DOM G) (REL!DOM H)) (REL!DOM H)))
+  (ALL (E)
+   (= (IN E (UNION (REL!DOM G) (REL!DOM H)))
+    (IN E (UNION (DIFF (REL!DOM G) (REL!DOM H)) (REL!DOM H))))))
+ (=
+  (UNION H
+   (UNION (REL!DOM-REMOVE (REL!DOM H) G)
+    (REL!DOM-REMOVE (UNION (REL!DOM G) (REL!DOM H)) F)))
+  (UNION H
+   (UNION (REL!DOM-REMOVE (REL!DOM H) G)
+    (REL!DOM-REMOVE (UNION (REL!DOM H) (DIFF (REL!DOM G) (REL!DOM H))) F)))))
+Which simplifies
+ when rewriting with DIFF.DEFINITION, UNION.DEFINITION, UNION.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+OVERRIDE-NULLSET-LEFT
+Beginning proof of OVERRIDE-NULLSET-LEFT ...
+(= (OVERRIDE (NULLSET) F) F)
+Which simplifies
+ with invocation of OVERRIDE
+ when rewriting with SETRULES!UNION-SUBSET-RIGHT,
+REL!DOM-REMOVE-BY-SUPERSET-DOM, SUBSET.NULLSET.LEFT, REL!DOM-NULLSET,
+REL!IS-RELATION-NULLSET
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, REL!IS-RELATION-BOOL to ...
+(TRUE)
+OVERRIDE-NULLSET-RIGHT
+Beginning proof of OVERRIDE-NULLSET-RIGHT ...
+(IMPLIES (REL!IS-RELATION F) (= (OVERRIDE F (NULLSET)) F))
+Which simplifies
+ with invocation of OVERRIDE
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+REL!DOM-REMOVE-BY-NULLSET, REL!DOM-NULLSET
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, REL!IS-RELATION-BOOL to ...
+(TRUE)
+PFUN
+IN-PFUN
+Beginning proof of IN-PFUN ...
+(= (IN F (PFUN X Y))
+ (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X) (SUBSET (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with REL!IN-REL, PFUN.DEFINITION
+ with the assumptions REL!IS-RELATION-BOOL to ...
+(IMPLIES
+ (AND (NOT (REL!IS-RELATION F)) (IS-FUNCTION F) (SUBSET (REL!DOM F) X))
+ (NOT (SUBSET (REL!RAN F) Y)))
+Splitting on (IS-FUNCTION F) generates ...
+(IF (IS-FUNCTION F)
+ (IMPLIES
+  (AND (NOT (REL!IS-RELATION F)) (IS-FUNCTION F) (SUBSET (REL!DOM F) X))
+  (NOT (SUBSET (REL!RAN F) Y)))
+ (IMPLIES
+  (AND (NOT (REL!IS-RELATION F)) (IS-FUNCTION F) (SUBSET (REL!DOM F) X))
+  (NOT (SUBSET (REL!RAN F) Y))))
+Which simplifies
+ with the assumptions REL!IS-RELATION-BOOL, FUNCTION-IS-RELATION to ...
+(TRUE)
+IN-PFUN-1
+Beginning proof of IN-PFUN-1 ...
+(= (IN F (PFUN X Y))
+ (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X)
+  (ALL (Z) (IMPLIES (IN Z (REL!DOM F)) (IN (APPLY F Z) Y)))))
+Splitting on (IN F (PFUN X Y)) generates ...
+(IF (IN F (PFUN X Y))
+ (= (IN F (PFUN X Y))
+  (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X)
+   (ALL (Z) (IMPLIES (IN Z (REL!DOM F)) (IN (APPLY F Z) Y)))))
+ (= (IN F (PFUN X Y))
+  (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X)
+   (ALL (Z$0) (IMPLIES (IN Z$0 (REL!DOM F)) (IN (APPLY F Z$0) Y))))))
+Which simplifies to ...
+(IF (IN F (PFUN X Y))
+ (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X)
+  (ALL (Z) (IMPLIES (IN Z (REL!DOM F)) (IN (APPLY F Z) Y))))
+ (IMPLIES (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X))
+  (NOT (ALL (Z$0) (IMPLIES (IN Z$0 (REL!DOM F)) (IN (APPLY F Z$0) Y))))))
+Which simplifies
+ when rewriting with FUNCTION-RAN-SUBSET, IN-PFUN to ...
+(TRUE)
+FUN
+IN-FUN
+Beginning proof of IN-FUN ...
+(= (IN F (FUN X Y))
+ (AND (IS-FUNCTION F) (= (REL!DOM F) X) (SUBSET (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with IN-PFUN, FUN.DEFINITION to ...
+(IMPLIES (AND (IS-FUNCTION F) (NOT (SUBSET (REL!DOM F) X)) (= (REL!DOM F) X))
+ (NOT (SUBSET (REL!RAN F) Y)))
+Assuming SUBSET.SELF with the instantiations: (= S X) generates ...
+(IMPLIES
+ (AND (= (SUBSET X X) (TRUE)) (IS-FUNCTION F) (NOT (SUBSET (REL!DOM F) X))
+  (= (REL!DOM F) X))
+ (NOT (SUBSET (REL!RAN F) Y)))
+Which simplifies to ...
+(TRUE)
+IN-FUN-1
+Beginning proof of IN-FUN-1 ...
+(= (IN F (FUN X Y))
+ (AND (IS-FUNCTION F) (= (REL!DOM F) X)
+  (ALL (Z) (IMPLIES (IN Z X) (IN (APPLY F Z) Y)))))
+Splitting on (IN F (FUN X Y)) generates ...
+(IF (IN F (FUN X Y))
+ (= (IN F (FUN X Y))
+  (AND (IS-FUNCTION F) (= (REL!DOM F) X)
+   (ALL (Z) (IMPLIES (IN Z X) (IN (APPLY F Z) Y)))))
+ (= (IN F (FUN X Y))
+  (AND (IS-FUNCTION F) (= (REL!DOM F) X)
+   (ALL (Z$0) (IMPLIES (IN Z$0 X) (IN (APPLY F Z$0) Y))))))
+Which simplifies to ...
+(IF (IN F (FUN X Y))
+ (AND (IS-FUNCTION F) (= (REL!DOM F) X)
+  (ALL (Z) (IMPLIES (IN Z X) (IN (APPLY F Z) Y))))
+ (IMPLIES (AND (IS-FUNCTION F) (= (REL!DOM F) X))
+  (NOT (ALL (Z$0) (IMPLIES (IN Z$0 X) (IN (APPLY F Z$0) Y))))))
+Which simplifies
+ when rewriting with FUNCTION-RAN-SUBSET, IN-FUN to ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (= (REL!DOM F) X)
+  (NOT (ALL (X$0) (IMPLIES (IN X$0 (REL!DOM F)) (IN (APPLY F X$0) Y)))))
+ (NOT (ALL (Z) (IMPLIES (IN Z X) (IN (APPLY F Z) Y)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (= (REL!DOM F) X)
+  (NOT (IMPLIES (IN X$0 (REL!DOM F)) (IN (APPLY F X$0) Y))))
+ (NOT (ALL (Z) (IMPLIES (IN Z X) (IN (APPLY F Z) Y)))))
+Which simplifies
+ with the instantiation (= Z X$0) to ...
+(TRUE)
+SURJ
+IN-SURJ
+Beginning proof of IN-SURJ ...
+(= (IN F (SURJ X Y)) (AND (IS-FUNCTION F) (= (REL!DOM F) X) (= (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with IN-FUN, SURJ.DEFINITION to ...
+(IMPLIES (AND (IS-FUNCTION F) (= (REL!DOM F) X) (NOT (SUBSET (REL!RAN F) Y)))
+ (NOT (= (REL!RAN F) Y)))
+Assuming SUBSET.SELF with the instantiations: (= S Y) generates ...
+(IMPLIES
+ (AND (= (SUBSET Y Y) (TRUE)) (IS-FUNCTION F) (= (REL!DOM F) X)
+  (NOT (SUBSET (REL!RAN F) Y)))
+ (NOT (= (REL!RAN F) Y)))
+Which simplifies to ...
+(TRUE)
+PSURJ
+IN-PSURJ
+Beginning proof of IN-PSURJ ...
+(= (IN F (PSURJ X Y))
+ (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X) (= (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with IN-PFUN, PSURJ.DEFINITION to ...
+(IMPLIES
+ (AND (IS-FUNCTION F) (SUBSET (REL!DOM F) X) (NOT (SUBSET (REL!RAN F) Y)))
+ (NOT (= (REL!RAN F) Y)))
+Assuming SUBSET.SELF with the instantiations: (= S Y) generates ...
+(IMPLIES
+ (AND (= (SUBSET Y Y) (TRUE)) (IS-FUNCTION F) (SUBSET (REL!DOM F) X)
+  (NOT (SUBSET (REL!RAN F) Y)))
+ (NOT (= (REL!RAN F) Y)))
+Which simplifies to ...
+(TRUE)
+INJ
+IN-INJ
+Beginning proof of IN-INJ ...
+(= (IN F (INJ X Y))
+ (AND (IS-FUNCTION F) (IS-FUNCTION (REL!INVERSE F)) (= (REL!DOM F) X)
+  (SUBSET (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with IN-FUN, INJ.DEFINITION
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+PINJ
+IN-PINJ
+Beginning proof of IN-PINJ ...
+(= (IN F (PINJ X Y))
+ (AND (IS-FUNCTION F) (IS-FUNCTION (REL!INVERSE F)) (SUBSET (REL!DOM F) X)
+  (SUBSET (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with IN-PFUN, PINJ.DEFINITION
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+BIJ
+IN-BIJ
+Beginning proof of IN-BIJ ...
+(= (IN F (BIJ X Y))
+ (AND (IS-FUNCTION F) (IS-FUNCTION (REL!INVERSE F)) (= (REL!DOM F) X)
+  (= (REL!RAN F) Y)))
+Which simplifies
+ when rewriting with IN-SURJ, BIJ.DEFINITION
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+PFUN-NULLSET-LEFT
+Beginning proof of PFUN-NULLSET-LEFT ...
+(= (PFUN (NULLSET) X) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (PFUN (NULLSET) X)) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying PFUN.DEFINITION gives ...
+(IF (AND (IN E (REL!REL (NULLSET) X)) (IS-FUNCTION E)) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, NULLSET.DEFINITION,
+SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD, REL!REL-NULLSET-LEFT to ...
+(TRUE)
+PFUN-NULLSET-RIGHT
+Beginning proof of PFUN-NULLSET-RIGHT ...
+(= (PFUN X (NULLSET)) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (PFUN X (NULLSET))) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying PFUN.DEFINITION gives ...
+(IF (AND (IN E (REL!REL X (NULLSET))) (IS-FUNCTION E)) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, NULLSET.DEFINITION,
+SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD, REL!REL-NULLSET-RIGHT to ...
+(TRUE)
+FUN-NULLSET-LEFT
+Beginning proof of FUN-NULLSET-LEFT ...
+(= (FUN (NULLSET) X) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (FUN (NULLSET) X)) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying FUN.DEFINITION gives ...
+(IF (AND (IN E (PFUN (NULLSET) X)) (= (REL!DOM E) (NULLSET)))
+ (IN E (UNIT (NULLSET))) (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with REL!DOM-NULLSET, NULLSET.DEFINITION, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD, PFUN-NULLSET-LEFT to ...
+(TRUE)
+FUN-NULLSET-RIGHT
+Beginning proof of FUN-NULLSET-RIGHT ...
+(= (FUN X (NULLSET)) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (FUN X (NULLSET)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying FUN.DEFINITION gives ...
+(IF (AND (IN E (PFUN X (NULLSET))) (= (REL!DOM E) X))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with SETRULES!IN-SELF, REL!DOM-NULLSET, NULLSET.DEFINITION,
+SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD, PFUN-NULLSET-RIGHT to ...
+(IMPLIES (AND (= E (NULLSET)) (NOT (= (NULLSET) X))) (SOME (E$0) (IN E$0 X)))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (= E (NULLSET))
+  (NOT (= (NULLSET) X)))
+ (SOME (E$1) (IN E$1 X)))
+Which simplifies to ...
+(TRUE)
+SURJ-NULLSET-LEFT
+Beginning proof of SURJ-NULLSET-LEFT ...
+(= (SURJ (NULLSET) X) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (SURJ (NULLSET) X))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying SURJ.DEFINITION gives ...
+(IF (AND (IN E (FUN (NULLSET) X)) (= (REL!RAN E) X))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with SETRULES!IN-SELF, REL!RAN-NULLSET, NULLSET.DEFINITION,
+SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD, FUN-NULLSET-LEFT to ...
+(IMPLIES (AND (= E (NULLSET)) (NOT (= (NULLSET) X))) (SOME (E$0) (IN E$0 X)))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (= E (NULLSET))
+  (NOT (= (NULLSET) X)))
+ (SOME (E$1) (IN E$1 X)))
+Which simplifies to ...
+(TRUE)
+SURJ-NULLSET-RIGHT
+Beginning proof of SURJ-NULLSET-RIGHT ...
+(= (SURJ X (NULLSET)) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (SURJ X (NULLSET)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying SURJ.DEFINITION gives ...
+(IF (AND (IN E (FUN X (NULLSET))) (= (REL!RAN E) (NULLSET)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with REL!RAN-NULLSET, NULLSET.DEFINITION, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD, FUN-NULLSET-RIGHT to ...
+(OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X)) (NOT (= E (NULLSET))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (NOT (= X (NULLSET)))
+  (NOT (SOME (E$1) (IN E$1 X))))
+ (NOT (= E (NULLSET))))
+Which simplifies to ...
+(TRUE)
+PSURJ-NULLSET-LEFT
+Beginning proof of PSURJ-NULLSET-LEFT ...
+(= (PSURJ (NULLSET) X) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (PSURJ (NULLSET) X))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying PSURJ.DEFINITION gives ...
+(IF (AND (IN E (PFUN (NULLSET) X)) (= (REL!RAN E) X))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with SETRULES!IN-SELF, REL!RAN-NULLSET, NULLSET.DEFINITION,
+SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD, PFUN-NULLSET-LEFT to ...
+(IMPLIES (AND (= E (NULLSET)) (NOT (= (NULLSET) X))) (SOME (E$0) (IN E$0 X)))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (= E (NULLSET))
+  (NOT (= (NULLSET) X)))
+ (SOME (E$1) (IN E$1 X)))
+Which simplifies to ...
+(TRUE)
+PSURJ-NULLSET-RIGHT
+Beginning proof of PSURJ-NULLSET-RIGHT ...
+(= (PSURJ X (NULLSET)) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (PSURJ X (NULLSET))) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying PSURJ.DEFINITION gives ...
+(IF (AND (IN E (PFUN X (NULLSET))) (= (REL!RAN E) (NULLSET)))
+ (IN E (UNIT (NULLSET))) (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with REL!RAN-NULLSET, NULLSET.DEFINITION, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD, PFUN-NULLSET-RIGHT to ...
+(TRUE)
+PINJ-NULLSET-LEFT
+Beginning proof of PINJ-NULLSET-LEFT ...
+(= (PINJ (NULLSET) X) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (PINJ (NULLSET) X)) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying PINJ.DEFINITION gives ...
+(IF (AND (IN E (PFUN (NULLSET) X)) (IS-FUNCTION (REL!INVERSE E)))
+ (IN E (UNIT (NULLSET))) (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD,
+PFUN-NULLSET-LEFT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+PINJ-NULLSET-RIGHT
+Beginning proof of PINJ-NULLSET-RIGHT ...
+(= (PINJ X (NULLSET)) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (PINJ X (NULLSET))) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying PINJ.DEFINITION gives ...
+(IF (AND (IN E (PFUN X (NULLSET))) (IS-FUNCTION (REL!INVERSE E)))
+ (IN E (UNIT (NULLSET))) (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD,
+PFUN-NULLSET-RIGHT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+INJ-NULLSET-LEFT
+Beginning proof of INJ-NULLSET-LEFT ...
+(= (INJ (NULLSET) X) (UNIT (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (INJ (NULLSET) X)) (IN E (UNIT (NULLSET)))
+ (NOT (IN E (UNIT (NULLSET)))))
+Applying INJ.DEFINITION gives ...
+(IF (AND (IN E (FUN (NULLSET) X)) (IS-FUNCTION (REL!INVERSE E)))
+ (IN E (UNIT (NULLSET))) (NOT (IN E (UNIT (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD,
+FUN-NULLSET-LEFT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+INJ-NULLSET-RIGHT
+Beginning proof of INJ-NULLSET-RIGHT ...
+(= (INJ X (NULLSET)) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (INJ X (NULLSET)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying INJ.DEFINITION gives ...
+(IF (AND (IN E (FUN X (NULLSET))) (IS-FUNCTION (REL!INVERSE E)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD,
+FUN-NULLSET-RIGHT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X)) (NOT (= E (NULLSET))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (NOT (= X (NULLSET)))
+  (NOT (SOME (E$1) (IN E$1 X))))
+ (NOT (= E (NULLSET))))
+Which simplifies to ...
+(TRUE)
+BIJ-NULLSET-LEFT
+Beginning proof of BIJ-NULLSET-LEFT ...
+(= (BIJ (NULLSET) X) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (BIJ (NULLSET) X))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying BIJ.DEFINITION gives ...
+(IF (AND (IN E (SURJ (NULLSET) X)) (IS-FUNCTION (REL!INVERSE E)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD,
+SURJ-NULLSET-LEFT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X)) (NOT (= E (NULLSET))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (NOT (= X (NULLSET)))
+  (NOT (SOME (E$1) (IN E$1 X))))
+ (NOT (= E (NULLSET))))
+Which simplifies to ...
+(TRUE)
+BIJ-NULLSET-RIGHT
+Beginning proof of BIJ-NULLSET-RIGHT ...
+(= (BIJ X (NULLSET)) (IF (= X (NULLSET)) (UNIT (NULLSET)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (BIJ X (NULLSET)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Applying BIJ.DEFINITION gives ...
+(IF (AND (IN E (SURJ X (NULLSET))) (IS-FUNCTION (REL!INVERSE E)))
+ (IN E
+  (IF (ALL (E$0) (IF (IN E$0 X) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))
+   (UNIT (NULLSET)) (NULLSET)))
+ (NOT
+  (IN E
+   (IF (ALL (E$1) (IF (IN E$1 X) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))
+    (UNIT (NULLSET)) (NULLSET)))))
+Which simplifies
+ when rewriting with IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+NULLSET.DEFINITION, SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD,
+SURJ-NULLSET-RIGHT
+ with the assumptions REL!INVERSE-INVERSE to ...
+(OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X)) (NOT (= E (NULLSET))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))) (NOT (= X (NULLSET)))
+  (NOT (SOME (E$1) (IN E$1 X))))
+ (NOT (= E (NULLSET))))
+Which simplifies to ...
+(TRUE)
+Done.

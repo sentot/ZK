@@ -1,0 +1,512 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/natmodel.ver"
+NAT
+IN-NAT
+Beginning proof of IN-NAT ...
+(= (IN X (NAT)) (>= X 0))
+Which simplifies
+ when rewriting with NAT.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+ZEROP
+WEAK-INDUCTION
+Beginning proof of WEAK-INDUCTION ...
+(IF (ZEROP N) (TRUE) (M< (- N 1) N))
+Which simplifies
+ with invocation of ZEROP
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+WEAKLY-INDUCTIVE
+WEAK-INDUCTION-1
+Beginning proof of WEAK-INDUCTION-1 ...
+(IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN N (NAT))) (IN N X))
+Inducting using the following scheme ...
+ (AND (IMPLIES (ZEROP N) (*P* N X))
+  (IMPLIES (AND (NOT (ZEROP N)) (*P* (- N 1) X)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES (ZEROP N)
+  (IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN N (NAT))) (IN N X)))
+ (IMPLIES
+  (AND (NOT (ZEROP N))
+   (IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN (- N 1) (NAT))) (IN (- N 1) X)))
+  (IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN N (NAT))) (IN N X))))
+Which simplifies
+ with invocation of WEAKLY-INDUCTIVE, ZEROP
+ when rewriting with IN-NAT, INTER.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (>= N 1) (IN 0 X)
+  (ALL (N$0) (IMPLIES (AND (IN N$0 X) (>= N$0 0)) (IN (+ 1 N$0) X)))
+  (IN (+ -1 N) X))
+ (IN N X))
+Instantiating (= N$0 (- N 1)) gives ...
+(IMPLIES
+ (AND (>= N 1) (IN 0 X)
+  (IMPLIES (AND (IN (- N 1) X) (>= (- N 1) 0)) (IN (+ 1 (- N 1)) X))
+  (ALL (N$0) (IMPLIES (AND (IN N$0 X) (>= N$0 0)) (IN (+ 1 N$0) X)))
+  (IN (+ -1 N) X))
+ (IN N X))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+WEAK-INDUCTION-2
+Beginning proof of WEAK-INDUCTION-2 ...
+(IMPLIES (WEAKLY-INDUCTIVE X) (SUBSET (NAT) X))
+Assuming WEAK-INDUCTION-1 with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (ALL (N) (IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN N (NAT))) (IN N X)))
+  (WEAKLY-INDUCTIVE X))
+ (SUBSET (NAT) X))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (ALL (N) (IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN N (NAT))) (IN N X)))
+  (WEAKLY-INDUCTIVE X))
+ (ALL (E) (IMPLIES (IN E (NAT)) (IN E X))))
+Which simplifies
+ with the instantiation (= N E) to ...
+(TRUE)
+STRONG-INDUCTION
+Beginning proof of STRONG-INDUCTION ...
+(IF (ZEROP N) (TRUE) (ALL (K) (IF (AND (<= 0 K) (< K N)) (M< K N) (TRUE))))
+Which simplifies
+ with invocation of ZEROP
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+STRONGLY-INDUCTIVE
+STRONG-WEAK-BRIDGE-SET
+STRONG-WEAK-BRIDGE
+Beginning proof of STRONG-WEAK-BRIDGE ...
+(IMPLIES (STRONGLY-INDUCTIVE X)
+ (= (WEAKLY-INDUCTIVE (STRONG-WEAK-BRIDGE-SET X)) (TRUE)))
+Which simplifies
+ with invocation of WEAKLY-INDUCTIVE, STRONGLY-INDUCTIVE
+ when rewriting with INTER.DEFINITION, INTER.COMMUTATIVE,
+STRONG-WEAK-BRIDGE-SET.DEFINITION, SUCC.INT.RULE, IN-NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(IMPLIES
+ (ALL (N)
+  (IMPLIES
+   (AND (>= N 0) (ALL (K) (IMPLIES (AND (>= K 0) (>= N (+ 1 K))) (IN K X))))
+   (IN N X)))
+ (AND (ALL (K$0) (IMPLIES (AND (>= K$0 0) (<= K$0 0)) (IN 0 X)))
+  (ALL (N$0)
+   (IMPLIES
+    (AND (>= N$0 0)
+     (ALL (K$1) (IMPLIES (AND (>= K$1 0) (>= N$0 K$1)) (IN K$1 X))))
+    (ALL (K$2) (IMPLIES (AND (>= K$2 0) (>= (+ 1 N$0) K$2)) (IN K$2 X)))))))
+Starting case 2 ...
+(IMPLIES
+ (ALL (N)
+  (IMPLIES
+   (AND (>= N 0) (ALL (K) (IMPLIES (AND (>= K 0) (>= N (+ 1 K))) (IN K X))))
+   (IN N X)))
+ (ALL (K$0) (IMPLIES (AND (>= K$0 0) (<= K$0 0)) (IN 0 X))))
+Instantiating (= N 0) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= 0 0) (ALL (K) (IMPLIES (AND (>= K 0) (<= (+ 1 K) 0)) (IN K X))))
+   (IN 0 X))
+  (ALL (N)
+   (IMPLIES
+    (AND (>= N 0)
+     (ALL (K$0) (IMPLIES (AND (>= K$0 0) (>= N (+ 1 K$0))) (IN K$0 X))))
+    (IN N X))))
+ (ALL (K$1) (IMPLIES (AND (>= K$1 0) (<= K$1 0)) (IN 0 X))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (ALL (N)
+  (IMPLIES
+   (AND (>= N 0) (ALL (K) (IMPLIES (AND (>= K 0) (>= N (+ 1 K))) (IN K X))))
+   (IN N X)))
+ (ALL (N$0)
+  (IMPLIES
+   (AND (>= N$0 0)
+    (ALL (K$1) (IMPLIES (AND (>= K$1 0) (>= N$0 K$1)) (IN K$1 X))))
+   (ALL (K$2) (IMPLIES (AND (>= K$2 0) (>= (+ 1 N$0) K$2)) (IN K$2 X))))))
+Instantiating (= N K$2) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= K 0)
+    (ALL (K$0) (IMPLIES (AND (>= K$0 0) (>= K (+ 1 K$0))) (IN K$0 X))))
+   (IN K X))
+  (ALL (N)
+   (IMPLIES
+    (AND (>= N 0)
+     (ALL (K$1) (IMPLIES (AND (>= K$1 0) (>= N (+ 1 K$1))) (IN K$1 X))))
+    (IN N X))))
+ (ALL (N$0)
+  (IMPLIES
+   (AND (>= N$0 0)
+    (ALL (K$2) (IMPLIES (AND (>= K$2 0) (>= N$0 K$2)) (IN K$2 X))) (>= K 0)
+    (>= (+ 1 N$0) K))
+   (IN K X))))
+Instantiating (= K$2 K$0) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= K 0) (IMPLIES (AND (>= K$0 0) (>= K (+ 1 K$0))) (IN K$0 X)))
+   (IN K X))
+  (ALL (N)
+   (IMPLIES
+    (AND (>= N 0)
+     (ALL (K$1) (IMPLIES (AND (>= K$1 0) (>= N (+ 1 K$1))) (IN K$1 X))))
+    (IN N X))))
+ (ALL (N$0)
+  (IMPLIES
+   (AND (>= N$0 0) (IMPLIES (AND (>= K$0 0) (>= N$0 K$0)) (IN K$0 X))
+    (ALL (K$2) (IMPLIES (AND (>= K$2 0) (>= N$0 K$2)) (IN K$2 X))) (>= K 0)
+    (>= (+ 1 N$0) K))
+   (IN K X))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+STRONG-INDUCTION-1
+Beginning proof of STRONG-INDUCTION-1 ...
+(IMPLIES (AND (STRONGLY-INDUCTIVE X) (IN N (NAT))) (IN N X))
+Assuming WEAK-INDUCTION-1 with the
+instantiations: (= X (STRONG-WEAK-BRIDGE-SET X)) (= N N) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (WEAKLY-INDUCTIVE (STRONG-WEAK-BRIDGE-SET X)) (IN N (NAT)))
+   (IN N (STRONG-WEAK-BRIDGE-SET X)))
+  (STRONGLY-INDUCTIVE X) (IN N (NAT)))
+ (IN N X))
+Rearranging gives ...
+(IMPLIES
+ (AND (STRONGLY-INDUCTIVE X) (IN N (NAT))
+  (IMPLIES (AND (WEAKLY-INDUCTIVE (STRONG-WEAK-BRIDGE-SET X)) (IN N (NAT)))
+   (IN N (STRONG-WEAK-BRIDGE-SET X))))
+ (IN N X))
+Which simplifies
+ when rewriting with STRONG-WEAK-BRIDGE-SET.DEFINITION, STRONG-WEAK-BRIDGE,
+IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+STRONG-INDUCTION-2
+Beginning proof of STRONG-INDUCTION-2 ...
+(IMPLIES (STRONGLY-INDUCTIVE X) (SUBSET (NAT) X))
+Assuming STRONG-INDUCTION-1 with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (ALL (N) (IMPLIES (AND (STRONGLY-INDUCTIVE X) (IN N (NAT))) (IN N X)))
+  (STRONGLY-INDUCTIVE X))
+ (SUBSET (NAT) X))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (ALL (N) (IMPLIES (AND (STRONGLY-INDUCTIVE X) (IN N (NAT))) (IN N X)))
+  (STRONGLY-INDUCTIVE X))
+ (ALL (E) (IMPLIES (IN E (NAT)) (IN E X))))
+Which simplifies
+ with the instantiation (= N E) to ...
+(TRUE)
+IS-SMALLEST-NAT-MEMBER
+HAS-SMALLEST
+Beginning proof of HAS-SMALLEST ...
+(IMPLIES (AND (IN N X) (IN N (NAT))) (SOME (K) (IS-SMALLEST-NAT-MEMBER K X)))
+Assuming STRONG-INDUCTION-2 with the
+instantiations: (= X (DIFF (NAT) X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (STRONGLY-INDUCTIVE (DIFF (NAT) X)) (SUBSET (NAT) (DIFF (NAT) X)))
+  (IN N X) (IN N (NAT)))
+ (SOME (K) (IS-SMALLEST-NAT-MEMBER K X)))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN N X) (IN N (NAT))
+  (IMPLIES (STRONGLY-INDUCTIVE (DIFF (NAT) X)) (SUBSET (NAT) (DIFF (NAT) X))))
+ (SOME (K) (IS-SMALLEST-NAT-MEMBER K X)))
+Which simplifies
+ with invocation of IS-SMALLEST-NAT-MEMBER, SUBSET, STRONGLY-INDUCTIVE
+ when rewriting with DIFF.DEFINITION, SUCC.INT.RULE, IN-NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(IMPLIES
+ (AND (IN N X) (>= N 0)
+  (NOT
+   (ALL (N$0)
+    (IMPLIES
+     (AND (>= N$0 0)
+      (ALL (K) (IMPLIES (AND (>= K 0) (>= N$0 (+ 1 K))) (NOT (IN K X)))))
+     (NOT (IN N$0 X))))))
+ (SOME (K$0)
+  (AND (IN K$0 X) (>= K$0 0)
+   (ALL (K$1) (IMPLIES (AND (IN K$1 X) (>= K$1 0)) (>= K$1 K$0))))))
+Instantiating (= K$0 N$0) gives ...
+(IMPLIES
+ (AND (IN N X) (>= N 0)
+  (NOT
+   (IMPLIES
+    (AND (>= N$0 0)
+     (ALL (K) (IMPLIES (AND (>= K 0) (>= N$0 (+ 1 K))) (NOT (IN K X)))))
+    (NOT (IN N$0 X))))
+  (NOT
+   (AND (IN N$0 X) (>= N$0 0)
+    (ALL (K$0) (IMPLIES (AND (IN K$0 X) (>= K$0 0)) (>= K$0 N$0))))))
+ (SOME (K$1)
+  (AND (IN K$1 X) (>= K$1 0)
+   (ALL (K$2) (IMPLIES (AND (IN K$2 X) (>= K$2 0)) (>= K$2 K$1))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (IN N X) (>= N 0) (>= N$0 0)
+  (ALL (K) (IMPLIES (AND (>= K 0) (>= N$0 (+ 1 K))) (NOT (IN K X))))
+  (IN N$0 X)
+  (NOT (ALL (K$0) (IMPLIES (AND (IN K$0 X) (>= K$0 0)) (>= K$0 N$0)))))
+ (SOME (K$1)
+  (AND (IN K$1 X) (>= K$1 0)
+   (ALL (K$2) (IMPLIES (AND (IN K$2 X) (>= K$2 0)) (>= K$2 K$1))))))
+Instantiating (= K K$0) gives ...
+(IMPLIES
+ (AND (IN N X) (>= N 0) (>= N$0 0)
+  (SOME (K)
+   (AND (IMPLIES (AND (>= K 0) (>= N$0 (+ 1 K))) (NOT (IN K X)))
+    (ALL (K$0) (IMPLIES (AND (>= K$0 0) (>= N$0 (+ 1 K$0))) (NOT (IN K$0 X))))
+    (IN N$0 X) (NOT (IMPLIES (AND (IN K X) (>= K 0)) (>= K N$0))))))
+ (SOME (K$1)
+  (AND (IN K$1 X) (>= K$1 0)
+   (ALL (K$2) (IMPLIES (AND (IN K$2 X) (>= K$2 0)) (>= K$2 K$1))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+SMALLEST-IS-UNIQUE
+Beginning proof of SMALLEST-IS-UNIQUE ...
+(IMPLIES (AND (IS-SMALLEST-NAT-MEMBER K X) (IS-SMALLEST-NAT-MEMBER N X))
+ (= N K))
+Which simplifies
+ with invocation of IS-SMALLEST-NAT-MEMBER
+ when rewriting with IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (IN K X) (>= K 0)
+  (ALL (K$0) (IMPLIES (AND (IN K$0 X) (>= K$0 0)) (>= K$0 K))) (IN N X)
+  (>= N 0) (ALL (K$1) (IMPLIES (AND (IN K$1 X) (>= K$1 0)) (>= K$1 N))))
+ (= N K))
+Instantiating (= K$0 N) gives ...
+(IMPLIES
+ (AND (IN K X) (>= K 0) (IMPLIES (AND (IN N X) (>= N 0)) (>= N K))
+  (ALL (K$0) (IMPLIES (AND (IN K$0 X) (>= K$0 0)) (>= K$0 K))) (IN N X)
+  (>= N 0) (ALL (K$1) (IMPLIES (AND (IN K$1 X) (>= K$1 0)) (>= K$1 N))))
+ (= N K))
+Instantiating (= K$1 K) gives ...
+(IMPLIES
+ (AND (IN K X) (>= K 0) (IMPLIES (AND (IN N X) (>= N 0)) (>= N K))
+  (ALL (K$0) (IMPLIES (AND (IN K$0 X) (>= K$0 0)) (>= K$0 K))) (IN N X)
+  (>= N 0) (IMPLIES (AND (IN K X) (>= K 0)) (>= K N))
+  (ALL (K$1) (IMPLIES (AND (IN K$1 X) (>= K$1 0)) (>= K$1 N))))
+ (= N K))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= K 0) (>= N 0) (IN K X) (IN N X)
+  (IMPLIES (AND (>= N 0) (IN N X)) (>= N K))
+  (IMPLIES (AND (>= K 0) (IN K X)) (>= K N))
+  (ALL (K$0) (IMPLIES (AND (>= K$0 0) (IN K$0 X)) (>= K$0 K)))
+  (ALL (K$1) (IMPLIES (AND (>= K$1 0) (IN K$1 X)) (>= K$1 N))))
+ (= N K))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+SMALLEST-NAT-MEMBER
+Beginning proof of SMALLEST-NAT-MEMBER ...
+(SOME (N)
+ (ALL (N-0)
+  (=
+   (IF (SOME (K) (IS-SMALLEST-NAT-MEMBER K X)) (IS-SMALLEST-NAT-MEMBER N-0 X)
+    (= N-0 -1))
+   (= N-0 N))))
+Which simplifies to ...
+(IF (SOME (K) (IS-SMALLEST-NAT-MEMBER K X))
+ (SOME (N) (ALL (N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (= N-0 N))))
+ (SOME (N$0) (ALL (N-0$0) (= (= N-0$0 -1) (= N-0$0 N$0)))))
+Instantiating (= N$0 -1) gives ...
+(IF (SOME (K) (IS-SMALLEST-NAT-MEMBER K X))
+ (SOME (N) (ALL (N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (= N-0 N))))
+ (OR (ALL (N-0$0) (= (= N-0$0 -1) (= N-0$0 -1)))
+  (SOME (N$0) (ALL (N-0$1) (= (= N-0$1 -1) (= N-0$1 N$0))))))
+Which simplifies to ...
+(IMPLIES (SOME (K) (IS-SMALLEST-NAT-MEMBER K X))
+ (SOME (N) (ALL (N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (= N-0 N)))))
+Instantiating (= N K) gives ...
+(IMPLIES
+ (AND (IS-SMALLEST-NAT-MEMBER K X)
+  (NOT (ALL (N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (= N-0 K)))))
+ (SOME (N) (ALL (N-0$0) (= (IS-SMALLEST-NAT-MEMBER N-0$0 X) (= N-0$0 N)))))
+Splitting on (= K N-0) generates ...
+(IMPLIES
+ (AND (IS-SMALLEST-NAT-MEMBER K X)
+  (NOT
+   (ALL (N-0)
+    (IF (= K N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (= N-0 K))
+     (= (IS-SMALLEST-NAT-MEMBER N-0 X) (= N-0 K))))))
+ (SOME (N) (ALL (N-0$0) (= (IS-SMALLEST-NAT-MEMBER N-0$0 X) (= N-0$0 N)))))
+Which simplifies to ...
+(IMPLIES
+ (AND (IS-SMALLEST-NAT-MEMBER K X)
+  (NOT (ALL (N-0) (OR (= K N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (FALSE))))))
+ (SOME (N) (ALL (N-0$0) (= (IS-SMALLEST-NAT-MEMBER N-0$0 X) (= N-0$0 N)))))
+Assuming SMALLEST-IS-UNIQUE with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (ALL (K$0 N)
+   (IMPLIES (AND (IS-SMALLEST-NAT-MEMBER K$0 X) (IS-SMALLEST-NAT-MEMBER N X))
+    (= N K$0)))
+  (IS-SMALLEST-NAT-MEMBER K X)
+  (NOT (ALL (N-0) (OR (= K N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (FALSE))))))
+ (SOME (N$0) (ALL (N-0$0) (= (IS-SMALLEST-NAT-MEMBER N-0$0 X) (= N-0$0 N$0)))))
+Instantiating (= K$0 K) (= N N-0) gives ...
+(IMPLIES
+ (SOME (N-0)
+  (AND
+   (IMPLIES (AND (IS-SMALLEST-NAT-MEMBER K X) (IS-SMALLEST-NAT-MEMBER N-0 X))
+    (= N-0 K))
+   (ALL (K$0 N)
+    (IMPLIES (AND (IS-SMALLEST-NAT-MEMBER K$0 X) (IS-SMALLEST-NAT-MEMBER N X))
+     (= N K$0)))
+   (IS-SMALLEST-NAT-MEMBER K X)
+   (NOT (OR (= K N-0) (= (IS-SMALLEST-NAT-MEMBER N-0 X) (FALSE))))))
+ (SOME (N$0) (ALL (N-0$0) (= (IS-SMALLEST-NAT-MEMBER N-0$0 X) (= N-0$0 N$0)))))
+Which simplifies to ...
+(TRUE)
+SMALLEST-IS-SMALLEST
+Beginning proof of SMALLEST-IS-SMALLEST ...
+(IMPLIES (AND (IN N X) (IN N (NAT)))
+ (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X))
+Assuming SMALLEST-NAT-MEMBER.DEFINITION with the
+instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (=
+   (IF (SOME (K) (IS-SMALLEST-NAT-MEMBER K X))
+    (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X)
+    (= (SMALLEST-NAT-MEMBER X) -1))
+   (TRUE))
+  (IN N X) (IN N (NAT)))
+ (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X))
+Assuming HAS-SMALLEST with the instantiations: (= X X) (= N N) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN N X) (IN N (NAT)))
+   (SOME (K) (IS-SMALLEST-NAT-MEMBER K X)))
+  (IF (SOME (K$0) (IS-SMALLEST-NAT-MEMBER K$0 X))
+   (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X)
+   (= (SMALLEST-NAT-MEMBER X) -1))
+  (IN N X) (IN N (NAT)))
+ (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X))
+Which simplifies to ...
+(TRUE)
+SMALLEST-IS-SMALLEST-2
+Beginning proof of SMALLEST-IS-SMALLEST-2 ...
+(IMPLIES (AND (IN N X) (IN N (NAT)))
+ (AND (IN (SMALLEST-NAT-MEMBER X) X) (IN (SMALLEST-NAT-MEMBER X) (NAT))
+  (<= (SMALLEST-NAT-MEMBER X) N)))
+Assuming SMALLEST-IS-SMALLEST with the
+instantiations: (= N N) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN N X) (IN N (NAT)))
+   (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X))
+  (IN N X) (IN N (NAT)))
+ (AND (IN (SMALLEST-NAT-MEMBER X) X) (IN (SMALLEST-NAT-MEMBER X) (NAT))
+  (>= N (SMALLEST-NAT-MEMBER X))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN N X) (IN N (NAT))
+  (IMPLIES (AND (IN N X) (IN N (NAT)))
+   (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X)))
+ (AND (>= N (SMALLEST-NAT-MEMBER X)) (IN (SMALLEST-NAT-MEMBER X) X)
+  (IN (SMALLEST-NAT-MEMBER X) (NAT))))
+Which simplifies
+ with invocation of IS-SMALLEST-NAT-MEMBER
+ when rewriting with IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+SMALLEST-OF-NULLSET
+Beginning proof of SMALLEST-OF-NULLSET ...
+(IMPLIES (= (INTER X (NAT)) (NULLSET)) (= (SMALLEST-NAT-MEMBER X) -1))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (INTER X (NAT))) (= Y (NULLSET)) generates ...
+(IMPLIES
+ (AND
+  (= (= (INTER X (NAT)) (NULLSET))
+   (ALL (E) (= (IN E (INTER X (NAT))) (IN E (NULLSET)))))
+  (= (INTER X (NAT)) (NULLSET)))
+ (= (SMALLEST-NAT-MEMBER X) -1))
+Assuming SMALLEST-NAT-MEMBER.DEFINITION with the
+instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (=
+   (IF (SOME (K) (IS-SMALLEST-NAT-MEMBER K X))
+    (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X)
+    (= (SMALLEST-NAT-MEMBER X) -1))
+   (TRUE))
+  (= (= (INTER X (NAT)) (NULLSET))
+   (ALL (E) (= (IN E (INTER X (NAT))) (IN E (NULLSET)))))
+  (= (INTER X (NAT)) (NULLSET)))
+ (= (SMALLEST-NAT-MEMBER X) -1))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, IN-NAT, INTER.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (SOME (K) (IS-SMALLEST-NAT-MEMBER K X))
+  (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X)
+  (= (= (INTER X (NAT)) (NULLSET))
+   (ALL (E) (IMPLIES (IN E X) (NOT (>= E 0)))))
+  (= (INTER X (NAT)) (NULLSET)))
+ (= (SMALLEST-NAT-MEMBER X) -1))
+Invoking IS-SMALLEST-NAT-MEMBER gives ...
+(IMPLIES
+ (AND
+  (SOME (K)
+   (AND (IN K X) (IN K (NAT))
+    (ALL (K$0) (IMPLIES (AND (IN K$0 X) (IN K$0 (NAT))) (>= K$0 K)))))
+  (IN (SMALLEST-NAT-MEMBER X) X) (IN (SMALLEST-NAT-MEMBER X) (NAT))
+  (ALL (K$1)
+   (IMPLIES (AND (IN K$1 X) (IN K$1 (NAT))) (>= K$1 (SMALLEST-NAT-MEMBER X))))
+  (= (= (INTER X (NAT)) (NULLSET))
+   (ALL (E) (IMPLIES (IN E X) (NOT (>= E 0)))))
+  (= (INTER X (NAT)) (NULLSET)))
+ (= (SMALLEST-NAT-MEMBER X) -1))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (INTER X (NAT)) (NULLSET)) (IN (SMALLEST-NAT-MEMBER X) X)
+  (IN (SMALLEST-NAT-MEMBER X) (NAT))
+  (= (= (INTER X (NAT)) (NULLSET))
+   (ALL (E) (IMPLIES (IN E X) (NOT (>= E 0)))))
+  (SOME (K)
+   (AND (IN K X) (IN K (NAT))
+    (ALL (K$0) (IMPLIES (AND (IN K$0 X) (IN K$0 (NAT))) (>= K$0 K)))))
+  (ALL (K$1)
+   (IMPLIES (AND (IN K$1 X) (IN K$1 (NAT)))
+    (>= K$1 (SMALLEST-NAT-MEMBER X)))))
+ (= (SMALLEST-NAT-MEMBER X) -1))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (= (INTER X (NAT)) (NULLSET)) (IN (SMALLEST-NAT-MEMBER X) X)
+  (IN (SMALLEST-NAT-MEMBER X) (NAT))
+  (= (TRUE) (ALL (E) (IMPLIES (IN E X) (NOT (>= E 0)))))
+  (SOME (K)
+   (AND (IN K X) (IN K (NAT))
+    (ALL (K$0) (IMPLIES (AND (IN K$0 X) (IN K$0 (NAT))) (>= K$0 K)))))
+  (ALL (K$1)
+   (IMPLIES (AND (IN K$1 X) (IN K$1 (NAT)))
+    (>= K$1 (SMALLEST-NAT-MEMBER X)))))
+ (= (SMALLEST-NAT-MEMBER X) -1))
+Which simplifies
+ when rewriting with IN-NAT
+ forward chaining using >=.SAME.TYPE
+ with the instantiation (= E (SMALLEST-NAT-MEMBER X)) to ...
+(TRUE)
+Done.

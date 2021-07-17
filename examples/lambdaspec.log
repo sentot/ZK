@@ -1,0 +1,35 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/lambdaspec.ver"
+Warning RULE-LOOPS for FN!FUNCTION-EXTENSIONALITY:
+ The rule FN!FUNCTION-EXTENSIONALITY loops upon itself.
+NULL
+BIND
+LOOKUP
+LOOKUP-BIND
+Beginning proof of LOOKUP-BIND ...
+(= (LOOKUP VAR1 (BIND VAR2 VAL RHO)) (IF (= VAR1 VAR2) VAL (LOOKUP VAR1 RHO)))
+CONST
+AP
+LAM
+VALUE
+VALUE-OF
+VALUE-VAR
+Beginning proof of VALUE-VAR ...
+(IMPLIES (= (TYPE-OF V) (INT)) (= (VALUE V R) (LOOKUP V R)))
+VALUE-CONST
+Beginning proof of VALUE-CONST ...
+(= (VALUE (CONST X) R) X)
+VALUE-AP
+Beginning proof of VALUE-AP ...
+(= (VALUE (AP E1 E2) R) (FN!APPLY (VALUE E1 R) (VALUE E2 R)))
+IS-FUNCTION-VALUE-LAM
+Beginning proof of IS-FUNCTION-VALUE-LAM ...
+(= (FN!IS-FUNCTION (VALUE (LAM V S E) R)) (TRUE))
+DOM-VALUE-LAM
+Beginning proof of DOM-VALUE-LAM ...
+(= (REL!DOM (VALUE (LAM V S E) R)) S)
+APPLY-VALUE-LAM
+Beginning proof of APPLY-VALUE-LAM ...
+(IMPLIES (IN X S)
+ (= (FN!APPLY (VALUE (LAM V S E) R) X) (VALUE E (BIND V X R))))
+Done.

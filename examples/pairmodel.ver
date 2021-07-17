@@ -1,0 +1,155 @@
+
+;;; Wiener-Kuratowski implementation of ordered pairs
+
+(load setrules)
+(load cap)
+
+(disabled
+ (function pair (x y) ()
+   (make-set (unit x) (make-set x y))))
+
+(disabled
+ (function fst (x) ()
+   (cap!cap (cap!cap x))))
+
+(grule fst-pair (x y)
+  (= (fst (pair x y))
+     x))
+(WITH-ENABLED (PAIR FST) (REDUCE))
+
+(disabled
+ (function snd (x) ()
+   (if (= x (unit (cap!cap x)))
+       (fst x)
+       (cap!cap (diff (cup x)
+		      (cap!cap x))))))
+
+(grule snd-pair (x y)
+  (= (snd (pair x y))
+     y))
+(SPLIT (= X Y))
+(WITH-ENABLED (PAIR FST SND) (REDUCE))
+(EQUALITY-SUBSTITUTE X)
+(REWRITE)
+
+(disabled
+ (function is-pair (x) ()
+   (= x (pair (fst x) (snd x)))))
+
+(grule is-pair-bool (x)
+  (= (type-of (is-pair x))
+     (bool)))
+(WITH-ENABLED (IS-PAIR) (REDUCE))
+
+(grule pair-is-pair (x y)
+  (is-pair (pair x y)))
+(WITH-ENABLED (IS-PAIR) (REDUCE))
+
+(axiom pair-composition (x)
+  (implies (is-pair x)
+	   (= (pair (fst x) (snd x)) x)))
+(WITH-ENABLED (IS-PAIR) (REDUCE))
+
+;;; cross product
+
+;;; We could define cross by the declaration
+;;;
+;;; (zf-function cross (x y) (map (pair a b) ((a) x) ((b) y)))
+;;;
+;;; but that is a bit of a cheat; this declaration presupposes cross products.
+;;; Here is how its done in the set theory books.
+
+(zf-function cross (x y)
+  (select (p (powerset (powerset (union x y))))
+    (and (is-pair p)
+	 (in (fst p) x)
+	 (in (snd p) y))))
+
+(axiom lemma-1 (a b x y)
+  (implies (and (in x a)
+		(in y b))
+	   (in (pair x y)
+	       (powerset (powerset (union a b))))))
+(WITH-ENABLED (PAIR) (REDUCE))
+
+(rule in-cross (a x y)
+  (= (in a (cross x y))
+     (and (is-pair a)
+	  (in (fst a) x)
+	  (in (snd a) y))))
+(REWRITE)
+(INVOKE IS-PAIR)
+(USE LEMMA-1 (X (FST A)) (Y (SND A)) (A X) (B Y))
+(REWRITE)
+
+(rule cross-nullset-left (x)
+  (= (cross (nullset) x)
+     (nullset)))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cross-nullset-right (x)
+  (= (cross x (nullset))
+     (nullset)))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(axiom =-cross-nullset (x y)
+  (= (= (cross x y) (nullset))
+     (or (= x (nullset))
+	 (= y (nullset)))))
+(USE SETRULES!SET-CASES (X X))
+(USE SETRULES!SET-CASES (X Y))
+(REWRITE)
+(APPLY SETRULES!EXTENSIONALITY (= (CROSS X Y) (NULLSET)))
+(INSTANTIATE (E$1 (PAIR E$0 E)))
+(REWRITE)
+
+(rule cross-union-left (x y z)
+  (= (cross (union x y) z)
+     (union (cross x z) (cross y z))))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cross-union-right (x y z)
+  (= (cross x (union y z))
+     (union (cross x y) (cross x z))))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cross-inter-left (x y z)
+  (= (cross (inter x y) z)
+     (inter (cross x z) (cross y z))))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cross-inter-right (x y z)
+  (= (cross x (inter y z))
+     (inter (cross x y) (cross x z))))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cross-diff-left (x y z)
+  (= (cross (diff x y) z)
+     (diff (cross x z) (cross y z))))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cross-diff-right (x y z)
+  (= (cross x (diff y z))
+     (diff (cross x y) (cross x z))))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(axiom subset-cross-cross (a b c d)
+  (= (subset (cross a b) (cross c d))
+     (or (= a (nullset))
+	 (= b (nullset))
+	 (and (subset a c)
+	      (subset b d)))))
+(USE SETRULES!SET-CASES (X A))
+(USE SETRULES!SET-CASES (X B))
+(PRENEX)
+(REWRITE)
+(REDUCE)
+(CASES)
+(SPLIT (SUBSET B D))
+(REDUCE)
+(INSTANTIATE (E$3 (PAIR E$0 E$1)))
+(REWRITE)
+(NEXT)
+(INSTANTIATE (E$4 (PAIR E$1 E)))
+(REWRITE)
+(NEXT)

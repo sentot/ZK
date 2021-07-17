@@ -1,0 +1,502 @@
+;;;
+;;; The theory of functions
+;;;
+;;; Concepts introduced:
+;;;
+;;; (is-function x)	-- does set X represent a function?
+;;; (apply f x)		-- apply function f to x. 
+;;; (override f g)	-- function overriding
+;;;
+;;; and various function spaces:
+;;;
+;;; (fun X Y)		-- total functions from X to Y
+;;; (pfun X Y)  	-- partial functions from X to Y
+;;; (surj X Y)		-- total surjections from X onto Y
+;;; (psurj X Y)		-- partial surjection from X onto Y
+;;; (inj X Y)		-- total injections (1-to-1 functions) from X to Y
+;;; (pinj X Y)  	-- partial injections from X to Y
+;;; (bij X Y)		-- bijections between X and Y
+;;;
+
+;;; Function theory is based on the theory of relations
+
+(load rel) ; which also loads pair
+
+
+;;; is-function
+
+(disabled
+ (function is-function (f) ()
+   (and (rel!is-relation f)
+	(all (a b c)
+	  (implies (and (in (pair!pair a b) f)
+			(in (pair!pair a c) f))
+		   (= b c))))))
+
+(grule is-function-bool (f)
+  (= (type-of (is-function f))
+     (bool)))
+
+(frule function-is-relation (f)
+  (implies (is-function f)
+	   (rel!is-relation f)))
+
+(rule function-is-relation-2 (f)
+  (implies (not (rel!is-relation f))
+	   (= (is-function f) (false))))
+
+ (axiom function-property (f a b c)
+  (implies (and (is-function f)
+		(in (pair!pair a b) f)
+		(in (pair!pair a c) f))
+	   (= b c)))
+
+(axiom is-function-subset (x y)
+  (implies (and (is-function y)
+		(subset x y))
+	   (is-function x)))
+
+
+;;; apply
+
+(function-stub apply (f x))
+
+(axiom apply-definition (f x)
+  (implies (and (is-function f)
+		(in x (rel!dom f)))
+	   (in (pair!pair x (apply f x)) f)))
+
+(axiom apply-unique (f x y)
+  (implies (and (is-function f)
+		(in (pair!pair x y) f))
+	   (= y (apply f x))))
+
+(axiom apply-in-ran (f x)
+  (implies (and (is-function f)
+		(in x (rel!dom f)))
+	   (in (apply f x) (rel!ran f))))
+
+(disabled
+ (rule function-extensionality (f g)
+  (implies (and (is-function f)
+		(is-function g))
+	   (= (= f g)
+	      (and (= (rel!dom f) (rel!dom g))
+		   (all (x) (implies (in x (rel!dom f))
+				     (= (apply f x) (apply g x)))))))))
+
+(disabled
+  (rule in-ran-function (x f)
+    (implies (is-function f)
+	     (= (in x (rel!ran f))
+		(some (y) (and (in y (rel!dom f))
+			       (= x (apply f y))))))))
+
+(disabled
+  (rule function-ran-subset (f s)
+    (implies (is-function f)
+	     (= (subset (rel!ran f) s)
+		(all (x) (implies (in x (rel!dom f))
+				  (in (apply f x) s)))))))
+
+(rule function-image-unit (f x)
+  (implies (and (is-function f)
+		(in x (rel!dom f)))
+	   (= (rel!image f (unit x))
+	      (unit (apply f x)))))
+
+(rule function-image-setadd (f x y)
+  (implies (and (is-function f)
+		(in x (rel!dom f)))
+	   (= (rel!image f (setadd x y))
+	      (setadd (apply f x) (rel!image f y)))))
+
+(rule in-pre-image-of-function (x f y)
+  (implies (is-function f)
+	   (= (in x (rel!image (rel!inverse f) y))
+	      (and (in x (rel!dom f))
+		   (in (apply f x) y)))))
+
+(disabled
+ (rule ran-dom-remove-function (x r)
+  (implies (is-function (rel!inverse r))
+	   (= (rel!ran (rel!dom-remove x r))
+	      (diff (rel!ran r) (rel!image r x))))))
+
+(disabled
+ (rule dom-ran-remove-function (r x)
+  (implies (is-function r)
+	   (= (rel!dom (rel!ran-remove r x))
+	      (diff (rel!dom r) (rel!image (rel!inverse r) x))))))
+
+(axiom apply-subset (f g x)
+  (implies (and (is-function g)
+		(subset f g)
+		(in x (rel!dom f)))
+	   (= (apply f x) (apply g x))))
+
+;;; particular functions
+;;;
+
+;;; Nullset
+
+(rule is-function-nullset ()
+  (= (is-function (nullset))
+     (true)))
+
+; no "apply" rule for nullset, since the domain is empty
+
+;;; Unit sets
+
+(rule is-function-unit (x)
+  (= (is-function (unit x))
+     (pair!is-pair x)))
+
+(rule apply-unit-pair (x y z)
+  (implies (= z x)
+	   (= (apply (unit (pair!pair x y)) z)
+	      y)))
+
+;;; Union
+
+(disabled
+ (rule is-function-union (f g)
+  (= (is-function (union f g))
+     (and (is-function f)
+	  (is-function g)
+	  (all (x) (implies (in x (inter (rel!dom f) (rel!dom g)))
+			    (= (apply f x) (apply g x))))))))
+
+(rule apply-union (f g x)
+  (implies (and (is-function (union f g))
+		(in x (rel!dom (union f g))))
+	   (= (apply (union f g) x)
+	      (if (in x (rel!dom f))
+		  (apply f x)
+		  (apply g x)))))
+
+;;; Setadd
+
+(rule is-function-setadd (f x)
+  (= (is-function (setadd x f))
+     (and (is-function f)
+	  (pair!is-pair x)
+	  (implies (in (pair!fst x) (rel!dom f))
+		   (in x f)))))
+
+
+(rule apply-setadd (f x y)
+  (implies (and (is-function (setadd x f))
+		(in y (rel!dom (setadd x f))))
+	   (= (apply (setadd x f) y)
+	      (if (= y (pair!fst x))
+		  (pair!snd x)
+		  (apply f y)))))
+
+;;; Comp
+
+(rule is-function-comp-functions (f g)
+  (implies (and (is-function f)
+		(is-function g))
+	   (= (is-function (rel!comp f g)) (true))))
+
+(rule apply-comp (f g x)
+  (implies (and (is-function f)
+		(is-function g)
+		(in x (rel!dom f))
+		(in (apply f x) (rel!dom g)))
+	   (= (apply (rel!comp f g) x)
+	      (apply g (apply f x)))))
+
+;;; Id
+
+(rule is-function-id (x)
+  (= (is-function (rel!id x))
+     (true)))
+
+(rule apply-id (x y)
+  (implies (in y x)
+	   (= (apply (rel!id x) y)
+	      y)))
+
+;;; Dom-restrict
+
+(rule is-function-dom-restrict (x f)
+  (implies (is-function f)
+	   (= (is-function (rel!dom-restrict x f)) (true))))
+
+(rule apply-dom-restrict-function (s f x)
+  (implies (and (is-function f)
+		(in x s)
+		(in x (rel!dom f)))
+	   (= (apply (rel!dom-restrict s f) x)
+	      (apply f x))))
+
+;;; Ran-restrict
+
+(rule is-function-ran-restrict (f x)
+  (implies (is-function f)
+	   (= (is-function (rel!ran-restrict f x)) (true))))
+
+(rule apply-ran-restrict-function (s f x)
+  (implies (and (is-function f)
+		(in x (rel!dom f))
+		(in (apply f x) s))
+	   (= (apply (rel!ran-restrict f s) x)
+	      (apply f x))))
+
+;;; Dom-remove
+
+(rule is-function-dom-remove (x f)
+  (implies (is-function f)
+	   (= (is-function (rel!dom-remove x f)) (true))))
+
+(rule apply-dom-remove-function (s f x)
+  (implies (and (is-function f)
+		(not (in x s))
+		(in x (rel!dom f)))
+	   (= (apply (rel!dom-remove s f) x)
+	      (apply f x))))
+
+;;; Ran-remove
+
+(rule is-function-ran-remove (f x)
+  (implies (is-function f)
+	   (= (is-function (rel!ran-remove f x)) (true))))
+
+(rule apply-ran-remove-function (s f x)
+  (implies (and (is-function f)
+		(in x (rel!dom f))
+		(not (in (apply f x) s)))
+	   (= (apply (rel!ran-remove f s) x)
+	      (apply f x))))
+
+
+
+;;; overriding
+
+(disabled
+ (function override (f g) ()
+   (union (rel!dom-remove (rel!dom g) f) g)))
+
+(rule is-relation-override (f g)
+  (implies (and (rel!is-relation f)
+		(rel!is-relation g))
+	   (= (rel!is-relation (override f g)) (true))))
+
+(rule is-function-override (f g)
+  (implies (and (is-function f)
+		(is-function g))
+	   (= (is-function (override f g)) (true))))
+
+(rule apply-override (f g x)
+  (implies (and (is-function f)
+		(is-function g)
+		(or (in x (rel!dom f)) (in x (rel!dom g))))
+	   (= (apply (override f g) x)
+	      (if (in x (rel!dom g))
+		  (apply g x)
+		  (apply f x)))))
+
+(rule dom-override (f g)
+  (= (rel!dom (override f g))
+     (union (rel!dom f) (rel!dom g))))
+
+(axiom ran-override (f g)
+  (subset (rel!ran (override f g))
+	  (union (rel!ran f) (rel!ran g))))
+
+(rule override-idempotent (f)
+  (= (override f f) f))
+
+(rule override-associative (f g h)
+  (= (override (override f g) h)
+     (override f (override g h))))
+
+(rule override-nullset-left (f)
+  (= (override (nullset) f)
+     f))
+
+(rule override-nullset-right (f)
+  (implies (rel!is-relation f)
+	   (= (override f (nullset))
+	      f)))
+
+
+;;; Function spaces
+;;;
+
+;;; (fun X Y) - functions from X to Y
+
+(function-stub fun (x y))
+
+(disabled
+ (rule in-fun (f x y)
+   (= (in f (fun x y))
+      (and (is-function f)
+	   (= (rel!dom f) x)
+	   (subset (rel!ran f) y)))))
+
+(disabled
+ (rule in-fun-1 (f x y)
+   (= (in f (fun x y))
+      (and (is-function f)
+	   (= (rel!dom f) x)
+	   (all (z) (implies (in z x)
+			     (in (apply f z) y)))))))
+
+
+;;; (pfun X Y) - partial functions from X to Y
+
+(function-stub pfun (x y))
+
+(disabled
+ (rule in-pfun (f x y)
+   (= (in f (pfun x y))
+      (and (is-function f)
+	   (subset (rel!dom f) x)
+	   (subset (rel!ran f) y)))))
+
+(disabled
+ (rule in-pfun-1 (f x y)
+   (= (in f (pfun x y))
+      (and (is-function f)
+	   (subset (rel!dom f) x)
+	   (all (z) (implies (in z (rel!dom f))
+			     (in (apply f z) y)))))))
+
+;;; (surj X Y) - functions from X onto Y
+
+(function-stub surj (x y))
+
+(disabled
+ (rule in-surj (f x y)
+  (= (in f (surj x y))
+     (and (is-function f)
+	  (= (rel!dom f) x)
+	  (= (rel!ran f) y)))))
+
+;;; (psurj X Y) - partial functions from X onto Y
+
+(function-stub psurj (x y))
+
+(disabled
+ (rule in-psurj (f x y)
+  (= (in f (psurj x y))
+     (and (is-function f)
+	  (subset (rel!dom f) x)
+	  (= (rel!ran f) y)))))
+
+;;; (inj X Y) - injective functions from X to Y
+
+(function-stub inj (x y))
+
+(disabled
+ (rule in-inj (f x y)
+   (= (in f (inj x y))
+      (and (is-function f)
+	   (is-function (rel!inverse f))
+	   (= (rel!dom f) x)
+	   (subset (rel!ran f) y)))))
+
+;;; (pinj X Y) - injective partial functions from X to Y
+
+(function-stub pinj (x y))
+
+(disabled
+ (rule in-pinj (f x y)
+   (= (in f (pinj x y))
+      (and (is-function f)
+	   (is-function (rel!inverse f))
+	   (subset (rel!dom f) x)
+	   (subset (rel!ran f) y)))))
+
+;;; (bij X Y) - bijective functions from X to Y
+
+(function-stub bij (x y))
+
+(disabled
+ (rule in-bij (f x y)
+  (= (in f (bij x y))
+     (and (is-function f)
+	  (is-function (rel!inverse f))
+	  (= (rel!dom f) x)
+	  (= (rel!ran f) y)))))
+
+
+;;;
+;;; properties of the spaces
+;;;
+
+;;; very sketchy at the moment
+
+
+(rule pfun-nullset-left (x)
+  (= (pfun (nullset) x)
+     (unit (nullset))))
+
+(rule pfun-nullset-right (x)
+  (= (pfun x (nullset))
+     (unit (nullset))))
+
+(rule fun-nullset-left (x)
+  (= (fun (nullset) x)
+     (unit (nullset))))
+
+(rule fun-nullset-right (x)
+  (= (fun x (nullset))
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))
+
+(rule surj-nullset-left (x)
+  (= (surj (nullset) x)
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))
+
+(rule surj-nullset-right (x)
+  (= (surj x (nullset))
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))
+
+(rule psurj-nullset-left (x)
+  (= (psurj (nullset) x)
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))
+
+(rule psurj-nullset-right (x)
+  (= (psurj x (nullset))
+     (unit (nullset))))
+
+(rule pinj-nullset-left (x)
+  (= (pinj (nullset) x)
+     (unit (nullset))))
+
+(rule pinj-nullset-right (x)
+  (= (pinj x (nullset))
+     (unit (nullset))))
+
+(rule inj-nullset-left (x)
+  (= (inj (nullset) x)
+     (unit (nullset))))
+
+(rule inj-nullset-right (x)
+  (= (inj x (nullset))
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))
+
+(rule bij-nullset-left (x)
+  (= (bij (nullset) x)
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))
+
+(rule bij-nullset-right (x)
+  (= (bij x (nullset))
+     (if (= x (nullset))
+	 (unit (nullset))
+	 (nullset))))

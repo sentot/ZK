@@ -1,0 +1,806 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/srmodel.ver"
+EXTENSIONALITY
+Beginning proof of EXTENSIONALITY ...
+(= (= X Y) (ALL (E) (IF (IN E X) (IN E Y) (NOT (IN E Y)))))
+Assuming =.EXTENSIONAL with the instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES (= (= X Y) (ALL (E) (= (IN E X) (IN E Y))))
+ (= (= X Y) (ALL (E$0) (IF (IN E$0 X) (IN E$0 Y) (NOT (IN E$0 Y))))))
+Splitting on (= X Y) generates ...
+(IF (= X Y)
+ (IMPLIES (= (= X Y) (ALL (E) (= (IN E X) (IN E Y))))
+  (= (= X Y) (ALL (E$0) (IF (IN E$0 X) (IN E$0 Y) (NOT (IN E$0 Y))))))
+ (IMPLIES (= (= X Y) (ALL (E$1) (= (IN E$1 X) (IN E$1 Y))))
+  (= (= X Y) (ALL (E$2) (IF (IN E$2 X) (IN E$2 Y) (NOT (IN E$2 Y)))))))
+Which simplifies to ...
+(IMPLIES (AND (NOT (= X Y)) (= (FALSE) (ALL (E) (= (IN E X) (IN E Y)))))
+ (= (FALSE) (ALL (E$0) (IF (IN E$0 X) (IN E$0 Y) (NOT (IN E$0 Y))))))
+Instantiating (= E$0 E) gives ...
+(IMPLIES (AND (NOT (= X Y)) (NOT (= (IN E X) (IN E Y))))
+ (NOT
+  (AND (IF (IN E X) (IN E Y) (NOT (IN E Y)))
+   (ALL (E$0) (IF (IN E$0 X) (IN E$0 Y) (NOT (IN E$0 Y)))))))
+Which simplifies to ...
+(TRUE)
+EXTENSIONALITY-SUBGOAL
+Beginning proof of EXTENSIONALITY-SUBGOAL ...
+(IMPLIES (ALL (E) (IF (IN E X) (IN E Y) (NOT (IN E Y)))) (= (= X Y) (TRUE)))
+Which simplifies
+ when rewriting with EXTENSIONALITY to ...
+(TRUE)
+SET-CASES
+Beginning proof of SET-CASES ...
+(OR (= X (NULLSET)) (SOME (E) (IN E X)))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, EXTENSIONALITY to ...
+(TRUE)
+SET-DECOMPOSITION
+Beginning proof of SET-DECOMPOSITION ...
+(OR (= X (NULLSET))
+ (SOME (A B) (AND (IN A X) (NOT (IN A B)) (= X (SETADD A B)))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X X) (= Y (NULLSET)) generates ...
+(IMPLIES
+ (AND (= (= X (NULLSET)) (ALL (E) (= (IN E X) (IN E (NULLSET)))))
+  (NOT (= X (NULLSET))))
+ (SOME (A B) (AND (IN A X) (NOT (IN A B)) (= X (SETADD A B)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION to ...
+(IMPLIES
+ (AND (= (= X (NULLSET)) (ALL (E) (= (IN E X) (FALSE))))
+  (NOT (= X (NULLSET))))
+ (SOME (A) (AND (IN A X) (SOME (B) (AND (NOT (IN A B)) (= X (SETADD A B)))))))
+Splitting on (= X (NULLSET)) generates ...
+(IF (= X (NULLSET))
+ (IMPLIES
+  (AND (= (= X (NULLSET)) (ALL (E) (= (IN E X) (FALSE))))
+   (NOT (= X (NULLSET))))
+  (SOME (A)
+   (AND (IN A X) (SOME (B) (AND (NOT (IN A B)) (= X (SETADD A B)))))))
+ (IMPLIES
+  (AND (= (= X (NULLSET)) (ALL (E$0) (= (IN E$0 X) (FALSE))))
+   (NOT (= X (NULLSET))))
+  (SOME (A$0)
+   (AND (IN A$0 X)
+    (SOME (B$0) (AND (NOT (IN A$0 B$0)) (= X (SETADD A$0 B$0))))))))
+Which simplifies to ...
+(IMPLIES (AND (NOT (= X (NULLSET))) (SOME (E) (IN E X)))
+ (SOME (A) (AND (IN A X) (SOME (B) (AND (NOT (IN A B)) (= X (SETADD A B)))))))
+Instantiating (= A E) (= B (DIFF X (UNIT E))) gives ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (IN E X)
+  (NOT
+   (AND (IN E X) (NOT (IN E (DIFF X (UNIT E))))
+    (= X (SETADD E (DIFF X (UNIT E)))))))
+ (SOME (A B) (AND (IN A X) (NOT (IN A B)) (= X (SETADD A B)))))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+UNIT.DEFINITION, DIFF.DEFINITION to ...
+(TRUE)
+SETADD-COMMUTES
+Beginning proof of SETADD-COMMUTES ...
+(= (SETADD A (SETADD B X)) (SETADD B (SETADD A X)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION to ...
+(TRUE)
+SETADD-IDEMPOTENT
+Beginning proof of SETADD-IDEMPOTENT ...
+(= (SETADD A (SETADD A X)) (SETADD A X))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION to ...
+(TRUE)
+SETADD-NON-NULL
+Beginning proof of SETADD-NON-NULL ...
+(= (= (SETADD A X) (NULLSET)) (FALSE))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (SETADD A X)) (= Y (NULLSET)) generates ...
+(IMPLIES
+ (= (= (SETADD A X) (NULLSET))
+  (ALL (E) (= (IN E (SETADD A X)) (IN E (NULLSET)))))
+ (NOT (= (SETADD A X) (NULLSET))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION
+ with the instantiation (= E A) to ...
+(TRUE)
+SETADD-CANCELLATION
+Beginning proof of SETADD-CANCELLATION ...
+(IMPLIES (AND (NOT (IN A X)) (NOT (IN A Y)))
+ (= (= (SETADD A X) (SETADD A Y)) (= X Y)))
+Splitting on (= X Y) generates ...
+(IF (= X Y)
+ (IMPLIES (AND (NOT (IN A X)) (NOT (IN A Y)))
+  (= (= (SETADD A X) (SETADD A Y)) (= X Y)))
+ (IMPLIES (AND (NOT (IN A X)) (NOT (IN A Y)))
+  (= (= (SETADD A X) (SETADD A Y)) (= X Y))))
+Which simplifies to ...
+(OR (= X Y) (IN A X) (IN A Y) (= (= (SETADD A X) (SETADD A Y)) (FALSE)))
+Applying EXTENSIONALITY gives ...
+(OR (ALL (E) (IF (IN E X) (IN E Y) (NOT (IN E Y)))) (IN A X) (IN A Y)
+ (NOT
+  (ALL (E$0)
+   (IF (IN E$0 (SETADD A X)) (IN E$0 (SETADD A Y))
+    (NOT (IN E$0 (SETADD A Y)))))))
+Instantiating (= E$0 E) gives ...
+(OR (IF (IN E X) (IN E Y) (NOT (IN E Y))) (IN A X) (IN A Y)
+ (NOT
+  (AND (IF (IN E (SETADD A X)) (IN E (SETADD A Y)) (NOT (IN E (SETADD A Y))))
+   (ALL (E$0)
+    (IF (IN E$0 (SETADD A X)) (IN E$0 (SETADD A Y))
+     (NOT (IN E$0 (SETADD A Y))))))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION to ...
+(TRUE)
+SETADD-LEFT-EQUALITY-TEST
+Beginning proof of SETADD-LEFT-EQUALITY-TEST ...
+(IMPLIES (NOT (IN A Y)) (= (= (SETADD A X) Y) (FALSE)))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (SETADD A X)) (= Y Y) generates ...
+(IMPLIES
+ (AND (= (= (SETADD A X) Y) (ALL (E) (= (IN E (SETADD A X)) (IN E Y))))
+  (NOT (IN A Y)))
+ (NOT (= (SETADD A X) Y)))
+Rearranging gives ...
+(IMPLIES
+ (AND (NOT (IN A Y))
+  (= (= (SETADD A X) Y) (ALL (E) (= (IN E (SETADD A X)) (IN E Y)))))
+ (NOT (= (SETADD A X) Y)))
+Which simplifies
+ when rewriting with SETADD.DEFINITION
+ with the instantiation (= E A) to ...
+(TRUE)
+SETADD-RIGHT-EQUALITY-TEST
+Beginning proof of SETADD-RIGHT-EQUALITY-TEST ...
+(IMPLIES (NOT (IN A X)) (= (= X (SETADD A Y)) (FALSE)))
+Assuming SETADD-LEFT-EQUALITY-TEST with the
+instantiations: (= A A) (= X Y) (= Y X) generates ...
+(IMPLIES
+ (AND (IMPLIES (NOT (IN A X)) (= (= (SETADD A Y) X) (FALSE))) (NOT (IN A X)))
+ (NOT (= X (SETADD A Y))))
+Which simplifies to ...
+(TRUE)
+SETADD-MEMBER
+Beginning proof of SETADD-MEMBER ...
+(IMPLIES (IN A X) (= (SETADD A X) X))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION to ...
+(TRUE)
+SUBSET-SETADD
+Beginning proof of SUBSET-SETADD ...
+(= (SUBSET (SETADD A B) C) (AND (IN A C) (SUBSET B C)))
+Splitting on (SUBSET (SETADD A B) C) generates ...
+(IF (SUBSET (SETADD A B) C)
+ (= (SUBSET (SETADD A B) C) (AND (IN A C) (SUBSET B C)))
+ (= (SUBSET (SETADD A B) C) (AND (IN A C) (SUBSET B C))))
+Which simplifies to ...
+(IF (SUBSET (SETADD A B) C) (AND (IN A C) (SUBSET B C))
+ (IMPLIES (IN A C) (NOT (SUBSET B C))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SETADD.DEFINITION to ...
+(IF (ALL (E) (IMPLIES (OR (= E A) (IN E B)) (IN E C)))
+ (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 C)))
+ (IMPLIES (IN A C) (NOT (ALL (E$1) (IMPLIES (IN E$1 B) (IN E$1 C))))))
+Instantiating (= E A) gives ...
+(IF
+ (AND (IMPLIES (OR (= A A) (IN A B)) (IN A C))
+  (ALL (E) (IMPLIES (OR (= E A) (IN E B)) (IN E C))))
+ (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 C)))
+ (IMPLIES (IN A C) (NOT (ALL (E$1) (IMPLIES (IN E$1 B) (IN E$1 C))))))
+Which simplifies to ...
+(IMPLIES (IN A C)
+ (IF (ALL (E) (IMPLIES (AND (NOT (= E A)) (IN E B)) (IN E C)))
+  (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 C)))
+  (NOT (ALL (E$1) (IMPLIES (IN E$1 B) (IN E$1 C))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IN A C) (ALL (E) (IMPLIES (AND (NOT (= E A)) (IN E B)) (IN E C))))
+ (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 C))))
+Instantiating (= E E$0) gives ...
+(IMPLIES
+ (AND (IN A C) (IMPLIES (AND (NOT (= E A)) (IN E B)) (IN E C))
+  (ALL (E$0) (IMPLIES (AND (NOT (= E$0 A)) (IN E$0 B)) (IN E$0 C))) (IN E B))
+ (IN E C))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IN A C)
+  (NOT (ALL (E) (IMPLIES (AND (NOT (= E A)) (IN E B)) (IN E C)))))
+ (NOT (ALL (E$1) (IMPLIES (IN E$1 B) (IN E$1 C)))))
+Prenexing produces ...
+(IMPLIES (AND (IN A C) (NOT (IMPLIES (AND (NOT (= E A)) (IN E B)) (IN E C))))
+ (NOT (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 C)))))
+Which simplifies
+ with the instantiation (= E$0 E) to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+SETADD-UNION-LEFT
+Beginning proof of SETADD-UNION-LEFT ...
+(= (UNION (SETADD A X) Y) (SETADD A (UNION X Y)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+UNION.DEFINITION, UNION.COMMUTATIVE to ...
+(TRUE)
+SETADD-UNION-RIGHT
+Beginning proof of SETADD-UNION-RIGHT ...
+(= (UNION X (SETADD A Y)) (SETADD A (UNION X Y)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+UNION.DEFINITION to ...
+(TRUE)
+SUBSET-UNION-LEFT
+Beginning proof of SUBSET-UNION-LEFT ...
+(= (SUBSET (UNION S T) U) (AND (SUBSET S U) (SUBSET T U)))
+Splitting on (AND (SUBSET S U) (SUBSET T U)) generates ...
+(IF (AND (SUBSET S U) (SUBSET T U))
+ (= (SUBSET (UNION S T) U) (AND (SUBSET S U) (SUBSET T U)))
+ (= (SUBSET (UNION S T) U) (AND (SUBSET S U) (SUBSET T U))))
+Which simplifies to ...
+(IF (SUBSET S U)
+ (IF (SUBSET T U) (= (SUBSET (UNION S T) U) (TRUE))
+  (= (SUBSET (UNION S T) U) (FALSE)))
+ (= (SUBSET (UNION S T) U) (FALSE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with UNION.DEFINITION to ...
+(IF (ALL (E) (IMPLIES (IN E S) (IN E U)))
+ (OR (ALL (E$0) (IMPLIES (IN E$0 T) (IN E$0 U)))
+  (NOT (ALL (E$1) (IMPLIES (AND (NOT (IN E$1 S)) (IN E$1 T)) (IN E$1 U)))))
+ (NOT (ALL (E$2) (IMPLIES (OR (IN E$2 S) (IN E$2 T)) (IN E$2 U)))))
+Starting case 2 ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E S) (IN E U)))
+  (NOT (ALL (E$0) (IMPLIES (IN E$0 T) (IN E$0 U)))))
+ (NOT (ALL (E$1) (IMPLIES (AND (NOT (IN E$1 S)) (IN E$1 T)) (IN E$1 U)))))
+Instantiating (= E E$0) gives ...
+(IMPLIES
+ (SOME (E)
+  (AND (IMPLIES (IN E S) (IN E U)) (ALL (E$0) (IMPLIES (IN E$0 S) (IN E$0 U)))
+   (NOT (IMPLIES (IN E T) (IN E U)))))
+ (NOT (ALL (E$1) (IMPLIES (AND (NOT (IN E$1 S)) (IN E$1 T)) (IN E$1 U)))))
+Instantiating (= E$1 E) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E S) (IN E U)) (ALL (E$0) (IMPLIES (IN E$0 S) (IN E$0 U)))
+  (NOT (IMPLIES (IN E T) (IN E U))))
+ (NOT
+  (AND (IMPLIES (AND (NOT (IN E S)) (IN E T)) (IN E U))
+   (ALL (E$1) (IMPLIES (AND (NOT (IN E$1 S)) (IN E$1 T)) (IN E$1 U))))))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (NOT (ALL (E) (IMPLIES (IN E S) (IN E U))))
+ (NOT (ALL (E$2) (IMPLIES (OR (IN E$2 S) (IN E$2 T)) (IN E$2 U)))))
+Instantiating (= E$2 E) gives ...
+(IMPLIES (NOT (IMPLIES (IN E S) (IN E U)))
+ (NOT
+  (AND (IMPLIES (OR (IN E S) (IN E T)) (IN E U))
+   (ALL (E$0) (IMPLIES (OR (IN E$0 S) (IN E$0 T)) (IN E$0 U))))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+UNION-SELF-ASSOCIATED
+Beginning proof of UNION-SELF-ASSOCIATED ...
+(= (UNION S (UNION S T)) (UNION S T))
+Assuming UNION.ASSOCIATIVE with the
+instantiations: (= X S) (= Y S) (= Z T) generates ...
+(IMPLIES (= (UNION (UNION S S) T) (UNION S (UNION S T)))
+ (= (UNION S (UNION S T)) (UNION S T)))
+Which simplifies
+ when rewriting with UNION.SELF to ...
+(TRUE)
+SUBSET-UNION-RIGHT
+Beginning proof of SUBSET-UNION-RIGHT ...
+(IMPLIES (OR (SUBSET S T) (SUBSET S U)) (= (SUBSET S (UNION T U)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with UNION.DEFINITION to ...
+(TRUE)
+SUBSET-UNION-RELATION-1
+Beginning proof of SUBSET-UNION-RELATION-1 ...
+(SUBSET S (UNION S T))
+Which simplifies
+ when rewriting with SUBSET-UNION-RIGHT, SUBSET.SELF to ...
+(TRUE)
+SUBSET-UNION-RELATION-2
+Beginning proof of SUBSET-UNION-RELATION-2 ...
+(SUBSET T (UNION S T))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SUBSET-UNION-RIGHT, SUBSET.SELF
+ with the assumptions SUBSET-UNION-RELATION-1 to ...
+(TRUE)
+UNION-SUBSET-LEFT
+Beginning proof of UNION-SUBSET-LEFT ...
+(IMPLIES (SUBSET T S) (= (UNION S T) S))
+Applying EXTENSIONALITY-SUBGOAL gives ...
+(IMPLIES
+ (AND (SUBSET T S)
+  (NOT (ALL (E) (IF (IN E (UNION S T)) (IN E S) (NOT (IN E S))))))
+ (= (UNION S T) S))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with UNION.DEFINITION
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2 to ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E T) (IN E S)))
+  (NOT (ALL (E$0) (OR (IN E$0 S) (NOT (IN E$0 T))))))
+ (= (UNION S T) S))
+Instantiating (= E E$0) gives ...
+(IMPLIES
+ (SOME (E)
+  (AND (IMPLIES (IN E T) (IN E S)) (ALL (E$0) (IMPLIES (IN E$0 T) (IN E$0 S)))
+   (NOT (OR (IN E S) (NOT (IN E T))))))
+ (= (UNION S T) S))
+Which simplifies to ...
+(TRUE)
+UNION-SUBSET-RIGHT
+Beginning proof of UNION-SUBSET-RIGHT ...
+(IMPLIES (SUBSET S T) (= (UNION S T) T))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with EXTENSIONALITY-SUBGOAL, UNION.DEFINITION
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+SETADD-INTER-LEFT
+Beginning proof of SETADD-INTER-LEFT ...
+(= (INTER (SETADD A X) Y) (IF (IN A Y) (SETADD A (INTER X Y)) (INTER X Y)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+INTER.DEFINITION, INTER.COMMUTATIVE to ...
+(TRUE)
+SETADD-INTER-RIGHT
+Beginning proof of SETADD-INTER-RIGHT ...
+(= (INTER X (SETADD A Y)) (IF (IN A X) (SETADD A (INTER X Y)) (INTER X Y)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+INTER.DEFINITION to ...
+(TRUE)
+SETADD-INTER-LEFT-MEMBER
+Beginning proof of SETADD-INTER-LEFT-MEMBER ...
+(IMPLIES (IN A Y) (= (INTER (SETADD A X) Y) (SETADD A (INTER X Y))))
+Which simplifies
+ when rewriting with SETADD-INTER-LEFT to ...
+(TRUE)
+SETADD-INTER-LEFT-NONMEMBER
+Beginning proof of SETADD-INTER-LEFT-NONMEMBER ...
+(IMPLIES (NOT (IN A Y)) (= (INTER (SETADD A X) Y) (INTER X Y)))
+Which simplifies
+ when rewriting with SETADD-INTER-LEFT to ...
+(TRUE)
+SETADD-INTER-RIGHT-MEMBER
+Beginning proof of SETADD-INTER-RIGHT-MEMBER ...
+(IMPLIES (IN A X) (= (INTER X (SETADD A Y)) (SETADD A (INTER X Y))))
+Assuming INTER.COMMUTATIVE with the
+instantiations: (= X X) (= Y (SETADD A Y)) generates ...
+(IMPLIES (AND (= (INTER X (SETADD A Y)) (INTER (SETADD A Y) X)) (IN A X))
+ (= (INTER X (SETADD A Y)) (SETADD A (INTER X Y))))
+Which simplifies
+ when rewriting with INTER.COMMUTATIVE, SETADD-INTER-LEFT,
+SETADD-INTER-RIGHT to ...
+(TRUE)
+SETADD-INTER-RIGHT-NONMEMBER
+Beginning proof of SETADD-INTER-RIGHT-NONMEMBER ...
+(IMPLIES (NOT (IN A X)) (= (INTER X (SETADD A Y)) (INTER X Y)))
+Assuming INTER.COMMUTATIVE with the
+instantiations: (= X X) (= Y (SETADD A Y)) generates ...
+(IMPLIES
+ (AND (= (INTER X (SETADD A Y)) (INTER (SETADD A Y) X)) (NOT (IN A X)))
+ (= (INTER X (SETADD A Y)) (INTER X Y)))
+Which simplifies
+ when rewriting with INTER.COMMUTATIVE, SETADD-INTER-LEFT,
+SETADD-INTER-RIGHT to ...
+(TRUE)
+INTER-SELF-ASSOCIATED
+Beginning proof of INTER-SELF-ASSOCIATED ...
+(= (INTER S (INTER S T)) (INTER S T))
+Assuming INTER.ASSOCIATIVE with the
+instantiations: (= X S) (= Y S) (= Z T) generates ...
+(IMPLIES (= (INTER (INTER S S) T) (INTER S (INTER S T)))
+ (= (INTER S (INTER S T)) (INTER S T)))
+Which simplifies
+ when rewriting with INTER.SELF to ...
+(TRUE)
+SUBSET-INTER-LEFT
+Beginning proof of SUBSET-INTER-LEFT ...
+(IMPLIES (OR (SUBSET S U) (SUBSET T U)) (= (SUBSET (INTER S T) U) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with INTER.DEFINITION to ...
+(TRUE)
+SUBSET-INTER-RIGHT
+Beginning proof of SUBSET-INTER-RIGHT ...
+(= (SUBSET S (INTER T U)) (AND (SUBSET S T) (SUBSET S U)))
+Splitting on (AND (SUBSET S T) (SUBSET S U)) generates ...
+(IF (AND (SUBSET S T) (SUBSET S U))
+ (= (SUBSET S (INTER T U)) (AND (SUBSET S T) (SUBSET S U)))
+ (= (SUBSET S (INTER T U)) (AND (SUBSET S T) (SUBSET S U))))
+Which simplifies to ...
+(IF (SUBSET S T)
+ (IF (SUBSET S U) (= (SUBSET S (INTER T U)) (TRUE))
+  (= (SUBSET S (INTER T U)) (FALSE)))
+ (= (SUBSET S (INTER T U)) (FALSE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with INTER.DEFINITION to ...
+(OR (ALL (E) (IMPLIES (IN E S) (IN E T)))
+ (NOT (ALL (E$0) (IMPLIES (IN E$0 S) (AND (IN E$0 T) (IN E$0 U))))))
+Instantiating (= E$0 E) gives ...
+(OR (IMPLIES (IN E S) (IN E T))
+ (NOT
+  (AND (IMPLIES (IN E S) (AND (IN E T) (IN E U)))
+   (ALL (E$0) (IMPLIES (IN E$0 S) (AND (IN E$0 T) (IN E$0 U)))))))
+Which simplifies to ...
+(TRUE)
+SUBSET-INTER-RELATION-1
+Beginning proof of SUBSET-INTER-RELATION-1 ...
+(SUBSET (INTER S T) S)
+Which simplifies
+ when rewriting with SUBSET-INTER-LEFT, SUBSET.SELF to ...
+(TRUE)
+SUBSET-INTER-RELATION-2
+Beginning proof of SUBSET-INTER-RELATION-2 ...
+(SUBSET (INTER S T) T)
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SUBSET-INTER-LEFT, SUBSET.SELF
+ with the assumptions SUBSET-INTER-RELATION-1 to ...
+(TRUE)
+INTER-SUBSET-LEFT
+Beginning proof of INTER-SUBSET-LEFT ...
+(IMPLIES (SUBSET T S) (= (INTER S T) T))
+Applying EXTENSIONALITY-SUBGOAL gives ...
+(IMPLIES
+ (AND (SUBSET T S)
+  (NOT (ALL (E) (IF (IN E (INTER S T)) (IN E T) (NOT (IN E T))))))
+ (= (INTER S T) T))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with INTER.DEFINITION
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E T) (IN E S)))
+  (NOT (ALL (E$0) (OR (IN E$0 S) (NOT (IN E$0 T))))))
+ (= (INTER S T) T))
+Instantiating (= E E$0) gives ...
+(IMPLIES
+ (SOME (E)
+  (AND (IMPLIES (IN E T) (IN E S)) (ALL (E$0) (IMPLIES (IN E$0 T) (IN E$0 S)))
+   (NOT (OR (IN E S) (NOT (IN E T))))))
+ (= (INTER S T) T))
+Which simplifies to ...
+(TRUE)
+INTER-SUBSET-RIGHT
+Beginning proof of INTER-SUBSET-RIGHT ...
+(IMPLIES (SUBSET S T) (= (INTER S T) S))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with EXTENSIONALITY-SUBGOAL, INTER.DEFINITION
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+INTER-NULLSET
+Beginning proof of INTER-NULLSET ...
+(= (= (INTER S T) (NULLSET)) (ALL (E) (NOT (AND (IN E S) (IN E T)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, INTER.DEFINITION, EXTENSIONALITY
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(IMPLIES (SOME (E) (AND (IN E S) (IN E T)))
+ (ALL (E$0)
+  (IF (IN E$0 (ALL (E$1) (IMPLIES (IN E$1 S) (NOT (IN E$1 T)))))
+   (IN E$0 (FALSE)) (NOT (IN E$0 (FALSE))))))
+Instantiating (= E$1 E) gives ...
+(IMPLIES (AND (IN E S) (IN E T))
+ (ALL (E$0)
+  (IF
+   (IN E$0
+    (AND (IMPLIES (IN E S) (NOT (IN E T)))
+     (ALL (E$1) (IMPLIES (IN E$1 S) (NOT (IN E$1 T))))))
+   (IN E$0 (FALSE)) (NOT (IN E$0 (FALSE))))))
+Which simplifies to ...
+(TRUE)
+INTER-UNION-DISTRIBUTION
+Beginning proof of INTER-UNION-DISTRIBUTION ...
+(= (INTER S (UNION T U)) (UNION (INTER S T) (INTER S U)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, UNION.DEFINITION, INTER.DEFINITION
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2,
+SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+INTER-DIFF-LEFT
+Beginning proof of INTER-DIFF-LEFT ...
+(= (INTER (DIFF S T) U) (DIFF (INTER S U) T))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+INTER.DEFINITION, INTER.COMMUTATIVE
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+INTER-DIFF-RIGHT
+Beginning proof of INTER-DIFF-RIGHT ...
+(= (INTER S (DIFF T U)) (DIFF (INTER S T) U))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION, INTER.DEFINITION
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+SETADD-DIFF
+Beginning proof of SETADD-DIFF ...
+(= (DIFF (SETADD A X) Y) (IF (IN A Y) (DIFF X Y) (SETADD A (DIFF X Y))))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+DIFF.DEFINITION to ...
+(TRUE)
+SETADD-DIFF-LEFT-MEMBER
+Beginning proof of SETADD-DIFF-LEFT-MEMBER ...
+(IMPLIES (IN A Y) (= (DIFF (SETADD A X) Y) (DIFF X Y)))
+Which simplifies
+ when rewriting with SETADD-DIFF to ...
+(TRUE)
+SETADD-DIFF-LEFT-NONMEMBER
+Beginning proof of SETADD-DIFF-LEFT-NONMEMBER ...
+(IMPLIES (NOT (IN A Y)) (= (DIFF (SETADD A X) Y) (SETADD A (DIFF X Y))))
+Which simplifies
+ when rewriting with SETADD-DIFF to ...
+(TRUE)
+SUBSET-DIFF-RELATION
+Beginning proof of SUBSET-DIFF-RELATION ...
+(SUBSET (DIFF S T) S)
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with DIFF.DEFINITION to ...
+(TRUE)
+SUBSET-DIFF-LEFT
+Beginning proof of SUBSET-DIFF-LEFT ...
+(= (SUBSET (DIFF S T) U) (SUBSET S (UNION T U)))
+Splitting on (SUBSET (DIFF S T) U) generates ...
+(IF (SUBSET (DIFF S T) U) (= (SUBSET (DIFF S T) U) (SUBSET S (UNION T U)))
+ (= (SUBSET (DIFF S T) U) (SUBSET S (UNION T U))))
+Which simplifies
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2,
+SUBSET-DIFF-RELATION to ...
+(IF (SUBSET (DIFF S T) U) (= (TRUE) (SUBSET S (UNION T U)))
+ (= (FALSE) (SUBSET S (UNION T U))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with UNION.DEFINITION, DIFF.DEFINITION
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2,
+SUBSET-DIFF-RELATION to ...
+(TRUE)
+SUBSET-DIFF-RIGHT
+Beginning proof of SUBSET-DIFF-RIGHT ...
+(= (SUBSET S (DIFF T U)) (AND (SUBSET S T) (= (INTER S U) (NULLSET))))
+Splitting on (AND (= (INTER S U) (NULLSET)) (SUBSET S T)) generates ...
+(IF (AND (= (INTER S U) (NULLSET)) (SUBSET S T))
+ (= (SUBSET S (DIFF T U)) (AND (SUBSET S T) (= (INTER S U) (NULLSET))))
+ (= (SUBSET S (DIFF T U)) (AND (SUBSET S T) (= (INTER S U) (NULLSET)))))
+Which simplifies
+ with the assumptions SUBSET-DIFF-RELATION, SUBSET-INTER-RELATION-1,
+SUBSET-INTER-RELATION-2 to ...
+(IF (SUBSET S T)
+ (IF (= (INTER S U) (NULLSET)) (= (SUBSET S (DIFF T U)) (TRUE))
+  (= (SUBSET S (DIFF T U)) (FALSE)))
+ (= (SUBSET S (DIFF T U)) (FALSE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with DIFF.DEFINITION, INTER-NULLSET
+ with the assumptions SUBSET-DIFF-RELATION, SUBSET-INTER-RELATION-1,
+SUBSET-INTER-RELATION-2 to ...
+(OR (ALL (E) (IMPLIES (IN E S) (IN E T)))
+ (NOT (ALL (E$0) (IMPLIES (IN E$0 S) (AND (IN E$0 T) (NOT (IN E$0 U)))))))
+Instantiating (= E$0 E) gives ...
+(OR (IMPLIES (IN E S) (IN E T))
+ (NOT
+  (AND (IMPLIES (IN E S) (AND (IN E T) (NOT (IN E U))))
+   (ALL (E$0) (IMPLIES (IN E$0 S) (AND (IN E$0 T) (NOT (IN E$0 U))))))))
+Which simplifies to ...
+(TRUE)
+DIFF-SELF
+Beginning proof of DIFF-SELF ...
+(= (DIFF S S) (NULLSET))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+DIFF.DEFINITION
+ with the assumptions SUBSET-DIFF-RELATION to ...
+(TRUE)
+DIFF-NULLSET-RIGHT
+Beginning proof of DIFF-NULLSET-RIGHT ...
+(= (DIFF S (NULLSET)) S)
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+DIFF.DEFINITION
+ with the assumptions SUBSET-DIFF-RELATION to ...
+(TRUE)
+DIFF-NULLSET-LEFT
+Beginning proof of DIFF-NULLSET-LEFT ...
+(= (DIFF (NULLSET) S) (NULLSET))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+DIFF.DEFINITION
+ with the assumptions SUBSET-DIFF-RELATION to ...
+(TRUE)
+DIFF-DIFF
+Beginning proof of DIFF-DIFF ...
+(= (DIFF (DIFF S T) U) (DIFF S (UNION T U)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, UNION.DEFINITION, DIFF.DEFINITION
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2,
+SUBSET-DIFF-RELATION to ...
+(TRUE)
+DIFF-INTER
+Beginning proof of DIFF-INTER ...
+(= (DIFF S (INTER T U)) (UNION (DIFF S T) (DIFF S U)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+INTER.DEFINITION, DIFF.DEFINITION
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2,
+SUBSET-DIFF-RELATION, SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+DIFF-=-NULLSET
+Beginning proof of DIFF-=-NULLSET ...
+(= (= (DIFF S T) (NULLSET)) (SUBSET S T))
+Splitting on (SUBSET S T) generates ...
+(IF (SUBSET S T) (= (= (DIFF S T) (NULLSET)) (SUBSET S T))
+ (= (= (DIFF S T) (NULLSET)) (SUBSET S T)))
+Which simplifies
+ with the assumptions SUBSET-DIFF-RELATION to ...
+(IF (SUBSET S T) (= (= (DIFF S T) (NULLSET)) (TRUE))
+ (= (= (DIFF S T) (NULLSET)) (FALSE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with NULLSET.DEFINITION, DIFF.DEFINITION, EXTENSIONALITY
+ with the assumptions SUBSET-DIFF-RELATION to ...
+(TRUE)
+DIFF-SUPERSET
+Beginning proof of DIFF-SUPERSET ...
+(IMPLIES (SUBSET S T) (= (DIFF S T) (NULLSET)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with DIFF-=-NULLSET
+ with the assumptions SUBSET-DIFF-RELATION to ...
+(TRUE)
+DELTA-EXPANSION
+Beginning proof of DELTA-EXPANSION ...
+(= (DELTA X Y) (UNION (DIFF X Y) (DIFF Y X)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+UNION.DEFINITION, DELTA.DEFINITION
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2,
+SUBSET-DIFF-RELATION to ...
+(TRUE)
+UNIT-TO-SETADD
+Beginning proof of UNIT-TO-SETADD ...
+(= (UNIT X) (SETADD X (NULLSET)))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, UNIT.DEFINITION to ...
+(TRUE)
+IN-SELF
+Beginning proof of IN-SELF ...
+(= (IN S S) (FALSE))
+Assuming AXIOM.OF.REGULAR.CHOICE with the
+instantiations: (= X (SETADD S (NULLSET))) generates ...
+(IMPLIES
+ (IMPLIES (NOT (= (SETADD S (NULLSET)) (NULLSET)))
+  (AND (IN (CHOICE (SETADD S (NULLSET))) (SETADD S (NULLSET)))
+   (= (INTER (CHOICE (SETADD S (NULLSET))) (SETADD S (NULLSET))) (NULLSET))))
+ (NOT (IN S S)))
+Which simplifies
+ when rewriting with INTER-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETADD-INTER-RIGHT-NONMEMBER, NOT.MEMBER.SELF, SETADD.DEFINITION,
+SETADD-LEFT-EQUALITY-TEST, NULLSET.DEFINITION
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+NO-2-CYCLE
+Beginning proof of NO-2-CYCLE ...
+(NOT (AND (IN S T) (IN T S)))
+Assuming AXIOM.OF.REGULAR.CHOICE with the
+instantiations: (= X (SETADD S (SETADD T (NULLSET)))) generates ...
+(IMPLIES
+ (IMPLIES (NOT (= (SETADD S (SETADD T (NULLSET))) (NULLSET)))
+  (AND
+   (IN (CHOICE (SETADD S (SETADD T (NULLSET))))
+    (SETADD S (SETADD T (NULLSET))))
+   (=
+    (INTER (CHOICE (SETADD S (SETADD T (NULLSET))))
+     (SETADD S (SETADD T (NULLSET))))
+    (NULLSET))))
+ (NOT (AND (IN S T) (IN T S))))
+Which simplifies
+ when rewriting with INTER-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETADD-INTER-RIGHT-NONMEMBER, IN-SELF, SETADD-INTER-RIGHT, SETADD.DEFINITION,
+SETADD-LEFT-EQUALITY-TEST, NULLSET.DEFINITION
+ with the assumptions SUBSET-INTER-RELATION-1, SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+CUP-NULLSET
+Beginning proof of CUP-NULLSET ...
+(= (CUP (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+CUP.DEFINITION to ...
+(TRUE)
+CUP-UNION
+Beginning proof of CUP-UNION ...
+(= (CUP (UNION X Y)) (UNION (CUP X) (CUP Y)))
+Which simplifies
+ when rewriting with UNION.DEFINITION, CUP.DEFINITION, EXTENSIONALITY
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2 to ...
+(IMPLIES
+ (AND (IN E Y$0) (OR (IN Y$0 X) (IN Y$0 Y))
+  (NOT (SOME (Y$1) (AND (IN E Y$1) (IN Y$1 X)))))
+ (SOME (Y$2) (AND (IN E Y$2) (IN Y$2 Y))))
+Splitting on (SOME (YY) (AND (IN E YY) (IN YY Y))) generates ...
+(IF (SOME (YY) (AND (IN E YY) (IN YY Y)))
+ (IMPLIES
+  (AND (IN E Y$0) (OR (IN Y$0 X) (IN Y$0 Y))
+   (NOT (SOME (Y$1) (AND (IN E Y$1) (IN Y$1 X)))))
+  (SOME (Y$2) (AND (IN E Y$2) (IN Y$2 Y))))
+ (IMPLIES
+  (AND (IN E Y$0) (OR (IN Y$0 X) (IN Y$0 Y))
+   (NOT (SOME (Y$3) (AND (IN E Y$3) (IN Y$3 X)))))
+  (SOME (Y$4) (AND (IN E Y$4) (IN Y$4 Y)))))
+Which simplifies
+ with the instantiations (= Y$1 Y$0) (= YY Y$0) (= Y$3 Y$0) to ...
+(TRUE)
+CUP-UNIT
+Beginning proof of CUP-UNIT ...
+(= (CUP (UNIT X)) X)
+Applying EXTENSIONALITY gives ...
+(IF (IN E (CUP (UNIT X))) (IN E X) (NOT (IN E X)))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, CUP.DEFINITION,
+UNIT-TO-SETADD to ...
+(TRUE)
+CUP-SETADD
+Beginning proof of CUP-SETADD ...
+(= (CUP (SETADD X Y)) (UNION X (CUP Y)))
+Assuming CUP-UNION with the instantiations: (= X (UNIT X)) (= Y Y) generates
+...
+(IMPLIES (= (CUP (UNION (UNIT X) Y)) (UNION (CUP (UNIT X)) (CUP Y)))
+ (= (CUP (SETADD X Y)) (UNION X (CUP Y))))
+Assuming CUP-UNIT with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (= (CUP (UNIT X)) X)
+  (= (CUP (UNION (UNIT X) Y)) (UNION (CUP (UNIT X)) (CUP Y))))
+ (= (CUP (SETADD X Y)) (UNION X (CUP Y))))
+Which simplifies
+ when rewriting with UNION-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETADD-UNION-LEFT, UNIT-TO-SETADD
+ with the assumptions SUBSET-UNION-RELATION-1, SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+MEMBER-SUBSET-CUP
+Beginning proof of MEMBER-SUBSET-CUP ...
+(IMPLIES (IN X Y) (= (SUBSET X (CUP Y)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with CUP.DEFINITION to ...
+(TRUE)
+CUP-SUBSET
+Beginning proof of CUP-SUBSET ...
+(= (SUBSET (CUP X) Y) (ALL (Z) (IMPLIES (IN Z X) (SUBSET Z Y))))
+Splitting on (SUBSET (CUP X) Y) generates ...
+(IF (SUBSET (CUP X) Y)
+ (= (SUBSET (CUP X) Y) (ALL (Z) (IMPLIES (IN Z X) (SUBSET Z Y))))
+ (= (SUBSET (CUP X) Y) (ALL (Z$0) (IMPLIES (IN Z$0 X) (SUBSET Z$0 Y)))))
+Which simplifies to ...
+(IF (SUBSET (CUP X) Y) (= (TRUE) (ALL (Z) (IMPLIES (IN Z X) (SUBSET Z Y))))
+ (= (FALSE) (ALL (Z$0) (IMPLIES (IN Z$0 X) (SUBSET Z$0 Y)))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with CUP.DEFINITION to ...
+(IF (ALL (E Y$0) (IMPLIES (AND (IN E Y$0) (IN Y$0 X)) (IN E Y)))
+ (ALL (Z) (IMPLIES (IN Z X) (ALL (E$0) (IMPLIES (IN E$0 Z) (IN E$0 Y)))))
+ (NOT
+  (ALL (Z$0)
+   (IMPLIES (IN Z$0 X) (ALL (E$1) (IMPLIES (IN E$1 Z$0) (IN E$1 Y)))))))
+Which simplifies
+ with the instantiations (= E E$0) (= Y$0 Z) to ...
+(OR (ALL (E Y$0) (IMPLIES (AND (IN E Y$0) (IN Y$0 X)) (IN E Y)))
+ (NOT
+  (ALL (Z) (IMPLIES (IN Z X) (ALL (E$0) (IMPLIES (IN E$0 Z) (IN E$0 Y)))))))
+Instantiating (= Z Y$0) (= E$0 E) gives ...
+(OR (IMPLIES (AND (IN E Y$0) (IN Y$0 X)) (IN E Y))
+ (NOT
+  (AND (IMPLIES (AND (IN Y$0 X) (IN E Y$0)) (IN E Y))
+   (ALL (Z E$0) (IMPLIES (AND (IN Z X) (IN E$0 Z)) (IN E$0 Y))))))
+Which simplifies to ...
+(TRUE)
+Done.

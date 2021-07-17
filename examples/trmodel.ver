@@ -1,0 +1,614 @@
+
+;;; Model for the trace theory
+;;; Traces are really just sequences
+
+(load seq)
+
+
+;;; =========== recognizers ============
+
+;;; is-empty is true when t is either an empty trace or a non-trace
+;;; is-trace is true when t is a trace (including the empty trace)
+
+(disabled
+  (function is-empty (t) () (seq!emptyp t)))
+
+(disabled
+  (function is-trace (t) () (seq!seqp t)))
+
+
+;;; =========== constructors =============
+
+;;; empty is the empty trace
+;;; tack adds an event x to the head of a trace t
+
+(disabled
+  (function empty () () (seq!empty)))
+
+(disabled
+  (function tack (x t) ()
+    (if (seq!seqp t)
+        (seq!tack x t)
+        (seq!tack x (seq!empty)))))
+
+
+;;; =========== accessors ============
+
+;;; head gives the event at the head of a trace t
+;;; tail produces a trace that results from removing the event
+;;;   at the head of a trace t
+
+(disabled
+  (function head (t) () (seq!head t)))
+
+(disabled
+  (function tail (t) () (seq!tail t)))
+
+
+;;; ============ measure ============
+
+;;; size is used to give a measure for the recursive definition
+;;; of length
+
+(disabled
+  (function size (t) () (seq!length t)))
+
+
+;;; ============ typing axioms ==============
+
+;;; the recognizers are predicates
+
+(grule is-empty-bool (t)
+  (= (type-of (is-empty t)) (bool)))
+(WITH-ENABLED (IS-EMPTY) (REDUCE))
+
+(grule is-trace-bool (t)
+  (= (type-of (is-trace t)) (bool)))
+(WITH-ENABLED (IS-TRACE) (REDUCE))
+
+;;; the purpose of the next two frules is to be able to deduce that
+;;; t is the empty trace when it satisfies is-trace and is-empty
+
+(frule is-trace-conseq (t)
+  (implies (is-trace t)
+           (= (is-empty t) (= t (empty)))))
+(WITH-ENABLED (IS-TRACE IS-EMPTY EMPTY) (REDUCE))
+
+(frule is-empty-conseq (t)
+  (implies (is-empty t)
+           (= (is-trace t) (= t (empty)))))
+(WITH-ENABLED (IS-TRACE IS-EMPTY EMPTY) (REDUCE))
+
+(grule is-trace-tail (t)
+  (implies (not (is-empty t))
+           (is-trace (tail t))))
+(WITH-ENABLED (IS-EMPTY IS-TRACE TAIL)
+ (REDUCE))
+(INVOKE (SEQ!IS-SEQUENCE T))
+(REDUCE)
+
+
+;;; ============ recognizer axioms =============
+
+(frule not-is-trace-is-empty (t)
+  (implies (not (is-trace t))
+	   (is-empty t)))
+(WITH-ENABLED (IS-TRACE IS-EMPTY) (REDUCE))
+
+(frule tack-head-tail (t)
+  (implies (not (is-empty t))
+	   (and (is-trace t)
+		(= t (tack (head t) (tail t))))))
+(WITH-ENABLED (IS-EMPTY IS-TRACE TACK HEAD TAIL)
+ (REDUCE))
+(INVOKE (SEQ!IS-SEQUENCE T))
+(REDUCE)
+
+
+;;; ============ constructor axioms =============
+
+(grule is-empty-empty () (is-empty (empty)))
+(WITH-ENABLED (IS-EMPTY EMPTY) (REDUCE))
+
+(grule is-trace-empty () (is-trace (empty)))
+(WITH-ENABLED (IS-TRACE EMPTY) (REDUCE))
+
+(grule tack-not-empty (x t)
+  (= (is-empty (tack x t)) (false)))
+(WITH-ENABLED (IS-EMPTY TACK) (REDUCE))
+
+(grule is-trace-tack (x t)
+  (is-trace (tack x t)))
+(WITH-ENABLED (IS-TRACE TACK) (REDUCE))
+
+(grule head-tack (x t)
+  (= (head (tack x t)) x))
+(WITH-ENABLED (HEAD TACK) (REDUCE))
+
+(grule tail-tack-seq (x t)
+  (implies (is-trace t)
+	   (= (tail (tack x t)) t)))
+(WITH-ENABLED (IS-TRACE TAIL TACK) (REDUCE))
+
+(grule tail-tack-empty (x t)
+  (implies (is-empty t)
+	   (= (tail (tack x t)) (empty))))
+(WITH-ENABLED (IS-EMPTY TAIL TACK EMPTY) (REDUCE))
+
+(rule tack-same (x1 y1 x2 y2)
+  (implies (and (is-trace y1) (is-trace y2))
+           (= (= (tack x1 y1) (tack x2 y2))
+              (and (= x1 x2) (= y1 y2)))))
+(SIMPLIFY)
+
+
+;;; ============ measure axiom =============
+
+(grule size-tail (t)
+  (implies (not (is-empty t))
+           (m< (size (tail t)) (size t))))
+(WITH-ENABLED (IS-EMPTY SIZE TAIL)
+ (REDUCE))
+
+;;; ============ length of a trace =============
+
+(function length (t)
+    ((measure (size t)))
+  (if (is-empty t)
+      0
+      (+ 1 (length (tail t)))))
+(REDUCE)
+
+(grule length-non-negative (t)
+  (>= (length t) 0))
+(PROVE-BY-INDUCTION)
+
+
+;;; ============= induction schemes =============
+
+;;; these are useful templates for induction on traces
+
+(function induction-scheme-for-nat-and-trace (n x)
+    ((measure n))
+  (if (and (> n 0) (not (is-empty x)))
+      (induction-scheme-for-nat-and-trace (- n 1) (tail x))
+      (true)))
+(REDUCE)
+
+(function induction-on-two-traces (t1 t2) ((measure (length t1)))
+  (if (or (is-empty t1) (is-empty t2))
+      (true)
+      (induction-on-two-traces (tail t1) (tail t2))))
+(REDUCE)
+
+
+;;; ============= appending traces ==============
+
+(function append (t1 t2) ((measure (length t1)))
+  (if (is-empty t1)
+      t2
+      (tack (head t1) (append (tail t1) t2))))
+(REDUCE)
+
+(grule is-trace-append (t1 t2)
+  (implies (and (is-trace t1) (is-trace t2))
+           (is-trace (append t1 t2))))
+(PROVE-BY-INDUCTION)
+
+(rule append-empty-left (t)
+  (implies (is-trace t)
+           (= (append (empty) t)
+              t)))
+(REDUCE)
+
+(rule append-empty-right (t)
+  (implies (is-trace t)
+           (= (append t (empty))
+              t)))
+(PROVE-BY-INDUCTION)
+
+(rule append-is-empty (s t)
+  (implies (and (is-trace s) (is-trace t))
+           (= (= (append s t) (empty))
+              (and (= s (empty)) (= t (empty))))))
+(PROVE-BY-INDUCTION)
+
+(rule length-append (t1 t2)
+  (implies (and (is-trace t1) (is-trace t2))
+           (= (length (append t1 t2))
+              (+ (length t1) (length t2)))))
+(PROVE-BY-INDUCTION)
+
+(rule append-associative (t1 t2 t3)
+  (implies (and (is-trace t1)
+                (is-trace t2)
+                (is-trace t3))
+           (= (append (append t1 t2) t3)
+              (append t1 (append t2 t3)))))
+(INDUCT)
+(REDUCE)
+
+(grule append-not-empty-left (s t)
+  (implies (and (not (is-empty s))
+                (is-trace t))
+           (not (is-empty (append s t)))))
+(PROVE-BY-INDUCTION)
+
+(grule append-not-empty-right (s t)
+  (implies (and (is-trace s)
+                (not (is-empty t)))
+           (not (is-empty (append s t)))))
+(PROVE-BY-INDUCTION)
+
+(axiom append-equality-lemma (s1 s2 t1 t2)
+  (implies (and (is-trace s1)
+                (is-trace s2)
+                (is-trace t1)
+                (is-trace t2)
+                (= (append s1 s2) (append t1 t2)))
+           (or (some (u1) (and (is-trace u1)
+                               (= s1 (append t1 u1))))
+               (some (u2) (and (is-trace u2)
+                               (= t1 (append s1 u2)))))))
+(INDUCT (INDUCTION-ON-TWO-TRACES S1 T1))
+(REDUCE)
+(CASES)
+(INSTANTIATE (U1$0 U1))
+(SIMPLIFY)
+(NEXT)
+(INSTANTIATE (U2$1 U2$0))
+(SIMPLIFY)
+(NEXT)
+
+(rule append-left-cancellation (s t1 t2)
+  (implies (and (is-trace s)
+                (is-trace t1)
+                (is-trace t2))
+           (= (= (append s t1) (append s t2))
+              (= t1 t2))))
+(PROVE-BY-INDUCTION)
+
+(rule append-right-cancellation (s1 s2 t)
+  (implies (and (is-trace s1)
+                (is-trace s2)
+                (is-trace t))
+           (= (= (append s1 t) (append s2 t))
+              (= s1 s2))))
+(INDUCT (INDUCTION-ON-TWO-TRACES S1 S2))
+(REDUCE)
+(CASES)
+(SPLIT (IS-EMPTY S2))
+(REDUCE)
+(SPLIT (= (LENGTH T) (LENGTH (APPEND S2 T))))
+(REDUCE)
+(APPLY LENGTH-APPEND)
+(SIMPLIFY)
+(INVOKE (LENGTH S2))
+(REDUCE)
+(NEXT)
+(SPLIT (= (LENGTH T) (LENGTH (APPEND S1 T))))
+(REDUCE)
+(APPLY LENGTH-APPEND)
+(SIMPLIFY)
+(INVOKE (LENGTH S1))
+(REDUCE)
+(NEXT)
+
+
+;;; ============ trace-of =============
+
+(function all-traces (s) ()
+  (all (x) (implies (in x s)
+                    (is-trace x))))
+
+(zf-function tackall (x s)
+  (map (tack a b) ((a) x) ((b) s)))
+
+(rule in-tackall (a x s)
+  (implies (all-traces s)
+           (= (in a (tackall x s))
+              (and (not (is-empty a))
+                   (in (head a) x)
+                   (in (tail a) s)))))
+(WITH-ENABLED (TACKALL.DEFINITION) (REDUCE))
+(SPLIT (IN (TAIL A) S))
+(REDUCE)
+(REARRANGE)
+(INSTANTIATE (X$0 B))
+(SIMPLIFY)
+
+(rule all-traces-tackall (x s)
+  (= (all-traces (tackall x s)) (true)))
+(WITH-ENABLED (TACKALL.DEFINITION) (REDUCE))
+(PRENEX)
+(SIMPLIFY)
+
+(function trace-n-of (n s) ((measure n))
+  (if (> n 0)
+      (tackall s (trace-n-of (- n 1) s))
+      (unit (empty))))
+(REDUCE)
+
+(rule all-traces-trace-n-of (n s)
+  (= (all-traces (trace-n-of n s)) (true)))
+(PROVE-BY-INDUCTION)
+
+(axiom trace-n-of-length (n x s)
+  (implies (in x (trace-n-of n s))
+           (= (length x) (if (>= n 0) n 0))))
+(INDUCT (INDUCTION-SCHEME-FOR-NAT-AND-TRACE N X))
+(REDUCE)
+(INVOKE TRACE-N-OF)
+(REDUCE)
+
+(zf-function sets-of-trace-n-of (s)
+  (map (trace-n-of n s) ((n) (int))))
+
+(rule in-sets-of-trace-n-of (x s)
+  (= (in x (sets-of-trace-n-of s))
+     (some (n) (and (in n (int))
+                    (= x (trace-n-of n s))))))
+(SPLIT (IN X (SETS-OF-TRACE-N-OF S)))
+(APPLY SETS-OF-TRACE-N-OF.DEFINITION)
+(SIMPLIFY)
+
+;;; trace-of construct the set of all possible traces of events
+;;; from a set s (this is ``star'' in Hoare's book)
+
+(disabled (function trace-of (s) ()
+  (cup (sets-of-trace-n-of s))))
+
+;;; is-trace-of is true when x is a trace consisting of events from
+;;; set s (i.e., x is a member of (trace-of s))
+
+(function is-trace-of (x s)
+    ((measure (length x)))
+  (if (is-empty x)
+      (= x (empty))
+      (and (in (head x) s)
+           (is-trace-of (tail x) s))))
+(INVOKE (LENGTH X))
+(REDUCE)
+
+;;; some laws about trace-of and is-trace-of
+
+(rule is-trace-of-empty (a)
+  (= (is-trace-of (empty) a)
+     (true)))
+(REDUCE)
+
+(disabled (rule is-trace-of-rule (x s)
+            (= (is-trace-of x s)
+               (in x (trace-n-of (length x) s)))))
+(PROVE-BY-INDUCTION)
+
+(rule in-trace-of (x s)
+  (= (in x (trace-of s))
+     (is-trace-of x s)))
+(APPLY IS-TRACE-OF-RULE)
+(WITH-ENABLED (TRACE-OF) (REDUCE))
+(INSTANTIATE (N (LENGTH X)))
+(REWRITE)
+(PRENEX)
+(USE TRACE-N-OF-LENGTH (N N) (S S) (X X))
+(REDUCE)
+
+(rule is-trace-of-tack (x s a)
+  (implies (and (in x a)
+                (is-trace s)
+                (is-trace-of s a))
+           (= (is-trace-of (tack x s) a) (true))))
+(REDUCE)
+
+(frule is-trace-of-is-trace (s a)
+  (implies (is-trace-of s a)
+           (is-trace s)))
+(PROVE-BY-INDUCTION)
+
+(axiom is-trace-of-append-lemma (s s1 s2 a)
+  (implies (and (is-trace-of s a)
+                (is-trace-of s1 a)
+                (is-trace s2)
+                (= s1 (append s s2)))
+           (is-trace-of s2 a)))
+(INDUCT (INDUCTION-ON-TWO-TRACES S1 S))
+(REDUCE)
+(INVOKE (APPEND S S2))
+(REDUCE)
+
+(rule is-trace-of-append (s1 s2 a)
+  (implies (and (is-trace s1) (is-trace s2))
+                (= (is-trace-of (append s1 s2) a)
+                   (and (is-trace-of s1 a)
+                        (is-trace-of s2 a)))))
+(INDUCT)
+(REDUCE)
+
+
+;;; ============ select-after ==============
+
+;;; begin-with selects, from a set of traces t, those traces
+;;; that have s as an initial subtrace
+
+(zf-function begin-with (s t)
+  (select (s1 t) (some (s2) (and (is-trace s2)
+                                 (= s1 (append s s2))))))
+
+;;; delete-initial-subsequence removes the first n events
+;;; from a trace s
+
+(function delete-initial-subsequence (s n) ((measure n))
+  (if (>= n 1)
+      (delete-initial-subsequence (tail s) (- n 1))
+      s))
+(REDUCE)
+
+(grule delete-initial-subsequence-is-trace (s n)
+  (implies (and (is-trace s)
+                (>= (length s) n))
+           (is-trace (delete-initial-subsequence s n))))
+(PROVE-BY-INDUCTION)
+
+;;; select-after first selects traces in t that has s as a prefix,
+;;; and then removes the prefix from each of the selected traces
+
+(zf-function select-after (s t)
+  (map (delete-initial-subsequence s1 (length s))
+       ((s1) (begin-with s t))))
+
+;;; lemmas about delete-initial-subsequence
+
+(rule delete-initial-subsequence-append (s1 s2)
+  (implies (and (is-trace s1)
+                (is-trace s2))
+           (= (delete-initial-subsequence (append s1 s2) (length s1))
+              s2)))
+(INDUCT)
+(REDUCE)
+
+(rule delete-initial-subsequence-length (s)
+  (implies (is-trace s)
+           (= (delete-initial-subsequence s (length s))
+              (empty))))
+(INDUCT)
+(REDUCE)
+
+(rule delete-initial-subsequence-append-length (s1 s2)
+  (implies (and (is-trace s1) (is-trace s2))
+           (= (delete-initial-subsequence (append s1 s2) (length s1))
+              s2)))
+(INDUCT)
+(REDUCE)
+
+(rule delete-initial-subsequence-is-trace-of (s n a)
+  (implies (and (is-trace-of s a)
+                (>= (length s) n))
+           (= (is-trace-of (delete-initial-subsequence s n) a)
+              (true))))
+(PROVE-BY-INDUCTION)
+
+
+;;; =========== restrict =============
+
+;;; restrict filters out elements of trace s that are not in a
+
+(function restrict (s a) ((measure (length s)))
+  (if (is-empty s)
+      s
+      (if (in (head s) a)
+          (tack (head s) (restrict (tail s) a))
+          (restrict (tail s) a))))
+(REDUCE)
+
+(grule is-trace-restrict (s a)
+  (implies (is-trace s)
+           (is-trace (restrict s a))))
+(INDUCT)
+(REDUCE)
+
+(grule is-trace-of-restrict (s a)
+  (implies (is-trace s)
+           (is-trace-of (restrict s a) a)))
+(INDUCT)
+(REDUCE)
+
+(rule restrict-append (s t a)
+  (implies (and (is-trace s) (is-trace t))
+           (= (restrict (append s t) a)
+              (append (restrict s a) (restrict t a)))))
+(INDUCT)
+(REDUCE)
+
+
+;;; =========== occurs ============
+
+;;; occurs is true if event e occurs in trace t
+
+(function occurs (e t) ((measure (length t)))
+  (if (is-empty t)
+      (false)
+      (or (= (head t) e)
+          (occurs e (tail t)))))
+(REDUCE)
+
+(frule occurs-implies-not-empty (e t)
+  (implies (occurs e t)
+           (not (is-empty t))))
+(INDUCT)
+(REDUCE)
+
+(rule occurs-append (e s1 s2)
+  (implies (and (is-trace s1)
+                (is-trace s2))
+           (= (occurs e (append s1 s2))
+              (or (occurs e s1)
+                  (occurs e s2)))))
+(PROVE-BY-INDUCTION)
+
+(rule occurs-restrict (e s a)
+  (implies (is-trace s)
+           (= (occurs e (restrict s a))
+              (and (in e a)
+                   (occurs e s)))))
+(PROVE-BY-INDUCTION)
+
+
+;;; ============ operations on tail end =============
+
+(function last-event (t) ((measure (length t)))
+  (if (is-empty t)
+      t
+      (if (is-empty (tail t))
+          (head t)
+          (last-event (tail t)))))
+(REDUCE)
+
+(function but-last (t) ((measure (length t)))
+  (if (or (is-empty t) (is-empty (tail t)))
+      (empty)
+      (tack (head t) (but-last (tail t)))))
+(REDUCE)
+
+(grule but-last-is-trace (t)
+  (is-trace (but-last t)))
+(INDUCT)
+(REDUCE)
+
+(rule but-last-is-trace-of (t a)
+  (implies (is-trace-of t a)
+           (= (is-trace-of (but-last t) a) (true))))
+(INDUCT)
+(REDUCE)
+
+(rule append-but-last-last (t)
+  (implies (not (is-empty t))
+           (= (append (but-last t) (tack (last-event t) (empty))) t)))
+(INDUCT)
+(REDUCE)
+
+(rule but-last-append (s t)
+  (implies (and (is-trace s)
+                (not (is-empty t)))
+           (= (but-last (append s t))
+              (append s (but-last t)))))
+(INDUCT (LENGTH S))
+(REDUCE)
+
+(rule length-but-last (s)
+  (implies (not (is-empty s))
+           (= (length (but-last s))
+              (- (length s) 1))))
+(INDUCT)
+(REDUCE)
+(INVOKE LENGTH)
+(REDUCE)
+
+(axiom occurs-but-last (e t)
+  (implies (and (is-trace t)
+                (occurs e (but-last t)))
+           (occurs e t)))
+(INDUCT)
+(REDUCE)
+
+
+; (make tr model)

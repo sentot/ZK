@@ -1,0 +1,752 @@
+;;;
+;;; The theory of relations
+;;;
+;;; Concepts introduced:
+;;;
+;;; (is-relation X)	-- is set X a relation?
+;;; (dom R), (ran R)	-- domain and range of relation R
+;;; (inverse R)		-- relational inverse of R
+;;; (image R X)		-- image
+;;; (comp R S)		-- (forward) composition of relations R and S
+;;; dom-restrict, ran-restrict, dom-remove, ran-remove
+;;;			-- (domain / range) (restriction / anti-restriction)
+;;; (id X)		-- identity relation on X
+;;;
+;;; (rel X Y)		-- the set of relations between members of X and members of Y.
+
+;;; Relations are based on ordered pairs
+
+(load pair)
+
+
+;;; is-relation
+
+(disabled
+ (function is-relation (r) ()
+   (all (x) (implies (in x r) (pair!is-pair x)))))
+
+(grule is-relation-bool (r)
+  (= (type-of (is-relation r))
+     (bool)))
+
+(axiom is-relation-monotonic (x y)
+  (implies (and (is-relation y)
+		(subset x y))
+	   (is-relation x)))
+
+(rule is-relation-nullset ()
+  (= (is-relation (nullset))
+     (true)))
+
+(rule is-relation-unit (x)
+  (= (is-relation (unit x))
+     (pair!is-pair x)))
+
+(rule is-relation-union (x y)
+  (= (is-relation (union x y))
+     (and (is-relation x)
+	  (is-relation y))))
+
+(disabled
+ (rule is-relation-cup (x)
+  (= (is-relation (cup x))
+     (all (y) (implies (in y x)
+		       (is-relation y))))))
+
+(rule is-relation-cup-1 (x)
+  (implies (all (y) (implies (in y x)
+			     (is-relation y)))
+	   (= (is-relation (cup x)) (true))))
+
+(rule is-relation-setadd (x y)
+  (= (is-relation (setadd x y))
+     (and (pair!is-pair x)
+	  (is-relation y))))
+
+(rule is-relation-inter (x y)
+  (implies (or (is-relation x)
+	       (is-relation y))
+	   (= (is-relation (inter x y)) (true))))
+
+(rule is-relation-diff (x y)
+  (implies (is-relation x)
+	   (= (is-relation (diff x y)) (true))))
+
+(rule is-relation-delta (x y)
+  (implies (and (is-relation x)
+		(is-relation y))
+	   (= (is-relation (delta x y)) (true))))
+
+(rule is-relation-cross (x y)
+  (= (is-relation (pair!cross x y))
+     (true)))
+
+
+
+;;; domain and range
+
+(function-stub dom (x))
+
+(disabled
+ (rule in-dom (a x)
+   (= (in a (dom x))
+      (some (b) (in (pair!pair a b) x)))))
+
+(rule in-dom-1 (a b x)
+  (implies (in (pair!pair a b) x)
+	   (= (in a (dom x)) (true))))
+
+(rule dom-nullset ()
+  (= (dom (nullset))
+     (nullset)))
+
+(rule dom-unit (x)
+  (= (dom (unit x))
+     (if (pair!is-pair x)
+	 (unit (pair!fst x))
+	 (nullset))))
+
+(rule dom-union (x y)
+  (= (dom (union x y))
+     (union (dom x) (dom y))))
+
+(rule dom-setadd (x y)
+  (= (dom (setadd x y))
+     (if (pair!is-pair x)
+	 (setadd (pair!fst x) (dom y))
+	 (dom y))))
+
+(rule dom-cross (x y)
+  (= (dom (pair!cross x y))
+     (if (= y (nullset))
+	 (nullset)
+	 x)))
+
+(rule dom-subset (x y)
+  (implies (subset x y)
+	   (= (subset (dom x) (dom y)) (true))))
+
+(function-stub ran (x))
+
+(disabled
+ (rule in-ran (b x)
+  (= (in b (ran x))
+     (some (a) (in (pair!pair a b) x)))))
+
+(rule in-ran-1 (a b x)
+  (implies (in (pair!pair a b) x)
+	   (= (in b (ran x)) (true))))
+
+(rule ran-nullset ()
+  (= (ran (nullset))
+     (nullset)))
+
+(rule ran-unit (x)
+  (= (ran (unit x))
+     (if (pair!is-pair x)
+	 (unit (pair!snd x))
+	 (nullset))))
+
+(rule ran-union (x y)
+  (= (ran (union x y))
+     (union (ran x) (ran y))))
+
+(rule ran-setadd (x y)
+  (= (ran (setadd x y))
+     (if (pair!is-pair x)
+	 (setadd (pair!snd x) (ran y))
+	 (ran y))))
+
+(rule ran-cross (x y)
+  (= (ran (pair!cross x y))
+     (if (= x (nullset))
+	 (nullset)
+	 y)))
+
+(rule ran-subset (x y)
+  (implies (subset x y)
+	   (= (subset (ran x) (ran y)) (true))))
+
+(axiom dom-null-iff-ran-null (x)
+  (= (= (dom x) (nullset))
+     (= (ran x) (nullset))))
+
+(disabled
+ (rule subset-cross (a x y)
+  (= (subset a (pair!cross x y))
+     (and (is-relation a)
+	  (subset (dom a) x)
+	  (subset (ran a) y)))))
+
+
+;;; inversion
+;;;
+;;; The odd definition here makes (inverse (inverse x)) = x for ANY set x,
+;;; not just sets of pairs.  This is extremely convenient!
+
+(disabled
+ (function flip-pair (x) ()
+   (if (pair!is-pair x)
+       (pair!pair (pair!snd x) (pair!fst x))
+       x)))
+
+(grule flip-pair-is-involution (x)
+  (= (flip-pair (flip-pair x))
+     x))
+
+(rule fst-flip-pair (x)
+  (implies (pair!is-pair x)
+	   (= (pair!fst (flip-pair x))
+	      (pair!snd x))))
+
+(rule snd-flip-pair (x)
+  (implies (pair!is-pair x)
+	   (= (pair!snd (flip-pair x))
+	      (pair!fst x))))
+
+(rule is-pair-flip-pair (x)
+  (= (pair!is-pair (flip-pair x))
+     (pair!is-pair x)))
+
+(rule flip-pair-pair (x y)
+  (= (flip-pair (pair!pair x y))
+     (pair!pair y x)))
+
+(function-stub inverse (r))
+
+(rule in-inverse (x r)
+  (= (in x (inverse r))
+     (in (flip-pair x) r)))
+
+(grule inverse-inverse (x)
+  (= (inverse (inverse x))
+     x))
+
+(rule inverse-nullset ()
+  (= (inverse (nullset))
+     (nullset)))
+
+(rule inverse-unit (x)
+  (= (inverse (unit x))
+     (unit (flip-pair x))))
+
+(rule inverse-union (x y)
+  (= (inverse (union x y))
+     (union (inverse x) (inverse y))))
+
+(rule inverse-setadd (x y)
+  (= (inverse (setadd x y))
+     (setadd (flip-pair x) (inverse y))))
+
+(rule inverse-intersection (x y)
+  (= (inverse (inter x y))
+     (inter (inverse x)(inverse y))))
+
+(rule inverse-diff (x y)
+  (= (inverse (diff x y))
+     (diff (inverse x) (inverse y))))
+
+(rule inverse-cross (x y)
+  (= (inverse (pair!cross x y))
+     (pair!cross y x)))
+
+(rule subset-inverse-inverse (x y)
+  (= (subset (inverse x)(inverse y))
+     (subset x y)))
+
+(rule =-inverse-inverse (x y)
+  (= (= (inverse x)(inverse y))
+     (= x y)))
+
+(rule is-relation-inverse (x)
+  (= (is-relation (inverse x))
+     (is-relation x)))
+
+(rule dom-inverse (r)
+  (= (dom (inverse r))
+     (ran r)))
+
+(rule ran-inverse (r)
+  (= (ran (inverse r))
+     (dom r)))
+
+
+;;; image
+
+(function-stub image (r x))
+
+(disabled
+ (rule in-image (r x y)
+   (= (in y (image r x))
+      (some (z) (and (in z x) (in (pair!pair z y) r))))))
+
+
+(rule image-of-nullset (r)
+  (= (image r (nullset))
+     (nullset)))
+
+(rule image-through-nullset (x)
+  (= (image (nullset) x)
+     (nullset)))
+
+(rule image-of-union (r x y)
+  (= (image r (union x y))
+     (union (image r x)
+	    (image r y))))
+
+(rule image-through-union (r s x)
+  (= (image (union r s) x)
+     (union (image r x)
+	    (image s x))))
+
+(rule image-dom (r)
+  (= (image r (dom r))
+     (ran r)))
+
+(rule image-cross (x y z)
+  (= (image (pair!cross x y) z)
+     (if (= (inter z x) (nullset))
+	 (nullset)
+	 y)))
+
+(rule image-monotonic (r s x y)
+  (implies (and (subset x y)
+		(subset r s))
+	   (= (subset (image r x) (image s y)) (true))))
+
+(axiom image-subset-ran (r x)
+  (subset (image r x) (ran r)))
+
+(rule image-of-superset-of-dom (r x)
+  (implies (subset (dom r) x)
+	   (= (image r x)
+	      (ran r))))
+
+
+;;; composition
+
+(function-stub comp (r s))
+
+(disabled
+ (rule in-comp (x r s)
+  (= (in x (comp r s))
+     (and (pair!is-pair x)
+	  (some (y) (and (in (pair!pair (pair!fst x) y) r)
+			 (in (pair!pair y (pair!snd x)) s)))))))
+
+(rule is-relation-comp (r s)
+  (= (is-relation (comp r s))
+     (true)))
+
+(rule inverse-comp (r s)
+  (= (inverse (comp r s))
+     (comp (inverse s) (inverse r))))
+
+(rule dom-comp (r s)
+  (= (dom (comp r s))
+     (image (inverse r) (dom s))))
+
+(rule ran-comp (r s)
+  (= (ran (comp r s))
+     (image s (ran r))))
+
+(rule image-comp (x r s)
+  (= (image (comp r s) x)
+     (image s (image r x))))
+
+(rule comp-nullset-left (r)
+  (= (comp (nullset) r)
+     (nullset)))
+
+(rule comp-nullset-right (r)
+  (= (comp r (nullset))
+     (nullset)))
+
+(rule comp-associative (r s t)
+  (= (comp (comp r s) t)
+     (comp r (comp s t))))
+
+(rule comp-monotonic (a b c d)
+  (implies (and (subset a c)
+		(subset b d))
+	   (= (subset (comp a b) (comp c d)) (true))))
+
+
+;;; restriction
+
+(function-stub dom-restrict (x r))
+
+(rule in-dom-restrict (x r y)
+  (= (in x (dom-restrict y r))
+     (and (pair!is-pair x)
+	  (in x r)
+	  (in (pair!fst x) y))))
+
+(function-stub ran-restrict (r x))
+
+(rule in-ran-restrict (x r y)
+  (= (in x (ran-restrict r y))
+     (and (pair!is-pair x)
+	  (in x r)
+	  (in (pair!snd x) y))))
+
+(axiom dom-restrict-subset (x r)
+  (subset (dom-restrict x r) r))
+
+(axiom ran-restrict-subset (r x)
+  (subset (ran-restrict r x) r))
+
+(rule is-relation-dom-restrict (x r)
+  (= (is-relation (dom-restrict x r))
+     (true)))
+
+(rule is-relation-ran-restrict (r x)
+  (= (is-relation (ran-restrict r x))
+     (true)))
+
+(rule inverse-dom-restrict (x r)
+  (= (inverse (dom-restrict x r))
+     (ran-restrict (inverse r) x)))
+
+(rule inverse-ran-restrict (r x)
+  (= (inverse (ran-restrict r x))
+     (dom-restrict x (inverse r))))
+
+(rule dom-dom-restrict (x r)
+  (= (dom (dom-restrict x r))
+     (inter x (dom r))))
+
+(rule ran-dom-restrict (x r)
+  (= (ran (dom-restrict x r))
+     (image r x)))
+
+(axiom dom-restrict-ignores-off-domain (x r)
+  (= (dom-restrict x r)
+     (dom-restrict (inter x (dom r)) r)))
+
+(axiom ran-restrict-ignores-off-ran (x r)
+  (= (ran-restrict r x)
+     (ran-restrict r (inter x (ran r)))))
+
+(rule dom-ran-restrict (r x)
+  (= (dom (ran-restrict r x))
+     (image (inverse r) x)))
+
+(rule ran-ran-restrict (r x)
+  (= (ran (ran-restrict r x))
+     (inter (ran r) x)))
+
+(rule ran-restrict-dom-restrict (x r y)
+  (= (ran-restrict (dom-restrict x r) y)
+     (dom-restrict x (ran-restrict r y))))
+
+(rule dom-restrict-dom-restrict (x y r)
+  (= (dom-restrict x (dom-restrict y r))
+     (dom-restrict (inter x y) r)))
+
+(rule ran-restrict-ran-restrict (r x y)
+  (= (ran-restrict (ran-restrict r x) y)
+     (ran-restrict r (inter x y))))
+
+(rule dom-restrict-by-nullset (r)
+  (= (dom-restrict (nullset) r)
+     (nullset)))
+
+(rule dom-restrict-nullset (x)
+  (= (dom-restrict x (nullset))
+     (nullset)))
+
+(rule ran-restrict-by-nullset (r)
+  (= (ran-restrict r (nullset))
+     (nullset)))
+
+(rule ran-restrict-nullset (x)
+     (= (ran-restrict (nullset) x)
+	(nullset)))
+
+(rule dom-restrict-union (x r s)
+  (= (dom-restrict x (union r s))
+     (union (dom-restrict x r)
+	    (dom-restrict x s))))
+
+(rule ran-restrict-union (x r s)
+  (= (ran-restrict (union r s) x)
+     (union (ran-restrict r x)
+	    (ran-restrict s x))))
+
+(rule dom-restrict-unit (x y)
+  (= (dom-restrict x (unit y))
+     (if (and (pair!is-pair y)
+	      (in (pair!fst y) x))
+	 (unit y)
+	 (nullset))))
+
+(rule ran-restrict-unit (x y)
+  (= (ran-restrict (unit x) y)
+     (if (and (pair!is-pair x)
+	      (in (pair!snd x) y))
+	 (unit x)
+	 (nullset))))
+
+(rule image-dom-restrict (x r y)
+  (= (image (dom-restrict x r) y)
+     (image r (inter x y))))
+
+(rule image-ran-restrict (r x y)
+  (= (image (ran-restrict r x) y)
+     (inter (image r y) x)))
+
+(rule dom-restrict-by-superset-dom (r x)
+  (implies (and (is-relation r)
+		(subset (dom r) x))
+	   (= (dom-restrict x r) r)))
+
+(rule ran-restrict-by-superset-ran (r x)
+  (implies (and (is-relation r)
+		(subset (ran r) x))
+	   (= (ran-restrict r x) r)))
+
+
+;;; anti-restriction
+
+(function-stub dom-remove (x r))
+
+(rule in-dom-remove (x r y)
+  (= (in x (dom-remove y r))
+     (and (pair!is-pair x)
+	  (in x r)
+	  (not (in (pair!fst x) y)))))
+
+(function-stub ran-remove (r x))
+
+(rule in-ran-remove (x r y)
+  (= (in x (ran-remove r y))
+     (and (pair!is-pair x)
+	  (in x r)
+	  (not (in (pair!snd x) y)))))
+
+(axiom dom-remove-subset (x r)
+  (subset (dom-remove x r) r))
+
+(axiom ran-remove-subset (r x)
+  (subset (ran-remove r x) r))
+
+(rule is-relation-dom-remove (x r)
+  (= (is-relation (dom-remove x r)) (true)))
+
+(rule is-relation-ran-remove (r x)
+  (= (is-relation (ran-remove r x)) (true)))
+
+(rule inverse-dom-remove(x r)
+  (= (inverse (dom-remove x r))
+     (ran-remove (inverse r) x)))
+
+(rule inverse-ran-remove (r x)
+  (= (inverse (ran-remove r x))
+     (dom-remove x (inverse r))))
+
+(rule dom-dom-remove (x r)
+  (= (dom (dom-remove x r))
+     (diff (dom r) x)))
+
+(axiom ran-dom-remove (x r)
+  (subset (diff (ran r) (image r x))
+	  (ran (dom-remove x r))))
+
+(rule ran-ran-remove (r x)
+  (= (ran (ran-remove r x))
+     (diff (ran r) x)))
+
+(axiom dom-ran-remove (r x)
+  (subset (diff (dom r) (image (inverse r) x))
+	  (dom (ran-remove r x))))
+
+(axiom dom-remove-ignores-off-domain (x r)
+  (= (dom-remove x r)
+     (dom-remove (inter x (dom r)) r)))
+
+(axiom ran-remove-ignores-off-ran (x r)
+  (= (ran-remove r x)
+     (ran-remove r (inter x (ran r)))))
+
+(rule ran-remove-dom-remove (x r y)
+  (= (ran-remove (dom-remove x r) y)
+     (dom-remove x (ran-remove r y))))
+
+(rule ran-remove-dom-restrict (x r y)
+  (= (ran-remove (dom-restrict x r) y)
+     (dom-restrict x (ran-remove r y))))
+
+(rule ran-restrict-dom-remove (x r y)
+  (= (ran-restrict (dom-remove x r) y)
+     (dom-remove x (ran-restrict r y))))
+
+(rule dom-remove-dom-remove (x y r)
+  (= (dom-remove x (dom-remove y r))
+     (dom-remove (union x y) r)))
+
+(rule dom-remove-dom-restrict (x y r)
+  (= (dom-remove x (dom-restrict y r))
+     (dom-restrict (diff y x) r)))
+
+(rule dom-restrict-dom-remove (x y r)
+  (= (dom-restrict x (dom-remove y r))
+     (dom-restrict (diff x y) r)))
+
+(rule ran-remove-ran-remove (r x y)
+  (= (ran-remove (ran-remove r x) y)
+     (ran-remove r (union x y))))
+
+(rule ran-remove-ran-restrict (r x y)
+  (= (ran-remove (ran-restrict r x) y)
+     (ran-restrict r (diff x y))))
+
+(rule ran-restrict-ran-remove (r x y)
+  (= (ran-restrict (ran-remove r x) y)
+     (ran-restrict r (diff y x))))
+
+(rule dom-remove-by-nullset (r)
+  (implies (is-relation r)
+	   (= (dom-remove (nullset) r)
+	      r)))
+
+(rule dom-remove-nullset (x)
+  (= (dom-remove x (nullset))
+     (nullset)))
+
+(rule ran-remove-by-nullset (r)
+  (implies (is-relation r)
+	   (= (ran-remove r (nullset))
+	      r)))
+
+(rule ran-remove-nullset (x)
+  (= (ran-remove (nullset) x)
+     (nullset)))
+
+(rule dom-remove-union (x r s)
+  (= (dom-remove x (union r s))
+     (union (dom-remove x r) (dom-remove x s))))
+
+(rule ran-remove-union (x r s)
+  (= (ran-remove (union r s) x)
+     (union (ran-remove r x) (ran-remove s x))))
+
+(rule dom-remove-unit (x y)
+  (= (dom-remove x (unit y))
+     (if (and (pair!is-pair y)
+	      (not (in (pair!fst y) x)))
+	 (unit y)
+	 (nullset))))
+
+(rule ran-remove-unit (x y)
+  (= (ran-remove (unit x) y)
+     (if (and (pair!is-pair x)
+	      (not (in (pair!snd x) y)))
+	 (unit x)
+	 (nullset))))
+
+(rule image-dom-remove (x r y)
+  (= (image (dom-remove x r) y)
+     (image r (diff y x))))
+
+(rule image-ran-remove (r x y)
+  (= (image (ran-remove r x) y)
+     (diff (image r y) x)))
+
+(rule dom-remove-by-superset-dom (r x)
+  (implies (and (is-relation r)
+		(subset (dom r) x))
+	   (= (dom-remove x r)
+	      (nullset))))
+
+(rule ran-remove-by-superset-ran (r x)
+  (implies (and (is-relation r)
+		(subset (ran r) x))
+	   (= (ran-remove r x)
+	      (nullset))))
+
+
+;;; identity relation
+
+(function-stub id (x))
+
+(rule is-relation-id (x)
+  (= (is-relation (id x))
+     (true)))
+
+(rule inverse-id (x)
+  (= (inverse (id x)) (id x)))
+
+(rule dom-id (x)
+  (= (dom (id x)) x))
+
+(rule ran-id (x)
+  (= (ran (id x)) x))
+
+(rule in-id (x y)
+  (= (in x (id y))
+     (and (pair!is-pair x)
+	  (in (pair!fst x) y)
+	  (= (pair!snd x)(pair!fst x)))))
+
+(rule image-id (x y)
+  (= (image (id x) y)
+     (inter x y)))
+
+(rule dom-restrict-id (x y)
+  (= (dom-restrict x (id y))
+     (id (inter x y))))
+
+(rule ran-restrict-id (x y)
+  (= (ran-restrict (id x) y)
+     (id (inter x y))))
+
+(rule dom-remove-id (x y)
+  (= (dom-remove x (id y))
+     (id (diff y x))))
+
+(rule ran-remove-id (x y)
+  (= (ran-remove (id x) y)
+     (id (diff x y))))
+
+(rule comp-id-left (x r)
+  (= (comp (id x) r)
+     (dom-restrict x r)))
+
+(rule comp-id-right (x r)
+  (= (comp r (id x))
+     (ran-restrict r x)))
+
+(rule id-nullset ()
+  (= (id (nullset))
+     (nullset)))
+
+(rule subset-id-id (x y)
+  (= (subset (id x) (id y))
+     (subset x y)))
+
+(rule =-id-id (x y)
+  (= (= (id x) (id y))
+     (= x y)))
+
+
+;;; (rel X Y) - relations between X and Y
+
+(disabled
+ (function rel (x y) ()
+   (powerset (pair!cross x y))))
+
+(disabled
+ (rule in-rel (r x y)
+    (= (in r (rel x y))
+       (and (is-relation r)
+	    (subset (dom r) x)
+	    (subset (ran r) y)))))
+
+(rule rel-nullset-left (x)
+  (= (rel (nullset) x)
+     (unit (nullset))))
+
+(rule rel-nullset-right (x)
+  (= (rel x (nullset))
+     (unit (nullset))))

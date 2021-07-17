@@ -1,0 +1,34 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/unitspec.ver"
+IS-UNIT-SET
+THE-ELEMENT
+DEFINITION-1
+Beginning proof of DEFINITION-1 ...
+(= (IS-UNIT-SET X) (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))))
+DEFINTION-2
+Beginning proof of DEFINTION-2 ...
+(= (IS-UNIT-SET X)
+ (AND (SOME (Y) (IN Y X))
+  (ALL (Y Z) (IMPLIES (AND (IN Y X) (IN Z X)) (= Y Z)))))
+IS-UNIT-SET-NULLSET
+Beginning proof of IS-UNIT-SET-NULLSET ...
+(= (IS-UNIT-SET (NULLSET)) (FALSE))
+IS-UNIT-SET-UNIT
+Beginning proof of IS-UNIT-SET-UNIT ...
+(= (IS-UNIT-SET (UNIT X)) (TRUE))
+IS-UNIT-SET-SETADD
+Beginning proof of IS-UNIT-SET-SETADD ...
+(= (IS-UNIT-SET (SETADD X S)) (ALL (Y) (IMPLIES (IN Y S) (= Y X))))
+THE-ELEMENT-UNIT
+Beginning proof of THE-ELEMENT-UNIT ...
+(= (THE-ELEMENT (UNIT X)) X)
+THE-ELEMENT-UNIT-2
+Beginning proof of THE-ELEMENT-UNIT-2 ...
+(= (THE-ELEMENT (SETADD X (NULLSET))) X)
+THE-ELEMENT-OF-UNIT-SET
+Beginning proof of THE-ELEMENT-OF-UNIT-SET ...
+(IMPLIES (IS-UNIT-SET X) (= X (UNIT (THE-ELEMENT X))))
+THE-ELEMENT-IS-IN
+Beginning proof of THE-ELEMENT-IS-IN ...
+(IMPLIES (IS-UNIT-SET X) (IN (THE-ELEMENT X) X))
+Done.

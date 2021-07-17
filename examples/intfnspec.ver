@@ -1,0 +1,156 @@
+;;;
+;;; internal integer functions
+;;;
+
+;;; function theory provides a definition of "first-class" functions.
+;;; here, we define first-class versions of the arithmetic functions.
+
+(load fn)
+
+;;; addition
+
+(function-stub add (k))
+
+(rule is-function-add (k)
+  (= (fn!is-function (add k))
+     (true)))
+
+(rule dom-add (k)
+  (= (rel!dom (add k))
+     (int)))
+
+(rule ran-add (k)
+  (implies (in k (int))
+	   (= (rel!ran (add k)) (int))))
+
+(rule apply-add (k x)
+  (implies (in x (int))
+	   (= (fn!apply (add k) x)
+	      (+ x k))))
+
+(rule inverse-add (k)
+  (implies (in k (int))
+	   (= (rel!inverse (add k))
+	      (add (negate k)))))
+
+(rule comp-add-add (m n)
+  (implies (and (in m (int))
+		(in n (int)))
+	   (= (rel!comp (add m) (add n))
+	      (add (+ m n)))))
+
+(rule add-0-is-id ()
+  (= (add 0)
+     (rel!id (int))))
+
+(rule image-add-range (i j k)
+  (implies (and (in i (int))
+		(in j (int))
+		(in k (int)))
+	   (= (rel!image (add i) (range j k))
+	      (range (+ i j) (+ i k)))))
+
+(function-stub plus ())			; curried addition function
+
+(rule is-function-plus ()
+  (= (fn!is-function (plus))
+     (true)))
+
+(rule dom-plus ()
+  (= (rel!dom (plus))
+     (int)))
+
+(rule apply-plus (k)
+  (implies (in k (int))
+	   (= (fn!apply (plus) k)
+	      (add k))))
+
+
+;;; multiplication
+
+(zf-function multiples-of (k)
+  (select (n (int))
+    (some (x) (and (in x (int)) (= n (* k x))))))
+
+(rule multiples-of-0 ()
+  (= (multiples-of 0)
+     (unit 0)))
+
+(rule multiples-of-1 ()
+  (= (multiples-of 1)
+     (int)))
+
+(rule multiples-of--1 ()
+  (= (multiples-of -1)
+     (int)))
+
+(function-stub multiply-by (k))
+
+(rule is-function-multiply-by (k)
+  (= (fn!is-function (multiply-by k))
+     (true)))
+
+(rule is-function-inverse-multiply-by (i)
+  (implies (and (in i (int))
+		(not (= i 0)))
+	   (= (fn!is-function (rel!inverse (multiply-by i))) (true))))
+
+(rule dom-multiply-by (k)
+  (= (rel!dom (multiply-by k))
+     (int)))
+
+(rule ran-multiply-by (k)
+  (implies (in k (int))
+	   (= (rel!ran (multiply-by k)) (multiples-of k))))
+
+(rule apply-multiply-by (k x)
+  (implies (in x (int))
+	   (= (fn!apply (multiply-by k) x)
+	      (* x k))))
+
+(rule comp-multiply-by-multiply-by (m n)
+  (implies (and (in m (int))
+		(in n (int)))
+	   (= (rel!comp (multiply-by m) (multiply-by n))
+	      (multiply-by (* m n)))))
+
+(rule multiply-by-1-is-id ()
+  (= (multiply-by 1)
+     (rel!id (int))))
+
+(rule inverse-multiply-by--1 ()
+  (= (rel!inverse (multiply-by -1))
+     (multiply-by -1)))
+
+(rule image-multiply-positive-range (i j k)
+  (implies (and (in i (int))
+		(in j (int))
+		(in k (int))
+		(> i 0))
+	   (= (rel!image (multiply-by i) (range j k))
+	      (inter (multiples-of i)
+		     (range (* i j) (* i k))))))
+
+(rule image-multiply-negative-range (i j k)
+  (implies (and (in i (int))
+		(in j (int))
+		(in k (int))
+		(< i 0))
+	   (= (rel!image (multiply-by i) (range j k))
+	      (inter (multiples-of i)
+		     (range (* i k) (* i j))))))
+
+(function-stub times ())		; curried multiplication function
+
+(rule is-function-times ()
+  (= (fn!is-function (times))
+     (true)))
+
+(rule dom-times ()
+  (= (rel!dom (times))
+     (int)))
+
+(rule apply-times (k)
+  (implies (in k (int))
+	   (= (fn!apply (times) k)
+	      (multiply-by k))))

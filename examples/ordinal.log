@@ -1,0 +1,1230 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/ordinal.ver"
+SC
+SELF-IN-SC
+Beginning proof of SELF-IN-SC ...
+(= (IN X (SC X)) (TRUE))
+Which simplifies
+ with invocation of SC
+ when rewriting with SETADD.DEFINITION to ...
+(TRUE)
+IS-TRANSITIVE
+IS-TRANSITIVE-NULLSET
+Beginning proof of IS-TRANSITIVE-NULLSET ...
+(= (IS-TRANSITIVE (NULLSET)) (TRUE))
+Which simplifies
+ with invocation of IS-TRANSITIVE
+ when rewriting with NULLSET.DEFINITION to ...
+(TRUE)
+IS-TRANSITIVE-SC
+Beginning proof of IS-TRANSITIVE-SC ...
+(= (IS-TRANSITIVE (SC S)) (IS-TRANSITIVE S))
+Splitting on (IS-TRANSITIVE (SC S)) generates ...
+(IF (IS-TRANSITIVE (SC S)) (= (IS-TRANSITIVE (SC S)) (IS-TRANSITIVE S))
+ (= (IS-TRANSITIVE (SC S)) (IS-TRANSITIVE S)))
+Which simplifies to ...
+(IF (IS-TRANSITIVE (SC S)) (= (TRUE) (IS-TRANSITIVE S))
+ (= (FALSE) (IS-TRANSITIVE S)))
+Starting case 2 ...
+(IMPLIES (IS-TRANSITIVE (SC S)) (= (TRUE) (IS-TRANSITIVE S)))
+Starting case 1 ...
+(IMPLIES (NOT (IS-TRANSITIVE (SC S))) (= (FALSE) (IS-TRANSITIVE S)))
+Which simplifies
+ with invocation of SUBSET, IS-TRANSITIVE, SC
+ when rewriting with SETADD.DEFINITION to ...
+(OR
+ (ALL (X)
+  (IMPLIES (AND (NOT (= X S)) (IN X S))
+   (ALL (E) (IMPLIES (AND (IN E X) (NOT (= E S))) (IN E S)))))
+ (= (FALSE)
+  (ALL (X$0)
+   (IMPLIES (IN X$0 S) (ALL (E$0) (IMPLIES (IN E$0 X$0) (IN E$0 S)))))))
+Instantiating (= X$0 X) (= E$0 E) gives ...
+(OR (IMPLIES (AND (NOT (= X S)) (IN X S) (IN E X) (NOT (= E S))) (IN E S))
+ (NOT
+  (AND (IMPLIES (AND (IN X S) (IN E X)) (IN E S))
+   (ALL (X$0 E$0) (IMPLIES (AND (IN X$0 S) (IN E$0 X$0)) (IN E$0 S))))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(IMPLIES (IS-TRANSITIVE (SC S)) (= (TRUE) (IS-TRANSITIVE S)))
+Invoking IS-TRANSITIVE gives ...
+(IMPLIES (ALL (X) (IMPLIES (IN X (SC S)) (SUBSET X (SC S))))
+ (ALL (X$0) (IMPLIES (IN X$0 S) (SUBSET X$0 S))))
+Invoking SC gives ...
+(IMPLIES (ALL (X) (IMPLIES (IN X (SETADD S S)) (SUBSET X (SETADD S S))))
+ (ALL (X$0) (IMPLIES (IN X$0 S) (SUBSET X$0 S))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION to ...
+(IMPLIES (ALL (X) (IMPLIES (OR (= X S) (IN X S)) (SUBSET X (SETADD S S))))
+ (ALL (X$0) (IMPLIES (IN X$0 S) (SUBSET X$0 S))))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (ALL (X$0) (IMPLIES (OR (= X$0 S) (IN X$0 S)) (SUBSET X$0 (SETADD S S))))
+  (IN X S))
+ (SUBSET X S))
+Assuming SETRULES!NO-2-CYCLE with the
+instantiations: (= S X) (= T S) generates ...
+(IMPLIES
+ (AND (NOT (AND (IN X S) (IN S X)))
+  (ALL (X$0) (IMPLIES (OR (= X$0 S) (IN X$0 S)) (SUBSET X$0 (SETADD S S))))
+  (IN X S))
+ (SUBSET X S))
+Instantiating (= X$0 X) gives ...
+(IMPLIES
+ (AND (NOT (AND (IN X S) (IN S X)))
+  (IMPLIES (OR (= X S) (IN X S)) (SUBSET X (SETADD S S)))
+  (ALL (X$0) (IMPLIES (OR (= X$0 S) (IN X$0 S)) (SUBSET X$0 (SETADD S S))))
+  (IN X S))
+ (SUBSET X S))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SETADD.DEFINITION to ...
+(TRUE)
+EVERY-MEMBER-IS-TRANSITIVE
+IS-TRANSITIVE-CUP
+Beginning proof of IS-TRANSITIVE-CUP ...
+(IMPLIES (EVERY-MEMBER-IS-TRANSITIVE S) (IS-TRANSITIVE (CUP S)))
+Invoking IS-TRANSITIVE gives ...
+(IMPLIES (EVERY-MEMBER-IS-TRANSITIVE S)
+ (ALL (X) (IMPLIES (IN X (CUP S)) (SUBSET X (CUP S)))))
+Which simplifies
+ when rewriting with CUP.DEFINITION to ...
+(IMPLIES (EVERY-MEMBER-IS-TRANSITIVE S)
+ (ALL (X Y) (IMPLIES (AND (IN X Y) (IN Y S)) (SUBSET X (CUP S)))))
+Invoking EVERY-MEMBER-IS-TRANSITIVE gives ...
+(IMPLIES (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+ (ALL (X$0 Y) (IMPLIES (AND (IN X$0 Y) (IN Y S)) (SUBSET X$0 (CUP S)))))
+Instantiating (= X Y) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN Y S) (IS-TRANSITIVE Y))
+  (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X))))
+ (ALL (X$0) (IMPLIES (AND (IN X$0 Y) (IN Y S)) (SUBSET X$0 (CUP S)))))
+Invoking (IS-TRANSITIVE Y) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN Y S) (ALL (X) (IMPLIES (IN X Y) (SUBSET X Y))))
+  (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRANSITIVE X$0))))
+ (ALL (X$1) (IMPLIES (AND (IN X$1 Y) (IN Y S)) (SUBSET X$1 (CUP S)))))
+Instantiating (= X X$1) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (IN Y S)
+   (AND (IMPLIES (IN X Y) (SUBSET X Y))
+    (ALL (X$0) (IMPLIES (IN X$0 Y) (SUBSET X$0 Y)))))
+  (ALL (X$1) (IMPLIES (IN X$1 S) (IS-TRANSITIVE X$1))) (IN X Y) (IN Y S))
+ (SUBSET X (CUP S)))
+Which simplifies
+ when rewriting with SUBSET.TRANSITIVE, SETRULES!MEMBER-SUBSET-CUP to ...
+(TRUE)
+IS-ORDINAL
+IS-ORDINAL-NULLSET
+Beginning proof of IS-ORDINAL-NULLSET ...
+(= (IS-ORDINAL (NULLSET)) (TRUE))
+Which simplifies
+ with invocation of EVERY-MEMBER-IS-TRANSITIVE, IS-ORDINAL
+ when rewriting with NULLSET.DEFINITION, IS-TRANSITIVE-NULLSET to ...
+(TRUE)
+EVERY-MEMBER-IS-TRANSITIVE-SETADD
+Beginning proof of EVERY-MEMBER-IS-TRANSITIVE-SETADD ...
+(= (EVERY-MEMBER-IS-TRANSITIVE (SETADD X S))
+ (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE S)))
+Splitting on (EVERY-MEMBER-IS-TRANSITIVE (SETADD X S)) generates ...
+(IF (EVERY-MEMBER-IS-TRANSITIVE (SETADD X S))
+ (= (EVERY-MEMBER-IS-TRANSITIVE (SETADD X S))
+  (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE S)))
+ (= (EVERY-MEMBER-IS-TRANSITIVE (SETADD X S))
+  (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE S))))
+Which simplifies to ...
+(IF (EVERY-MEMBER-IS-TRANSITIVE (SETADD X S))
+ (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE S))
+ (IMPLIES (IS-TRANSITIVE X) (NOT (EVERY-MEMBER-IS-TRANSITIVE S))))
+Which simplifies
+ with invocation of EVERY-MEMBER-IS-TRANSITIVE
+ when rewriting with SETADD.DEFINITION to ...
+(IF (ALL (X$0) (IMPLIES (OR (= X$0 X) (IN X$0 S)) (IS-TRANSITIVE X$0)))
+ (ALL (X$1) (IMPLIES (IN X$1 S) (IS-TRANSITIVE X$1)))
+ (IMPLIES (IS-TRANSITIVE X)
+  (NOT (ALL (X$2) (IMPLIES (IN X$2 S) (IS-TRANSITIVE X$2))))))
+Starting case 2 ...
+(IMPLIES (ALL (X$0) (IMPLIES (OR (= X$0 X) (IN X$0 S)) (IS-TRANSITIVE X$0)))
+ (ALL (X$1) (IMPLIES (IN X$1 S) (IS-TRANSITIVE X$1))))
+Instantiating (= X$0 X$1) gives ...
+(IMPLIES
+ (AND (IMPLIES (OR (= X$0 X) (IN X$0 S)) (IS-TRANSITIVE X$0))
+  (ALL (X$1) (IMPLIES (OR (= X$1 X) (IN X$1 S)) (IS-TRANSITIVE X$1)))
+  (IN X$0 S))
+ (IS-TRANSITIVE X$0))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND
+  (NOT (ALL (X$0) (IMPLIES (OR (= X$0 X) (IN X$0 S)) (IS-TRANSITIVE X$0))))
+  (IS-TRANSITIVE X))
+ (NOT (ALL (X$2) (IMPLIES (IN X$2 S) (IS-TRANSITIVE X$2)))))
+Instantiating (= X$2 X$0) gives ...
+(IMPLIES
+ (AND (NOT (IMPLIES (OR (= X$0 X) (IN X$0 S)) (IS-TRANSITIVE X$0)))
+  (IS-TRANSITIVE X))
+ (NOT
+  (AND (IMPLIES (IN X$0 S) (IS-TRANSITIVE X$0))
+   (ALL (X$1) (IMPLIES (IN X$1 S) (IS-TRANSITIVE X$1))))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IS-ORDINAL-SC
+Beginning proof of IS-ORDINAL-SC ...
+(= (IS-ORDINAL (SC S)) (IS-ORDINAL S))
+Invoking IS-ORDINAL gives ...
+(= (AND (IS-TRANSITIVE (SC S)) (EVERY-MEMBER-IS-TRANSITIVE (SC S)))
+ (AND (IS-TRANSITIVE S) (EVERY-MEMBER-IS-TRANSITIVE S)))
+Which simplifies
+ when rewriting with IS-TRANSITIVE-SC to ...
+(IMPLIES (IS-TRANSITIVE S)
+ (IF (EVERY-MEMBER-IS-TRANSITIVE (SC S)) (EVERY-MEMBER-IS-TRANSITIVE S)
+  (NOT (EVERY-MEMBER-IS-TRANSITIVE S))))
+Invoking SC gives ...
+(IMPLIES (IS-TRANSITIVE S)
+ (IF (EVERY-MEMBER-IS-TRANSITIVE (SETADD S S)) (EVERY-MEMBER-IS-TRANSITIVE S)
+  (NOT (EVERY-MEMBER-IS-TRANSITIVE S))))
+Which simplifies
+ when rewriting with EVERY-MEMBER-IS-TRANSITIVE-SETADD to ...
+(TRUE)
+IS-ORDINAL-CUP
+Beginning proof of IS-ORDINAL-CUP ...
+(IMPLIES (ALL (X) (IMPLIES (IN X S) (IS-ORDINAL X))) (IS-ORDINAL (CUP S)))
+Invoking IS-ORDINAL gives ...
+(IMPLIES
+ (ALL (X)
+  (IMPLIES (IN X S) (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE X))))
+ (AND (IS-TRANSITIVE (CUP S)) (EVERY-MEMBER-IS-TRANSITIVE (CUP S))))
+Assuming IS-TRANSITIVE-CUP with the instantiations: (= S S) generates ...
+(IMPLIES
+ (AND (IMPLIES (EVERY-MEMBER-IS-TRANSITIVE S) (IS-TRANSITIVE (CUP S)))
+  (ALL (X)
+   (IMPLIES (IN X S) (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE X)))))
+ (AND (IS-TRANSITIVE (CUP S)) (EVERY-MEMBER-IS-TRANSITIVE (CUP S))))
+Invoking EVERY-MEMBER-IS-TRANSITIVE gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+   (IS-TRANSITIVE (CUP S)))
+  (ALL (X$0)
+   (IMPLIES (IN X$0 S)
+    (AND (IS-TRANSITIVE X$0)
+     (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1)))))))
+ (AND (IS-TRANSITIVE (CUP S))
+  (ALL (X$2) (IMPLIES (IN X$2 (CUP S)) (IS-TRANSITIVE X$2)))))
+Which simplifies
+ when rewriting with CUP.DEFINITION
+ with the instantiation (= X X$0) to ...
+(IF (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+ (IMPLIES
+  (AND (IS-TRANSITIVE (CUP S))
+   (ALL (X$0)
+    (IMPLIES (IN X$0 S)
+     (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1))))))
+  (ALL (X$2 Y) (IMPLIES (AND (IN X$2 Y) (IN Y S)) (IS-TRANSITIVE X$2))))
+ (IMPLIES
+  (ALL (X$3)
+   (IMPLIES (IN X$3 S)
+    (AND (IS-TRANSITIVE X$3)
+     (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4))))))
+  (AND (IS-TRANSITIVE (CUP S))
+   (ALL (X$5 Y$0)
+    (IMPLIES (AND (IN X$5 Y$0) (IN Y$0 S)) (IS-TRANSITIVE X$5))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X))) (IS-TRANSITIVE (CUP S))
+  (ALL (X$0)
+   (IMPLIES (IN X$0 S)
+    (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1))))))
+ (ALL (X$2 Y) (IMPLIES (AND (IN X$2 Y) (IN Y S)) (IS-TRANSITIVE X$2))))
+Instantiating (= X$0 Y) (= X$1 X$2) gives ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRANSITIVE X$0)))
+  (IS-TRANSITIVE (CUP S)) (IMPLIES (AND (IN Y S) (IN X Y)) (IS-TRANSITIVE X))
+  (ALL (X$1 X$2) (IMPLIES (AND (IN X$1 S) (IN X$2 X$1)) (IS-TRANSITIVE X$2)))
+  (IN X Y) (IN Y S))
+ (IS-TRANSITIVE X))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X))))
+  (ALL (X$3)
+   (IMPLIES (IN X$3 S)
+    (AND (IS-TRANSITIVE X$3)
+     (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4)))))))
+ (AND (IS-TRANSITIVE (CUP S))
+  (ALL (X$5 Y$0) (IMPLIES (AND (IN X$5 Y$0) (IN Y$0 S)) (IS-TRANSITIVE X$5)))))
+Instantiating (= X$3 X) gives ...
+(IMPLIES
+ (SOME (X)
+  (AND (NOT (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+   (IMPLIES (IN X S)
+    (AND (IS-TRANSITIVE X)
+     (ALL (X$0) (IMPLIES (IN X$0 X) (IS-TRANSITIVE X$0)))))
+   (ALL (X$1)
+    (IMPLIES (IN X$1 S)
+     (AND (IS-TRANSITIVE X$1)
+      (ALL (X$2) (IMPLIES (IN X$2 X$1) (IS-TRANSITIVE X$2))))))))
+ (AND (IS-TRANSITIVE (CUP S))
+  (ALL (X$3 Y) (IMPLIES (AND (IN X$3 Y) (IN Y S)) (IS-TRANSITIVE X$3)))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IS-ORDINAL-INHERITED
+Beginning proof of IS-ORDINAL-INHERITED ...
+(IMPLIES (AND (IS-ORDINAL Y) (IN X Y)) (IS-ORDINAL X))
+Invoking IS-ORDINAL gives ...
+(IMPLIES (AND (IS-TRANSITIVE Y) (EVERY-MEMBER-IS-TRANSITIVE Y) (IN X Y))
+ (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE X)))
+Invoking EVERY-MEMBER-IS-TRANSITIVE gives ...
+(IMPLIES
+ (AND (IS-TRANSITIVE Y) (ALL (X$0) (IMPLIES (IN X$0 Y) (IS-TRANSITIVE X$0)))
+  (IN X Y))
+ (AND (IS-TRANSITIVE X) (ALL (X$1) (IMPLIES (IN X$1 X) (IS-TRANSITIVE X$1)))))
+Invoking (IS-TRANSITIVE Y) gives ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 Y) (SUBSET X$0 Y)))
+  (ALL (X$1) (IMPLIES (IN X$1 Y) (IS-TRANSITIVE X$1))) (IN X Y))
+ (AND (IS-TRANSITIVE X) (ALL (X$2) (IMPLIES (IN X$2 X) (IS-TRANSITIVE X$2)))))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 Y) (ALL (E) (IMPLIES (IN E X$0) (IN E Y)))))
+  (ALL (X$1) (IMPLIES (IN X$1 Y) (IS-TRANSITIVE X$1))) (IN X Y))
+ (AND (IS-TRANSITIVE X) (ALL (X$2) (IMPLIES (IN X$2 X) (IS-TRANSITIVE X$2)))))
+Instantiating (= X$0 X) (= E X$2) gives ...
+(IMPLIES
+ (AND (IMPLIES (AND (IN X Y) (IN X$0 X)) (IN X$0 Y))
+  (ALL (X$1 E) (IMPLIES (AND (IN X$1 Y) (IN E X$1)) (IN E Y)))
+  (ALL (X$2) (IMPLIES (IN X$2 Y) (IS-TRANSITIVE X$2))) (IN X Y))
+ (AND (IS-TRANSITIVE X) (IMPLIES (IN X$0 X) (IS-TRANSITIVE X$0))))
+Which simplifies
+ with the instantiations (= X$2 X$0) (= X$2 X) to ...
+(TRUE)
+ORDINAL-ELEMENT
+Beginning proof of ORDINAL-ELEMENT ...
+(IMPLIES (AND (IS-ORDINAL Y) (IN X Y)) (AND (IS-ORDINAL X) (SUBSET X Y)))
+Assuming IS-ORDINAL-INHERITED with the
+instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (IS-ORDINAL Y) (IN X Y)) (IS-ORDINAL X)) (IS-ORDINAL Y)
+  (IN X Y))
+ (AND (IS-ORDINAL X) (SUBSET X Y)))
+Which simplifies to ...
+(IMPLIES (AND (IS-ORDINAL Y) (IN X Y) (IS-ORDINAL X)) (SUBSET X Y))
+Invoking (IS-ORDINAL Y) gives ...
+(IMPLIES
+ (AND (IS-TRANSITIVE Y) (EVERY-MEMBER-IS-TRANSITIVE Y) (IN X Y)
+  (IS-ORDINAL X))
+ (SUBSET X Y))
+Invoking IS-TRANSITIVE gives ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 Y) (SUBSET X$0 Y)))
+  (EVERY-MEMBER-IS-TRANSITIVE Y) (IN X Y) (IS-ORDINAL X))
+ (SUBSET X Y))
+Which simplifies
+ with the instantiation (= X$0 X) to ...
+(TRUE)
+P
+P-STEP
+Beginning proof of P-STEP ...
+(IMPLIES (ALL (A) (IMPLIES (IN A Y) (P A X))) (P X Y))
+Assuming AXIOM.OF.REGULAR.CHOICE with the
+instantiations: (= X (DIFF Y X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (DIFF Y X) (NULLSET)))
+   (AND (IN (CHOICE (DIFF Y X)) (DIFF Y X))
+    (= (INTER (CHOICE (DIFF Y X)) (DIFF Y X)) (NULLSET))))
+  (ALL (A) (IMPLIES (IN A Y) (P A X))))
+ (P X Y))
+Invoking P gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (DIFF Y X) (NULLSET)))
+   (AND (IN (CHOICE (DIFF Y X)) (DIFF Y X))
+    (= (INTER (CHOICE (DIFF Y X)) (DIFF Y X)) (NULLSET))))
+  (ALL (A)
+   (IMPLIES
+    (AND (IN A Y) (IS-ORDINAL A) (IS-ORDINAL X) (SUBSET A X) (NOT (= A X)))
+    (IN A X)))
+  (IS-ORDINAL X) (IS-ORDINAL Y) (SUBSET X Y) (NOT (= X Y)))
+ (IN X Y))
+Applying =.EXTENSIONAL.SUBSET to
+ (= X Y) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (DIFF Y X) (NULLSET)))
+   (AND (IN (CHOICE (DIFF Y X)) (DIFF Y X))
+    (= (INTER (CHOICE (DIFF Y X)) (DIFF Y X)) (NULLSET))))
+  (ALL (A)
+   (IMPLIES
+    (AND (IN A Y) (IS-ORDINAL A) (IS-ORDINAL X) (SUBSET A X) (NOT (= A X)))
+    (IN A X)))
+  (IS-ORDINAL X) (IS-ORDINAL Y) (SUBSET X Y)
+  (NOT (AND (SUBSET X Y) (SUBSET Y X))))
+ (IN X Y))
+Which simplifies
+ when rewriting with INTER.COMMUTATIVE, SETRULES!INTER-DIFF-RIGHT,
+DIFF.DEFINITION, SETRULES!DIFF-=-NULLSET
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (NOT (SUBSET Y X)) (IN (CHOICE (DIFF Y X)) Y)
+  (NOT (IN (CHOICE (DIFF Y X)) X)) (SUBSET (INTER Y (CHOICE (DIFF Y X))) X)
+  (ALL (A)
+   (IMPLIES
+    (AND (IN A Y) (IS-ORDINAL A) (IS-ORDINAL X) (SUBSET A X) (NOT (= A X)))
+    (IN A X)))
+  (IS-ORDINAL X) (IS-ORDINAL Y) (SUBSET X Y))
+ (IN X Y))
+Assuming ORDINAL-ELEMENT with the
+instantiations: (= X (CHOICE (DIFF Y X))) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-ORDINAL Y) (IN (CHOICE (DIFF Y X)) Y))
+   (AND (IS-ORDINAL (CHOICE (DIFF Y X))) (SUBSET (CHOICE (DIFF Y X)) Y)))
+  (NOT (SUBSET Y X)) (IN (CHOICE (DIFF Y X)) Y)
+  (NOT (IN (CHOICE (DIFF Y X)) X)) (SUBSET (INTER Y (CHOICE (DIFF Y X))) X)
+  (ALL (A)
+   (IMPLIES
+    (AND (IN A Y) (IS-ORDINAL A) (IS-ORDINAL X) (SUBSET A X) (NOT (= A X)))
+    (IN A X)))
+  (IS-ORDINAL X) (IS-ORDINAL Y) (SUBSET X Y))
+ (IN X Y))
+Instantiating (= A (CHOICE (DIFF Y X))) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-ORDINAL Y) (IN (CHOICE (DIFF Y X)) Y))
+   (AND (IS-ORDINAL (CHOICE (DIFF Y X))) (SUBSET (CHOICE (DIFF Y X)) Y)))
+  (NOT (SUBSET Y X)) (IN (CHOICE (DIFF Y X)) Y)
+  (NOT (IN (CHOICE (DIFF Y X)) X)) (SUBSET (INTER Y (CHOICE (DIFF Y X))) X)
+  (IMPLIES
+   (AND (IN (CHOICE (DIFF Y X)) Y) (IS-ORDINAL (CHOICE (DIFF Y X)))
+    (IS-ORDINAL X) (SUBSET (CHOICE (DIFF Y X)) X)
+    (NOT (= (CHOICE (DIFF Y X)) X)))
+   (IN (CHOICE (DIFF Y X)) X))
+  (ALL (A)
+   (IMPLIES
+    (AND (IN A Y) (IS-ORDINAL A) (IS-ORDINAL X) (SUBSET A X) (NOT (= A X)))
+    (IN A X)))
+  (IS-ORDINAL X) (IS-ORDINAL Y) (SUBSET X Y))
+ (IN X Y))
+Which simplifies
+ when rewriting with SETRULES!INTER-SUBSET-LEFT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+P-SET
+P-INDUCTION
+Beginning proof of P-INDUCTION ...
+(IMPLIES (IS-TRANSITIVE Z) (= (P-SET Z) (NULLSET)))
+Assuming AXIOM.OF.REGULAR.CHOICE with the
+instantiations: (= X (P-SET Z)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (P-SET Z) (NULLSET)))
+   (AND (IN (CHOICE (P-SET Z)) (P-SET Z))
+    (= (INTER (CHOICE (P-SET Z)) (P-SET Z)) (NULLSET))))
+  (IS-TRANSITIVE Z))
+ (= (P-SET Z) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!INTER-NULLSET, INTER.COMMUTATIVE,
+P-SET.DEFINITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IMPLIES
+ (AND (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (ALL (X) (P X (CHOICE (P-SET Z)))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (IS-TRANSITIVE Z)))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (IS-TRANSITIVE Z)))
+Assuming P-STEP with the
+instantiations: (= X X) (= Y (CHOICE (P-SET Z))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (A) (IMPLIES (IN A (CHOICE (P-SET Z))) (P A X)))
+   (P X (CHOICE (P-SET Z))))
+  (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (IS-TRANSITIVE Z)))
+Which simplifies to ...
+(IMPLIES
+ (AND (NOT (ALL (A) (IMPLIES (IN A (CHOICE (P-SET Z))) (P A X))))
+  (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (IS-TRANSITIVE Z)))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (IMPLIES (IN A (CHOICE (P-SET Z))) (P A X)))
+  (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (IS-TRANSITIVE Z)))
+Assuming P-STEP with the instantiations: (= X A) (= Y X) generates ...
+(IMPLIES
+ (AND (IMPLIES (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))) (P A X))
+  (NOT (IMPLIES (IN A (CHOICE (P-SET Z))) (P A X)))
+  (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (IS-TRANSITIVE Z)))
+Invoking (IS-TRANSITIVE Z) gives ...
+(IMPLIES
+ (AND (IMPLIES (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))) (P A X))
+  (NOT (IMPLIES (IN A (CHOICE (P-SET Z))) (P A X)))
+  (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT (ALL (X$1) (IMPLIES (IN X$1 Z) (SUBSET X$1 Z)))))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (IMPLIES (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))) (P A X))
+  (NOT (IMPLIES (IN A (CHOICE (P-SET Z))) (P A X)))
+  (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT
+  (ALL (X$1)
+   (IMPLIES (IN X$1 Z) (ALL (E$0) (IMPLIES (IN E$0 X$1) (IN E$0 Z)))))))
+Which simplifies to ...
+(IMPLIES
+ (AND (NOT (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))))
+  (IN A (CHOICE (P-SET Z))) (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET)))
+  (IN (CHOICE (P-SET Z)) Z) (NOT (P X (CHOICE (P-SET Z))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT
+  (ALL (X$1)
+   (IMPLIES (IN X$1 Z) (ALL (E$0) (IMPLIES (IN E$0 X$1) (IN E$0 Z)))))))
+Instantiating (= E A) gives ...
+(IMPLIES
+ (AND (NOT (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))))
+  (IN A (CHOICE (P-SET Z))) (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET)))
+  (IN (CHOICE (P-SET Z)) Z) (NOT (P X (CHOICE (P-SET Z))))
+  (IMPLIES (AND (IN A Z) (NOT (ALL (X$0) (P X$0 A))))
+   (NOT (IN A (CHOICE (P-SET Z)))))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$1) (P X$1 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT
+  (ALL (X$2)
+   (IMPLIES (IN X$2 Z) (ALL (E$0) (IMPLIES (IN E$0 X$2) (IN E$0 Z)))))))
+Which simplifies to ...
+(IMPLIES
+ (AND (NOT (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))))
+  (IN A (CHOICE (P-SET Z))) (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET)))
+  (IN (CHOICE (P-SET Z)) Z) (NOT (P X (CHOICE (P-SET Z)))))
+ (IF (IN A Z)
+  (IMPLIES
+   (AND (ALL (X$0) (P X$0 A))
+    (ALL (E)
+     (IMPLIES (AND (IN E Z) (NOT (ALL (X$1) (P X$1 E))))
+      (NOT (IN E (CHOICE (P-SET Z)))))))
+   (NOT
+    (ALL (X$2)
+     (IMPLIES (IN X$2 Z) (ALL (E$0) (IMPLIES (IN E$0 X$2) (IN E$0 Z)))))))
+  (IMPLIES
+   (ALL (E$1)
+    (IMPLIES (AND (IN E$1 Z) (NOT (ALL (X$3) (P X$3 E$1))))
+     (NOT (IN E$1 (CHOICE (P-SET Z))))))
+   (NOT
+    (ALL (X$4)
+     (IMPLIES (IN X$4 Z) (ALL (E$2) (IMPLIES (IN E$2 X$4) (IN E$2 Z)))))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (NOT (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))))
+  (IN A (CHOICE (P-SET Z))) (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET)))
+  (IN (CHOICE (P-SET Z)) Z) (NOT (P X (CHOICE (P-SET Z)))) (IN A Z)
+  (ALL (X$0) (P X$0 A))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$1) (P X$1 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT
+  (ALL (X$2)
+   (IMPLIES (IN X$2 Z) (ALL (E$0) (IMPLIES (IN E$0 X$2) (IN E$0 Z)))))))
+Instantiating (= X$2 A$0) gives ...
+(IMPLIES
+ (AND (NOT (IMPLIES (IN A$0 X) (P A$0 A))) (IN A (CHOICE (P-SET Z)))
+  (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET))) (IN (CHOICE (P-SET Z)) Z)
+  (NOT (P X (CHOICE (P-SET Z)))) (IN A Z) (ALL (X$0) (P X$0 A))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$1) (P X$1 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT
+  (AND (IMPLIES (IN A$0 Z) (ALL (E$0) (IMPLIES (IN E$0 A$0) (IN E$0 Z))))
+   (ALL (X$2)
+    (IMPLIES (IN X$2 Z) (ALL (E$1) (IMPLIES (IN E$1 X$2) (IN E$1 Z))))))))
+Which simplifies
+ with the instantiation (= X$0 A$0) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))))
+  (IN A (CHOICE (P-SET Z))) (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET)))
+  (IN (CHOICE (P-SET Z)) Z) (NOT (P X (CHOICE (P-SET Z)))) (NOT (IN A Z))
+  (ALL (E$1)
+   (IMPLIES (AND (IN E$1 Z) (NOT (ALL (X$3) (P X$3 E$1))))
+    (NOT (IN E$1 (CHOICE (P-SET Z)))))))
+ (NOT
+  (ALL (X$4)
+   (IMPLIES (IN X$4 Z) (ALL (E$2) (IMPLIES (IN E$2 X$4) (IN E$2 Z)))))))
+Instantiating (= X$4 (CHOICE (P-SET Z))) gives ...
+(IMPLIES
+ (AND (NOT (ALL (A$0) (IMPLIES (IN A$0 X) (P A$0 A))))
+  (IN A (CHOICE (P-SET Z))) (NOT (P A X)) (NOT (= (P-SET Z) (NULLSET)))
+  (IN (CHOICE (P-SET Z)) Z) (NOT (P X (CHOICE (P-SET Z)))) (NOT (IN A Z))
+  (ALL (E)
+   (IMPLIES (AND (IN E Z) (NOT (ALL (X$0) (P X$0 E))))
+    (NOT (IN E (CHOICE (P-SET Z)))))))
+ (NOT
+  (AND
+   (IMPLIES (IN (CHOICE (P-SET Z)) Z)
+    (ALL (E$0) (IMPLIES (IN E$0 (CHOICE (P-SET Z))) (IN E$0 Z))))
+   (ALL (X$1)
+    (IMPLIES (IN X$1 Z) (ALL (E$1) (IMPLIES (IN E$1 X$1) (IN E$1 Z))))))))
+Which simplifies
+ with the instantiation (= E$0 A) to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IN-NULLSET-LEMMA
+Beginning proof of IN-NULLSET-LEMMA ...
+(IMPLIES (= S (NULLSET)) (NOT (IN E S)))
+Substituting (= S (NULLSET)) produces ...
+(IMPLIES (= S (NULLSET)) (NOT (IN E (NULLSET))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION to ...
+(TRUE)
+TOTAL-ORDER-WITH-P
+Beginning proof of TOTAL-ORDER-WITH-P ...
+(P X Y)
+Assuming IN-NULLSET-LEMMA with the
+instantiations: (= E Y) (= S (P-SET (SC Y))) generates ...
+(IMPLIES (IMPLIES (= (P-SET (SC Y)) (NULLSET)) (NOT (IN Y (P-SET (SC Y)))))
+ (P X Y))
+Assuming P-INDUCTION with the instantiations: (= Z (SC Y)) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-TRANSITIVE (SC Y)) (= (P-SET (SC Y)) (NULLSET)))
+  (IMPLIES (= (P-SET (SC Y)) (NULLSET)) (NOT (IN Y (P-SET (SC Y))))))
+ (P X Y))
+Splitting on (IN Y (P-SET (SC Y))) generates ...
+(IF (IN Y (P-SET (SC Y)))
+ (IMPLIES
+  (AND (IMPLIES (IS-TRANSITIVE (SC Y)) (= (P-SET (SC Y)) (NULLSET)))
+   (IMPLIES (= (P-SET (SC Y)) (NULLSET)) (NOT (IN Y (P-SET (SC Y))))))
+  (P X Y))
+ (IMPLIES
+  (AND (IMPLIES (IS-TRANSITIVE (SC Y)) (= (P-SET (SC Y)) (NULLSET)))
+   (IMPLIES (= (P-SET (SC Y)) (NULLSET)) (NOT (IN Y (P-SET (SC Y))))))
+  (P X Y)))
+Which simplifies to ...
+(IF (IN Y (P-SET (SC Y)))
+ (OR (IS-TRANSITIVE (SC Y)) (= (P-SET (SC Y)) (NULLSET)) (P X Y))
+ (IF (IS-TRANSITIVE (SC Y)) (IMPLIES (= (P-SET (SC Y)) (NULLSET)) (P X Y))
+  (P X Y)))
+Which simplifies
+ when rewriting with IS-TRANSITIVE-SC, SELF-IN-SC, P-SET.DEFINITION to ...
+(OR (ALL (X$0) (P X$0 Y)) (IS-TRANSITIVE Y) (= (P-SET (SC Y)) (NULLSET))
+ (P X Y))
+Invoking (P X Y) gives ...
+(IMPLIES
+ (AND (NOT (ALL (X$0) (P X$0 Y))) (NOT (IS-TRANSITIVE Y))
+  (NOT (= (P-SET (SC Y)) (NULLSET))) (IS-ORDINAL X) (IS-ORDINAL Y)
+  (SUBSET X Y) (NOT (= X Y)))
+ (IN X Y))
+Invoking (IS-ORDINAL Y) gives ...
+(IMPLIES
+ (AND (NOT (ALL (X$0) (P X$0 Y))) (NOT (IS-TRANSITIVE Y))
+  (NOT (= (P-SET (SC Y)) (NULLSET))) (IS-ORDINAL X) (IS-TRANSITIVE Y)
+  (EVERY-MEMBER-IS-TRANSITIVE Y) (SUBSET X Y) (NOT (= X Y)))
+ (IN X Y))
+Which simplifies to ...
+(TRUE)
+CAP-TRANSITIVE-SUBSET
+Beginning proof of CAP-TRANSITIVE-SUBSET ...
+(IMPLIES (AND (NOT (= S (NULLSET))) (IS-TRANSITIVE S)) (SUBSET (CAP!CAP S) S))
+Assuming SETRULES!SET-CASES with the instantiations: (= X S) generates ...
+(IMPLIES
+ (AND (OR (= S (NULLSET)) (SOME (E) (IN E S))) (NOT (= S (NULLSET)))
+  (IS-TRANSITIVE S))
+ (SUBSET (CAP!CAP S) S))
+Which simplifies
+ with invocation of SUBSET, IS-TRANSITIVE
+ when rewriting with CAP!IN-CAP to ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (SOME (E) (IN E S))
+  (ALL (X) (IMPLIES (IN X S) (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 S))))))
+ (ALL (E$1) (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN E$1 Z))) (IN E$1 S))))
+Instantiating (= Z E) gives ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (IN E S)
+  (ALL (X) (IMPLIES (IN X S) (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 S))))))
+ (ALL (E$1)
+  (IMPLIES
+   (AND (IMPLIES (IN E S) (IN E$1 E)) (ALL (Z) (IMPLIES (IN Z S) (IN E$1 Z))))
+   (IN E$1 S))))
+Which simplifies to ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (IN E S)
+  (ALL (X) (IMPLIES (IN X S) (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 S))))))
+ (ALL (E$1)
+  (IMPLIES (AND (IN E$1 E) (ALL (Z) (IMPLIES (IN Z S) (IN E$1 Z))))
+   (IN E$1 S))))
+Instantiating (= X E) gives ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (IN E S)
+  (IMPLIES (IN E S) (ALL (E$0) (IMPLIES (IN E$0 E) (IN E$0 S))))
+  (ALL (X) (IMPLIES (IN X S) (ALL (E$1) (IMPLIES (IN E$1 X) (IN E$1 S))))))
+ (ALL (E$2)
+  (IMPLIES (AND (IN E$2 E) (ALL (Z) (IMPLIES (IN Z S) (IN E$2 Z))))
+   (IN E$2 S))))
+Which simplifies
+ with the instantiation (= E$0 E$2) to ...
+(TRUE)
+CAP-NOT-SELF
+Beginning proof of CAP-NOT-SELF ...
+(IMPLIES (NOT (= S (NULLSET))) (NOT (= (CAP!CAP S) S)))
+Applying SETRULES!EXTENSIONALITY to
+ (= (CAP!CAP S) S) gives ...
+(IMPLIES (NOT (= S (NULLSET)))
+ (NOT (ALL (E) (IF (IN E (CAP!CAP S)) (IN E S) (NOT (IN E S))))))
+Which simplifies
+ when rewriting with CAP!IN-CAP to ...
+(OR (= S (NULLSET))
+ (NOT
+  (ALL (E)
+   (IF (ALL (Z) (IMPLIES (IN Z S) (IN E Z))) (IN E S) (NOT (IN E S))))))
+Instantiating (= Z E) gives ...
+(OR (= S (NULLSET))
+ (NOT
+  (ALL (E)
+   (IF (AND (IMPLIES (IN E S) (IN E E)) (ALL (Z) (IMPLIES (IN Z S) (IN E Z))))
+    (IN E S) (NOT (IN E S))))))
+Which simplifies
+ when rewriting with SETRULES!IN-SELF
+ with the instantiation (= E Z) to ...
+(TRUE)
+IS-TRANSITIVE-CAP
+Beginning proof of IS-TRANSITIVE-CAP ...
+(IMPLIES (EVERY-MEMBER-IS-TRANSITIVE X) (IS-TRANSITIVE (CAP!CAP X)))
+Which simplifies
+ with invocation of SUBSET, IS-TRANSITIVE, EVERY-MEMBER-IS-TRANSITIVE
+ when rewriting with CAP!IN-CAP to ...
+(IMPLIES
+ (AND
+  (ALL (X$0)
+   (IMPLIES (IN X$0 X)
+    (ALL (X$1)
+     (IMPLIES (IN X$1 X$0) (ALL (E) (IMPLIES (IN E X$1) (IN E X$0)))))))
+  (NOT (= X (NULLSET))))
+ (ALL (X$2)
+  (IMPLIES (ALL (Z) (IMPLIES (IN Z X) (IN X$2 Z)))
+   (ALL (E$0)
+    (IMPLIES (IN E$0 X$2) (ALL (Z$0) (IMPLIES (IN Z$0 X) (IN E$0 Z$0))))))))
+Instantiating (= E E$0) (= X$0 Z$0) (= X$1 X$2) gives ...
+(IMPLIES
+ (AND (IMPLIES (AND (IN Z X) (IN X$0 Z) (IN E X$0)) (IN E Z))
+  (ALL (X$1 X$2 E$0)
+   (IMPLIES (AND (IN X$1 X) (IN X$2 X$1) (IN E$0 X$2)) (IN E$0 X$1)))
+  (NOT (= X (NULLSET))) (ALL (Z$0) (IMPLIES (IN Z$0 X) (IN X$0 Z$0)))
+  (IN E X$0) (IN Z X))
+ (IN E Z))
+Which simplifies
+ with the instantiation (= Z$0 Z) to ...
+(TRUE)
+IS-ORDINAL-CAP
+Beginning proof of IS-ORDINAL-CAP ...
+(IMPLIES (ALL (X) (IMPLIES (IN X S) (IS-ORDINAL X))) (IS-ORDINAL (CAP!CAP S)))
+Invoking IS-ORDINAL gives ...
+(IMPLIES
+ (ALL (X)
+  (IMPLIES (IN X S) (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE X))))
+ (AND (IS-TRANSITIVE (CAP!CAP S)) (EVERY-MEMBER-IS-TRANSITIVE (CAP!CAP S))))
+Assuming IS-TRANSITIVE-CAP with the instantiations: (= X S) generates ...
+(IMPLIES
+ (AND (IMPLIES (EVERY-MEMBER-IS-TRANSITIVE S) (IS-TRANSITIVE (CAP!CAP S)))
+  (ALL (X)
+   (IMPLIES (IN X S) (AND (IS-TRANSITIVE X) (EVERY-MEMBER-IS-TRANSITIVE X)))))
+ (AND (IS-TRANSITIVE (CAP!CAP S)) (EVERY-MEMBER-IS-TRANSITIVE (CAP!CAP S))))
+Invoking EVERY-MEMBER-IS-TRANSITIVE gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+   (IS-TRANSITIVE (CAP!CAP S)))
+  (ALL (X$0)
+   (IMPLIES (IN X$0 S)
+    (AND (IS-TRANSITIVE X$0)
+     (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1)))))))
+ (AND (IS-TRANSITIVE (CAP!CAP S))
+  (ALL (X$2) (IMPLIES (IN X$2 (CAP!CAP S)) (IS-TRANSITIVE X$2)))))
+Which simplifies
+ when rewriting with CAP!IN-CAP
+ with the instantiation (= X X$0) to ...
+(IF (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+ (IMPLIES
+  (AND (IS-TRANSITIVE (CAP!CAP S))
+   (ALL (X$0)
+    (IMPLIES (IN X$0 S)
+     (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1)))))
+   (NOT (= S (NULLSET))))
+  (ALL (X$2)
+   (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN X$2 Z))) (IS-TRANSITIVE X$2))))
+ (IMPLIES
+  (ALL (X$3)
+   (IMPLIES (IN X$3 S)
+    (AND (IS-TRANSITIVE X$3)
+     (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4))))))
+  (AND (IS-TRANSITIVE (CAP!CAP S))
+   (OR (= S (NULLSET))
+    (ALL (X$5)
+     (IMPLIES (ALL (Z$0) (IMPLIES (IN Z$0 S) (IN X$5 Z$0)))
+      (IS-TRANSITIVE X$5)))))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X S) generates ...
+(IMPLIES (OR (= S (NULLSET)) (SOME (E) (IN E S)))
+ (IF (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+  (IMPLIES
+   (AND (IS-TRANSITIVE (CAP!CAP S))
+    (ALL (X$0)
+     (IMPLIES (IN X$0 S)
+      (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1)))))
+    (NOT (= S (NULLSET))))
+   (ALL (X$2)
+    (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN X$2 Z))) (IS-TRANSITIVE X$2))))
+  (IMPLIES
+   (ALL (X$3)
+    (IMPLIES (IN X$3 S)
+     (AND (IS-TRANSITIVE X$3)
+      (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4))))))
+   (AND (IS-TRANSITIVE (CAP!CAP S))
+    (OR (= S (NULLSET))
+     (ALL (X$5)
+      (IMPLIES (ALL (Z$0) (IMPLIES (IN Z$0 S) (IN X$5 Z$0)))
+       (IS-TRANSITIVE X$5))))))))
+Rearranging gives ...
+(IMPLIES (OR (= S (NULLSET)) (SOME (E) (IN E S)))
+ (IF (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+  (IMPLIES
+   (AND (IS-TRANSITIVE (CAP!CAP S)) (NOT (= S (NULLSET)))
+    (ALL (X$0)
+     (IMPLIES (IN X$0 S)
+      (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1))))))
+   (ALL (X$2)
+    (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN X$2 Z))) (IS-TRANSITIVE X$2))))
+  (IMPLIES
+   (ALL (X$3)
+    (IMPLIES (IN X$3 S)
+     (AND (IS-TRANSITIVE X$3)
+      (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4))))))
+   (AND (IS-TRANSITIVE (CAP!CAP S))
+    (OR (= S (NULLSET))
+     (ALL (X$5)
+      (IMPLIES (ALL (Z$0) (IMPLIES (IN Z$0 S) (IN X$5 Z$0)))
+       (IS-TRANSITIVE X$5))))))))
+Which simplifies
+ when rewriting with IS-TRANSITIVE-NULLSET, CAP!CAP-NULLSET,
+NULLSET.DEFINITION to ...
+(IMPLIES (AND (NOT (= S (NULLSET))) (SOME (E) (IN E S)))
+ (IF (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+  (IMPLIES
+   (AND (IS-TRANSITIVE (CAP!CAP S))
+    (ALL (X$0)
+     (IMPLIES (IN X$0 S)
+      (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1))))))
+   (ALL (X$2)
+    (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN X$2 Z))) (IS-TRANSITIVE X$2))))
+  (IMPLIES
+   (ALL (X$3)
+    (IMPLIES (IN X$3 S)
+     (AND (IS-TRANSITIVE X$3)
+      (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4))))))
+   (AND (IS-TRANSITIVE (CAP!CAP S))
+    (ALL (X$5)
+     (IMPLIES (ALL (Z$0) (IMPLIES (IN Z$0 S) (IN X$5 Z$0)))
+      (IS-TRANSITIVE X$5)))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (SOME (E) (IN E S))
+  (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X))) (IS-TRANSITIVE (CAP!CAP S))
+  (ALL (X$0)
+   (IMPLIES (IN X$0 S)
+    (ALL (X$1) (IMPLIES (IN X$1 X$0) (IS-TRANSITIVE X$1))))))
+ (ALL (X$2)
+  (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN X$2 Z))) (IS-TRANSITIVE X$2))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (IN E S)
+  (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRANSITIVE X$0)))
+  (IS-TRANSITIVE (CAP!CAP S))
+  (ALL (X$1)
+   (IMPLIES (IN X$1 S)
+    (ALL (X$2) (IMPLIES (IN X$2 X$1) (IS-TRANSITIVE X$2)))))
+  (ALL (Z) (IMPLIES (IN Z S) (IN X Z))))
+ (IS-TRANSITIVE X))
+Instantiating (= X$1 E) (= X$2 X) gives ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (IN E S)
+  (ALL (X$0) (IMPLIES (IN X$0 S) (IS-TRANSITIVE X$0)))
+  (IS-TRANSITIVE (CAP!CAP S))
+  (IMPLIES (AND (IN E S) (IN X E)) (IS-TRANSITIVE X))
+  (ALL (X$1 X$2) (IMPLIES (AND (IN X$1 S) (IN X$2 X$1)) (IS-TRANSITIVE X$2)))
+  (ALL (Z) (IMPLIES (IN Z S) (IN X Z))))
+ (IS-TRANSITIVE X))
+Which simplifies
+ with the instantiation (= Z E) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (SOME (E) (IN E S))
+  (NOT (ALL (X) (IMPLIES (IN X S) (IS-TRANSITIVE X))))
+  (ALL (X$3)
+   (IMPLIES (IN X$3 S)
+    (AND (IS-TRANSITIVE X$3)
+     (ALL (X$4) (IMPLIES (IN X$4 X$3) (IS-TRANSITIVE X$4)))))))
+ (AND (IS-TRANSITIVE (CAP!CAP S))
+  (ALL (X$5)
+   (IMPLIES (ALL (Z$0) (IMPLIES (IN Z$0 S) (IN X$5 Z$0)))
+    (IS-TRANSITIVE X$5)))))
+Instantiating (= X$3 X) gives ...
+(IMPLIES
+ (AND (NOT (= S (NULLSET))) (SOME (E) (IN E S))
+  (SOME (X)
+   (AND (NOT (IMPLIES (IN X S) (IS-TRANSITIVE X)))
+    (IMPLIES (IN X S)
+     (AND (IS-TRANSITIVE X)
+      (ALL (X$0) (IMPLIES (IN X$0 X) (IS-TRANSITIVE X$0)))))
+    (ALL (X$1)
+     (IMPLIES (IN X$1 S)
+      (AND (IS-TRANSITIVE X$1)
+       (ALL (X$2) (IMPLIES (IN X$2 X$1) (IS-TRANSITIVE X$2)))))))))
+ (AND (IS-TRANSITIVE (CAP!CAP S))
+  (ALL (X$3)
+   (IMPLIES (ALL (Z) (IMPLIES (IN Z S) (IN X$3 Z))) (IS-TRANSITIVE X$3)))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+ORDINAL-SET-HAS-MINIMUM-LEMMA
+Beginning proof of ORDINAL-SET-HAS-MINIMUM-LEMMA ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Assuming SETRULES!IN-SELF with the instantiations: (= S (CAP!CAP X)) generates
+...
+(IMPLIES
+ (AND (= (IN (CAP!CAP X) (CAP!CAP X)) (FALSE)) (NOT (= X (NULLSET)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Which simplifies
+ when rewriting with CAP!IN-CAP to ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET)))
+  (NOT (ALL (Z) (IMPLIES (IN Z X) (IN (CAP!CAP X) Z))))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (NOT (IMPLIES (IN Z X) (IN (CAP!CAP X) Z)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Assuming TOTAL-ORDER-WITH-P with the
+instantiations: (= X (CAP!CAP X)) (= Y Z) generates ...
+(IMPLIES
+ (AND (P (CAP!CAP X) Z) (NOT (= X (NULLSET)))
+  (NOT (IMPLIES (IN Z X) (IN (CAP!CAP X) Z)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Invoking P gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-ORDINAL (CAP!CAP X)) (IS-ORDINAL Z) (SUBSET (CAP!CAP X) Z)
+    (NOT (= (CAP!CAP X) Z)))
+   (IN (CAP!CAP X) Z))
+  (NOT (= X (NULLSET))) (NOT (IMPLIES (IN Z X) (IN (CAP!CAP X) Z)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Assuming IS-ORDINAL-CAP with the instantiations: (= S X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (IMPLIES
+   (AND (IS-ORDINAL (CAP!CAP X)) (IS-ORDINAL Z) (SUBSET (CAP!CAP X) Z)
+    (NOT (= (CAP!CAP X) Z)))
+   (IN (CAP!CAP X) Z))
+  (NOT (= X (NULLSET))) (NOT (IMPLIES (IN Z X) (IN (CAP!CAP X) Z)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) X))
+Which simplifies
+ with the instantiation (= X$0 E) to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+  (IS-ORDINAL (CAP!CAP X)))
+ (IF (IS-ORDINAL Z)
+  (IMPLIES
+   (AND (NOT (SUBSET (CAP!CAP X) Z)) (NOT (= X (NULLSET))) (IN Z X)
+    (NOT (IN (CAP!CAP X) Z)))
+   (IN (CAP!CAP X) X))
+  (IMPLIES (AND (NOT (= X (NULLSET))) (IN Z X) (NOT (IN (CAP!CAP X) Z)))
+   (IN (CAP!CAP X) X))))
+Splitting on (IN Z X) generates ...
+(IF (IN Z X)
+ (IMPLIES
+  (AND (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (IF (IS-ORDINAL Z)
+   (IMPLIES
+    (AND (NOT (SUBSET (CAP!CAP X) Z)) (NOT (= X (NULLSET))) (IN Z X)
+     (NOT (IN (CAP!CAP X) Z)))
+    (IN (CAP!CAP X) X))
+   (IMPLIES (AND (NOT (= X (NULLSET))) (IN Z X) (NOT (IN (CAP!CAP X) Z)))
+    (IN (CAP!CAP X) X))))
+ (IMPLIES
+  (AND (ALL (X$1) (IMPLIES (IN X$1 X) (IS-ORDINAL X$1)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (IF (IS-ORDINAL Z)
+   (IMPLIES
+    (AND (NOT (SUBSET (CAP!CAP X) Z)) (NOT (= X (NULLSET))) (IN Z X)
+     (NOT (IN (CAP!CAP X) Z)))
+    (IN (CAP!CAP X) X))
+   (IMPLIES (AND (NOT (= X (NULLSET))) (IN Z X) (NOT (IN (CAP!CAP X) Z)))
+    (IN (CAP!CAP X) X)))))
+Which simplifies
+ when rewriting with CAP!CAP-SUBSET-MEMBER
+ with the instantiation (= X$0 Z) to ...
+(TRUE)
+ORDINAL-SET-HAS-MINIMUM-LEMMA-2
+Beginning proof of ORDINAL-SET-HAS-MINIMUM-LEMMA-2 ...
+(IMPLIES
+ (AND (IN B X) (NOT (= B (CAP!CAP X)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) B))
+Assuming TOTAL-ORDER-WITH-P with the
+instantiations: (= X (CAP!CAP X)) (= Y B) generates ...
+(IMPLIES
+ (AND (P (CAP!CAP X) B) (IN B X) (NOT (= B (CAP!CAP X)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) B))
+Assuming IS-ORDINAL-CAP with the instantiations: (= S X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (P (CAP!CAP X) B) (IN B X) (NOT (= B (CAP!CAP X)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) B))
+Invoking P gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (IMPLIES
+   (AND (IS-ORDINAL (CAP!CAP X)) (IS-ORDINAL B) (SUBSET (CAP!CAP X) B)
+    (NOT (= (CAP!CAP X) B)))
+   (IN (CAP!CAP X) B))
+  (IN B X) (NOT (= B (CAP!CAP X)))
+  (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (IN (CAP!CAP X) B))
+Which simplifies
+ with the instantiation (= X$0 E) to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+  (IS-ORDINAL (CAP!CAP X)))
+ (IF (IS-ORDINAL B)
+  (IMPLIES (AND (NOT (SUBSET (CAP!CAP X) B)) (IN B X) (NOT (= B (CAP!CAP X))))
+   (IN (CAP!CAP X) B))
+  (IMPLIES (IN B X) (IN (CAP!CAP X) B))))
+Splitting on (IN B X) generates ...
+(IF (IN B X)
+ (IMPLIES
+  (AND (ALL (X$0) (IMPLIES (IN X$0 X) (IS-ORDINAL X$0)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (IF (IS-ORDINAL B)
+   (IMPLIES
+    (AND (NOT (SUBSET (CAP!CAP X) B)) (IN B X) (NOT (= B (CAP!CAP X))))
+    (IN (CAP!CAP X) B))
+   (IMPLIES (IN B X) (IN (CAP!CAP X) B))))
+ (IMPLIES
+  (AND (ALL (X$1) (IMPLIES (IN X$1 X) (IS-ORDINAL X$1)))
+   (IS-ORDINAL (CAP!CAP X)))
+  (IF (IS-ORDINAL B)
+   (IMPLIES
+    (AND (NOT (SUBSET (CAP!CAP X) B)) (IN B X) (NOT (= B (CAP!CAP X))))
+    (IN (CAP!CAP X) B))
+   (IMPLIES (IN B X) (IN (CAP!CAP X) B)))))
+Which simplifies
+ when rewriting with CAP!CAP-SUBSET-MEMBER
+ with the instantiation (= X$0 B) to ...
+(TRUE)
+ORDINAL-<
+ORDINAL-<=
+SMALLEST
+ORDINAL-SET-HAS-MINIMUM
+Beginning proof of ORDINAL-SET-HAS-MINIMUM ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (AND (IN (SMALLEST X) X) (IMPLIES (IN A X) (ORDINAL-<= (SMALLEST X) A))))
+Invoking SMALLEST gives ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (AND (IN (CAP!CAP X) X) (IMPLIES (IN A X) (ORDINAL-<= (CAP!CAP X) A))))
+Invoking ORDINAL-<= gives ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+ (AND (IN (CAP!CAP X) X)
+  (IMPLIES (AND (IN A X) (NOT (IN (CAP!CAP X) A))) (= (CAP!CAP X) A))))
+Assuming ORDINAL-SET-HAS-MINIMUM-LEMMA with the
+instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (NOT (= X (NULLSET))) (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+   (IN (CAP!CAP X) X))
+  (NOT (= X (NULLSET))) (ALL (E$0) (IMPLIES (IN E$0 X) (IS-ORDINAL E$0))))
+ (AND (IN (CAP!CAP X) X)
+  (IMPLIES (AND (IN A X) (NOT (IN (CAP!CAP X) A))) (= (CAP!CAP X) A))))
+Assuming ORDINAL-SET-HAS-MINIMUM-LEMMA-2 with the
+instantiations: (= X X) (= B A) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN A X) (NOT (= A (CAP!CAP X)))
+    (ALL (E) (IMPLIES (IN E X) (IS-ORDINAL E))))
+   (IN (CAP!CAP X) A))
+  (IMPLIES
+   (AND (NOT (= X (NULLSET)))
+    (ALL (E$0) (IMPLIES (IN E$0 X) (IS-ORDINAL E$0))))
+   (IN (CAP!CAP X) X))
+  (NOT (= X (NULLSET))) (ALL (E$1) (IMPLIES (IN E$1 X) (IS-ORDINAL E$1))))
+ (AND (IN (CAP!CAP X) X)
+  (IMPLIES (AND (IN A X) (NOT (IN (CAP!CAP X) A))) (= (CAP!CAP X) A))))
+Which simplifies
+ with the instantiations (= E E$0) (= E E$1) (= E$0 E$1) to ...
+(TRUE)
+TOTAL-ORDER
+Beginning proof of TOTAL-ORDER ...
+(IMPLIES (AND (IS-ORDINAL X) (IS-ORDINAL Y))
+ (= (ORDINAL-< X Y) (NOT (ORDINAL-<= Y X))))
+Assuming ORDINAL-SET-HAS-MINIMUM with the
+instantiations: (= X (SETADD X (SETADD Y (NULLSET)))) generates ...
+(IMPLIES
+ (AND
+  (ALL (A)
+   (IMPLIES
+    (AND (NOT (= (SETADD X (SETADD Y (NULLSET))) (NULLSET)))
+     (ALL (E)
+      (IMPLIES (IN E (SETADD X (SETADD Y (NULLSET)))) (IS-ORDINAL E))))
+    (AND
+     (IN (SMALLEST (SETADD X (SETADD Y (NULLSET))))
+      (SETADD X (SETADD Y (NULLSET))))
+     (IMPLIES (IN A (SETADD X (SETADD Y (NULLSET))))
+      (ORDINAL-<= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) A)))))
+  (IS-ORDINAL X) (IS-ORDINAL Y))
+ (= (ORDINAL-< X Y) (NOT (ORDINAL-<= Y X))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-ORDINAL X) (IS-ORDINAL Y)
+  (ALL (A)
+   (IMPLIES
+    (AND (NOT (= (SETADD X (SETADD Y (NULLSET))) (NULLSET)))
+     (ALL (E)
+      (IMPLIES (IN E (SETADD X (SETADD Y (NULLSET)))) (IS-ORDINAL E))))
+    (AND
+     (IN (SMALLEST (SETADD X (SETADD Y (NULLSET))))
+      (SETADD X (SETADD Y (NULLSET))))
+     (IMPLIES (IN A (SETADD X (SETADD Y (NULLSET))))
+      (ORDINAL-<= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) A))))))
+ (= (ORDINAL-< X Y) (NOT (ORDINAL-<= Y X))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION, SETRULES!SETADD-LEFT-EQUALITY-TEST,
+NULLSET.DEFINITION
+ with the instantiation (= A X) to ...
+(IMPLIES (AND (IS-ORDINAL X) (IS-ORDINAL Y))
+ (IF (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) X)
+  (IMPLIES (ALL (A) (IMPLIES (OR (= A X) (= A Y)) (ORDINAL-<= X A)))
+   (IF (ORDINAL-<= Y X) (= (ORDINAL-< X Y) (FALSE))
+    (= (ORDINAL-< X Y) (TRUE))))
+  (IMPLIES
+   (AND (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) Y)
+    (ALL (A$0) (IMPLIES (OR (= A$0 X) (= A$0 Y)) (ORDINAL-<= Y A$0))))
+   (= (ORDINAL-< X Y) (FALSE)))))
+Invoking ORDINAL-< gives ...
+(IMPLIES (AND (IS-ORDINAL X) (IS-ORDINAL Y))
+ (IF (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) X)
+  (IMPLIES (ALL (A) (IMPLIES (OR (= A X) (= A Y)) (ORDINAL-<= X A)))
+   (IF (ORDINAL-<= Y X) (= (IN X Y) (FALSE)) (IN X Y)))
+  (IMPLIES
+   (AND (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) Y)
+    (ALL (A$0) (IMPLIES (OR (= A$0 X) (= A$0 Y)) (ORDINAL-<= Y A$0))))
+   (= (IN X Y) (FALSE)))))
+Invoking ORDINAL-<= gives ...
+(IMPLIES (AND (IS-ORDINAL X) (IS-ORDINAL Y))
+ (IF (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) X)
+  (IMPLIES
+   (ALL (A) (IMPLIES (AND (OR (= A X) (= A Y)) (NOT (IN X A))) (= X A)))
+   (IF (OR (IN Y X) (= Y X)) (NOT (IN X Y)) (IN X Y)))
+  (IMPLIES
+   (AND (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) Y)
+    (ALL (A$0)
+     (IMPLIES (AND (OR (= A$0 X) (= A$0 Y)) (NOT (IN Y A$0))) (= Y A$0))))
+   (NOT (IN X Y)))))
+Assuming SETRULES!IN-SELF with the instantiations: (= S X) generates ...
+(IMPLIES (AND (= (IN X X) (FALSE)) (IS-ORDINAL X) (IS-ORDINAL Y))
+ (IF (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) X)
+  (IMPLIES
+   (ALL (A) (IMPLIES (AND (OR (= A X) (= A Y)) (NOT (IN X A))) (= X A)))
+   (IF (OR (IN Y X) (= Y X)) (NOT (IN X Y)) (IN X Y)))
+  (IMPLIES
+   (AND (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) Y)
+    (ALL (A$0)
+     (IMPLIES (AND (OR (= A$0 X) (= A$0 Y)) (NOT (IN Y A$0))) (= Y A$0))))
+   (NOT (IN X Y)))))
+Which simplifies to ...
+(IMPLIES (AND (NOT (IN X X)) (IS-ORDINAL X) (IS-ORDINAL Y))
+ (IF (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) X)
+  (IMPLIES (AND (NOT (= Y X)) (IN X Y)) (NOT (IN Y X)))
+  (IMPLIES (AND (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) Y) (IN Y X))
+   (NOT (IN X Y)))))
+Assuming SETRULES!NO-2-CYCLE with the
+instantiations: (= S X) (= T Y) generates ...
+(IMPLIES
+ (AND (NOT (AND (IN X Y) (IN Y X))) (NOT (IN X X)) (IS-ORDINAL X)
+  (IS-ORDINAL Y))
+ (IF (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) X)
+  (IMPLIES (AND (NOT (= Y X)) (IN X Y)) (NOT (IN Y X)))
+  (IMPLIES (AND (= (SMALLEST (SETADD X (SETADD Y (NULLSET)))) Y) (IN Y X))
+   (NOT (IN X Y)))))
+Which simplifies to ...
+(TRUE)
+Done.

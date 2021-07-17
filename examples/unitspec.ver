@@ -1,0 +1,48 @@
+;;; Unit sets
+;;;
+
+(function-stub is-unit-set (x))  ;; is X a unit set?
+(function-stub the-element (x))  ;; the element of X, when X is a unit set
+
+;;;
+
+(disabled
+  (rule definition-1 (X)
+    (= (is-unit-set X)
+       (some (y) (all (z) (= (in z X) (= z y)))))))
+
+(disabled
+  (rule defintion-2 (x)
+    (= (is-unit-set x)
+       (and (some (y) (in y x))
+	    (all (y z) (implies (and (in y x) (in z x))
+				(= y z)))))))
+
+(rule is-unit-set-nullset ()
+  (= (is-unit-set (nullset))
+     (false)))
+
+(rule is-unit-set-unit (x)
+  (= (is-unit-set (unit x))
+     (true)))
+
+(rule is-unit-set-setadd (x s)
+  (= (is-unit-set (setadd x s))
+     (all (y) (implies (in y s)
+		       (= y x)))))
+
+(grule the-element-unit (x)
+  (= (the-element (unit x))
+     x))
+
+(rule the-element-unit-2 (x)
+  (= (the-element (setadd x (nullset)))
+     x))
+
+(frule the-element-of-unit-set (x)
+  (implies (is-unit-set x)
+	   (= x (unit (the-element x)))))
+
+(axiom the-element-is-in (x)
+  (implies (is-unit-set x)
+	   (in (the-element x) x)))

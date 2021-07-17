@@ -1,0 +1,591 @@
+
+;;; A version of the Generic Railroad Crossing Problem
+
+
+;;; Declare constant that represents the set of trains.
+
+(function-stub trains ())
+
+
+;;; Recognizer for train
+
+(disabled (function is-train (tr) () (in tr (trains))))
+
+(rule in-trains (tr) (= (in tr (trains)) (is-train tr)))
+(WITH-ENABLED (IS-TRAIN) (REDUCE))
+
+(grule is-train-bool (tr)
+  (= (type-of (is-train tr)) (bool)))
+(WITH-ENABLED (IS-TRAIN) (REDUCE))
+
+
+;;; A ``train'' crosses the railroad crossing exactly once.
+
+(function-stub enter-sensor (tr))
+
+(function-stub enter-crossing (tr))
+
+(function-stub exit-crossing (tr))
+
+(grule enter-sensor-is-nat (tr)
+  (>= (enter-sensor tr) 0))
+
+(grule enter-crossing-is-nat (tr)
+  (>= (enter-crossing tr) 0))
+
+(grule exit-crossing-is-nat (tr)
+  (>= (exit-crossing tr) 0))
+
+;;; We assume that it takes at least 300 time units and at most 1000
+;;; time units for a train from the time it reaches the signaling point
+;;; (enter-sensor) to the time it reaches the crossing.
+
+(frule train-crossing-bounds (tr)
+  (implies (is-train tr)
+           (and (>= (enter-crossing tr) (+ (enter-sensor tr) 300))
+                (>= (+ (enter-sensor tr) 1000) (enter-crossing tr))
+                (>= (exit-crossing tr) (enter-crossing tr)))))
+
+(function crossing-interval (tr) ()
+  (range (enter-crossing tr) (exit-crossing tr)))
+
+(function down-mode (t) ()
+  (some (tr) (and (is-train tr)
+                  (>= t (+ (enter-sensor tr) 1))
+                  (>= (exit-crossing tr) t))))
+
+(function raise (x) ()
+  (if (>= 89 x)
+      (+ x 1)
+      x))
+
+(function lower (x) ()
+  (if (>= x 1)
+      (- x 1)
+      x))
+
+;;; gate-position defines the functionality of the gate crossing.
+
+(function gate-position (t) ((measure t))
+  (if (>= t 1)
+      (if (down-mode t)
+          (lower (gate-position (+ -1 t)))
+          (raise (gate-position (+ -1 t))))
+      90))
+(REDUCE)
+
+(axiom gate-position-bounds (t)
+  (and (>= (gate-position t) 0)
+       (<= (gate-position t) 90)))
+(INDUCT)
+(REDUCE)
+
+(grule gate-position-int (t)
+  (= (type-of (gate-position t)) (int)))
+(USE GATE-POSITION-BOUNDS (T T))
+(SIMPLIFY)
+
+(function gate-down (t) ()
+  (= (gate-position t) 0))
+
+(function gate-up (t) ()
+  (= (gate-position t) 90))
+
+;;; A theorem about gate position at time zero.
+
+(axiom gate-up-at-zero ()
+  (gate-up 0))
+(REDUCE)
+
+;;; An occupancy interval is a maximal time interval in which there is
+;;; at least one train in the crossing.  By maximal we mean that there
+;;; is no train in the crossing just outside of the interval.
+
+(function is-occupancy-interval (t1 t2) ()
+  (and (>= t1 0)
+       (>= t2 t1)
+       (not (some (tr1) (and (is-train tr1)
+                             (in (- t1 1) (crossing-interval tr1)))))
+       (not (some (tr2) (and (is-train tr2)
+                             (in (+ t2 1) (crossing-interval tr2)))))
+       (all (t3) (implies (in t3 (range t1 t2))
+                          (some (tr3) (and (is-train tr3)
+                                           (in t3
+                                               (crossing-interval tr3))))))))
+
+(function lower-n (x n) ()
+  (if (and (>= n 0) (>= (- x n) 0))
+      (- x n)
+      0))
+
+(axiom lower-n-thm (t1 t2)
+  (implies (and (>= t1 0)
+                (>= t2 t1)
+                (all (t3) (implies (and (>= t3 t1)
+                                        (>= t2 t3))
+                                   (down-mode t3))))
+           (= (gate-position t2) (lower-n (gate-position t1) (- t2 t1)))))
+(INDUCT (GATE-POSITION T2))
+(CASES)
+(INVOKE (GATE-POSITION T2))
+(SIMPLIFY)
+(INVOKE LOWER)
+(INVOKE LOWER-N)
+(CASES)
+(SIMPLIFY)
+(INSTANTIATE (T3$0 T3))
+(SIMPLIFY)
+(NEXT)
+(SPLIT (= T1 T2))
+(SIMPLIFY)
+(EQUALITY-SUBSTITUTE T1)
+(INVOKE (GATE-POSITION T2))
+(SIMPLIFY)
+(INVOKE LOWER)
+(SIMPLIFY)
+(USE GATE-POSITION-BOUNDS (T (- T2 1)))
+(SIMPLIFY)
+(NEXT)
+(SIMPLIFY)
+(INSTANTIATE (T3 T1))
+(SIMPLIFY)
+(NEXT)
+(SIMPLIFY)
+(INVOKE DOWN-MODE)
+(SIMPLIFY)
+(NEXT)
+
+(axiom gate-down-thm (t)
+  (implies (and (>= t 90)
+                (all (t3) (implies (and (>= t3 (- t 90))
+                                        (>= t t3))
+                                   (down-mode t3))))
+           (gate-down t)))
+(INVOKE GATE-DOWN)
+(USE LOWER-N-THM (T1 (- T 90)) (T2 T))
+(SIMPLIFY)
+(INVOKE LOWER-N)
+(SIMPLIFY)
+(USE GATE-POSITION-BOUNDS (T (- T 90)))
+(SIMPLIFY)
+
+;;; First version of the safety property.  It is stated in terms
+;;; of occupancy of individual trains.  Note that the safety
+;;; property here concerns the safety of the gate mechanism,
+;;; not necessarily the safety of the trains.
+
+(axiom safety-thm-1 ()
+  (all (t) (implies (some (tr) (and (is-train tr)
+                                    (in t (crossing-interval tr))))
+                    (gate-down t))))
+(PRENEX)
+(USE GATE-DOWN-THM (T T))
+(INVOKE CROSSING-INTERVAL)
+(SPLIT (IS-TRAIN TR))
+(REWRITE)
+(CASES)
+(INVOKE DOWN-MODE)
+(INSTANTIATE (T3 T))
+(SIMPLIFY)
+(PRENEX)
+(SIMPLIFY)
+(INSTANTIATE (TR$1 TR))
+(SIMPLIFY)
+(NEXT)
+(USE TRAIN-CROSSING-BOUNDS (TR TR))
+(WITH-DISABLED (TRAIN-CROSSING-BOUNDS)
+ (SIMPLIFY))
+(NEXT)
+
+
+;;; The second version of the safety property is stated using
+;;; occupancy intervals.  The proof is only slightly more difficult
+;;; than the first version.
+
+(axiom safety-thm-2 ()
+  (all (t) (implies (some (t1 t2) (and (is-occupancy-interval t1 t2)
+                                       (in t (range t1 t2))))
+                    (gate-down t))))
+(PRENEX)
+(INVOKE IS-OCCUPANCY-INTERVAL)
+(REWRITE)
+(INSTANTIATE (T3 T))
+(SIMPLIFY)
+(PRENEX)
+(USE SAFETY-THM-1)
+(INSTANTIATE (T$0 T))
+(SIMPLIFY)
+
+(function raise-n (x n) ()
+  (if (and (>= n 0) (<= (+ x n) 90))
+      (+ x n)
+      90))
+
+(axiom raise-n-thm (t1 t2)
+  (implies (and (>= t1 0)
+                (>= t2 t1)
+                (all (t3) (implies (and (>= t3 (+ t1 1))
+                                        (>= t2 t3))
+                                   (not (down-mode t3)))))
+           (= (gate-position t2) (raise-n (gate-position t1) (- t2 t1)))))
+(INDUCT (GATE-POSITION T2))
+(CASES)
+(SIMPLIFY)
+(INVOKE RAISE-N)
+(SIMPLIFY)
+(USE GATE-POSITION-BOUNDS (T T1))
+(SIMPLIFY)
+(NEXT)
+(INVOKE (GATE-POSITION T2))
+(SIMPLIFY)
+(INVOKE RAISE)
+(INVOKE RAISE-N)
+(SIMPLIFY)
+(INSTANTIATE (T3$0 T3))
+(SIMPLIFY)
+(SPLIT (= T1 T2))
+(SIMPLIFY)
+(EQUALITY-SUBSTITUTE T1)
+(INVOKE (GATE-POSITION T2))
+(SIMPLIFY)
+(INVOKE RAISE)
+(SIMPLIFY)
+(USE GATE-POSITION-BOUNDS (T (- T2 1)))
+(SIMPLIFY)
+(NEXT)
+(REDUCE)
+(NEXT)
+
+(axiom gate-up-thm (t)
+  (implies (and (>= t 90)
+                (all (t3) (implies (and (>= t3 (- t 89))
+                                        (>= t t3))
+                                   (not (down-mode t3)))))
+           (gate-up t)))
+(INVOKE GATE-UP)
+(USE RAISE-N-THM (T1 (- T 90)) (T2 T))
+(SIMPLIFY)
+(INVOKE RAISE-N)
+(SIMPLIFY)
+(USE GATE-POSITION-BOUNDS (T (- T 90)))
+(SIMPLIFY)
+
+(function nat-induction (i) ((measure i))
+  (if (>= i 1) (nat-induction (+ -1 i)) (true)))
+(REDUCE)
+
+(axiom gate-up-thm-2 (t)
+  (implies (all (t3) (implies (and (>= t3 (- t 89))
+                                   (>= t t3))
+                              (not (down-mode t3))))
+           (gate-up t)))
+(USE GATE-UP-THM (T T))
+(SIMPLIFY)
+(INDUCT (NAT-INDUCTION T))
+(INVOKE GATE-UP)
+(INVOKE (GATE-POSITION T))
+(REWRITE)
+(CASES)
+(INVOKE RAISE)
+(SIMPLIFY)
+(NEXT)
+(PRENEX)
+(SIMPLIFY)
+(INSTANTIATE (T3$0 T3))
+(SIMPLIFY)
+(INVOKE (DOWN-MODE T3))
+(PRENEX)
+(SIMPLIFY)
+(NEXT)
+
+;;; The first version of the gate utility property, stated in
+
+;;; terms of individual train occupancies.
+
+(axiom utility-thm-1 ()
+  (all (t) (implies
+            (not (some (tr) (and (is-train tr)
+                                 (in t (range (- (enter-crossing tr) 1000)
+                                              (+ (exit-crossing tr) 89))))))
+            (gate-up t))))
+(USE GATE-UP-THM-2 (T T))
+(REWRITE)
+(PRENEX)
+(SIMPLIFY)
+(INVOKE DOWN-MODE)
+(PRENEX)
+(SIMPLIFY)
+(INSTANTIATE (TR$0 TR))
+(SIMPLIFY)
+
+;;; Without an additional assumption, we can not prove the utility
+;;; property stated in terms of occupancy intervals, as the
+;;; specification does not rule out an indefinite occupation of
+;;; the crossing (by an infinite number of trains).
+
+;;; Thus we add the following ``liveness'' assumption.
+
+(axiom liveness-assumption (tr)
+  (implies (is-train tr)
+           (some (t) (and (>= t (exit-crossing tr))
+                          (not (some (tr2) (in t (crossing-interval tr2))))))))
+
+(zf-function set-of-vacant-points-after (t)
+  (select (t1 (int))
+    (and (>= t1 t)
+         (not (some (tr) (and (is-train tr)
+                              (in t1 (crossing-interval tr))))))))
+
+(zf-function set-of-occupied-points-before (t)
+  (select (t1 (int))
+    (and (>= t1 0)
+         (>= t t1)
+         (some (tr) (and (is-train tr)
+                         (in t1 (crossing-interval tr))))
+         (all (t2) (implies (and (>= t2 t1) (>= t t2))
+                            (some (tr2)
+                              (and (is-train tr2)
+                                   (in t2 (crossing-interval tr2)))))))))
+
+(load nat)
+
+(disabled
+ (function interval-lob (tr) ()
+   (nat!smallest-nat-member
+    (set-of-occupied-points-before
+     (enter-crossing tr)))))
+
+(disabled
+ (function interval-hib (tr) ()
+   (- (nat!smallest-nat-member
+       (set-of-vacant-points-after
+        (exit-crossing tr)))
+      1)))
+
+(axiom interval-lob-lemma (tr)
+  (implies (is-train tr)
+           (in (interval-lob tr)
+               (set-of-occupied-points-before (enter-crossing tr)))))
+(INVOKE INTERVAL-LOB)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N (ENTER-CROSSING TR))
+     (X (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+(REWRITE)
+(INSTANTIATE (TR$0 TR))
+(REDUCE)
+
+(axiom interval-hib-lemma (tr)
+  (implies (is-train tr)
+           (in (+ (interval-hib tr) 1)
+               (set-of-vacant-points-after (exit-crossing tr)))))
+(INVOKE INTERVAL-HIB)
+(USE LIVENESS-ASSUMPTION (TR TR))
+(PRENEX)
+(SIMPLIFY)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N T)
+     (X (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+(REWRITE)
+(INSTANTIATE (TR2 TR$0))
+(SIMPLIFY)
+
+(axiom occupancy-lemma-1 (tr)
+  (implies (is-train tr)
+           (and (>= (interval-lob tr) 0)
+                (>= (enter-crossing tr) (interval-lob tr)))))
+(INVOKE INTERVAL-LOB)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N (ENTER-CROSSING TR))
+     (X (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+(REWRITE)
+(INSTANTIATE (TR$0 TR))
+(SPLIT (IS-TRAIN TR))
+(REDUCE)
+
+(axiom occupancy-lemma-2 (tr)
+  (implies (is-train tr)
+           (>= (interval-hib tr) (exit-crossing tr))))
+(INVOKE INTERVAL-HIB)
+(USE LIVENESS-ASSUMPTION (TR TR))
+(PRENEX)
+(SIMPLIFY)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N T)
+     (X (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+(REWRITE)
+(INSTANTIATE (TR$0 TR))
+(SPLIT (IS-TRAIN TR))
+(REDUCE)
+(USE TRAIN-CROSSING-BOUNDS (TR TR))
+(WITH-DISABLED (TRAIN-CROSSING-BOUNDS) (SIMPLIFY))
+(INSTANTIATE (TR$1 TR))
+(SIMPLIFY)
+(INSTANTIATE (TR2 TR$0))
+(SIMPLIFY)
+
+(axiom occupancy-lemma-3 (tr)
+  (implies (is-train tr)
+           (not (in (- (interval-lob tr) 1)
+                    (set-of-occupied-points-before (enter-crossing tr))))))
+(INVOKE INTERVAL-LOB)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N (ENTER-CROSSING TR))
+     (X (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+(WITH-DISABLED (SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION) (REWRITE))
+(SPLIT (IS-TRAIN TR))
+(SIMPLIFY)
+(WITH-SUBEXPRESSION (IN (ENTER-CROSSING TR)
+                        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+                    (REDUCE))
+(USE 
+ NAT!SMALLEST-IS-SMALLEST-2
+ (N 
+  (- 
+   (NAT!SMALLEST-NAT-MEMBER 
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   1))
+ (X (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+(REWRITE)
+
+(axiom occupancy-lemma-4 (tr)
+  (implies (is-train tr)
+           (in (+ (interval-hib tr) 1)
+               (set-of-vacant-points-after (exit-crossing tr)))))
+(REDUCE)
+(INVOKE INTERVAL-HIB)
+(USE LIVENESS-ASSUMPTION (TR TR))
+(PRENEX)
+(SIMPLIFY)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N T)
+     (X (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+(REDUCE)
+(PRENEX)
+(SIMPLIFY)
+
+(axiom occupancy-lemma-5 (tr)
+  (implies (is-train tr)
+           (all (t3) (implies
+                      (in t3 (range (interval-lob tr)
+                                    (interval-hib tr)))
+                      (some (tr3) (and (is-train tr3)
+                                       (in t3 (crossing-interval
+                                               tr3))))))))
+(PRENEX)
+(SPLIT (>= T3 (ENTER-CROSSING TR)))
+(CASES)
+(SPLIT (>= (EXIT-CROSSING TR) T3))
+(CASES)
+(INSTANTIATE (TR3 TR))
+(REDUCE)
+(NEXT)
+(SPLIT (IS-TRAIN TR))
+(SIMPLIFY)
+(REDUCE)
+(INVOKE INTERVAL-HIB)
+(USE LIVENESS-ASSUMPTION (TR TR))
+(PRENEX)
+(SIMPLIFY)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N T)
+     (X (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+(REDUCE)
+(SPLIT (IN T3 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+(REDUCE)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N T3)
+     (X (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+(REDUCE)
+(NEXT)
+(REDUCE)
+(INVOKE INTERVAL-LOB)
+(USE NAT!SMALLEST-IS-SMALLEST-2
+     (N (ENTER-CROSSING TR))
+     (X (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+(REDUCE)
+(INSTANTIATE (TR$0 TR))
+(SIMPLIFY)
+(INSTANTIATE (T2 T3))
+(SIMPLIFY)
+(NEXT)
+
+(axiom occupancy-lemma (tr)
+  (implies (is-train tr)
+           (and (>= (interval-lob tr) 0)
+                (>= (interval-hib tr) (interval-lob tr))
+                (not (some (tr1) (and (is-train tr1)
+                                      (in (- (interval-lob tr) 1)
+                                          (crossing-interval tr1)))))
+                (not (some (tr2) (and (is-train tr2)
+                                      (in (+ (interval-hib tr) 1)
+                                          (crossing-interval tr2)))))
+                (all (t3) (implies
+                           (in t3 (range (interval-lob tr)
+                                         (interval-hib tr)))
+                           (some (tr3) (and (is-train tr3)
+                                            (in t3 (crossing-interval
+                                                    tr3)))))))))
+(USE OCCUPANCY-LEMMA-2 (TR TR))
+(USE OCCUPANCY-LEMMA-1 (TR TR))
+(SIMPLIFY)
+(CASES)
+(USE OCCUPANCY-LEMMA-3 (TR TR))
+(REDUCE)
+(PRENEX)
+(REDUCE)
+(USE INTERVAL-LOB-LEMMA (TR TR))
+(REWRITE)
+(INSTANTIATE (T2$0 T2))
+(SIMPLIFY)
+(PRENEX)
+(INSTANTIATE (TR2$1 TR2))
+(REDUCE)
+(NEXT)
+(USE OCCUPANCY-LEMMA-4 (TR TR))
+(REDUCE)
+(NEXT)
+(USE OCCUPANCY-LEMMA-5 (TR TR))
+(SIMPLIFY)
+(NEXT)
+                    
+(axiom in-occupancy-interval (tr)
+  (implies (is-train tr)
+           (some (t1 t2)
+             (and (is-occupancy-interval t1 t2)
+                  (in (enter-crossing tr) (range t1 t2))
+                  (in (exit-crossing tr) (range t1 t2))))))
+(USE OCCUPANCY-LEMMA (TR TR))
+(SIMPLIFY)
+(INVOKE IS-OCCUPANCY-INTERVAL)
+(INSTANTIATE (T1 (INTERVAL-LOB TR)) (T2 (INTERVAL-HIB TR)))
+(REWRITE)
+(USE OCCUPANCY-LEMMA-2 (TR TR))
+(USE OCCUPANCY-LEMMA-1 (TR TR))
+(SIMPLIFY)
+
+(axiom utility-thm-2-lemma (t)
+  (implies (all (t1 t2) (implies (is-occupancy-interval t1 t2)
+                                 (not (in t (range (- t1 1000) (+ t2 89))))))
+           (not (some (tr) (and (is-train tr)
+                                (in t (range (- (enter-crossing tr) 1000)
+                                             (+ (exit-crossing tr) 89))))))))
+(PRENEX)
+(USE IN-OCCUPANCY-INTERVAL (TR TR))
+(REWRITE)
+(INSTANTIATE (T1$0 T1) (T2$0 T2))
+(PRENEX)
+(SIMPLIFY)
+
+;;; The second version of the utility property.
+
+(axiom utility-thm-2 ()
+  (all (t)
+    (implies (all (t1 t2) (implies (is-occupancy-interval t1 t2)
+                                   (not (in t (range (- t1 1000) (+ t2 89))))))
+             (gate-up t))))
+(USE UTILITY-THM-2-LEMMA (T T))
+(SIMPLIFY)
+(USE UTILITY-THM-1)
+(INSTANTIATE (T$0 T))
+(SIMPLIFY)
+

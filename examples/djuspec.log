@@ -1,0 +1,54 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/djuspec.ver"
+INL
+INR
+IS-L
+IS-R
+IS-DJU
+OUT
+TYPE-OF-IS-L
+Beginning proof of TYPE-OF-IS-L ...
+(= (TYPE-OF (IS-L X)) (BOOL))
+IS-L-INL
+Beginning proof of IS-L-INL ...
+(IS-L (INL X))
+IS-L-ISNT-R
+Beginning proof of IS-L-ISNT-R ...
+(IMPLIES (IS-L X) (NOT (IS-R X)))
+OUT-INL
+Beginning proof of OUT-INL ...
+(= (OUT (INL X)) X)
+IS-L-CONSTRUCTION
+Beginning proof of IS-L-CONSTRUCTION ...
+(IMPLIES (IS-L X) (= X (INL (OUT X))))
+TYPE-OF-IS-R
+Beginning proof of TYPE-OF-IS-R ...
+(= (TYPE-OF (IS-R X)) (BOOL))
+IS-R-INR
+Beginning proof of IS-R-INR ...
+(IS-R (INR X))
+IS-R-ISNT-L
+Beginning proof of IS-R-ISNT-L ...
+(IMPLIES (IS-R X) (NOT (IS-L X)))
+OUT-INR
+Beginning proof of OUT-INR ...
+(= (OUT (INR X)) X)
+IS-R-CONSTRUCTION
+Beginning proof of IS-R-CONSTRUCTION ...
+(IMPLIES (IS-R X) (= X (INR (OUT X))))
+IS-DJU-1
+Beginning proof of IS-DJU-1 ...
+(IMPLIES (NOT (IS-L X)) (= (IS-DJU X) (IS-R X)))
+IS-DJU-2
+Beginning proof of IS-DJU-2 ...
+(IMPLIES (NOT (IS-R X)) (= (IS-DJU X) (IS-L X)))
+LEFT
+IN-LEFT
+Beginning proof of IN-LEFT ...
+(= (IN X (LEFT Y)) (AND (IS-L X) (IN (OUT X) Y)))
+RIGHT
+IN-RIGHT
+Beginning proof of IN-RIGHT ...
+(= (IN X (RIGHT Y)) (AND (IS-R X) (IN (OUT X) Y)))
+DJU
+Done.

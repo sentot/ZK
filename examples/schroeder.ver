@@ -1,0 +1,144 @@
+;;; Schroeder-Bernstein Theorem
+;;;
+
+(load fn)
+(load fixpt)
+(load setrules)
+
+;;; h = lambda z: (powerset X). X \ g[ Y \ f [ z ] ]
+
+(zf-function h-fn (f g X Y)
+  (map (pair!pair z (diff X (rel!image g (diff Y (rel!image f z)))))
+    ((z) (powerset X))))
+
+(rule in-h-fn (e f g X Y)
+  (= (in e (h-fn f g X Y))
+     (and (pair!is-pair e)
+	  (subset (pair!fst e) X)
+	  (= (pair!snd e)
+	     (diff X (rel!image g (diff Y (rel!image f (pair!fst e)))))))))
+(SPLIT (AND (PAIR!IS-PAIR E)
+            (SUBSET (PAIR!FST E) X)
+            (= (PAIR!SND E)
+               (DIFF X (REL!IMAGE G (DIFF Y (REL!IMAGE F (PAIR!FST E))))))))
+(APPLY H-FN.DEFINITION)
+(REWRITE)
+(INSTANTIATE (Z (PAIR!FST E)))
+(SIMPLIFY)
+
+;;; h is a function
+
+(rule is-function-h-fn (f g X Y)
+  (= (fn!is-function (h-fn f g X Y))
+     (true)))
+(WITH-ENABLED (REL!IS-RELATION FN!IS-FUNCTION) (REDUCE))
+
+;;; (dom h) = powerset X
+
+(rule dom-h-fn (f g X Y)
+  (= (rel!dom (h-fn f g X Y))
+     (powerset X)))
+(APPLY SETRULES!EXTENSIONALITY)
+(WITH-ENABLED (REL!IN-DOM) (REWRITE))
+
+;;; z subset (powerset X) => h (z) = X \ g[ Y \ f [ z ] ]
+
+(rule apply-h-fn (f g X Y a)
+  (implies (subset a X)
+	   (= (fn!apply (h-fn f g X Y) a)
+	      (diff X (rel!image g (diff Y (rel!image f a)))))))
+(USE FN!APPLY-DEFINITION (F (H-FN F G X Y)) (X A))
+(REWRITE)
+
+;;; h is monotonic
+
+(rule is-monotonic-h-fn (f g X Y)
+  (= (fixpt!is-monotonic (h-fn f g X Y) X)
+     (true)))
+(INVOKE FIXPT!IS-MONOTONIC)
+(APPLY FN!IN-FUN)
+(REWRITE)
+(WITH-ENABLED (REL!IN-RAN) (REDUCE))
+
+;;; define A = fix h and B = Y \ f[A]
+
+(disabled
+ (function A (f g X Y) ()
+   (fixpt!fix (h-fn f g X Y))))
+
+(disabled
+ (function B (f g X Y) ()
+   (diff Y (rel!image f (A f g X Y)))))
+
+;;; A subset X
+
+(grule subset-A-X (f g X Y)
+  (subset (A f g X Y) X))
+(USE FIXPT!FIX-IN-DOM-2 (F (H-FN F G X Y)) (X X))
+(INVOKE A)
+(REWRITE)
+
+;;; B subset Y
+
+(grule subset-B-Y (f g X Y)
+  (subset (B f g X Y) Y))
+(INVOKE B)
+(REWRITE)
+
+;;; A = X \ g [ B ] and B = Y \ f [A]
+
+(axiom A-B-relation (f g X Y)
+  (and (= (A f g X Y) (diff X (rel!image g (B f g X Y))))
+       (= (B f g X Y) (diff Y (rel!image f (A f g X Y))))))
+(USE FIXPT!FIX-IS-FIXEDPOINT (F (H-FN F G X Y)) (X X))
+(USE FIXPT!FIX-IN-DOM-2 (F (H-FN F G X Y)) (X X))
+(INVOKE B)
+(INVOKE A)
+(REWRITE)
+
+(rule diff-diff (a b)
+  (= (diff a (diff a b))
+     (inter a b)))
+(APPLY SETRULES!EXTENSIONALITY)
+(REWRITE)
+
+(rule image-f-A (f g X Y)
+  (implies (subset (rel!ran f) Y)
+	   (= (rel!image f (A f g X Y))
+	      (diff Y (B f g X Y)))))
+(USE A-B-RELATION (F F) (G G) (X X) (Y Y))
+(EQUALITY-SUBSTITUTE (B F G X Y))
+(USE REL!IMAGE-SUBSET-RAN (R F) (X (A F G X Y)))
+(REWRITE)
+
+(rule image-g-B (f g X Y)
+  (implies (subset (rel!ran g) X)
+	   (= (rel!image g (B f g X Y))
+	      (diff X (A f g X Y)))))
+(USE A-B-RELATION (F F) (G G) (X X) (Y Y))
+(EQUALITY-SUBSTITUTE (A F G X Y))
+(USE REL!IMAGE-SUBSET-RAN (R G) (X (B F G X Y)))
+(REWRITE)
+
+;;; sb-function = (A <| f) union (B <| g)~
+
+(function sb-function (f g X Y) ()
+  (union (rel!dom-restrict (A f g X Y) f)
+	 (rel!inverse (rel!dom-restrict (B f g X Y) g))))
+
+(rule union-diff (a b)
+  (= (union a (diff b a))
+     (union a b)))
+(APPLY SETRULES!EXTENSIONALITY)
+(REWRITE)
+
+;;; the Schroeder-Bernstein theorem
+
+(axiom schroeder-bernstein (f g X Y)
+  (implies (and (in f (fn!inj X Y))
+		(in g (fn!inj Y X)))
+	   (in (sb-function f g X Y) (fn!bij X Y))))
+(APPLY FN!IN-INJ)
+(APPLY FN!IN-BIJ)
+(INVOKE SB-FUNCTION)
+(WITH-ENABLED (FN!IS-FUNCTION-UNION) (REWRITE))

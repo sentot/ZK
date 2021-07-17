@@ -1,0 +1,45 @@
+;;; "optional" values
+;;;
+;;; an optional X is either an X or a nothing.
+;;;
+;;; We use "(no)" for the nothing, "(yes x)" for a something x
+
+(function-stub optional (X))
+
+(function-stub no ())
+(function-stub yes (x))
+
+(rule no-is-optional (X)
+  (= (in (no) (optional X))
+     (true)))
+
+(rule yes-is-optional (x Y)
+  (= (in (yes x) (optional Y))
+     (in x Y)))
+
+(disabled
+ (rule in-optional (x Y)
+  (= (in x (optional Y))
+     (or (= x (no))
+	 (some (z) (and (= x (yes z))
+			(in z Y)))))))
+
+(rule equal-yes-yes (x y)
+  (= (= (yes x) (yes y))
+     (= x y)))
+
+(grule yes-is-not-no (x)
+  (not (= (yes x) (no))))
+
+(function-stub the-option (x))
+
+(grule the-option-yes (x)
+  (= (the-option (yes x))
+     x))
+
+(disabled
+ (rule in-optional-2 (x S)
+  (= (in x (optional S))
+     (or (= x (no))
+	 (and (= x (yes (the-option x)))
+	      (in (the-option x) S))))))

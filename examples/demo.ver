@@ -1,0 +1,13 @@
+
+
+(function nth-odd (n) () (- (* 2 n) 1))
+
+(function sum-of-odd (n)
+   ((measure n))
+ (if (>= n 1) (+ (nth-odd n) (sum-of-odd (- n 1))) 0))
+(REDUCE)
+
+(rule sum-of-odd-is-square (n) (implies (>= n 1) (= (sum-of-odd n) (* n n))))
+(PROVE-BY-INDUCTION)
+
+

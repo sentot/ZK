@@ -1,0 +1,661 @@
+;;; A modest system for lambda-terms
+;;;
+;;; Lambda-terms
+;;;
+;;; Integers are used for variable names.  Thus, we could represent the
+;;; term (lambda x: S (lambda y: T . y(x)) by the term
+;;;
+;;; (value-of (lam 0 S (lam 1 T (ap 1 0)))
+;;;
+;;; Functions introduced:
+;;;
+;;; "Pure" lambda-calculus:
+;;;
+;;; 0, 1, ...     variables represented by integers
+;;; (ap e1 e2)
+;;; (lam v S e)    -- lambda v: S . e
+;;;
+;;; Constants:
+;;;
+;;; (const x) 
+;;;
+;;;  Evaluation of lambda-expressions:
+;;;
+;;; (value-of e)  -- the value denoted by the lambda-term e
+;;; (value e rho)  -- the value of e in environment rho
+;;;
+;;; Environments:
+;;;
+;;; (null)
+;;; (bind var value rho)
+;;; (lookup var rho)
+;;;
+
+(load bt)				; binary trees (used for syntax trees)
+(load setrules)
+(load fn)
+
+;;; We use a rather round-about way to define the model.
+;;; First, we define deBruijn lambda-terms.  Then we define
+;;; the meaning of full lambda-terms by translation to
+;;; deBruijn terms.
+;;;
+;;; This is not really necessary, but is just an accident of history.
+;;; I had the deBruijn theory already proved, and it seemed to be a
+;;; shame to have to duplicate the development for full lambda theory.
+;;; Hence the present approach.
+;;;
+
+;;; Part 1: deBruijn terms
+;;;
+;;; Lambda-terms are represented using deBruijn indices, so that variable names
+;;; are not needed
+;;;
+;;; Functions introduced:
+;;;
+;;; (db-const x)
+;;; (db-var n) 
+;;; (db-ap e1 e2)
+;;; (db-lam S e)  -- lambda x: S . e, but e uses deBruijn indices to refer to x
+;;;
+;;; (db-value e b)  -- the value of e with bindings b for free variables
+;;;                 (b is a sequence of values)
+;;;
+
+(disabled (function db-const (x) () (bt!cons 0 x)))
+(disabled (function db-var (n) () (bt!cons 1 n)))
+(disabled (function db-ap (e1 e2) () (bt!cons 2 (bt!cons e1 e2))))
+(disabled (function db-lam (S e) () (bt!cons 3 (bt!cons S e))))
+
+(function nth (b n)
+    ((measure n))
+  (if (> n 0)
+      (nth (pair!snd b) (- n 1))
+      (pair!fst b)))
+(REDUCE)
+
+(zf-function nth-fn (X n)
+  (map (pair!pair b (nth b n))
+       ((b) X)))
+
+(rule in-nth-fn (y X n)
+  (= (in y (nth-fn X n))
+     (and (pair!is-pair y)
+	  (in (pair!fst y) X)
+	  (= (pair!snd y) (nth (pair!fst y) n)))))
+(USE NTH-FN.DEFINITION (X X) (N N) (B$0 Y))
+(SPLIT (AND (PAIR!IS-PAIR Y)
+	    (IN (PAIR!FST Y) X)
+	    (= (PAIR!SND Y) (NTH (PAIR!FST Y) N))))
+(REDUCE)
+(INSTANTIATE (B (PAIR!FST Y)))
+(SIMPLIFY)
+
+(grule is-function-nth-fn (X n)
+  (fn!is-function (nth-fn X n)))
+(WITH-ENABLED (FN!IS-FUNCTION REL!IS-RELATION) (REDUCE))
+
+(rule dom-nth-fn (X n)
+  (= (rel!dom (nth-fn X n))
+     X))
+(APPLY SETRULES!EXTENSIONALITY)
+(WITH-ENABLED (REL!IN-DOM) (REDUCE))
+
+(rule apply-nth-fn (X n y)
+  (implies (in y X)
+	   (= (fn!apply (nth-fn X n) y)
+	      (nth y n))))
+(USE FN!APPLY-DEFINITION (F (NTH-FN X N)) (X Y))
+(REWRITE)
+
+(rule nth-function-monotonic (x y n)
+  (implies (subset x y)
+	   (= (subset (nth-fn x n) (nth-fn y n))
+	      (true))))
+(REDUCE)
+
+(zf-function s2 (f g X)
+  (map (pair!pair y (fn!apply (fn!apply f y) (fn!apply g y)))
+       ((y) X)))
+
+(rule in-s2 (y f g X)
+  (= (in y (s2 f g X))
+     (and (pair!is-pair y)
+	  (in (pair!fst y) X)
+	  (= (pair!snd y)
+	     (fn!apply (fn!apply f (pair!fst y))
+		       (fn!apply g (pair!fst y)))))))
+(USE S2.DEFINITION (F F) (G G) (X X) (Y$0 Y))
+(SPLIT (AND (PAIR!IS-PAIR Y)
+	    (IN (PAIR!FST Y) X)
+	    (= (PAIR!SND Y)
+	       (FN!APPLY (FN!APPLY F (PAIR!FST Y))
+			 (FN!APPLY G (PAIR!FST Y))))))
+(REDUCE)
+(INSTANTIATE (Y$0 (PAIR!FST Y)))
+(SIMPLIFY)
+
+(grule is-function-s2 (f g X)
+  (fn!is-function (s2 f g X)))
+(WITH-ENABLED (FN!IS-FUNCTION REL!IS-RELATION) (REDUCE))
+
+(rule dom-s2 (f g X)
+  (= (rel!dom (s2 f g X))
+     X))
+(APPLY SETRULES!EXTENSIONALITY)
+(WITH-ENABLED (REL!IN-DOM) (REDUCE))
+
+(rule apply-s2 (f g X y)
+  (implies (in y X)
+	   (= (fn!apply (s2 f g X) y)
+	      (fn!apply (fn!apply f y) (fn!apply g y)))))
+(USE FN!APPLY-DEFINITION (F (S2 F G X)) (X Y))
+(REDUCE)
+
+(rule s2-monotonic (f1 g1 x1 f2 g2 x2)
+  (implies (and (fn!is-function f2)
+		(fn!is-function g2)
+		(subset f1 f2)
+		(subset g1 g2)
+		(subset x1 x2)
+		(subset x1 (rel!dom f1))
+		(subset x1 (rel!dom g1)))
+	   (= (subset (s2 f1 g1 x1) (s2 f2 g2 x2))
+	      (true))))
+(INVOKE (SUBSET (S2 F1 G1 X1) (S2 F2 G2 X2)))
+(PRENEX)
+(USE FN!APPLY-SUBSET (F F1) (G F2) (X (PAIR!FST E)))
+(USE FN!APPLY-SUBSET (F G1) (G G2) (X (PAIR!FST E)))
+(REARRANGE)
+(REWRITE)
+(REDUCE)
+
+(disabled
+ (function const-fn (v X) ()
+  (pair!cross X (make-set v))))
+
+(grule is-function-const-fn (v X)
+  (fn!is-function (const-fn v X)))
+(WITH-ENABLED (CONST-FN FN!IS-FUNCTION) (REDUCE))
+
+(rule dom-const-fn (v X)
+  (= (rel!dom (const-fn v X))
+     X))
+(WITH-ENABLED (CONST-FN) (REDUCE))
+
+(rule apply-const-fn (v X y)
+  (implies (in y X)
+	   (= (fn!apply (const-fn v X) y)
+	      v)))
+(USE FN!APPLY-DEFINITION (F (CONST-FN V X)) (X Y))
+(REWRITE)
+(WITH-ENABLED (CONST-FN) (REDUCE))
+
+(rule const-fn-monotonic (v x y)
+  (implies (subset x y)
+	   (= (subset (const-fn v x) (const-fn v y))
+	      (true))))
+(WITH-ENABLED (CONST-FN) (REDUCE))
+
+(zf-function curry-1 (f X y)
+  (map (pair!pair z (fn!apply f (pair!pair z y)))
+       ((z) X)))
+
+(rule in-curry-1 (f x y z)
+  (= (in z (curry-1 f x y))
+     (and (pair!is-pair z)
+	  (in (pair!fst z) x)
+	  (= (pair!snd z)
+	     (fn!apply f (pair!pair (pair!fst z) y))))))
+(USE CURRY-1.DEFINITION (F F) (X X) (Y Y) (Z$0 Z))
+(SPLIT (AND (PAIR!IS-PAIR Z)
+	    (IN (PAIR!FST Z) X)
+	    (= (PAIR!SND Z) (FN!APPLY F (PAIR!PAIR (PAIR!FST Z) Y)))))
+(REDUCE)
+(INSTANTIATE (Z$0 (PAIR!FST Z)))
+(SIMPLIFY)
+
+(grule is-function-curry-1 (f x y)
+  (fn!is-function (curry-1 f x y)))
+(WITH-ENABLED (FN!IS-FUNCTION REL!IS-RELATION) (REDUCE))
+
+(rule dom-curry-1 (f x y)
+  (= (rel!dom (curry-1 f x y))
+     x))
+(APPLY SETRULES!EXTENSIONALITY)
+(WITH-ENABLED (REL!IN-DOM) (REDUCE))
+
+(rule apply-curry-1 (f x y z)
+  (implies (in z x)
+	   (= (fn!apply (curry-1 f x y) z)
+	      (fn!apply f (pair!pair z y)))))
+(USE FN!APPLY-DEFINITION (F (CURRY-1 F X Y)) (X Z))
+(REWRITE)
+
+(rule curry-1-monotonic (f1 x1 y f2 x2)
+  (implies (and (fn!is-function f2)
+		(subset f1 f2)
+		(subset x1 x2)
+		(subset (pair!cross x1 (make-set y)) (rel!dom f1)))
+	   (= (subset (curry-1 f1 x1 y) (curry-1 f2 x2 y))
+	      (true))))
+(INVOKE (SUBSET (CURRY-1 F1 X1 Y) (CURRY-1 F2 X2 Y)))
+(PRENEX)
+(REWRITE)
+(USE FN!APPLY-SUBSET (F F1) (G F2) (X (PAIR!PAIR (PAIR!FST E) Y)))
+(REARRANGE)
+(SIMPLIFY)
+(REDUCE)
+
+(zf-function curry (f X Y)
+  (map (pair!pair z (curry-1 f X z))
+       ((z) Y)))
+
+(rule in-curry (f x y z)
+  (= (in z (curry f x y))
+     (and (pair!is-pair z)
+	  (in (pair!fst z) y)
+	  (= (pair!snd z) (curry-1 f x (pair!fst z))))))
+(USE CURRY.DEFINITION (F F) (X X) (Y Y) (Z$0 Z))
+(SPLIT (AND (PAIR!IS-PAIR Z)
+	    (IN (PAIR!FST Z) Y)
+	    (= (PAIR!SND Z) (CURRY-1 F X (PAIR!FST Z)))))
+(REDUCE)
+(INSTANTIATE (Z$0 (PAIR!FST Z)))
+(SIMPLIFY)
+
+
+(grule is-function-curry (f x y)
+  (fn!is-function (curry f x y)))
+(WITH-ENABLED (FN!IS-FUNCTION REL!IS-RELATION) (REDUCE))
+
+(rule dom-curry (f x y)
+  (= (rel!dom (curry f x y))
+     y))
+(APPLY SETRULES!EXTENSIONALITY)
+(WITH-ENABLED (REL!IN-DOM) (REDUCE))
+
+(rule apply-curry (f x y z)
+  (implies (in z y)
+	   (= (fn!apply (curry f x y) z)
+	      (curry-1 f x z))))
+(USE FN!APPLY-DEFINITION (F (CURRY F X Y)) (X Z))
+(REWRITE)
+
+(rule curry-monotonic (f1 x y1 f2 y2)
+  (implies (and (fn!is-function f2)
+		(subset f1 f2)
+		(subset y1 y2)
+		(subset (pair!cross x y1) (rel!dom f1)))
+	   (= (subset (curry f1 x y1) (curry f2 x y2))
+	      (true))))
+(INVOKE (SUBSET (CURRY F1 X Y1) (CURRY F2 X Y2)))
+(PRENEX)
+(USE FN!FUNCTION-EXTENSIONALITY
+     (F (CURRY-1 F1 X (PAIR!FST E)))
+     (G (CURRY-1 F2 X (PAIR!FST E))))
+(REARRANGE)
+(REWRITE)
+(CASES)
+(REDUCE)
+(NEXT)
+(SPLIT (= (CURRY-1 F1 X (PAIR!FST E)) (CURRY-1 F2 X (PAIR!FST E))))
+(SIMPLIFY)
+(PRENEX)
+(USE FN!APPLY-SUBSET (F F1) (G F2) (X (PAIR!PAIR X$0 (PAIR!FST E))))
+(SIMPLIFY)
+(INVOKE (SUBSET (PAIR!CROSS X Y1) (REL!DOM F1)))
+(WITH-ENABLED (PAIR!IN-CROSS) (REWRITE))
+(INSTANTIATE (E$0 (PAIR!PAIR X$0 (PAIR!FST E))))
+(SIMPLIFY)
+(NEXT)
+
+(function f (e X)
+    ((measure (bt!size e)))
+  (if (not (bt!is-cons e))			; not a lambda-expr
+      (const-fn 0 X)
+  (if (= (bt!car e) 0)				; const
+      (const-fn (bt!cdr e) X)
+  (if (= (bt!car e) 1)				; var
+      (nth-fn X (bt!cdr e))
+  (if (not (bt!is-cons (bt!cdr e)))		; not a lambda-expr
+      (const-fn 0 X)
+  (if (= (bt!car e) 2)				; ap
+      (s2 (f (bt!car (bt!cdr e)) x)
+	  (f (bt!cdr (bt!cdr e)) x)
+	  x)
+      ;; otherwise db-lam
+      (curry (f (bt!cdr (bt!cdr e)) (pair!cross (bt!car (bt!cdr e)) x))
+	     (bt!car (bt!cdr e))
+	     x)))))))
+(USE BT!SIZE-CONS (X (BT!CDR E)))
+(USE BT!SIZE-CONS (X E))
+(WITH-DISABLED (BT!SIZE-CONS) (REWRITE))
+
+(grule is-function-f (e x)
+  (fn!is-function (f e x)))
+(INVOKE F)
+(REWRITE)
+
+(rule dom-f (e x)
+  (= (rel!dom (f e x))
+     x))
+(INVOKE F)
+(REWRITE)
+
+(axiom f-monotonic (e x y)
+  (implies (subset x y)
+	   (subset (f e x) (f e y))))
+(INDUCT)
+(WITH-DISABLED (SUBSET) (REDUCE))
+
+(disabled
+ (function db-value (e b) ()
+   (fn!apply (f e (make-set b)) b)))
+
+(rule db-value-db-const (x b)
+  (= (db-value (db-const x) b)
+     x))
+(with-enabled (db-const db-value) (REDUCE))
+
+(rule db-value-db-var-0 (b)
+  (= (db-value (db-var 0) b)
+     (pair!fst b)))
+(with-enabled (db-var db-value) (REDUCE))
+
+(rule db-value-db-var-positive (n b)
+  (implies (> n 0)
+	   (= (db-value (db-var n) b)
+	      (db-value (db-var (+ -1 n)) (pair!snd b)))))
+(WITH-ENABLED (DB-VAR DB-VALUE)
+ (REDUCE))
+(INVOKE (NTH B N))
+(REWRITE)
+
+(rule db-value-db-ap (e1 e2 b)
+  (= (db-value (db-ap e1 e2) b)
+     (fn!apply (db-value e1 b)
+	       (db-value e2 b))))
+(with-enabled (db-ap db-value) (REDUCE))
+
+(rule is-function-db-value-db-lam (s e b)
+  (= (fn!is-function (db-value (db-lam S e) b))
+     (true)))
+(with-enabled (db-lam db-value) (REDUCE))
+
+(rule dom-db-value-db-lam (s e b)
+  (= (rel!dom (db-value (db-lam S e) b))
+     S))
+(with-enabled (db-lam db-value) (REDUCE))
+
+(rule apply-db-value-db-lam (S e b x)
+  (implies (in x S)
+	   (= (fn!apply (db-value (db-lam  S e) b) x)
+	      (db-value e (pair!pair x b)))))
+(with-enabled (db-lam db-value) (REDUCE))
+(USE FN!APPLY-SUBSET
+     (F (F E (SETADD (PAIR!PAIR X B) (NULLSET))))
+     (G (F E (PAIR!CROSS S (SETADD B (NULLSET)))))
+     (X (PAIR!PAIR X B)))
+(USE F-MONOTONIC
+     (E E)
+     (X (SETADD (PAIR!PAIR X B) (NULLSET)))
+     (Y (PAIR!CROSS S (SETADD B (NULLSET)))))
+(REARRANGE)
+(REWRITE)
+
+;;; Part 2.  With the deBruin theory in place, we develop
+;;; the theory of full typed lambda-terms
+
+;; Environments
+
+(function null () ()
+  (nullset))
+
+(disabled
+  (function bind (var val rho) ()
+    (if (fn!is-function rho)
+        (fn!override rho (unit (pair!pair var val)))
+        (unit (pair!pair var val)))))
+
+(disabled
+ (function lookup (var rho) ()
+   (if (and (fn!is-function rho)
+	    (in var (rel!dom rho)))
+       (fn!apply rho var)
+       (nullset))))			; need a standard "off-domain" value
+					; for some of the rules
+
+(rule lookup-bind (var1 var2 val rho)
+  (= (lookup var1 (bind var2 val rho))
+     (if (= var1 var2)
+	 val
+	 (lookup var1 rho))))
+(with-enabled (bind lookup) (reduce))
+
+;;; lambda-terms
+
+;;; It is a bit awkward to get labels for the term constructors so that
+;;; constants are never confused with labelled trees.  The idea is this.
+;;; define S = { (bt!car x) | x in (int) }
+;;; then S not in S; similarly { S } not in S, and {S, { S }} not in S.
+;;; So if x in (int), (bt!car x) is not any of the three labels.
+
+(zf-function set-S ()
+  (map (bt!car x)
+    ((x) (int))))
+
+(axiom car-int-in-S (x)
+  (implies (in x (int))
+	   (in (bt!car x) (set-S))))
+(WITH-ENABLED (SET-S.DEFINITION) (REWRITE))
+
+(disabled
+ (function label (n) ()
+   (make-set (set-S) n)))
+
+(grule label-not-in-set-S (n)
+  (not (in (label n) (set-S))))
+(use setrules!no-2-cycle (s (set-S)) (t (label n)))
+(with-enabled (label) (reduce))
+
+(rule =-label-label (k n)
+  (= (= (label k) (label n))
+     (= k n)))
+(apply =.extensional.subset (= (label k) (label n)))
+(with-enabled (label) (reduce))
+
+(function const-label () () (label 0))
+(function ap-label () () (label 1))
+(function lambda-label () () (label 2))
+
+;;; Lambda terms
+
+(function const (x) () (bt!cons (const-label) x))
+(function ap (e1 e2) () (bt!cons (ap-label) (bt!cons e1 e2)))
+(function lam (v S e) ()
+  (bt!cons (lambda-label) (bt!cons v (bt!cons S e))))
+
+(disabled
+ (function is-var (x) ()
+   (in x (int))))
+
+(function is-const (x) ()
+  (and (bt!is-cons x)
+       (= (bt!car x) (const-label))))
+
+(function const-val (x) () (bt!cdr x))
+
+(function is-ap (x) ()
+  (and (bt!is-cons x)
+       (= (bt!car x) (ap-label))
+       (bt!is-cons (bt!cdr x))))
+
+(function rator (x) () (bt!car (bt!cdr x)))
+(function rand (x) () (bt!cdr (bt!cdr x)))
+
+(function is-lam (x) ()
+    (and (bt!is-cons x)
+	 (= (bt!car x) (lambda-label))
+	 (bt!is-cons (bt!cdr x))
+	 (bt!is-cons (bt!cdr (bt!cdr x)))))
+
+(function lam-var (x) () (bt!car (bt!cdr x)))
+(function lam-set (x) () (bt!car (bt!cdr (bt!cdr x))))
+(function lam-body (x) () (bt!cdr (bt!cdr (bt!cdr x))))
+
+(rule is-var-labelled (x y)
+  (= (is-var (bt!cons (label x) y))
+     (false)))
+(with-enabled (is-var) (reduce))
+(use car-int-in-S (x (bt!cons (label x) y)))
+(rewrite)
+
+;;; Translation from these to deBruijn terms
+;;; (tr e BV rho) uses rho for any variables not assigned indices in BV
+
+(function tr-aux (var bv rho n)
+    ((measure (bt!size bv)))
+  (if (bt!is-cons bv)
+      (if (= var (bt!car bv))
+	  (db-var n)
+	  (tr-aux var (bt!cdr bv) rho (+ n 1)))
+      (db-const (lookup var rho))))
+(reduce)
+
+(function tr (e bv rho)
+    ((measure (bt!size e)))
+  (if (is-var e)
+      (tr-aux e bv rho 0)
+  (if (is-const e)
+      (db-const (const-val e))
+  (if (is-ap e)
+      (db-ap (tr (rator e) bv rho) (tr (rand e) bv rho))
+  (if (is-lam e)
+      (db-lam (lam-set e) (tr (lam-body e) (bt!cons (lam-var e) bv) rho))
+  (db-const 0))))))
+(REDUCE)
+(USE BT!SIZE-CONS (X (BT!CDR (BT!CDR E))))
+(USE BT!SIZE-CONS (X (BT!CDR E)))
+(USE BT!SIZE-CONS (X E))
+(WITH-DISABLED (BT!SIZE-CONS) (REWRITE))
+
+;;; Note: clearly the axioms in BT could stand improvement, so that
+;;; such hand instantiations are not needed.
+
+(function new-rho (rho bv vals)
+    ((measure (bt!size bv)))
+  (if (bt!is-cons bv)
+      (bind (bt!car bv)
+	    (pair!fst vals)
+	    (new-rho rho (bt!cdr bv) (pair!snd vals)))
+      rho))
+(reduce)
+
+
+(axiom tr-aux-lemma (e bv rho n vals)
+  (implies (>= n 1)
+	   (= (db-value (tr-aux e bv rho n) vals)
+	      (db-value (tr-aux e bv rho (- n 1)) (pair!snd vals)))))
+(prove-by-induction)
+
+(rule main-step-var-case-lemma (e bv rho vals)
+  (implies (is-var e)
+	   (= (db-value (tr-aux e bv rho 0) vals)
+	      (lookup e (new-rho rho bv vals)))))
+(INDUCT)
+(REDUCE)
+(USE TR-AUX-LEMMA (E E) (BV (BT!CDR BV)) (RHO RHO) (N 1) (VALS VALS))
+(SIMPLIFY)
+(REDUCE)
+
+(function main-induction (e bv rho vals)
+    ((measure (bt!size e)))
+  (if (is-ap e)
+      (and (main-induction (rator e) bv rho vals)
+	   (main-induction (rand e) bv rho vals))
+  (if (is-lam e)
+      (all (x)
+	(and (main-induction (lam-body e)
+			     (bt!cons (bt!car (bt!cdr e)) bv)
+			     rho
+			     (pair!pair x vals))
+	     (main-induction (lam-body e)
+			     (bt!cons (bt!car (bt!cdr e)) (bt!leaf 0))
+			     (new-rho rho bv vals)
+			     (pair!pair x 0))))
+  (true))))
+(REDUCE)
+(USE BT!SIZE-CONS (X (BT!CDR (BT!CDR E))))
+(USE BT!SIZE-CONS (X (BT!CDR E)))
+(USE BT!SIZE-CONS (X E))
+(WITH-DISABLED (BT!SIZE-CONS) (REWRITE))
+
+(axiom main-step (e bv rho vals)
+  (= (db-value (tr e bv rho) vals)
+     (db-value (tr e (bt!leaf 0) (new-rho rho bv vals)) 0)))
+(INDUCT (MAIN-INDUCTION E BV RHO VALS))
+(INVOKE (TR E BV RHO))
+(INVOKE (TR E (BT!LEAF 0) (NEW-RHO RHO BV VALS)))
+(WITH-DISABLED (TR) (REDUCE))
+(APPLY FN!FUNCTION-EXTENSIONALITY
+       (= (DB-VALUE (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+                                (TR (BT!CDR (BT!CDR (BT!CDR E)))
+                                    (BT!CONS (BT!CAR (BT!CDR E)) BV)
+                                    RHO))
+                      VALS)
+          (DB-VALUE (DB-LAM (BT!CAR (BT!CDR (BT!CDR E)))
+                                (TR (BT!CDR (BT!CDR (BT!CDR E)))
+                                    (BT!CONS (BT!CAR (BT!CDR E)) (BT!LEAF 0))
+                                    (NEW-RHO RHO BV VALS)))
+                      0)))
+(REWRITE)
+(INSTANTIATE (X X$1))
+(INSTANTIATE (X$1 X))
+(SIMPLIFY)
+
+(function value (e r) ()
+  (db-value (tr e (bt!leaf 0) r) 0))
+
+(rule value-var (v r)
+  (implies (= (type-of v) (int))
+	   (= (value v r)
+	      (lookup v r))))
+(REDUCE)
+(WITH-ENABLED (IS-VAR) (REDUCE))
+
+(rule value-const (x r)
+  (= (value (const x) r)
+     x))
+(reduce)
+
+(rule value-ap (e1 e2 r)
+  (= (value (ap e1 e2) r)
+     (fn!apply (value e1 r)
+	       (value e2 r))))
+(reduce)
+
+(rule is-function-value-lam (v S e r)
+  (= (fn!is-function (value (lam v S e) r))
+     (true)))
+(reduce)
+
+(rule dom-value-lam (v S e r)
+  (= (rel!dom (value (lam v S e) r))
+     S))
+(reduce)
+
+(rule apply-value-lam (v S e r x)
+  (implies (in x S)
+	   (= (fn!apply (value (lam v S e) r) x)
+	      (value e (bind v x r)))))
+(REDUCE)
+(USE MAIN-STEP
+     (E E)
+     (BV (BT!CONS V (BT!LEAF 0)))
+     (RHO R)
+     (VALS (PAIR!PAIR X 0)))
+(REDUCE)
+
+(function value-of (e) ()
+  (value e (null)))

@@ -1,0 +1,89 @@
+;;; A modest system for lambda-terms
+;;;
+;;; Lambda-terms
+;;;
+;;; Integers  are used for variable names.  Thus, we could represent the
+;;; term (lambda x: S (lambda y: T . y(x)) by the term
+;;;
+;;; (value-of (lam 0 S (lam 1 T (ap 1 0)))
+;;;
+;;; Functions introduced:
+;;;
+;;; "Pure" lambda-calculus:
+;;;
+;;; 0, 1, ...     variables represented by integers
+;;; (ap e1 e2)
+;;; (lam v S e)    -- lambda v: S . e
+;;;
+;;; Constants:
+;;;
+;;; (const x) 
+;;;
+;;;  Evaluation of lambda-expressions:
+;;;
+;;; (value-of e)  -- the value denoted by the lambda-term e
+;;; (value e rho)  -- the value of e in environment rho
+;;;
+;;; Environments:
+;;;
+;;; (null)
+;;; (bind var value rho)
+;;; (lookup var rho)
+;;;
+
+(load fn)
+
+;; Environments
+
+(function-stub null ())
+(function-stub bind (var val rho))
+(function-stub lookup (var rho))
+
+(rule lookup-bind (var1 var2 val rho)
+  (= (lookup var1 (bind var2 val rho))
+     (if (= var1 var2)
+         val
+         (lookup var1 rho))))
+
+;;; Lambda-term constructors
+
+(function-stub const (x))
+(function-stub ap (e1 e2))
+(function-stub lam (v S e))
+
+;;; Evaluation
+
+(function-stub value (e r))
+
+(function value-of (e) ()
+  (value e (null)))
+
+;;; Axioms
+
+(rule value-var (v r)
+  (implies (= (type-of v) (int))
+	       (= (value v r)
+	          (lookup v r))))
+
+(rule value-const (x r)
+  (= (value (const x) r)
+     x))
+
+(rule value-ap (e1 e2 r)
+  (= (value (ap e1 e2) r)
+     (fn!apply (value e1 r)
+	           (value e2 r))))
+
+(rule is-function-value-lam (v S e r)
+  (= (fn!is-function (value (lam v S e) r))
+     (true)))
+
+(rule dom-value-lam (v S e r)
+  (= (rel!dom (value (lam v S e) r))
+     S))
+
+(rule apply-value-lam (v S e r x)
+  (implies (in x S)
+	   (= (fn!apply (value (lam v S e) r) x)
+	      (value e (bind v x r)))))
+

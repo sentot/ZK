@@ -1,0 +1,483 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/fixptmodel.ver"
+Warning RULE-LOOPS for FN!FUNCTION-EXTENSIONALITY:
+ The rule FN!FUNCTION-EXTENSIONALITY loops upon itself.
+IS-MONOTONIC
+MONOTONIC-PROPERTY
+Beginning proof of MONOTONIC-PROPERTY ...
+(IMPLIES (AND (IS-MONOTONIC F X) (SUBSET A B) (SUBSET B X))
+ (AND (SUBSET (FN!APPLY F A) (FN!APPLY F B)) (SUBSET (FN!APPLY F B) X)))
+Invoking IS-MONOTONIC gives ...
+(IMPLIES
+ (AND (IN F (FN!FUN (POWERSET X) (POWERSET X)))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (SUBSET A$0 B$0) (SUBSET B$0 X))
+    (SUBSET (FN!APPLY F A$0) (FN!APPLY F B$0))))
+  (SUBSET A B) (SUBSET B X))
+ (AND (SUBSET (FN!APPLY F A) (FN!APPLY F B)) (SUBSET (FN!APPLY F B) X)))
+Which simplifies
+ when rewriting with FN!IN-FUN
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL
+ with the instantiations (= A$0 A) (= B$0 B) to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F) (= (REL!DOM F) (POWERSET X))
+  (SUBSET (REL!RAN F) (POWERSET X))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (SUBSET A$0 B$0) (SUBSET B$0 X))
+    (SUBSET (FN!APPLY F A$0) (FN!APPLY F B$0))))
+  (SUBSET A B) (SUBSET B X))
+ (SUBSET (FN!APPLY F B) X))
+Assuming FN!APPLY-IN-RAN with the instantiations: (= F F) (= X B) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION F) (IN B (REL!DOM F)))
+   (IN (FN!APPLY F B) (REL!RAN F)))
+  (FN!IS-FUNCTION F) (= (REL!DOM F) (POWERSET X))
+  (SUBSET (REL!RAN F) (POWERSET X))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (SUBSET A$0 B$0) (SUBSET B$0 X))
+    (SUBSET (FN!APPLY F A$0) (FN!APPLY F B$0))))
+  (SUBSET A B) (SUBSET B X))
+ (SUBSET (FN!APPLY F B) X))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (REL!DOM F) (POWERSET X)) (FN!IS-FUNCTION F)
+  (SUBSET (REL!RAN F) (POWERSET X)) (SUBSET A B) (SUBSET B X)
+  (IMPLIES (AND (FN!IS-FUNCTION F) (IN B (REL!DOM F)))
+   (IN (FN!APPLY F B) (REL!RAN F)))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (SUBSET A$0 B$0) (SUBSET B$0 X))
+    (SUBSET (FN!APPLY F A$0) (FN!APPLY F B$0)))))
+ (SUBSET (FN!APPLY F B) X))
+Substituting (= (REL!DOM F) (POWERSET X)) produces ...
+(IMPLIES
+ (AND (= (REL!DOM F) (POWERSET X)) (FN!IS-FUNCTION F)
+  (SUBSET (REL!RAN F) (POWERSET X)) (SUBSET A B) (SUBSET B X))
+ (IF (IN B (POWERSET X))
+  (IMPLIES
+   (AND (IN (FN!APPLY F B) (REL!RAN F))
+    (ALL (A$0 B$0)
+     (IMPLIES (AND (SUBSET A$0 B$0) (SUBSET B$0 X))
+      (SUBSET (FN!APPLY F A$0) (FN!APPLY F B$0)))))
+   (SUBSET (FN!APPLY F B) X))
+  (IMPLIES
+   (ALL (A$1 B$1)
+    (IMPLIES (AND (SUBSET A$1 B$1) (SUBSET B$1 X))
+     (SUBSET (FN!APPLY F A$1) (FN!APPLY F B$1))))
+   (SUBSET (FN!APPLY F B) X))))
+Invoking (SUBSET (REL!RAN F) (POWERSET X)) gives ...
+(IMPLIES
+ (AND (= (REL!DOM F) (POWERSET X)) (FN!IS-FUNCTION F)
+  (ALL (E) (IMPLIES (IN E (REL!RAN F)) (IN E (POWERSET X)))) (SUBSET A B)
+  (SUBSET B X)
+  (IF (IN B (POWERSET X))
+   (AND (IN (FN!APPLY F B) (REL!RAN F))
+    (ALL (A$0 B$0)
+     (IMPLIES (AND (SUBSET A$0 B$0) (SUBSET B$0 X))
+      (SUBSET (FN!APPLY F A$0) (FN!APPLY F B$0)))))
+   (ALL (A$1 B$1)
+    (IMPLIES (AND (SUBSET A$1 B$1) (SUBSET B$1 X))
+     (SUBSET (FN!APPLY F A$1) (FN!APPLY F B$1))))))
+ (SUBSET (FN!APPLY F B) X))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL
+ with the instantiation (= E (FN!APPLY F B)) to ...
+(TRUE)
+DOM-MONOTONIC
+Beginning proof of DOM-MONOTONIC ...
+(IMPLIES (IS-MONOTONIC F X) (= (REL!DOM F) (POWERSET X)))
+Invoking IS-MONOTONIC gives ...
+(IMPLIES
+ (AND (IN F (FN!FUN (POWERSET X) (POWERSET X)))
+  (ALL (A B)
+   (IMPLIES (AND (SUBSET A B) (SUBSET B X))
+    (SUBSET (FN!APPLY F A) (FN!APPLY F B)))))
+ (= (REL!DOM F) (POWERSET X)))
+Which simplifies
+ when rewriting with FN!IN-FUN
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+SUPERPOINTS
+SUPERPOINTS-NON-EMPTY
+Beginning proof of SUPERPOINTS-NON-EMPTY ...
+(IMPLIES (IS-MONOTONIC F X) (IN X (SUPERPOINTS F)))
+Assuming MONOTONIC-PROPERTY with the
+instantiations: (= F F) (= X X) (= A X) (= B X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET X X) (SUBSET X X))
+   (AND (SUBSET (FN!APPLY F X) (FN!APPLY F X)) (SUBSET (FN!APPLY F X) X)))
+  (IS-MONOTONIC F X))
+ (IN X (SUPERPOINTS F)))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, DOM-MONOTONIC,
+SUPERPOINTS.DEFINITION, SUBSET.SELF to ...
+(TRUE)
+SUPERPOINTS-NON-EMPTY-2
+Beginning proof of SUPERPOINTS-NON-EMPTY-2 ...
+(IMPLIES (IS-MONOTONIC F X) (NOT (= (SUPERPOINTS F) (NULLSET))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (SUPERPOINTS F)) (= Y (NULLSET)) generates ...
+(IMPLIES
+ (AND
+  (= (= (SUPERPOINTS F) (NULLSET))
+   (ALL (E) (= (IN E (SUPERPOINTS F)) (IN E (NULLSET)))))
+  (IS-MONOTONIC F X))
+ (NOT (= (SUPERPOINTS F) (NULLSET))))
+Assuming SUPERPOINTS-NON-EMPTY with the
+instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (IN X (SUPERPOINTS F)))
+  (= (= (SUPERPOINTS F) (NULLSET))
+   (ALL (E) (= (IN E (SUPERPOINTS F)) (IN E (NULLSET)))))
+  (IS-MONOTONIC F X))
+ (NOT (= (SUPERPOINTS F) (NULLSET))))
+Assuming NULLSET.DEFINITION generates ...
+(IMPLIES
+ (AND (ALL (X$0) (= (IN X$0 (NULLSET)) (FALSE)))
+  (IMPLIES (IS-MONOTONIC F X) (IN X (SUPERPOINTS F)))
+  (= (= (SUPERPOINTS F) (NULLSET))
+   (ALL (E) (= (IN E (SUPERPOINTS F)) (IN E (NULLSET)))))
+  (IS-MONOTONIC F X))
+ (NOT (= (SUPERPOINTS F) (NULLSET))))
+Which simplifies
+ with the instantiation (= X$0 E) to ...
+(IMPLIES
+ (AND (NOT (SOME (X$0) (IN X$0 (NULLSET)))) (IS-MONOTONIC F X)
+  (IN X (SUPERPOINTS F))
+  (= (= (SUPERPOINTS F) (NULLSET))
+   (ALL (E) (= (IN E (SUPERPOINTS F)) (FALSE)))))
+ (NOT (= (SUPERPOINTS F) (NULLSET))))
+Instantiating (= E X) gives ...
+(IMPLIES
+ (AND (NOT (SOME (X$0) (IN X$0 (NULLSET)))) (IS-MONOTONIC F X)
+  (IN X (SUPERPOINTS F))
+  (= (= (SUPERPOINTS F) (NULLSET))
+   (AND (NOT (IN X (SUPERPOINTS F))) (ALL (E) (NOT (IN E (SUPERPOINTS F)))))))
+ (NOT (= (SUPERPOINTS F) (NULLSET))))
+Which simplifies to ...
+(TRUE)
+FIX
+PROP-2
+Beginning proof of PROP-2 ...
+(IMPLIES (AND (IS-MONOTONIC F X) (IN A (SUPERPOINTS F))) (SUBSET (FIX F) A))
+Invoking FIX gives ...
+(IMPLIES (AND (IS-MONOTONIC F X) (IN A (SUPERPOINTS F)))
+ (SUBSET (CAP!CAP (SUPERPOINTS F)) A))
+Assuming CAP!CAP-SUBSET-MEMBER with the
+instantiations: (= X A) (= Y (SUPERPOINTS F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IN A (SUPERPOINTS F))
+   (= (SUBSET (CAP!CAP (SUPERPOINTS F)) A) (TRUE)))
+  (IS-MONOTONIC F X) (IN A (SUPERPOINTS F)))
+ (SUBSET (CAP!CAP (SUPERPOINTS F)) A))
+Which simplifies to ...
+(TRUE)
+PROP-3
+Beginning proof of PROP-3 ...
+(IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) X))
+Invoking FIX gives ...
+(IMPLIES (IS-MONOTONIC F X) (SUBSET (CAP!CAP (SUPERPOINTS F)) X))
+Assuming SUPERPOINTS-NON-EMPTY with the
+instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (IN X (SUPERPOINTS F))) (IS-MONOTONIC F X))
+ (SUBSET (CAP!CAP (SUPERPOINTS F)) X))
+Which simplifies
+ when rewriting with CAP!CAP-SUBSET-MEMBER, SUBSET.SELF, POWERSET.DEFINITION,
+DOM-MONOTONIC, SUPERPOINTS.DEFINITION to ...
+(TRUE)
+PROP-4
+Beginning proof of PROP-4 ...
+(IMPLIES (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+ (SUBSET (FN!APPLY F (FIX F)) B))
+Assuming MONOTONIC-PROPERTY with the
+instantiations: (= F F) (= X X) (= A (FIX F)) (= B B) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET (FIX F) B) (SUBSET B X))
+   (AND (SUBSET (FN!APPLY F (FIX F)) (FN!APPLY F B))
+    (SUBSET (FN!APPLY F B) X)))
+  (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+ (SUBSET (FN!APPLY F (FIX F)) B))
+Splitting on (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F))) generates ...
+(IF (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+ (IMPLIES
+  (AND
+   (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET (FIX F) B) (SUBSET B X))
+    (AND (SUBSET (FN!APPLY F (FIX F)) (FN!APPLY F B))
+     (SUBSET (FN!APPLY F B) X)))
+   (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+  (SUBSET (FN!APPLY F (FIX F)) B))
+ (IMPLIES
+  (AND
+   (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET (FIX F) B) (SUBSET B X))
+    (AND (SUBSET (FN!APPLY F (FIX F)) (FN!APPLY F B))
+     (SUBSET (FN!APPLY F B) X)))
+   (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+  (SUBSET (FN!APPLY F (FIX F)) B)))
+Invoking FIX gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (IF (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F))) (IS-MONOTONIC F X)
+     (IS-MONOTONIC F X))
+    (SUBSET (CAP!CAP (SUPERPOINTS F)) B) (SUBSET B X))
+   (AND (SUBSET (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) (FN!APPLY F B))
+    (SUBSET (FN!APPLY F B) X)))
+  (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+ (SUBSET (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) B))
+Which simplifies
+ when rewriting with SUBSET.TRANSITIVE, CAP!CAP-SUBSET-MEMBER,
+POWERSET.DEFINITION, DOM-MONOTONIC, SUPERPOINTS.DEFINITION to ...
+(TRUE)
+PROP-5
+Beginning proof of PROP-5 ...
+(IMPLIES (IS-MONOTONIC F X) (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+Assuming CAP!SUBSET-CAP with the
+instantiations: (= X (FN!APPLY F (FIX F))) (= Y (SUPERPOINTS F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (SUPERPOINTS F) (NULLSET)))
+   (= (SUBSET (FN!APPLY F (FIX F)) (CAP!CAP (SUPERPOINTS F)))
+    (ALL (Z)
+     (IMPLIES (IN Z (SUPERPOINTS F)) (SUBSET (FN!APPLY F (FIX F)) Z)))))
+  (IS-MONOTONIC F X))
+ (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+Assuming PROP-4 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND
+  (ALL (B)
+   (IMPLIES (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+    (SUBSET (FN!APPLY F (FIX F)) B)))
+  (IMPLIES (NOT (= (SUPERPOINTS F) (NULLSET)))
+   (= (SUBSET (FN!APPLY F (FIX F)) (CAP!CAP (SUPERPOINTS F)))
+    (ALL (Z)
+     (IMPLIES (IN Z (SUPERPOINTS F)) (SUBSET (FN!APPLY F (FIX F)) Z)))))
+  (IS-MONOTONIC F X))
+ (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+Assuming SUPERPOINTS-NON-EMPTY-2 with the
+instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (NOT (= (SUPERPOINTS F) (NULLSET))))
+  (ALL (B)
+   (IMPLIES (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+    (SUBSET (FN!APPLY F (FIX F)) B)))
+  (IMPLIES (NOT (= (SUPERPOINTS F) (NULLSET)))
+   (= (SUBSET (FN!APPLY F (FIX F)) (CAP!CAP (SUPERPOINTS F)))
+    (ALL (Z)
+     (IMPLIES (IN Z (SUPERPOINTS F)) (SUBSET (FN!APPLY F (FIX F)) Z)))))
+  (IS-MONOTONIC F X))
+ (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+Invoking FIX gives ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (NOT (= (SUPERPOINTS F) (NULLSET))))
+  (ALL (B)
+   (IMPLIES (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+    (SUBSET (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) B)))
+  (IMPLIES (NOT (= (SUPERPOINTS F) (NULLSET)))
+   (=
+    (SUBSET (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) (CAP!CAP (SUPERPOINTS F)))
+    (ALL (Z)
+     (IMPLIES (IN Z (SUPERPOINTS F))
+      (SUBSET (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) Z)))))
+  (IS-MONOTONIC F X))
+ (SUBSET (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) (CAP!CAP (SUPERPOINTS F))))
+Which simplifies
+ with the instantiation (= B Z) to ...
+(TRUE)
+PROP-6
+Beginning proof of PROP-6 ...
+(IMPLIES (IS-MONOTONIC F X) (IN (FIX F) (SUPERPOINTS F)))
+Assuming PROP-3 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) X)) (IS-MONOTONIC F X))
+ (IN (FIX F) (SUPERPOINTS F)))
+Assuming PROP-5 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+  (IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) X)) (IS-MONOTONIC F X))
+ (IN (FIX F) (SUPERPOINTS F)))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, DOM-MONOTONIC,
+SUPERPOINTS.DEFINITION to ...
+(TRUE)
+PROP-7
+Beginning proof of PROP-7 ...
+(IMPLIES (AND (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+ (IN (FN!APPLY F B) (SUPERPOINTS F)))
+Assuming MONOTONIC-PROPERTY with the
+instantiations: (= F F) (= X X) (= A (FN!APPLY F B)) (= B B) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET (FN!APPLY F B) B) (SUBSET B X))
+   (AND (SUBSET (FN!APPLY F (FN!APPLY F B)) (FN!APPLY F B))
+    (SUBSET (FN!APPLY F B) X)))
+  (IS-MONOTONIC F X) (IN B (SUPERPOINTS F)))
+ (IN (FN!APPLY F B) (SUPERPOINTS F)))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, DOM-MONOTONIC,
+SUPERPOINTS.DEFINITION, SUBSET.TRANSITIVE to ...
+(TRUE)
+PROP-8
+Beginning proof of PROP-8 ...
+(IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) (FN!APPLY F (FIX F))))
+Assuming PROP-7 with the
+instantiations: (= F F) (= X X) (= B (FIX F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-MONOTONIC F X) (IN (FIX F) (SUPERPOINTS F)))
+   (IN (FN!APPLY F (FIX F)) (SUPERPOINTS F)))
+  (IS-MONOTONIC F X))
+ (SUBSET (FIX F) (FN!APPLY F (FIX F))))
+Assuming PROP-6 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (IN (FIX F) (SUPERPOINTS F)))
+  (IMPLIES (AND (IS-MONOTONIC F X) (IN (FIX F) (SUPERPOINTS F)))
+   (IN (FN!APPLY F (FIX F)) (SUPERPOINTS F)))
+  (IS-MONOTONIC F X))
+ (SUBSET (FIX F) (FN!APPLY F (FIX F))))
+Which simplifies to ...
+(IMPLIES
+ (AND (IS-MONOTONIC F X) (IN (FIX F) (SUPERPOINTS F))
+  (IN (FN!APPLY F (FIX F)) (SUPERPOINTS F)))
+ (SUBSET (FIX F) (FN!APPLY F (FIX F))))
+Invoking FIX gives ...
+(IMPLIES
+ (AND (IS-MONOTONIC F X) (IN (CAP!CAP (SUPERPOINTS F)) (SUPERPOINTS F))
+  (IN (FN!APPLY F (CAP!CAP (SUPERPOINTS F))) (SUPERPOINTS F)))
+ (SUBSET (CAP!CAP (SUPERPOINTS F)) (FN!APPLY F (CAP!CAP (SUPERPOINTS F)))))
+Which simplifies
+ when rewriting with CAP!CAP-SUBSET-MEMBER to ...
+(TRUE)
+FIX-IN-DOM
+Beginning proof of FIX-IN-DOM ...
+(IMPLIES (IS-MONOTONIC F X) (IN (FIX F) (REL!DOM F)))
+Assuming PROP-3 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) X)) (IS-MONOTONIC F X))
+ (IN (FIX F) (REL!DOM F)))
+Which simplifies to ...
+(IMPLIES (AND (IS-MONOTONIC F X) (SUBSET (FIX F) X)) (IN (FIX F) (REL!DOM F)))
+Invoking IS-MONOTONIC gives ...
+(IMPLIES
+ (AND (IN F (FN!FUN (POWERSET X) (POWERSET X)))
+  (ALL (A B)
+   (IMPLIES (AND (SUBSET A B) (SUBSET B X))
+    (SUBSET (FN!APPLY F A) (FN!APPLY F B))))
+  (SUBSET (FIX F) X))
+ (IN (FIX F) (REL!DOM F)))
+Which simplifies
+ when rewriting with FN!IN-FUN
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F) (= (REL!DOM F) (POWERSET X))
+  (SUBSET (REL!RAN F) (POWERSET X))
+  (ALL (A B)
+   (IMPLIES (AND (SUBSET A B) (SUBSET B X))
+    (SUBSET (FN!APPLY F A) (FN!APPLY F B))))
+  (SUBSET (FIX F) X))
+ (IN (FIX F) (REL!DOM F)))
+Substituting (= (REL!DOM F) (POWERSET X)) produces ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F) (= (REL!DOM F) (POWERSET X))
+  (SUBSET (REL!RAN F) (POWERSET X))
+  (ALL (A B)
+   (IMPLIES (AND (SUBSET A B) (SUBSET B X))
+    (SUBSET (FN!APPLY F A) (FN!APPLY F B))))
+  (SUBSET (FIX F) X))
+ (IN (FIX F) (POWERSET X)))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+FIX-IN-DOM-2
+Beginning proof of FIX-IN-DOM-2 ...
+(IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) X))
+Assuming PROP-3 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) X)) (IS-MONOTONIC F X))
+ (SUBSET (FIX F) X))
+Which simplifies to ...
+(TRUE)
+FIX-IS-FIXEDPOINT
+Beginning proof of FIX-IS-FIXEDPOINT ...
+(IMPLIES (IS-MONOTONIC F X) (= (FN!APPLY F (FIX F)) (FIX F)))
+Assuming =.EXTENSIONAL.SUBSET with the
+instantiations: (= X (FN!APPLY F (FIX F))) (= Y (FIX F)) generates ...
+(IMPLIES
+ (AND
+  (= (= (FN!APPLY F (FIX F)) (FIX F))
+   (AND (SUBSET (FN!APPLY F (FIX F)) (FIX F))
+    (SUBSET (FIX F) (FN!APPLY F (FIX F)))))
+  (IS-MONOTONIC F X))
+ (= (FN!APPLY F (FIX F)) (FIX F)))
+Assuming PROP-5 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+  (= (= (FN!APPLY F (FIX F)) (FIX F))
+   (AND (SUBSET (FN!APPLY F (FIX F)) (FIX F))
+    (SUBSET (FIX F) (FN!APPLY F (FIX F)))))
+  (IS-MONOTONIC F X))
+ (= (FN!APPLY F (FIX F)) (FIX F)))
+Assuming PROP-8 with the instantiations: (= F F) (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-MONOTONIC F X) (SUBSET (FIX F) (FN!APPLY F (FIX F))))
+  (IMPLIES (IS-MONOTONIC F X) (SUBSET (FN!APPLY F (FIX F)) (FIX F)))
+  (= (= (FN!APPLY F (FIX F)) (FIX F))
+   (AND (SUBSET (FN!APPLY F (FIX F)) (FIX F))
+    (SUBSET (FIX F) (FN!APPLY F (FIX F)))))
+  (IS-MONOTONIC F X))
+ (= (FN!APPLY F (FIX F)) (FIX F)))
+Which simplifies to ...
+(TRUE)
+FIX-IS-LEAST-SUPERPOINT
+Beginning proof of FIX-IS-LEAST-SUPERPOINT ...
+(IMPLIES (AND (IS-MONOTONIC F X) (SUBSET A X) (SUBSET (FN!APPLY F A) A))
+ (SUBSET (FIX F) A))
+Assuming PROP-2 with the instantiations: (= F F) (= X X) (= A A) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-MONOTONIC F X) (IN A (SUPERPOINTS F))) (SUBSET (FIX F) A))
+  (IS-MONOTONIC F X) (SUBSET A X) (SUBSET (FN!APPLY F A) A))
+ (SUBSET (FIX F) A))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-MONOTONIC F X) (SUBSET A X) (SUBSET (FN!APPLY F A) A)
+  (IMPLIES (AND (IS-MONOTONIC F X) (IN A (SUPERPOINTS F)))
+   (SUBSET (FIX F) A)))
+ (SUBSET (FIX F) A))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, DOM-MONOTONIC,
+SUPERPOINTS.DEFINITION to ...
+(TRUE)
+FIX-IS-LEAST-FIXEDPOINT
+Beginning proof of FIX-IS-LEAST-FIXEDPOINT ...
+(IMPLIES (AND (IS-MONOTONIC F X) (SUBSET A X) (= (FN!APPLY F A) A))
+ (SUBSET (FIX F) A))
+Assuming FIX-IS-LEAST-SUPERPOINT with the
+instantiations: (= F F) (= X X) (= A A) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET A X) (SUBSET (FN!APPLY F A) A))
+   (SUBSET (FIX F) A))
+  (IS-MONOTONIC F X) (SUBSET A X) (= (FN!APPLY F A) A))
+ (SUBSET (FIX F) A))
+Assuming SUBSET.SELF with the instantiations: (= S A) generates ...
+(IMPLIES
+ (AND (= (SUBSET A A) (TRUE))
+  (IMPLIES (AND (IS-MONOTONIC F X) (SUBSET A X) (SUBSET (FN!APPLY F A) A))
+   (SUBSET (FIX F) A))
+  (IS-MONOTONIC F X) (SUBSET A X) (= (FN!APPLY F A) A))
+ (SUBSET (FIX F) A))
+Which simplifies to ...
+(TRUE)
+Done.

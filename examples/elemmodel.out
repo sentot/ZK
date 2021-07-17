@@ -1,0 +1,1125 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/elemmodel.ver"
+SUCC-CLOSED
+>=-LEMMA-1
+Beginning proof of >=-LEMMA-1 ...
+(IMPLIES (AND (>= Y X) (IN X Z) (SUCC-CLOSED Z)) (IN Y Z))
+Assuming >=.DEFINITION with the instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (= (>= Y X)
+   (ALL (Z$0)
+    (IMPLIES (AND (IN X Z$0) (ALL (A) (IMPLIES (IN A Z$0) (IN (SUCC A) Z$0))))
+     (IN Y Z$0))))
+  (>= Y X) (IN X Z) (SUCC-CLOSED Z))
+ (IN Y Z))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= Y X) (IN X Z) (SUCC-CLOSED Z)
+  (= (>= Y X)
+   (ALL (Z$0)
+    (IMPLIES (AND (IN X Z$0) (ALL (A) (IMPLIES (IN A Z$0) (IN (SUCC A) Z$0))))
+     (IN Y Z$0)))))
+ (IN Y Z))
+Which simplifies
+ with invocation of SUCC-CLOSED
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (>= Y X) (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z)))
+  (= (TRUE)
+   (ALL (Z$0)
+    (IMPLIES
+     (AND (IN X Z$0) (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+     (IN Y Z$0)))))
+ (IN Y Z))
+Instantiating (= Z$0 Z) gives ...
+(IMPLIES
+ (AND (>= Y X) (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z)))
+  (IMPLIES (AND (IN X Z) (ALL (A$0) (IMPLIES (IN A$0 Z) (IN (SUCC A$0) Z))))
+   (IN Y Z))
+  (ALL (Z$0)
+   (IMPLIES
+    (AND (IN X Z$0) (ALL (A$1) (IMPLIES (IN A$1 Z$0) (IN (SUCC A$1) Z$0))))
+    (IN Y Z$0))))
+ (IN Y Z))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the instantiation (= A A$0) to ...
+(TRUE)
+>=-LEMMA-2
+Beginning proof of >=-LEMMA-2 ...
+(IMPLIES (ALL (Z) (IMPLIES (AND (IN X Z) (SUCC-CLOSED Z)) (IN Y Z))) (>= Y X))
+Assuming >=.DEFINITION with the instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (= (>= Y X)
+   (ALL (Z)
+    (IMPLIES (AND (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+     (IN Y Z))))
+  (ALL (Z$0) (IMPLIES (AND (IN X Z$0) (SUCC-CLOSED Z$0)) (IN Y Z$0))))
+ (>= Y X))
+Splitting on (>= Y X) generates ...
+(IF (>= Y X)
+ (IMPLIES
+  (AND
+   (= (>= Y X)
+    (ALL (Z)
+     (IMPLIES (AND (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+      (IN Y Z))))
+   (ALL (Z$0) (IMPLIES (AND (IN X Z$0) (SUCC-CLOSED Z$0)) (IN Y Z$0))))
+  (>= Y X))
+ (IMPLIES
+  (AND
+   (= (>= Y X)
+    (ALL (Z$1)
+     (IMPLIES
+      (AND (IN X Z$1) (ALL (A$0) (IMPLIES (IN A$0 Z$1) (IN (SUCC A$0) Z$1))))
+      (IN Y Z$1))))
+   (ALL (Z$2) (IMPLIES (AND (IN X Z$2) (SUCC-CLOSED Z$2)) (IN Y Z$2))))
+  (>= Y X)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (NOT (>= Y X))
+  (= (FALSE)
+   (ALL (Z)
+    (IMPLIES (AND (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+     (IN Y Z)))))
+ (NOT (ALL (Z$0) (IMPLIES (AND (IN X Z$0) (SUCC-CLOSED Z$0)) (IN Y Z$0)))))
+Instantiating (= Z$0 Z) gives ...
+(IMPLIES
+ (AND (NOT (>= Y X))
+  (NOT
+   (IMPLIES (AND (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+    (IN Y Z))))
+ (NOT
+  (AND (IMPLIES (AND (IN X Z) (SUCC-CLOSED Z)) (IN Y Z))
+   (ALL (Z$0) (IMPLIES (AND (IN X Z$0) (SUCC-CLOSED Z$0)) (IN Y Z$0))))))
+Which simplifies
+ with invocation of SUCC-CLOSED
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+>=-TRANSITIVE
+Beginning proof of >=-TRANSITIVE ...
+(IMPLIES (AND (>= I J) (>= J K)) (= (>= I K) (TRUE)))
+Assuming >=-LEMMA-2 with the instantiations: (= Y I) (= X K) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (ALL (Z) (IMPLIES (AND (IN K Z) (SUCC-CLOSED Z)) (IN I Z)))
+   (>= I K))
+  (>= I J) (>= J K))
+ (>= I K))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (NOT (ALL (Z) (IMPLIES (AND (IN K Z) (SUCC-CLOSED Z)) (IN I Z))))
+  (>= I J) (>= J K))
+ (>= I K))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (IMPLIES (AND (IN K Z) (SUCC-CLOSED Z)) (IN I Z))) (>= I J)
+  (>= J K))
+ (>= I K))
+Assuming >=-LEMMA-1 with the instantiations: (= Y I) (= X J) (= Z Z) generates
+...
+(IMPLIES
+ (AND (IMPLIES (AND (>= I J) (IN J Z) (SUCC-CLOSED Z)) (IN I Z))
+  (NOT (IMPLIES (AND (IN K Z) (SUCC-CLOSED Z)) (IN I Z))) (>= I J) (>= J K))
+ (>= I K))
+Assuming >=-LEMMA-1 with the instantiations: (= X K) (= Y J) (= Z Z) generates
+...
+(IMPLIES
+ (AND (IMPLIES (AND (>= J K) (IN K Z) (SUCC-CLOSED Z)) (IN J Z))
+  (IMPLIES (AND (>= I J) (IN J Z) (SUCC-CLOSED Z)) (IN I Z))
+  (NOT (IMPLIES (AND (IN K Z) (SUCC-CLOSED Z)) (IN I Z))) (>= I J) (>= J K))
+ (>= I K))
+Trivially simplifies to ...
+(TRUE)
+>=-SELF
+Beginning proof of >=-SELF ...
+(= (>= X X) (TRUE))
+Assuming >=.DEFINITION with the instantiations: (= X X) (= Y X) generates ...
+(IMPLIES
+ (= (>= X X)
+  (ALL (Z)
+   (IMPLIES (AND (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+    (IN X Z))))
+ (>= X X))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+>=-SUCC-SELF
+Beginning proof of >=-SUCC-SELF ...
+(= (>= (SUCC X) X) (TRUE))
+Assuming >=.DEFINITION with the
+instantiations: (= X X) (= Y (SUCC X)) generates ...
+(IMPLIES
+ (= (>= (SUCC X) X)
+  (ALL (Z)
+   (IMPLIES (AND (IN X Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+    (IN (SUCC X) Z))))
+ (>= (SUCC X) X))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the instantiation (= A X) to ...
+(TRUE)
+>=-SUCC-SUBGOAL
+Beginning proof of >=-SUCC-SUBGOAL ...
+(IMPLIES (>= X Y) (= (>= (SUCC X) Y) (TRUE)))
+Assuming >=-TRANSITIVE with the
+instantiations: (= I (SUCC X)) (= J X) (= K Y) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (>= (SUCC X) X) (>= X Y)) (= (>= (SUCC X) Y) (TRUE)))
+  (>= X Y))
+ (>= (SUCC X) Y))
+Assuming >=-SUCC-SELF with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (= (>= (SUCC X) X) (TRUE))
+  (IMPLIES (AND (>= (SUCC X) X) (>= X Y)) (>= (SUCC X) Y)) (>= X Y))
+ (>= (SUCC X) Y))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+>=-SUCC-DEVELOPMENT
+Beginning proof of >=-SUCC-DEVELOPMENT ...
+(= (>= X Y) (OR (= X Y) (>= X (SUCC Y))))
+Assuming >=.DEFINITION with the instantiations: (= X Y) (= Y X) generates ...
+(IMPLIES
+ (= (>= X Y)
+  (ALL (Z)
+   (IMPLIES (AND (IN Y Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+    (IN X Z))))
+ (= (>= X Y) (OR (= X Y) (>= X (SUCC Y)))))
+Assuming >=.DEFINITION with the
+instantiations: (= X (SUCC Y)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (= (>= X (SUCC Y))
+   (ALL (Z)
+    (IMPLIES
+     (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+     (IN X Z))))
+  (= (>= X Y)
+   (ALL (Z$0)
+    (IMPLIES
+     (AND (IN Y Z$0) (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+     (IN X Z$0)))))
+ (= (>= X Y) (OR (= X Y) (>= X (SUCC Y)))))
+Splitting on (AND (>= X Y) (>= X (SUCC Y))) generates ...
+(IF (AND (>= X Y) (>= X (SUCC Y)))
+ (IMPLIES
+  (AND
+   (= (>= X (SUCC Y))
+    (ALL (Z)
+     (IMPLIES
+      (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+      (IN X Z))))
+   (= (>= X Y)
+    (ALL (Z$0)
+     (IMPLIES
+      (AND (IN Y Z$0) (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+      (IN X Z$0)))))
+  (= (>= X Y) (OR (= X Y) (>= X (SUCC Y)))))
+ (IMPLIES
+  (AND
+   (= (>= X (SUCC Y))
+    (ALL (Z$1)
+     (IMPLIES
+      (AND (IN (SUCC Y) Z$1)
+       (ALL (A$1) (IMPLIES (IN A$1 Z$1) (IN (SUCC A$1) Z$1))))
+      (IN X Z$1))))
+   (= (>= X Y)
+    (ALL (Z$2)
+     (IMPLIES
+      (AND (IN Y Z$2) (ALL (A$2) (IMPLIES (IN A$2 Z$2) (IN (SUCC A$2) Z$2))))
+      (IN X Z$2)))))
+  (= (>= X Y) (OR (= X Y) (>= X (SUCC Y))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IF (>= X Y)
+ (IMPLIES
+  (AND (NOT (>= X (SUCC Y)))
+   (= (FALSE)
+    (ALL (Z)
+     (IMPLIES
+      (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+      (IN X Z))))
+   (= (TRUE)
+    (ALL (Z$0)
+     (IMPLIES
+      (AND (IN Y Z$0) (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+      (IN X Z$0)))))
+  (= X Y))
+ (IMPLIES
+  (AND
+   (= (>= X (SUCC Y))
+    (ALL (Z$1)
+     (IMPLIES
+      (AND (IN (SUCC Y) Z$1)
+       (ALL (A$1) (IMPLIES (IN A$1 Z$1) (IN (SUCC A$1) Z$1))))
+      (IN X Z$1))))
+   (= (FALSE)
+    (ALL (Z$2)
+     (IMPLIES
+      (AND (IN Y Z$2) (ALL (A$2) (IMPLIES (IN A$2 Z$2) (IN (SUCC A$2) Z$2))))
+      (IN X Z$2)))))
+  (AND (NOT (= X Y)) (NOT (>= X (SUCC Y))))))
+Instantiating (= Z$0 (SETADD Y Z)) gives ...
+(IF (>= X Y)
+ (IMPLIES
+  (AND (NOT (>= X (SUCC Y)))
+   (SOME (Z)
+    (AND
+     (NOT
+      (IMPLIES
+       (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+       (IN X Z)))
+     (IMPLIES
+      (AND (IN Y (SETADD Y Z))
+       (ALL (A$0)
+        (IMPLIES (IN A$0 (SETADD Y Z)) (IN (SUCC A$0) (SETADD Y Z)))))
+      (IN X (SETADD Y Z)))
+     (ALL (Z$0)
+      (IMPLIES
+       (AND (IN Y Z$0) (ALL (A$1) (IMPLIES (IN A$1 Z$0) (IN (SUCC A$1) Z$0))))
+       (IN X Z$0))))))
+  (= X Y))
+ (IMPLIES
+  (AND
+   (= (>= X (SUCC Y))
+    (ALL (Z$1)
+     (IMPLIES
+      (AND (IN (SUCC Y) Z$1)
+       (ALL (A$2) (IMPLIES (IN A$2 Z$1) (IN (SUCC A$2) Z$1))))
+      (IN X Z$1))))
+   (NOT
+    (ALL (Z$2)
+     (IMPLIES
+      (AND (IN Y Z$2) (ALL (A$3) (IMPLIES (IN A$3 Z$2) (IN (SUCC A$3) Z$2))))
+      (IN X Z$2)))))
+  (AND (NOT (= X Y)) (NOT (>= X (SUCC Y))))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION
+ forward chaining using >=.SAME.TYPE
+ with the instantiation (= A A$0) to ...
+(IF (>= X Y)
+ (IMPLIES
+  (AND (NOT (>= X (SUCC Y)))
+   (SOME (Z)
+    (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z)))
+     (NOT (IN X Z)) (= X Y))))
+  (= X Y))
+ (IMPLIES
+  (AND
+   (= (>= X (SUCC Y))
+    (ALL (Z$0)
+     (IMPLIES
+      (AND (IN (SUCC Y) Z$0)
+       (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+      (IN X Z$0))))
+   (NOT
+    (ALL (Z$1)
+     (IMPLIES
+      (AND (IN Y Z$1) (ALL (A$1) (IMPLIES (IN A$1 Z$1) (IN (SUCC A$1) Z$1))))
+      (IN X Z$1)))))
+  (AND (NOT (= X Y)) (NOT (>= X (SUCC Y))))))
+Splitting on (= X Y) generates ...
+(IF (= X Y)
+ (IF (>= X Y)
+  (IMPLIES
+   (AND (NOT (>= X (SUCC Y)))
+    (SOME (Z)
+     (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z)))
+      (NOT (IN X Z)) (= X Y))))
+   (= X Y))
+  (IMPLIES
+   (AND
+    (= (>= X (SUCC Y))
+     (ALL (Z$0)
+      (IMPLIES
+       (AND (IN (SUCC Y) Z$0)
+        (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+       (IN X Z$0))))
+    (NOT
+     (ALL (Z$1)
+      (IMPLIES
+       (AND (IN Y Z$1) (ALL (A$1) (IMPLIES (IN A$1 Z$1) (IN (SUCC A$1) Z$1))))
+       (IN X Z$1)))))
+   (AND (NOT (= X Y)) (NOT (>= X (SUCC Y))))))
+ (IF (>= X Y)
+  (IMPLIES
+   (AND (NOT (>= X (SUCC Y)))
+    (SOME (Z$2)
+     (AND (IN (SUCC Y) Z$2)
+      (ALL (A$2) (IMPLIES (IN A$2 Z$2) (IN (SUCC A$2) Z$2))) (NOT (IN X Z$2))
+      (= X Y))))
+   (= X Y))
+  (IMPLIES
+   (AND
+    (= (>= X (SUCC Y))
+     (ALL (Z$3)
+      (IMPLIES
+       (AND (IN (SUCC Y) Z$3)
+        (ALL (A$3) (IMPLIES (IN A$3 Z$3) (IN (SUCC A$3) Z$3))))
+       (IN X Z$3))))
+    (NOT
+     (ALL (Z$4)
+      (IMPLIES
+       (AND (IN Y Z$4) (ALL (A$4) (IMPLIES (IN A$4 Z$4) (IN (SUCC A$4) Z$4))))
+       (IN X Z$4)))))
+   (AND (NOT (= X Y)) (NOT (>= X (SUCC Y)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (NOT (= X Y)) (NOT (>= X Y))
+  (= (>= X (SUCC Y))
+   (ALL (Z)
+    (IMPLIES
+     (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+     (IN X Z))))
+  (NOT
+   (ALL (Z$0)
+    (IMPLIES
+     (AND (IN Y Z$0) (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+     (IN X Z$0)))))
+ (NOT (>= X (SUCC Y))))
+Instantiating (= Z Z$0) gives ...
+(IMPLIES
+ (AND (NOT (= X Y)) (NOT (>= X Y))
+  (SOME (Z)
+   (AND
+    (= (>= X (SUCC Y))
+     (AND
+      (IMPLIES
+       (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+       (IN X Z))
+      (ALL (Z$0)
+       (IMPLIES
+        (AND (IN (SUCC Y) Z$0)
+         (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+        (IN X Z$0)))))
+    (NOT
+     (IMPLIES
+      (AND (IN Y Z) (ALL (A$1) (IMPLIES (IN A$1 Z) (IN (SUCC A$1) Z))))
+      (IN X Z))))))
+ (NOT (>= X (SUCC Y))))
+Splitting on (>= X (SUCC Y)) generates ...
+(IF (>= X (SUCC Y))
+ (IMPLIES
+  (AND (NOT (= X Y)) (NOT (>= X Y))
+   (SOME (Z)
+    (AND
+     (= (>= X (SUCC Y))
+      (AND
+       (IMPLIES
+        (AND (IN (SUCC Y) Z) (ALL (A) (IMPLIES (IN A Z) (IN (SUCC A) Z))))
+        (IN X Z))
+       (ALL (Z$0)
+        (IMPLIES
+         (AND (IN (SUCC Y) Z$0)
+          (ALL (A$0) (IMPLIES (IN A$0 Z$0) (IN (SUCC A$0) Z$0))))
+         (IN X Z$0)))))
+     (NOT
+      (IMPLIES
+       (AND (IN Y Z) (ALL (A$1) (IMPLIES (IN A$1 Z) (IN (SUCC A$1) Z))))
+       (IN X Z))))))
+  (NOT (>= X (SUCC Y))))
+ (IMPLIES
+  (AND (NOT (= X Y)) (NOT (>= X Y))
+   (SOME (Z$1)
+    (AND
+     (= (>= X (SUCC Y))
+      (AND
+       (IMPLIES
+        (AND (IN (SUCC Y) Z$1)
+         (ALL (A$2) (IMPLIES (IN A$2 Z$1) (IN (SUCC A$2) Z$1))))
+        (IN X Z$1))
+       (ALL (Z$2)
+        (IMPLIES
+         (AND (IN (SUCC Y) Z$2)
+          (ALL (A$3) (IMPLIES (IN A$3 Z$2) (IN (SUCC A$3) Z$2))))
+         (IN X Z$2)))))
+     (NOT
+      (IMPLIES
+       (AND (IN Y Z$1) (ALL (A$4) (IMPLIES (IN A$4 Z$1) (IN (SUCC A$4) Z$1))))
+       (IN X Z$1))))))
+  (NOT (>= X (SUCC Y)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the instantiations (= A A$1) (= A$1 Y) (= A$2 A$4) (= A$4 Y) to ...
+(TRUE)
+>=-SELF-PRED
+Beginning proof of >=-SELF-PRED ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (>= X (PRED X)) (TRUE)))
+Which simplifies
+ when rewriting with PRED.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions PRED.INT to ...
+(TRUE)
+>=-PRED-DEVELOPMENT
+Beginning proof of >=-PRED-DEVELOPMENT ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (>= X Y) (OR (= X Y) (>= (PRED X) Y))))
+Which simplifies
+ when rewriting with PRED.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions PRED.INT to ...
+(TRUE)
+ASSYMETRY
+Beginning proof of ASSYMETRY ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (= X Y) (AND (>= X Y) (>= Y X))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+TRICHOTOMY
+Beginning proof of TRICHOTOMY ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (TYPE-OF X)))
+ (OR (= X Y) (> X Y) (< X Y)))
+Which simplifies
+ when rewriting with SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+>=-MAX-RIGHT
+Beginning proof of >=-MAX-RIGHT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Z) (TYPE-OF X)))
+ (= (>= X (MAX Y Z)) (AND (>= X Y) (>= X Z))))
+Which simplifies
+ with invocation of MAX
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+>=-MAX-LEFT
+Beginning proof of >=-MAX-LEFT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (TYPE-OF X)))
+ (= (>= (MAX X Y) Z) (OR (>= X Z) (>= Y Z))))
+Which simplifies
+ with invocation of MAX
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+>=-MIN-LEFT
+Beginning proof of >=-MIN-LEFT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (TYPE-OF X)))
+ (= (>= (MIN X Y) Z) (AND (>= X Z) (>= Y Z))))
+Which simplifies
+ with invocation of MIN
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+>=-MIN-RIGHT
+Beginning proof of >=-MIN-RIGHT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Z) (TYPE-OF X)))
+ (= (>= X (MIN Y Z)) (OR (>= X Y) (>= X Z))))
+Which simplifies
+ with invocation of MIN
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+MIN-TYPE
+Beginning proof of MIN-TYPE ...
+(IMPLIES (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF (MIN X Y)) (TYPE-OF X)))
+Which simplifies
+ with invocation of MIN
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+MAX-TYPE
+Beginning proof of MAX-TYPE ...
+(IMPLIES (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF (MAX X Y)) (TYPE-OF X)))
+Which simplifies
+ with invocation of MAX
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+SUCC-TYPE
+Beginning proof of SUCC-TYPE ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (TYPE-OF (SUCC X)) (TYPE-OF X)))
+Which simplifies
+ with the assumptions SUCC.INT to ...
+(TRUE)
+NULL-RANGE
+Beginning proof of NULL-RANGE ...
+(IMPLIES (NOT (<= X Y)) (= (RANGE X Y) (NULLSET)))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (RANGE X Y)) (= Y (NULLSET)) generates ...
+(IMPLIES
+ (AND
+  (= (= (RANGE X Y) (NULLSET))
+   (ALL (E) (= (IN E (RANGE X Y)) (IN E (NULLSET)))))
+  (NOT (>= Y X)))
+ (= (RANGE X Y) (NULLSET)))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND
+  (= (= (RANGE X Y) (NULLSET)) (ALL (E) (IMPLIES (>= E X) (NOT (>= Y E)))))
+  (NOT (>= Y X)))
+ (= (RANGE X Y) (NULLSET)))
+Splitting on (= (RANGE X Y) (NULLSET)) generates ...
+(IF (= (RANGE X Y) (NULLSET))
+ (IMPLIES
+  (AND
+   (= (= (RANGE X Y) (NULLSET)) (ALL (E) (IMPLIES (>= E X) (NOT (>= Y E)))))
+   (NOT (>= Y X)))
+  (= (RANGE X Y) (NULLSET)))
+ (IMPLIES
+  (AND
+   (= (= (RANGE X Y) (NULLSET))
+    (ALL (E$0) (IMPLIES (>= E$0 X) (NOT (>= Y E$0)))))
+   (NOT (>= Y X)))
+  (= (RANGE X Y) (NULLSET))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (NOT (= (RANGE X Y) (NULLSET)))
+  (= (FALSE) (ALL (E) (IMPLIES (>= E X) (NOT (>= Y E))))))
+ (>= Y X))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= (RANGE X Y) (NULLSET))) (NOT (IMPLIES (>= E X) (NOT (>= Y E)))))
+ (>= Y X))
+Assuming >=-TRANSITIVE with the
+instantiations: (= I Y) (= J E) (= K X) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (>= Y E) (>= E X)) (= (>= Y X) (TRUE)))
+  (NOT (= (RANGE X Y) (NULLSET))) (NOT (IMPLIES (>= E X) (NOT (>= Y E)))))
+ (>= Y X))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+SINGLETON-RANGE
+Beginning proof of SINGLETON-RANGE ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (RANGE X X) (UNIT X)))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (RANGE X X)) (= Y (UNIT X)) generates ...
+(IMPLIES
+ (AND
+  (= (= (RANGE X X) (UNIT X))
+   (ALL (E) (= (IN E (RANGE X X)) (IN E (UNIT X)))))
+  (= (TYPE-OF X) (INT)))
+ (= (RANGE X X) (UNIT X)))
+Splitting on (= (RANGE X X) (UNIT X)) generates ...
+(IF (= (RANGE X X) (UNIT X))
+ (IMPLIES
+  (AND
+   (= (= (RANGE X X) (UNIT X))
+    (ALL (E) (= (IN E (RANGE X X)) (IN E (UNIT X)))))
+   (= (TYPE-OF X) (INT)))
+  (= (RANGE X X) (UNIT X)))
+ (IMPLIES
+  (AND
+   (= (= (RANGE X X) (UNIT X))
+    (ALL (E$0) (= (IN E$0 (RANGE X X)) (IN E$0 (UNIT X)))))
+   (= (TYPE-OF X) (INT)))
+  (= (RANGE X X) (UNIT X))))
+Which simplifies
+ when rewriting with UNIT.DEFINITION, RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (NOT (= (RANGE X X) (UNIT X)))
+  (= (FALSE)
+   (ALL (E)
+    (IF (>= E X) (IMPLIES (>= X E) (= (TRUE) (= E X))) (= (FALSE) (= E X))))))
+ (NOT (= (TYPE-OF X) (INT))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= (RANGE X X) (UNIT X)))
+  (NOT (IF (>= E X) (IMPLIES (>= X E) (= E X)) (NOT (= E X)))))
+ (NOT (= (TYPE-OF X) (INT))))
+Assuming ASSYMETRY with the instantiations: (= X E) (= Y X) generates ...
+(IMPLIES
+ (AND (IMPLIES (= (TYPE-OF E) (INT)) (= (= E X) (AND (>= E X) (>= X E))))
+  (NOT (= (RANGE X X) (UNIT X)))
+  (NOT (IF (>= E X) (IMPLIES (>= X E) (= E X)) (NOT (= E X)))))
+ (NOT (= (TYPE-OF X) (INT))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+RANGE-BOTTOM-EXPANSION
+Beginning proof of RANGE-BOTTOM-EXPANSION ...
+(IMPLIES (<= X Y) (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (RANGE X Y))
+                (= Y (SETADD X (RANGE (SUCC X) Y))) generates
+...
+(IMPLIES
+ (AND
+  (= (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y)))
+   (ALL (E) (= (IN E (RANGE X Y)) (IN E (SETADD X (RANGE (SUCC X) Y))))))
+  (>= Y X))
+ (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+Splitting on (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))) generates ...
+(IF (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y)))
+ (IMPLIES
+  (AND
+   (= (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y)))
+    (ALL (E) (= (IN E (RANGE X Y)) (IN E (SETADD X (RANGE (SUCC X) Y))))))
+   (>= Y X))
+  (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+ (IMPLIES
+  (AND
+   (= (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y)))
+    (ALL (E$0)
+     (= (IN E$0 (RANGE X Y)) (IN E$0 (SETADD X (RANGE (SUCC X) Y))))))
+   (>= Y X))
+  (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y)))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION, RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (NOT (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+  (= (FALSE)
+   (ALL (E)
+    (IF (>= E X) (IF (>= Y E) (OR (= E X) (>= E (SUCC X))) (NOT (= E X)))
+     (AND (NOT (= E X)) (IMPLIES (>= E (SUCC X)) (NOT (>= Y E))))))))
+ (NOT (>= Y X)))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+  (NOT
+   (IF (>= E X) (IF (>= Y E) (OR (= E X) (>= E (SUCC X))) (NOT (= E X)))
+    (AND (NOT (= E X)) (IMPLIES (>= E (SUCC X)) (NOT (>= Y E)))))))
+ (NOT (>= Y X)))
+Assuming >=-SUCC-DEVELOPMENT with the
+instantiations: (= X E) (= Y X) generates ...
+(IMPLIES
+ (AND (= (>= E X) (OR (= E X) (>= E (SUCC X))))
+  (NOT (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+  (NOT
+   (IF (>= E X) (IF (>= Y E) (OR (= E X) (>= E (SUCC X))) (NOT (= E X)))
+    (AND (NOT (= E X)) (IMPLIES (>= E (SUCC X)) (NOT (>= Y E)))))))
+ (NOT (>= Y X)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+RANGE-TOP-EXPANSION
+Beginning proof of RANGE-TOP-EXPANSION ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (<= X Y))
+ (= (RANGE X Y) (SETADD Y (RANGE X (PRED Y)))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (RANGE X Y))
+                (= Y (SETADD Y (RANGE X (PRED Y)))) generates
+...
+(IMPLIES
+ (AND
+  (= (= (RANGE X Y) (SETADD Y (RANGE X (PRED Y))))
+   (ALL (E) (= (IN E (RANGE X Y)) (IN E (SETADD Y (RANGE X (PRED Y)))))))
+  (= (TYPE-OF X) (INT)) (>= Y X))
+ (= (RANGE X Y) (SETADD Y (RANGE X (PRED Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT)) (>= Y X)
+  (= (= (RANGE X Y) (SETADD Y (RANGE X (PRED Y))))
+   (ALL (E) (= (IN E (RANGE X Y)) (IN E (SETADD Y (RANGE X (PRED Y))))))))
+ (= (RANGE X Y) (SETADD Y (RANGE X (PRED Y)))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION, RANGE.DEFINITION, PRED.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions PRED.INT to ...
+(TRUE)
+RANGE-SUBSET-RANGE
+Beginning proof of RANGE-SUBSET-RANGE ...
+(= (SUBSET (RANGE U V) (RANGE X Y)) (IMPLIES (<= U V) (AND (<= X U) (<= V Y))))
+Splitting on (<= U V) generates ...
+(IF (<= U V)
+ (= (SUBSET (RANGE U V) (RANGE X Y))
+  (IMPLIES (<= U V) (AND (<= X U) (<= V Y))))
+ (= (SUBSET (RANGE U V) (RANGE X Y))
+  (IMPLIES (<= U V) (AND (<= X U) (<= V Y)))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SUBSET.NULLSET.LEFT, NULL-RANGE, RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (>= V U)
+ (IF (>= U X)
+  (IF (>= Y V)
+   (= (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E))))
+    (TRUE))
+   (=
+    (ALL (E$0)
+     (IMPLIES (AND (>= E$0 U) (>= V E$0)) (AND (>= E$0 X) (>= Y E$0))))
+    (FALSE)))
+  (=
+   (ALL (E$1)
+    (IMPLIES (AND (>= E$1 U) (>= V E$1)) (AND (>= E$1 X) (>= Y E$1))))
+   (FALSE))))
+Starting case 2 ...
+(IMPLIES (AND (>= V U) (>= U X))
+ (IF (>= Y V)
+  (= (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E))))
+   (TRUE))
+  (=
+   (ALL (E$0)
+    (IMPLIES (AND (>= E$0 U) (>= V E$0)) (AND (>= E$0 X) (>= Y E$0))))
+   (FALSE))))
+Splitting on (>= Y V) generates ...
+(IF (>= Y V)
+ (IMPLIES (AND (>= V U) (>= U X))
+  (IF (>= Y V)
+   (= (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E))))
+    (TRUE))
+   (=
+    (ALL (E$0)
+     (IMPLIES (AND (>= E$0 U) (>= V E$0)) (AND (>= E$0 X) (>= Y E$0))))
+    (FALSE))))
+ (IMPLIES (AND (>= V U) (>= U X))
+  (IF (>= Y V)
+   (=
+    (ALL (E$1)
+     (IMPLIES (AND (>= E$1 U) (>= V E$1)) (AND (>= E$1 X) (>= Y E$1))))
+    (TRUE))
+   (=
+    (ALL (E$2)
+     (IMPLIES (AND (>= E$2 U) (>= V E$2)) (AND (>= E$2 X) (>= Y E$2))))
+    (FALSE)))))
+Starting case 2.2 ...
+(IMPLIES (AND (>= Y V) (>= V U) (>= U X))
+ (IF (>= Y V)
+  (= (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E))))
+   (TRUE))
+  (=
+   (ALL (E$0)
+    (IMPLIES (AND (>= E$0 U) (>= V E$0)) (AND (>= E$0 X) (>= Y E$0))))
+   (FALSE))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (AND (>= Y V) (>= V U) (>= U X))
+ (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E)))))
+Prenexing produces ...
+(IMPLIES (AND (>= Y V) (>= V U) (>= U X) (>= E U) (>= V E))
+ (AND (>= E X) (>= Y E)))
+Assuming >=-TRANSITIVE with the
+instantiations: (= I E) (= J U) (= K X) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (>= E U) (>= U X)) (= (>= E X) (TRUE))) (>= Y V) (>= V U)
+  (>= U X) (>= E U) (>= V E))
+ (AND (>= E X) (>= Y E)))
+Assuming >=-TRANSITIVE with the
+instantiations: (= I Y) (= J V) (= K E) generates ...
+(IMPLIES
+ (AND (IMPLIES (AND (>= Y V) (>= V E)) (= (>= Y E) (TRUE)))
+  (IMPLIES (AND (>= E U) (>= U X)) (>= E X)) (>= Y V) (>= V U) (>= U X)
+  (>= E U) (>= V E))
+ (AND (>= E X) (>= Y E)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Starting case 2.1 ...
+(IMPLIES (AND (NOT (>= Y V)) (>= V U) (>= U X))
+ (IF (>= Y V)
+  (=
+   (ALL (E$1)
+    (IMPLIES (AND (>= E$1 U) (>= V E$1)) (AND (>= E$1 X) (>= Y E$1))))
+   (TRUE))
+  (=
+   (ALL (E$2)
+    (IMPLIES (AND (>= E$2 U) (>= V E$2)) (AND (>= E$2 X) (>= Y E$2))))
+   (FALSE))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (AND (NOT (>= Y V)) (>= V U) (>= U X))
+ (NOT (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E))))))
+Instantiating (= E V) gives ...
+(IMPLIES (AND (NOT (>= Y V)) (>= V U) (>= U X))
+ (NOT
+  (AND (IMPLIES (AND (>= V U) (>= V V)) (AND (>= V X) (>= Y V)))
+   (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E)))))))
+Which simplifies
+ when rewriting with >=-SELF
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (AND (>= V U) (NOT (>= U X)))
+ (=
+  (ALL (E$1)
+   (IMPLIES (AND (>= E$1 U) (>= V E$1)) (AND (>= E$1 X) (>= Y E$1))))
+  (FALSE)))
+Instantiating (= E$1 U) gives ...
+(IMPLIES (AND (>= V U) (NOT (>= U X)))
+ (NOT
+  (AND (IMPLIES (AND (>= U U) (>= V U)) (AND (>= U X) (>= Y U)))
+   (ALL (E) (IMPLIES (AND (>= E U) (>= V E)) (AND (>= E X) (>= Y E)))))))
+Which simplifies
+ when rewriting with >=-SELF
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+INTER-RANGE-RANGE
+Beginning proof of INTER-RANGE-RANGE ...
+(IMPLIES (= (TYPE-OF X) (INT))
+ (= (INTER (RANGE U V) (RANGE X Y))
+  (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+   (RANGE (MAX U X) (MIN V Y)) (NULLSET))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (INTER (RANGE U V) (RANGE X Y)))
+                (= Y
+                 (IF
+                  (AND (= (TYPE-OF U) (TYPE-OF X))
+                   (= (TYPE-OF V) (TYPE-OF Y)))
+                  (RANGE (MAX U X) (MIN V Y)) (NULLSET))) generates
+...
+(IMPLIES
+ (AND
+  (=
+   (= (INTER (RANGE U V) (RANGE X Y))
+    (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+     (RANGE (MAX U X) (MIN V Y)) (NULLSET)))
+   (ALL (E)
+    (= (IN E (INTER (RANGE U V) (RANGE X Y)))
+     (IN E
+      (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+       (RANGE (MAX U X) (MIN V Y)) (NULLSET))))))
+  (= (TYPE-OF X) (INT)))
+ (= (INTER (RANGE U V) (RANGE X Y))
+  (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+   (RANGE (MAX U X) (MIN V Y)) (NULLSET))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT))
+  (=
+   (= (INTER (RANGE U V) (RANGE X Y))
+    (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+     (RANGE (MAX U X) (MIN V Y)) (NULLSET)))
+   (ALL (E)
+    (= (IN E (INTER (RANGE U V) (RANGE X Y)))
+     (IN E
+      (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+       (RANGE (MAX U X) (MIN V Y)) (NULLSET)))))))
+ (= (INTER (RANGE U V) (RANGE X Y))
+  (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+   (RANGE (MAX U X) (MIN V Y)) (NULLSET))))
+Which simplifies
+ when rewriting with >=-MIN-LEFT, >=-MAX-RIGHT, NULLSET.DEFINITION,
+RANGE.DEFINITION, INTER.DEFINITION
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MIN-TYPE, MAX-TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF U) (INT)) (= (TYPE-OF V) (TYPE-OF Y))
+  (= (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y)))
+   (ALL (E)
+    (IF (>= E U)
+     (IMPLIES (AND (NOT (>= V E)) (>= E X)) (NOT (>= (MIN V Y) E)))
+     (IMPLIES (>= E (MAX U X)) (NOT (>= (MIN V Y) E)))))))
+ (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y))))
+Splitting on (= (TYPE-OF Y) (TYPE-OF X)) generates ...
+(IF (= (TYPE-OF Y) (TYPE-OF X))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF U) (INT)) (= (TYPE-OF V) (TYPE-OF Y))
+   (= (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y)))
+    (ALL (E)
+     (IF (>= E U)
+      (IMPLIES (AND (NOT (>= V E)) (>= E X)) (NOT (>= (MIN V Y) E)))
+      (IMPLIES (>= E (MAX U X)) (NOT (>= (MIN V Y) E)))))))
+  (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y))))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF U) (INT)) (= (TYPE-OF V) (TYPE-OF Y))
+   (= (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y)))
+    (ALL (E$0)
+     (IF (>= E$0 U)
+      (IMPLIES (AND (NOT (>= V E$0)) (>= E$0 X)) (NOT (>= (MIN V Y) E$0)))
+      (IMPLIES (>= E$0 (MAX U X)) (NOT (>= (MIN V Y) E$0)))))))
+  (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y)))))
+Which simplifies
+ when rewriting with INTER.NULLSET.RIGHT, NULL-RANGE, >=-MIN-LEFT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MIN-TYPE, MAX-TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF Y) (TYPE-OF X)) (= (TYPE-OF X) (INT)) (= (TYPE-OF U) (INT))
+  (= (TYPE-OF V) (INT))
+  (= (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y)))
+   (ALL (E)
+    (IMPLIES (AND (NOT (>= E U)) (>= E (MAX U X)) (>= V E)) (NOT (>= Y E))))))
+ (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y))))
+Splitting on (= (TYPE-OF E) (TYPE-OF X)) generates ...
+(IMPLIES
+ (AND (= (TYPE-OF Y) (TYPE-OF X)) (= (TYPE-OF X) (INT)) (= (TYPE-OF U) (INT))
+  (= (TYPE-OF V) (INT))
+  (= (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y)))
+   (ALL (E)
+    (IF (= (TYPE-OF E) (TYPE-OF X))
+     (IMPLIES (AND (NOT (>= E U)) (>= E (MAX U X)) (>= V E)) (NOT (>= Y E)))
+     (IMPLIES (AND (NOT (>= E U)) (>= E (MAX U X)) (>= V E))
+      (NOT (>= Y E)))))))
+ (= (INTER (RANGE U V) (RANGE X Y)) (RANGE (MAX U X) (MIN V Y))))
+Which simplifies
+ when rewriting with >=-MAX-RIGHT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MIN-TYPE, MAX-TYPE to ...
+(TRUE)
+UNION-RANGE-RANGE
+Beginning proof of UNION-RANGE-RANGE ...
+(IMPLIES
+ (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+  (= (TYPE-OF X) (INT)) (<= (MAX U X) (SUCC (MIN V Y))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (UNION (RANGE U V) (RANGE X Y)))
+                (= Y (RANGE (MIN U X) (MAX V Y))) generates
+...
+(IMPLIES
+ (AND
+  (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+   (ALL (E)
+    (= (IN E (UNION (RANGE U V) (RANGE X Y)))
+     (IN E (RANGE (MIN U X) (MAX V Y))))))
+  (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+  (= (TYPE-OF X) (INT)) (>= (SUCC (MIN V Y)) (MAX U X)))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+  (= (TYPE-OF X) (INT)) (>= (SUCC (MIN V Y)) (MAX U X))
+  (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+   (ALL (E)
+    (= (IN E (UNION (RANGE U V) (RANGE X Y)))
+     (IN E (RANGE (MIN U X) (MAX V Y)))))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Which simplifies
+ when rewriting with >=-MAX-LEFT, >=-MIN-RIGHT, RANGE.DEFINITION,
+UNION.DEFINITION
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MAX-TYPE, MIN-TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+  (= (TYPE-OF X) (INT)) (>= (SUCC (MIN V Y)) (MAX U X))
+  (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+   (ALL (E)
+    (IF (>= E U)
+     (OR (>= V E)
+      (IF (>= E X) (OR (>= Y E) (NOT (>= (MAX V Y) E)))
+       (NOT (>= (MAX V Y) E))))
+     (IF (>= E X) (OR (>= Y E) (NOT (>= (MAX V Y) E)))
+      (IMPLIES (>= E (MIN U X)) (NOT (>= (MAX V Y) E))))))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Splitting on (= (TYPE-OF X) (TYPE-OF Y)) generates ...
+(IF (= (TYPE-OF X) (TYPE-OF Y))
+ (IMPLIES
+  (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+   (= (TYPE-OF X) (INT)) (>= (SUCC (MIN V Y)) (MAX U X))
+   (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+    (ALL (E)
+     (IF (>= E U)
+      (OR (>= V E)
+       (IF (>= E X) (OR (>= Y E) (NOT (>= (MAX V Y) E)))
+        (NOT (>= (MAX V Y) E))))
+      (IF (>= E X) (OR (>= Y E) (NOT (>= (MAX V Y) E)))
+       (IMPLIES (>= E (MIN U X)) (NOT (>= (MAX V Y) E))))))))
+  (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+ (IMPLIES
+  (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+   (= (TYPE-OF X) (INT)) (>= (SUCC (MIN V Y)) (MAX U X))
+   (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+    (ALL (E$0)
+     (IF (>= E$0 U)
+      (OR (>= V E$0)
+       (IF (>= E$0 X) (OR (>= Y E$0) (NOT (>= (MAX V Y) E$0)))
+        (NOT (>= (MAX V Y) E$0))))
+      (IF (>= E$0 X) (OR (>= Y E$0) (NOT (>= (MAX V Y) E$0)))
+       (IMPLIES (>= E$0 (MIN U X)) (NOT (>= (MAX V Y) E$0))))))))
+  (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))))
+Which simplifies
+ when rewriting with UNION.NULLSET.RIGHT, NULL-RANGE, >=-MAX-LEFT,
+>=-MAX-RIGHT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MAX-TYPE, SUCC.INT, MIN-TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF U) (TYPE-OF X))
+  (= (TYPE-OF V) (TYPE-OF Y)) (= (TYPE-OF X) (INT)) (>= (+ 1 (MIN V Y)) U)
+  (>= (+ 1 (MIN V Y)) X)
+  (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+   (ALL (E)
+    (IF (>= E U) (OR (>= V E) (>= E X) (NOT (>= Y E)))
+     (IF (>= E X) (OR (>= Y E) (NOT (>= V E)))
+      (IMPLIES (>= E (MIN U X)) (AND (NOT (>= V E)) (NOT (>= Y E)))))))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Splitting on (= (TYPE-OF X) (INT)) generates ...
+(IF (= (TYPE-OF X) (INT))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF U) (TYPE-OF X))
+   (= (TYPE-OF V) (TYPE-OF Y)) (= (TYPE-OF X) (INT)) (>= (+ 1 (MIN V Y)) U)
+   (>= (+ 1 (MIN V Y)) X)
+   (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+    (ALL (E)
+     (IF (>= E U) (OR (>= V E) (>= E X) (NOT (>= Y E)))
+      (IF (>= E X) (OR (>= Y E) (NOT (>= V E)))
+       (IMPLIES (>= E (MIN U X)) (AND (NOT (>= V E)) (NOT (>= Y E)))))))))
+  (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF U) (TYPE-OF X))
+   (= (TYPE-OF V) (TYPE-OF Y)) (= (TYPE-OF X) (INT)) (>= (+ 1 (MIN V Y)) U)
+   (>= (+ 1 (MIN V Y)) X)
+   (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+    (ALL (E$0)
+     (IF (>= E$0 U) (OR (>= V E$0) (>= E$0 X) (NOT (>= Y E$0)))
+      (IF (>= E$0 X) (OR (>= Y E$0) (NOT (>= V E$0)))
+       (IMPLIES (>= E$0 (MIN U X))
+        (AND (NOT (>= V E$0)) (NOT (>= Y E$0)))))))))
+  (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MAX-TYPE, MIN-TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT)) (= (INT) (TYPE-OF Y)) (= (TYPE-OF U) (INT))
+  (= (TYPE-OF V) (INT)) (>= (+ 1 (MIN V Y)) U) (>= (+ 1 (MIN V Y)) X)
+  (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+   (ALL (E)
+    (IF (>= E U) (OR (>= V E) (>= E X) (NOT (>= Y E)))
+     (IF (>= E X) (OR (>= Y E) (NOT (>= V E)))
+      (IMPLIES (>= E (MIN U X)) (AND (NOT (>= V E)) (NOT (>= Y E)))))))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Splitting on (= (TYPE-OF E) (INT)) generates ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT)) (= (INT) (TYPE-OF Y)) (= (TYPE-OF U) (INT))
+  (= (TYPE-OF V) (INT)) (>= (+ 1 (MIN V Y)) U) (>= (+ 1 (MIN V Y)) X)
+  (= (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y)))
+   (ALL (E)
+    (IF (= (TYPE-OF E) (INT))
+     (IF (>= E U) (OR (>= V E) (>= E X) (NOT (>= Y E)))
+      (IF (>= E X) (OR (>= Y E) (NOT (>= V E)))
+       (IMPLIES (>= E (MIN U X)) (AND (NOT (>= V E)) (NOT (>= Y E))))))
+     (IF (>= E U) (OR (>= V E) (>= E X) (NOT (>= Y E)))
+      (IF (>= E X) (OR (>= Y E) (NOT (>= V E)))
+       (IMPLIES (>= E (MIN U X)) (AND (NOT (>= V E)) (NOT (>= Y E))))))))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+Which simplifies
+ with invocation of MAX, MIN
+ forward chaining using >=.SAME.TYPE
+ with the assumptions MAX-TYPE, MIN-TYPE to ...
+(TRUE)
+BELOW
+IN-BELOW
+Beginning proof of IN-BELOW ...
+(IMPLIES (= (TYPE-OF Y) (INT)) (= (IN X (BELOW Y)) (<= X Y)))
+Which simplifies
+ when rewriting with BELOW.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+ABOVE
+IN-ABOVE
+Beginning proof of IN-ABOVE ...
+(IMPLIES (= (TYPE-OF Y) (INT)) (= (IN X (ABOVE Y)) (>= X Y)))
+Which simplifies
+ when rewriting with ABOVE.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+INTER-ABOVE-BELOW
+Beginning proof of INTER-ABOVE-BELOW ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)))
+ (= (INTER (ABOVE X) (BELOW Y)) (RANGE X Y)))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X (INTER (ABOVE X) (BELOW Y))) (= Y (RANGE X Y)) generates
+...
+(IMPLIES
+ (AND
+  (= (= (INTER (ABOVE X) (BELOW Y)) (RANGE X Y))
+   (ALL (E) (= (IN E (INTER (ABOVE X) (BELOW Y))) (IN E (RANGE X Y)))))
+  (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)))
+ (= (INTER (ABOVE X) (BELOW Y)) (RANGE X Y)))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT))
+  (= (= (INTER (ABOVE X) (BELOW Y)) (RANGE X Y))
+   (ALL (E) (= (IN E (INTER (ABOVE X) (BELOW Y))) (IN E (RANGE X Y))))))
+ (= (INTER (ABOVE X) (BELOW Y)) (RANGE X Y)))
+Which simplifies
+ when rewriting with RANGE.DEFINITION, IN-ABOVE, IN-BELOW, INTER.DEFINITION,
+INTER.COMMUTATIVE
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Done.

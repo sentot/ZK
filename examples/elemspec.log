@@ -1,0 +1,103 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/elemspec.ver"
+Warning RULE-CONDITION-LOOPS for >=-TRANSITIVE:
+ The rule >=-TRANSITIVE applies to its own condition.
+>=-TRANSITIVE
+Beginning proof of >=-TRANSITIVE ...
+(IMPLIES (AND (>= I J) (>= J K)) (= (>= I K) (TRUE)))
+>=-SELF
+Beginning proof of >=-SELF ...
+(= (>= X X) (TRUE))
+>=-SUCC-SELF
+Beginning proof of >=-SUCC-SELF ...
+(= (>= (SUCC X) X) (TRUE))
+>=-SUCC-SUBGOAL
+Beginning proof of >=-SUCC-SUBGOAL ...
+(IMPLIES (>= X Y) (= (>= (SUCC X) Y) (TRUE)))
+>=-SUCC-DEVELOPMENT
+Beginning proof of >=-SUCC-DEVELOPMENT ...
+(= (>= X Y) (OR (= X Y) (>= X (SUCC Y))))
+>=-SELF-PRED
+Beginning proof of >=-SELF-PRED ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (>= X (PRED X)) (TRUE)))
+Warning RULE-LOOPS for >=-PRED-DEVELOPMENT:
+ The rule >=-PRED-DEVELOPMENT loops upon itself.
+>=-PRED-DEVELOPMENT
+Beginning proof of >=-PRED-DEVELOPMENT ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (>= X Y) (OR (= X Y) (>= (PRED X) Y))))
+Warning RULE-CONDITION-LOOPS for ASSYMETRY:
+ The rule ASSYMETRY applies to its own condition.
+ASSYMETRY
+Beginning proof of ASSYMETRY ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (= X Y) (AND (>= X Y) (>= Y X))))
+TRICHOTOMY
+Beginning proof of TRICHOTOMY ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (TYPE-OF X)))
+ (OR (= X Y) (> X Y) (< X Y)))
+MIN-TYPE
+Beginning proof of MIN-TYPE ...
+(IMPLIES (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF (MIN X Y)) (TYPE-OF X)))
+MAX-TYPE
+Beginning proof of MAX-TYPE ...
+(IMPLIES (= (TYPE-OF X) (TYPE-OF Y)) (= (TYPE-OF (MAX X Y)) (TYPE-OF X)))
+>=-MAX-LEFT
+Beginning proof of >=-MAX-LEFT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (TYPE-OF X)))
+ (= (>= (MAX X Y) Z) (OR (>= X Z) (>= Y Z))))
+>=-MAX-RIGHT
+Beginning proof of >=-MAX-RIGHT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Z) (TYPE-OF X)))
+ (= (>= X (MAX Y Z)) (AND (>= X Y) (>= X Z))))
+>=-MIN-LEFT
+Beginning proof of >=-MIN-LEFT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (TYPE-OF X)))
+ (= (>= (MIN X Y) Z) (AND (>= X Z) (>= Y Z))))
+>=-MIN-RIGHT
+Beginning proof of >=-MIN-RIGHT ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Z) (TYPE-OF X)))
+ (= (>= X (MIN Y Z)) (OR (>= X Y) (>= X Z))))
+NULL-RANGE
+Beginning proof of NULL-RANGE ...
+(IMPLIES (NOT (<= X Y)) (= (RANGE X Y) (NULLSET)))
+SINGLETON-RANGE
+Beginning proof of SINGLETON-RANGE ...
+(IMPLIES (= (TYPE-OF X) (INT)) (= (RANGE X X) (UNIT X)))
+Warning RULE-LOOPS for RANGE-BOTTOM-EXPANSION:
+ The rule RANGE-BOTTOM-EXPANSION loops upon itself.
+RANGE-BOTTOM-EXPANSION
+Beginning proof of RANGE-BOTTOM-EXPANSION ...
+(IMPLIES (<= X Y) (= (RANGE X Y) (SETADD X (RANGE (SUCC X) Y))))
+Warning RULE-LOOPS for RANGE-TOP-EXPANSION:
+ The rule RANGE-TOP-EXPANSION loops upon itself.
+RANGE-TOP-EXPANSION
+Beginning proof of RANGE-TOP-EXPANSION ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (<= X Y))
+ (= (RANGE X Y) (SETADD Y (RANGE X (PRED Y)))))
+RANGE-SUBSET-RANGE
+Beginning proof of RANGE-SUBSET-RANGE ...
+(= (SUBSET (RANGE U V) (RANGE X Y)) (IMPLIES (<= U V) (AND (<= X U) (<= V Y))))
+INTER-RANGE-RANGE
+Beginning proof of INTER-RANGE-RANGE ...
+(IMPLIES (= (TYPE-OF X) (INT))
+ (= (INTER (RANGE U V) (RANGE X Y))
+  (IF (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y)))
+   (RANGE (MAX U X) (MIN V Y)) (NULLSET))))
+UNION-RANGE-RANGE
+Beginning proof of UNION-RANGE-RANGE ...
+(IMPLIES
+ (AND (= (TYPE-OF U) (TYPE-OF X)) (= (TYPE-OF V) (TYPE-OF Y))
+  (= (TYPE-OF X) (INT)) (<= (MAX U X) (SUCC (MIN V Y))))
+ (= (UNION (RANGE U V) (RANGE X Y)) (RANGE (MIN U X) (MAX V Y))))
+BELOW
+IN-BELOW
+Beginning proof of IN-BELOW ...
+(IMPLIES (= (TYPE-OF Y) (INT)) (= (IN X (BELOW Y)) (<= X Y)))
+ABOVE
+IN-ABOVE
+Beginning proof of IN-ABOVE ...
+(IMPLIES (= (TYPE-OF Y) (INT)) (= (IN X (ABOVE Y)) (>= X Y)))
+INTER-ABOVE-BELOW
+Beginning proof of INTER-ABOVE-BELOW ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)))
+ (= (INTER (ABOVE X) (BELOW Y)) (RANGE X Y)))
+Done.

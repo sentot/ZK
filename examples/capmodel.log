@@ -1,0 +1,232 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/capmodel.ver"
+CAP
+IN-CAP
+Beginning proof of IN-CAP ...
+(= (IN X (CAP Y))
+ (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN X Z)))))
+Splitting on (IN X (CAP Y)) generates ...
+(IF (IN X (CAP Y))
+ (= (IN X (CAP Y))
+  (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN X Z)))))
+ (= (IN X (CAP Y))
+  (AND (NOT (= Y (NULLSET))) (ALL (Z$0) (IMPLIES (IN Z$0 Y) (IN X Z$0))))))
+Which simplifies to ...
+(IF (IN X (CAP Y))
+ (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN X Z))))
+ (OR (= Y (NULLSET)) (NOT (ALL (Z$0) (IMPLIES (IN Z$0 Y) (IN X Z$0))))))
+Which simplifies
+ when rewriting with CUP.DEFINITION, CAP.DEFINITION to ...
+(IF (SOME (Y$0) (AND (IN X Y$0) (IN Y$0 Y)))
+ (IMPLIES (ALL (Z) (IMPLIES (IN Z Y) (IN X Z))) (NOT (= Y (NULLSET))))
+ (OR (= Y (NULLSET)) (NOT (ALL (Z$0) (IMPLIES (IN Z$0 Y) (IN X Z$0))))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X Y) generates ...
+(IMPLIES (OR (= Y (NULLSET)) (SOME (E) (IN E Y)))
+ (IF (SOME (Y$0) (AND (IN X Y$0) (IN Y$0 Y)))
+  (IMPLIES (ALL (Z) (IMPLIES (IN Z Y) (IN X Z))) (NOT (= Y (NULLSET))))
+  (OR (= Y (NULLSET)) (NOT (ALL (Z$0) (IMPLIES (IN Z$0 Y) (IN X Z$0)))))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION to ...
+(IMPLIES
+ (AND (NOT (= Y (NULLSET))) (SOME (E) (IN E Y))
+  (NOT (SOME (Y$0) (AND (IN X Y$0) (IN Y$0 Y)))))
+ (NOT (ALL (Z) (IMPLIES (IN Z Y) (IN X Z)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= Y (NULLSET))) (IN E Y)
+  (NOT (SOME (Y$0) (AND (IN X Y$0) (IN Y$0 Y)))))
+ (NOT (ALL (Z) (IMPLIES (IN Z Y) (IN X Z)))))
+Instantiating (= Y$0 E) gives ...
+(IMPLIES
+ (AND (NOT (= Y (NULLSET))) (IN E Y)
+  (NOT (OR (AND (IN X E) (IN E Y)) (SOME (Y$0) (AND (IN X Y$0) (IN Y$0 Y))))))
+ (NOT (ALL (Z) (IMPLIES (IN Z Y) (IN X Z)))))
+Which simplifies
+ with the instantiation (= Z E) to ...
+(TRUE)
+CAP-NULLSET
+Beginning proof of CAP-NULLSET ...
+(= (CAP (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-CAP to ...
+(TRUE)
+CAP-UNION
+Beginning proof of CAP-UNION ...
+(IMPLIES (AND (NOT (= X (NULLSET))) (NOT (= Y (NULLSET))))
+ (= (CAP (UNION X Y)) (INTER (CAP X) (CAP Y))))
+Applying SETRULES!EXTENSIONALITY to
+ (= (CAP (UNION X Y)) (INTER (CAP X) (CAP Y))) gives ...
+(IMPLIES (AND (NOT (= X (NULLSET))) (NOT (= Y (NULLSET))))
+ (ALL (E)
+  (IF (IN E (CAP (UNION X Y))) (IN E (INTER (CAP X) (CAP Y)))
+   (NOT (IN E (INTER (CAP X) (CAP Y)))))))
+Which simplifies
+ when rewriting with INTER.DEFINITION, UNION.DEFINITION, =.UNION.NULLSET,
+IN-CAP
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(OR (= X (NULLSET)) (= Y (NULLSET))
+ (ALL (E)
+  (IF (ALL (Z) (IMPLIES (OR (IN Z X) (IN Z Y)) (IN E Z)))
+   (ALL (Z$0) (IMPLIES (IN Z$0 Y) (IN E Z$0)))
+   (IMPLIES (ALL (Z$1) (IMPLIES (IN Z$1 X) (IN E Z$1)))
+    (NOT (ALL (Z$2) (IMPLIES (IN Z$2 Y) (IN E Z$2))))))))
+Splitting on (IN Z Y) generates ...
+(OR (= X (NULLSET)) (= Y (NULLSET))
+ (ALL (E)
+  (IF
+   (ALL (Z)
+    (IF (IN Z Y) (IMPLIES (OR (IN Z X) (IN Z Y)) (IN E Z))
+     (IMPLIES (OR (IN Z X) (IN Z Y)) (IN E Z))))
+   (ALL (Z$0) (IMPLIES (IN Z$0 Y) (IN E Z$0)))
+   (IMPLIES (ALL (Z$1) (IMPLIES (IN Z$1 X) (IN E Z$1)))
+    (NOT (ALL (Z$2) (IMPLIES (IN Z$2 Y) (IN E Z$2))))))))
+Which simplifies
+ with the instantiation (= Z Z$0) to ...
+(OR (= X (NULLSET)) (= Y (NULLSET))
+ (ALL (E)
+  (IMPLIES
+   (AND (NOT (ALL (Z) (IMPLIES (OR (IN Z Y) (IN Z X)) (IN E Z))))
+    (ALL (Z$0) (IMPLIES (IN Z$0 X) (IN E Z$0))))
+   (NOT (ALL (Z$1) (IMPLIES (IN Z$1 Y) (IN E Z$1)))))))
+Instantiating (= Z$1 Z) gives ...
+(OR (= X (NULLSET)) (= Y (NULLSET))
+ (ALL (E Z)
+  (IMPLIES
+   (AND (NOT (IMPLIES (OR (IN Z Y) (IN Z X)) (IN E Z)))
+    (ALL (Z$0) (IMPLIES (IN Z$0 X) (IN E Z$0))))
+   (NOT
+    (AND (IMPLIES (IN Z Y) (IN E Z))
+     (ALL (Z$1) (IMPLIES (IN Z$1 Y) (IN E Z$1))))))))
+Which simplifies
+ with the instantiation (= Z$0 Z) to ...
+(TRUE)
+CAP-UNIT
+Beginning proof of CAP-UNIT ...
+(= (CAP (UNIT X)) X)
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+SETRULES!SETADD-LEFT-EQUALITY-TEST, NULLSET.DEFINITION, IN-CAP,
+SETRULES!UNIT-TO-SETADD to ...
+(TRUE)
+CAP-SETADD
+Beginning proof of CAP-SETADD ...
+(= (CAP (SETADD X Y)) (IF (= Y (NULLSET)) X (INTER X (CAP Y))))
+Assuming CAP-UNION with the instantiations: (= X (UNIT X)) (= Y Y) generates
+...
+(IMPLIES
+ (IMPLIES (AND (NOT (= (UNIT X) (NULLSET))) (NOT (= Y (NULLSET))))
+  (= (CAP (UNION (UNIT X) Y)) (INTER (CAP (UNIT X)) (CAP Y))))
+ (= (CAP (SETADD X Y)) (IF (= Y (NULLSET)) X (INTER X (CAP Y)))))
+Assuming CAP-UNIT with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (= (CAP (UNIT X)) X)
+  (IMPLIES (AND (NOT (= (UNIT X) (NULLSET))) (NOT (= Y (NULLSET))))
+   (= (CAP (UNION (UNIT X) Y)) (INTER (CAP (UNIT X)) (CAP Y)))))
+ (= (CAP (SETADD X Y)) (IF (= Y (NULLSET)) X (INTER X (CAP Y)))))
+Which simplifies
+ when rewriting with SETRULES!UNION-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETRULES!SETADD-UNION-LEFT, SETRULES!SETADD-LEFT-EQUALITY-TEST,
+NULLSET.DEFINITION, SETRULES!UNIT-TO-SETADD
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+CAP-SETADD-NULLSET
+Beginning proof of CAP-SETADD-NULLSET ...
+(= (CAP (SETADD X (NULLSET))) X)
+Which simplifies
+ when rewriting with CAP-SETADD to ...
+(TRUE)
+CAP-SETADD-SETADD
+Beginning proof of CAP-SETADD-SETADD ...
+(= (CAP (SETADD X (SETADD Y Z))) (INTER X (CAP (SETADD Y Z))))
+Which simplifies
+ when rewriting with SETRULES!SETADD-LEFT-EQUALITY-TEST, NULLSET.DEFINITION,
+CAP-SETADD
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+CAP-SUBSET-MEMBER
+Beginning proof of CAP-SUBSET-MEMBER ...
+(IMPLIES (IN X Y) (= (SUBSET (CAP Y) X) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-CAP to ...
+(TRUE)
+SUBSET-CAP
+Beginning proof of SUBSET-CAP ...
+(IMPLIES (NOT (= Y (NULLSET)))
+ (= (SUBSET X (CAP Y)) (ALL (Z) (IMPLIES (IN Z Y) (SUBSET X Z)))))
+Splitting on (SUBSET X (CAP Y)) generates ...
+(IF (SUBSET X (CAP Y))
+ (IMPLIES (NOT (= Y (NULLSET)))
+  (= (SUBSET X (CAP Y)) (ALL (Z) (IMPLIES (IN Z Y) (SUBSET X Z)))))
+ (IMPLIES (NOT (= Y (NULLSET)))
+  (= (SUBSET X (CAP Y)) (ALL (Z$0) (IMPLIES (IN Z$0 Y) (SUBSET X Z$0))))))
+Which simplifies to ...
+(IF (SUBSET X (CAP Y))
+ (OR (= Y (NULLSET)) (= (TRUE) (ALL (Z) (IMPLIES (IN Z Y) (SUBSET X Z)))))
+ (OR (= Y (NULLSET))
+  (= (FALSE) (ALL (Z$0) (IMPLIES (IN Z$0 Y) (SUBSET X Z$0))))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-CAP to ...
+(IF
+ (ALL (E)
+  (IMPLIES (IN E X)
+   (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN E Z))))))
+ (OR (= Y (NULLSET))
+  (ALL (Z$0)
+   (IMPLIES (IN Z$0 Y) (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 Z$0))))))
+ (OR (= Y (NULLSET))
+  (NOT
+   (ALL (Z$1)
+    (IMPLIES (IN Z$1 Y) (ALL (E$1) (IMPLIES (IN E$1 X) (IN E$1 Z$1))))))))
+Starting case 2 ...
+(IMPLIES
+ (AND
+  (ALL (E)
+   (IMPLIES (IN E X)
+    (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN E Z))))))
+  (NOT (= Y (NULLSET))))
+ (ALL (Z$0)
+  (IMPLIES (IN Z$0 Y) (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 Z$0))))))
+Instantiating (= Z Z$0) (= E E$0) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (IN E X) (AND (NOT (= Y (NULLSET))) (IMPLIES (IN Z Y) (IN E Z))))
+  (ALL (E$0 Z$0)
+   (IMPLIES (IN E$0 X)
+    (AND (NOT (= Y (NULLSET))) (IMPLIES (IN Z$0 Y) (IN E$0 Z$0)))))
+  (NOT (= Y (NULLSET))) (IN Z Y) (IN E X))
+ (IN E Z))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND
+  (NOT
+   (ALL (E)
+    (IMPLIES (IN E X)
+     (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN E Z)))))))
+  (NOT (= Y (NULLSET))))
+ (NOT
+  (ALL (Z$1)
+   (IMPLIES (IN Z$1 Y) (ALL (E$1) (IMPLIES (IN E$1 X) (IN E$1 Z$1)))))))
+Instantiating (= Z$1 Z) (= E$1 E) gives ...
+(IMPLIES
+ (AND
+  (NOT
+   (IMPLIES (IN E X) (AND (NOT (= Y (NULLSET))) (IMPLIES (IN Z Y) (IN E Z)))))
+  (NOT (= Y (NULLSET))))
+ (NOT
+  (AND (IMPLIES (AND (IN Z Y) (IN E X)) (IN E Z))
+   (ALL (Z$0 E$0) (IMPLIES (AND (IN Z$0 Y) (IN E$0 X)) (IN E$0 Z$0))))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+Done.

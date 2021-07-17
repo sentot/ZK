@@ -1,0 +1,57 @@
+
+;;; Unary intersection
+;;;
+;;; Concepts introduced:
+;;;
+;;; (cap x)		-- intersection of all elements of X
+;;;
+;;; (cap (nullset)) is defined, arbitrarily, to be the empty set. Otherwise, the
+;;; definition is standard.
+
+(function-stub cap (x))
+
+(rule in-cap (x y)
+  (= (in x (cap y))
+     (and (not (= y (nullset)))
+	  (all (z) (implies (in z y)
+			    (in x z))))))
+
+(rule cap-nullset ()
+  (= (cap (nullset))
+     (nullset)))
+
+(rule cap-union (x y)
+  (implies (and (not (= x (nullset)))
+		(not (= y (nullset))))
+	   (= (cap (union x y))
+	      (inter (cap x) (cap y)))))
+
+(rule cap-unit (x)
+  (= (cap (unit x))
+     x))
+
+(disabled
+ (rule cap-setadd (x y)
+   (= (cap (setadd x y))
+      (if (= y (nullset))
+	  x
+	  (inter x (cap y))))))
+
+(rule cap-setadd-nullset (x)
+  (= (cap (setadd x (nullset)))
+     x))
+
+(rule cap-setadd-setadd (x y z)
+  (= (cap (setadd x (setadd y z)))
+     (inter x (cap (setadd y z)))))
+
+(rule cap-subset-member (x y)
+  (implies (in x y)
+	   (= (subset (cap y) x) (true))))
+
+(disabled
+ (rule subset-cap (x y)
+    (implies (not (= y (nullset)))
+	     (= (subset x (cap y))
+		(all (z) (implies (in z y)
+				  (subset x z)))))))

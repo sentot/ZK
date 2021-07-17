@@ -1,0 +1,86 @@
+
+;;; Unary intersection
+;;;
+
+(load setrules)
+
+(zf-function cap (x)
+  (select (e (cup x))
+	  (all (z) (implies (in z x) (in e z)))))
+
+(rule in-cap (x y)
+  (= (in x (cap y))
+     (and (not (= y (nullset)))
+	  (all (z) (implies (in z y)
+			    (in x z))))))
+(SPLIT (IN X (CAP Y)))
+(SIMPLIFY)
+(REWRITE)
+(USE SETRULES!SET-CASES (X Y))
+(REWRITE)
+(PRENEX)
+(INSTANTIATE (Y$0 E))
+(SIMPLIFY)
+
+(rule cap-nullset ()
+  (= (cap (nullset))
+     (nullset)))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cap-union (x y)
+  (implies (and (not (= x (nullset)))
+		(not (= y (nullset))))
+	   (= (cap (union x y))
+	      (inter (cap x) (cap y)))))
+(APPLY SETRULES!EXTENSIONALITY
+       (= (CAP (UNION X Y)) (INTER (CAP X) (CAP Y))))
+(REWRITE)
+(SPLIT (IN Z Y))
+(SIMPLIFY)
+(INSTANTIATE (Z$1 Z))
+(SIMPLIFY)
+
+(rule cap-unit (x)
+  (= (cap (unit x))
+     x))
+(WITH-ENABLED (SETRULES!EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cap-setadd (x y)
+  (= (cap (setadd x y))
+     (if (= y (nullset))
+	 x
+	 (inter x (cap y)))))
+(USE CAP-UNION (X (UNIT X)) (Y Y))
+(USE CAP-UNIT (X X))
+(REWRITE)
+
+(rule cap-setadd-nullset (x)
+  (= (cap (setadd x (nullset)))
+     x))
+(REWRITE)
+
+(rule cap-setadd-setadd (x y z)
+  (= (cap (setadd x (setadd y z)))
+     (inter x (cap (setadd y z)))))
+(REWRITE)
+
+(rule cap-subset-member (x y)
+  (implies (in x y)
+	   (= (subset (cap y) x) (true))))
+(REDUCE)
+
+(axiom subset-cap (x y)
+  (implies (not (= y (nullset)))
+	   (= (subset x (cap y))
+	      (all (z) (implies (in z y)
+				(subset x z))))))
+(SPLIT (SUBSET X (CAP Y)))
+(SIMPLIFY)
+(REDUCE)
+(CASES)
+(INSTANTIATE (Z Z$0) (E E$0))
+(SIMPLIFY)
+(NEXT)
+(INSTANTIATE (Z$1 Z) (E$1 E))
+(SIMPLIFY)
+(NEXT)

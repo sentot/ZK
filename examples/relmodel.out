@@ -1,0 +1,3109 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/relmodel.ver"
+IS-RELATION
+IS-RELATION-BOOL
+Beginning proof of IS-RELATION-BOOL ...
+(= (TYPE-OF (IS-RELATION R)) (BOOL))
+Which simplifies
+ with invocation of IS-RELATION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-RELATION-MONOTONIC
+Beginning proof of IS-RELATION-MONOTONIC ...
+(IMPLIES (AND (IS-RELATION Y) (SUBSET X Y)) (IS-RELATION X))
+Which simplifies
+ with invocation of SUBSET, IS-RELATION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 Y) (PAIR!IS-PAIR X$0)))
+  (ALL (E) (IMPLIES (IN E X) (IN E Y))))
+ (ALL (X$1) (IMPLIES (IN X$1 X) (PAIR!IS-PAIR X$1))))
+Instantiating (= E X$1) gives ...
+(IMPLIES
+ (AND (ALL (X$1) (IMPLIES (IN X$1 Y) (PAIR!IS-PAIR X$1)))
+  (IMPLIES (IN X$0 X) (IN X$0 Y)) (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+  (IN X$0 X))
+ (PAIR!IS-PAIR X$0))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= X$1 X$0) to ...
+(TRUE)
+IS-RELATION-NULLSET
+Beginning proof of IS-RELATION-NULLSET ...
+(= (IS-RELATION (NULLSET)) (TRUE))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with NULLSET.DEFINITION to ...
+(TRUE)
+IS-RELATION-UNIT
+Beginning proof of IS-RELATION-UNIT ...
+(= (IS-RELATION (UNIT X)) (PAIR!IS-PAIR X))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-RELATION-UNION
+Beginning proof of IS-RELATION-UNION ...
+(= (IS-RELATION (UNION X Y)) (AND (IS-RELATION X) (IS-RELATION Y)))
+Splitting on (IS-RELATION (UNION X Y)) generates ...
+(IF (IS-RELATION (UNION X Y))
+ (= (IS-RELATION (UNION X Y)) (AND (IS-RELATION X) (IS-RELATION Y)))
+ (= (IS-RELATION (UNION X Y)) (AND (IS-RELATION X) (IS-RELATION Y))))
+Which simplifies
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IF (IS-RELATION (UNION X Y)) (AND (IS-RELATION X) (IS-RELATION Y))
+ (IMPLIES (IS-RELATION X) (NOT (IS-RELATION Y))))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with UNION.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IF (ALL (X$0) (IMPLIES (OR (IN X$0 X) (IN X$0 Y)) (PAIR!IS-PAIR X$0)))
+ (ALL (X$1) (IMPLIES (IN X$1 Y) (PAIR!IS-PAIR X$1)))
+ (IMPLIES (ALL (X$2) (IMPLIES (IN X$2 X) (PAIR!IS-PAIR X$2)))
+  (NOT (ALL (X$3) (IMPLIES (IN X$3 Y) (PAIR!IS-PAIR X$3))))))
+Splitting on (IN X$0 Y) generates ...
+(IF
+ (ALL (X$0)
+  (IF (IN X$0 Y) (IMPLIES (OR (IN X$0 X) (IN X$0 Y)) (PAIR!IS-PAIR X$0))
+   (IMPLIES (OR (IN X$0 X) (IN X$0 Y)) (PAIR!IS-PAIR X$0))))
+ (ALL (X$1) (IMPLIES (IN X$1 Y) (PAIR!IS-PAIR X$1)))
+ (IMPLIES (ALL (X$2) (IMPLIES (IN X$2 X) (PAIR!IS-PAIR X$2)))
+  (NOT (ALL (X$3) (IMPLIES (IN X$3 Y) (PAIR!IS-PAIR X$3))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= X$0 X$1) to ...
+(IMPLIES
+ (AND
+  (NOT (ALL (X$0) (IMPLIES (OR (IN X$0 Y) (IN X$0 X)) (PAIR!IS-PAIR X$0))))
+  (ALL (X$1) (IMPLIES (IN X$1 X) (PAIR!IS-PAIR X$1))))
+ (NOT (ALL (X$2) (IMPLIES (IN X$2 Y) (PAIR!IS-PAIR X$2)))))
+Instantiating (= X$2 X$0) gives ...
+(IMPLIES
+ (AND (NOT (IMPLIES (OR (IN X$0 Y) (IN X$0 X)) (PAIR!IS-PAIR X$0)))
+  (ALL (X$1) (IMPLIES (IN X$1 X) (PAIR!IS-PAIR X$1))))
+ (NOT
+  (AND (IMPLIES (IN X$0 Y) (PAIR!IS-PAIR X$0))
+   (ALL (X$2) (IMPLIES (IN X$2 Y) (PAIR!IS-PAIR X$2))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= X$1 X$0) to ...
+(TRUE)
+IS-RELATION-CUP
+Beginning proof of IS-RELATION-CUP ...
+(= (IS-RELATION (CUP X)) (ALL (Y) (IMPLIES (IN Y X) (IS-RELATION Y))))
+Splitting on (IS-RELATION (CUP X)) generates ...
+(IF (IS-RELATION (CUP X))
+ (= (IS-RELATION (CUP X)) (ALL (Y) (IMPLIES (IN Y X) (IS-RELATION Y))))
+ (= (IS-RELATION (CUP X)) (ALL (Y$0) (IMPLIES (IN Y$0 X) (IS-RELATION Y$0)))))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with CUP.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(IF (ALL (X$0 Y) (IMPLIES (AND (IN X$0 Y) (IN Y X)) (PAIR!IS-PAIR X$0)))
+ (= (TRUE)
+  (ALL (Y$0)
+   (IMPLIES (IN Y$0 X)
+    (ALL (X$1) (IMPLIES (IN X$1 Y$0) (PAIR!IS-PAIR X$1))))))
+ (= (FALSE)
+  (ALL (Y$1)
+   (IMPLIES (IN Y$1 X)
+    (ALL (X$2) (IMPLIES (IN X$2 Y$1) (PAIR!IS-PAIR X$2)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiations (= X$0 X$1) (= Y Y$0) to ...
+(OR (ALL (X$0 Y) (IMPLIES (AND (IN X$0 Y) (IN Y X)) (PAIR!IS-PAIR X$0)))
+ (NOT
+  (ALL (Y$0)
+   (IMPLIES (IN Y$0 X)
+    (ALL (X$1) (IMPLIES (IN X$1 Y$0) (PAIR!IS-PAIR X$1)))))))
+Prenexing produces ...
+(OR (IMPLIES (AND (IN X$0 Y) (IN Y X)) (PAIR!IS-PAIR X$0))
+ (NOT
+  (ALL (Y$0)
+   (IMPLIES (IN Y$0 X)
+    (ALL (X$1) (IMPLIES (IN X$1 Y$0) (PAIR!IS-PAIR X$1)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(IMPLIES (AND (IN X$0 Y) (IN Y X) (NOT (PAIR!IS-PAIR X$0)))
+ (NOT
+  (ALL (Y$0)
+   (IMPLIES (IN Y$0 X)
+    (ALL (X$1) (IMPLIES (IN X$1 Y$0) (PAIR!IS-PAIR X$1)))))))
+Instantiating (= Y$0 Y) gives ...
+(IMPLIES (AND (IN X Y) (IN Y X$0) (NOT (PAIR!IS-PAIR X)))
+ (NOT
+  (AND
+   (IMPLIES (IN Y X$0) (ALL (X$1) (IMPLIES (IN X$1 Y) (PAIR!IS-PAIR X$1))))
+   (ALL (Y$0)
+    (IMPLIES (IN Y$0 X$0)
+     (ALL (X$2) (IMPLIES (IN X$2 Y$0) (PAIR!IS-PAIR X$2))))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= X$1 X) to ...
+(TRUE)
+IS-RELATION-CUP-1
+Beginning proof of IS-RELATION-CUP-1 ...
+(IMPLIES (ALL (Y) (IMPLIES (IN Y X) (IS-RELATION Y)))
+ (= (IS-RELATION (CUP X)) (TRUE)))
+Applying IS-RELATION-CUP gives ...
+(IMPLIES (ALL (Y) (IMPLIES (IN Y X) (IS-RELATION Y)))
+ (ALL (Y$0) (IMPLIES (IN Y$0 X) (IS-RELATION Y$0))))
+Which simplifies
+ with the instantiation (= Y Y$0) to ...
+(TRUE)
+IS-RELATION-SETADD
+Beginning proof of IS-RELATION-SETADD ...
+(= (IS-RELATION (SETADD X Y)) (AND (PAIR!IS-PAIR X) (IS-RELATION Y)))
+Assuming IS-RELATION-UNION with the
+instantiations: (= X (UNIT X)) (= Y Y) generates ...
+(IMPLIES
+ (= (IS-RELATION (UNION (UNIT X) Y))
+  (AND (IS-RELATION (UNIT X)) (IS-RELATION Y)))
+ (= (IS-RELATION (SETADD X Y)) (AND (PAIR!IS-PAIR X) (IS-RELATION Y))))
+Assuming IS-RELATION-UNIT with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (= (IS-RELATION (UNIT X)) (PAIR!IS-PAIR X))
+  (= (IS-RELATION (UNION (UNIT X) Y))
+   (AND (IS-RELATION (UNIT X)) (IS-RELATION Y))))
+ (= (IS-RELATION (SETADD X Y)) (AND (PAIR!IS-PAIR X) (IS-RELATION Y))))
+Which simplifies
+ when rewriting with SETRULES!UNION-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETRULES!SETADD-UNION-LEFT, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-RELATION-INTER
+Beginning proof of IS-RELATION-INTER ...
+(IMPLIES (OR (IS-RELATION X) (IS-RELATION Y))
+ (= (IS-RELATION (INTER X Y)) (TRUE)))
+Assuming IS-RELATION-MONOTONIC with the
+instantiations: (= X (INTER X Y)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-RELATION X) (SUBSET (INTER X Y) X))
+   (IS-RELATION (INTER X Y)))
+  (OR (IS-RELATION X) (IS-RELATION Y)))
+ (IS-RELATION (INTER X Y)))
+Assuming IS-RELATION-MONOTONIC with the
+instantiations: (= X (INTER X Y)) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-RELATION Y) (SUBSET (INTER X Y) Y))
+   (IS-RELATION (INTER X Y)))
+  (IMPLIES (AND (IS-RELATION X) (SUBSET (INTER X Y) X))
+   (IS-RELATION (INTER X Y)))
+  (OR (IS-RELATION X) (IS-RELATION Y)))
+ (IS-RELATION (INTER X Y)))
+Which simplifies
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+IS-RELATION-DIFF
+Beginning proof of IS-RELATION-DIFF ...
+(IMPLIES (IS-RELATION X) (= (IS-RELATION (DIFF X Y)) (TRUE)))
+Assuming IS-RELATION-MONOTONIC with the
+instantiations: (= X (DIFF X Y)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-RELATION X) (SUBSET (DIFF X Y) X))
+   (IS-RELATION (DIFF X Y)))
+  (IS-RELATION X))
+ (IS-RELATION (DIFF X Y)))
+Which simplifies
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+IS-RELATION-DELTA
+Beginning proof of IS-RELATION-DELTA ...
+(IMPLIES (AND (IS-RELATION X) (IS-RELATION Y))
+ (= (IS-RELATION (DELTA X Y)) (TRUE)))
+Which simplifies
+ when rewriting with IS-RELATION-DIFF, IS-RELATION-UNION,
+SETRULES!DELTA-EXPANSION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+IS-RELATION-CROSS
+Beginning proof of IS-RELATION-CROSS ...
+(= (IS-RELATION (PAIR!CROSS X Y)) (TRUE))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with PAIR!IN-CROSS
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+FLIP-PAIR
+FLIP-PAIR-IS-INVOLUTION
+Beginning proof of FLIP-PAIR-IS-INVOLUTION ...
+(= (FLIP-PAIR (FLIP-PAIR X)) X)
+Which simplifies
+ with invocation of FLIP-PAIR
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+FST-FLIP-PAIR
+Beginning proof of FST-FLIP-PAIR ...
+(IMPLIES (PAIR!IS-PAIR X) (= (PAIR!FST (FLIP-PAIR X)) (PAIR!SND X)))
+Which simplifies
+ with invocation of FLIP-PAIR
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+FLIP-PAIR-IS-INVOLUTION, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+SND-FLIP-PAIR
+Beginning proof of SND-FLIP-PAIR ...
+(IMPLIES (PAIR!IS-PAIR X) (= (PAIR!SND (FLIP-PAIR X)) (PAIR!FST X)))
+Which simplifies
+ with invocation of FLIP-PAIR
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+FLIP-PAIR-IS-INVOLUTION, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-PAIR-FLIP-PAIR
+Beginning proof of IS-PAIR-FLIP-PAIR ...
+(= (PAIR!IS-PAIR (FLIP-PAIR X)) (PAIR!IS-PAIR X))
+Which simplifies
+ with invocation of FLIP-PAIR
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+FLIP-PAIR-PAIR
+Beginning proof of FLIP-PAIR-PAIR ...
+(= (FLIP-PAIR (PAIR!PAIR X Y)) (PAIR!PAIR Y X))
+Which simplifies
+ with invocation of FLIP-PAIR
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+INVERSE
+IN-INVERSE
+Beginning proof of IN-INVERSE ...
+(= (IN X (INVERSE R)) (IN (FLIP-PAIR X) R))
+Assuming INVERSE.DEFINITION with the
+instantiations: (= R R) (= X$0 X) generates ...
+(IMPLIES
+ (= (IN X (INVERSE R)) (SOME (X$0) (AND (IN X$0 R) (= X (FLIP-PAIR X$0)))))
+ (= (IN X (INVERSE R)) (IN (FLIP-PAIR X) R)))
+Splitting on (IN X (INVERSE R)) generates ...
+(IF (IN X (INVERSE R))
+ (IMPLIES
+  (= (IN X (INVERSE R)) (SOME (X$0) (AND (IN X$0 R) (= X (FLIP-PAIR X$0)))))
+  (= (IN X (INVERSE R)) (IN (FLIP-PAIR X) R)))
+ (IMPLIES
+  (= (IN X (INVERSE R)) (SOME (X$1) (AND (IN X$1 R) (= X (FLIP-PAIR X$1)))))
+  (= (IN X (INVERSE R)) (IN (FLIP-PAIR X) R))))
+Which simplifies
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(IF (IN X (INVERSE R))
+ (IMPLIES (= (TRUE) (SOME (X$0) (AND (IN X$0 R) (= X (FLIP-PAIR X$0)))))
+  (= (TRUE) (IN (FLIP-PAIR X) R)))
+ (IMPLIES (= (FALSE) (SOME (X$1) (AND (IN X$1 R) (= X (FLIP-PAIR X$1)))))
+  (= (FALSE) (IN (FLIP-PAIR X) R))))
+Prenexing produces ...
+(IF (IN X (INVERSE R))
+ (IMPLIES (AND (IN X$0 R) (= X (FLIP-PAIR X$0))) (IN (FLIP-PAIR X) R))
+ (IMPLIES (NOT (SOME (X$1) (AND (IN X$1 R) (= X (FLIP-PAIR X$1)))))
+  (NOT (IN (FLIP-PAIR X) R))))
+Which simplifies
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(OR (IN X (INVERSE R)) (SOME (X$0) (AND (IN X$0 R) (= X (FLIP-PAIR X$0))))
+ (NOT (IN (FLIP-PAIR X) R)))
+Instantiating (= X$0 (FLIP-PAIR X)) gives ...
+(OR (IN X (INVERSE R))
+ (AND (IN (FLIP-PAIR X) R) (= X (FLIP-PAIR (FLIP-PAIR X))))
+ (SOME (X$0) (AND (IN X$0 R) (= X (FLIP-PAIR X$0))))
+ (NOT (IN (FLIP-PAIR X) R)))
+Which simplifies
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+INVERSE-INVERSE
+Beginning proof of INVERSE-INVERSE ...
+(= (INVERSE (INVERSE X)) X)
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+INVERSE-NULLSET
+Beginning proof of INVERSE-NULLSET ...
+(= (INVERSE (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+INVERSE-UNIT
+Beginning proof of INVERSE-UNIT ...
+(= (INVERSE (UNIT X)) (UNIT (FLIP-PAIR X)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, IN-INVERSE, SETRULES!UNIT-TO-SETADD
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+INVERSE-UNION
+Beginning proof of INVERSE-UNION ...
+(= (INVERSE (UNION X Y)) (UNION (INVERSE X) (INVERSE Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+INVERSE-SETADD
+Beginning proof of INVERSE-SETADD ...
+(= (INVERSE (SETADD X Y)) (SETADD (FLIP-PAIR X) (INVERSE Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, SETADD.DEFINITION,
+IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+INVERSE-INTERSECTION
+Beginning proof of INVERSE-INTERSECTION ...
+(= (INVERSE (INTER X Y)) (INTER (INVERSE X) (INVERSE Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+INVERSE-DIFF
+Beginning proof of INVERSE-DIFF ...
+(= (INVERSE (DIFF X Y)) (DIFF (INVERSE X) (INVERSE Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION,
+SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+INVERSE-CROSS
+Beginning proof of INVERSE-CROSS ...
+(= (INVERSE (PAIR!CROSS X Y)) (PAIR!CROSS Y X))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, SND-FLIP-PAIR,
+FST-FLIP-PAIR, IS-PAIR-FLIP-PAIR, PAIR!IN-CROSS, IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+SUBSET-INVERSE-INVERSE
+Beginning proof of SUBSET-INVERSE-INVERSE ...
+(= (SUBSET (INVERSE X) (INVERSE Y)) (SUBSET X Y))
+Splitting on (SUBSET X Y) generates ...
+(IF (SUBSET X Y) (= (SUBSET (INVERSE X) (INVERSE Y)) (SUBSET X Y))
+ (= (SUBSET (INVERSE X) (INVERSE Y)) (SUBSET X Y)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-INVERSE
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(OR (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+ (= (ALL (E$0) (IMPLIES (IN (FLIP-PAIR E$0) X) (IN (FLIP-PAIR E$0) Y)))
+  (FALSE)))
+Instantiating (= E$0 (FLIP-PAIR E)) gives ...
+(OR (IMPLIES (IN E X) (IN E Y))
+ (NOT
+  (AND
+   (IMPLIES (IN (FLIP-PAIR (FLIP-PAIR E)) X) (IN (FLIP-PAIR (FLIP-PAIR E)) Y))
+   (ALL (E$0) (IMPLIES (IN (FLIP-PAIR E$0) X) (IN (FLIP-PAIR E$0) Y))))))
+Which simplifies
+ with the assumptions FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+=-INVERSE-INVERSE
+Beginning proof of =-INVERSE-INVERSE ...
+(= (= (INVERSE X) (INVERSE Y)) (= X Y))
+Assuming INVERSE-INVERSE with the instantiations: (= X X) generates ...
+(IMPLIES (= (INVERSE (INVERSE X)) X) (= (= (INVERSE X) (INVERSE Y)) (= X Y)))
+Assuming INVERSE-INVERSE with the instantiations: (= X Y) generates ...
+(IMPLIES (AND (= (INVERSE (INVERSE Y)) Y) (= (INVERSE (INVERSE X)) X))
+ (= (= (INVERSE X) (INVERSE Y)) (= X Y)))
+Splitting on (= X Y) generates ...
+(IF (= X Y)
+ (IMPLIES (AND (= (INVERSE (INVERSE Y)) Y) (= (INVERSE (INVERSE X)) X))
+  (= (= (INVERSE X) (INVERSE Y)) (= X Y)))
+ (IMPLIES (AND (= (INVERSE (INVERSE Y)) Y) (= (INVERSE (INVERSE X)) X))
+  (= (= (INVERSE X) (INVERSE Y)) (= X Y))))
+Which simplifies to ...
+(TRUE)
+IS-RELATION-INVERSE
+Beginning proof of IS-RELATION-INVERSE ...
+(= (IS-RELATION (INVERSE X)) (IS-RELATION X))
+Splitting on (IS-RELATION X) generates ...
+(IF (IS-RELATION X) (= (IS-RELATION (INVERSE X)) (IS-RELATION X))
+ (= (IS-RELATION (INVERSE X)) (IS-RELATION X)))
+Which simplifies
+ with invocation of FLIP-PAIR, IS-RELATION
+ when rewriting with IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+FLIP-PAIR-IS-INVOLUTION, PAIR!IS-PAIR-BOOL to ...
+(IF (ALL (X$0) (IMPLIES (IN X$0 X) (PAIR!IS-PAIR X$0)))
+ (= (ALL (X$1) (OR (PAIR!IS-PAIR X$1) (NOT (IN X$1 X)))) (TRUE))
+ (= (ALL (X$2) (OR (PAIR!IS-PAIR X$2) (NOT (IN X$2 X)))) (FALSE)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(IF (ALL (X$0) (IMPLIES (IN X$0 X) (PAIR!IS-PAIR X$0)))
+ (ALL (X$1) (OR (PAIR!IS-PAIR X$1) (NOT (IN X$1 X))))
+ (NOT (ALL (X$2) (OR (PAIR!IS-PAIR X$2) (NOT (IN X$2 X))))))
+Splitting on (PAIR!IS-PAIR X$0) generates ...
+(IF
+ (ALL (X$0)
+  (IF (PAIR!IS-PAIR X$0) (IMPLIES (IN X$0 X) (PAIR!IS-PAIR X$0))
+   (IMPLIES (IN X$0 X) (PAIR!IS-PAIR X$0))))
+ (ALL (X$1) (OR (PAIR!IS-PAIR X$1) (NOT (IN X$1 X))))
+ (NOT (ALL (X$2) (OR (PAIR!IS-PAIR X$2) (NOT (IN X$2 X))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= X$0 X$1) to ...
+(TRUE)
+PAIRS
+DOM
+IN-DOM
+Beginning proof of IN-DOM ...
+(= (IN A (DOM X)) (SOME (B) (IN (PAIR!PAIR A B) X)))
+Assuming DOM.DEFINITION with the instantiations: (= A$0 A) (= X X) generates
+...
+(IMPLIES
+ (= (IN A (DOM X)) (SOME (A$0) (AND (IN A$0 (PAIRS X)) (= A (PAIR!FST A$0)))))
+ (= (IN A (DOM X)) (SOME (B) (IN (PAIR!PAIR A B) X))))
+Splitting on (IN A (DOM X)) generates ...
+(IF (IN A (DOM X))
+ (IMPLIES
+  (= (IN A (DOM X))
+   (SOME (A$0) (AND (IN A$0 (PAIRS X)) (= A (PAIR!FST A$0)))))
+  (= (IN A (DOM X)) (SOME (B) (IN (PAIR!PAIR A B) X))))
+ (IMPLIES
+  (= (IN A (DOM X))
+   (SOME (A$1) (AND (IN A$1 (PAIRS X)) (= A (PAIR!FST A$1)))))
+  (= (IN A (DOM X)) (SOME (B$0) (IN (PAIR!PAIR A B$0) X)))))
+Which simplifies
+ when rewriting with PAIRS.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IF (IN A (DOM X))
+ (IMPLIES
+  (= (TRUE)
+   (SOME (A$0) (AND (IN A$0 X) (PAIR!IS-PAIR A$0) (= A (PAIR!FST A$0)))))
+  (= (TRUE) (SOME (B) (IN (PAIR!PAIR A B) X))))
+ (IMPLIES
+  (= (FALSE)
+   (SOME (A$1) (AND (IN A$1 X) (PAIR!IS-PAIR A$1) (= A (PAIR!FST A$1)))))
+  (= (FALSE) (SOME (B$0) (IN (PAIR!PAIR A B$0) X)))))
+Prenexing produces ...
+(IF (IN A (DOM X))
+ (IMPLIES (AND (IN A$0 X) (PAIR!IS-PAIR A$0) (= A (PAIR!FST A$0)))
+  (SOME (B$0) (IN (PAIR!PAIR A B$0) X)))
+ (IMPLIES
+  (NOT (SOME (A$1) (AND (IN A$1 X) (PAIR!IS-PAIR A$1) (= A (PAIR!FST A$1)))))
+  (NOT (IN (PAIR!PAIR A B) X))))
+Instantiating (= B$0 (PAIR!SND A$0)) gives ...
+(IF (IN A (DOM X))
+ (IMPLIES
+  (AND (IN A$0 X) (PAIR!IS-PAIR A$0) (= A (PAIR!FST A$0))
+   (NOT (IN (PAIR!PAIR A (PAIR!SND A$0)) X)))
+  (SOME (B$0) (IN (PAIR!PAIR A B$0) X)))
+ (IMPLIES
+  (NOT (SOME (A$1) (AND (IN A$1 X) (PAIR!IS-PAIR A$1) (= A (PAIR!FST A$1)))))
+  (NOT (IN (PAIR!PAIR A B) X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(OR (IN A (DOM X))
+ (SOME (A$0) (AND (IN A$0 X) (PAIR!IS-PAIR A$0) (= A (PAIR!FST A$0))))
+ (NOT (IN (PAIR!PAIR A B) X)))
+Instantiating (= A$0 (PAIR!PAIR A B)) gives ...
+(OR (IN A (DOM X))
+ (AND (IN (PAIR!PAIR A B) X) (PAIR!IS-PAIR (PAIR!PAIR A B))
+  (= A (PAIR!FST (PAIR!PAIR A B))))
+ (SOME (A$0) (AND (IN A$0 X) (PAIR!IS-PAIR A$0) (= A (PAIR!FST A$0))))
+ (NOT (IN (PAIR!PAIR A B) X)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IN-DOM-1
+Beginning proof of IN-DOM-1 ...
+(IMPLIES (IN (PAIR!PAIR A B) X) (= (IN A (DOM X)) (TRUE)))
+Which simplifies
+ when rewriting with IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+DOM-NULLSET
+Beginning proof of DOM-NULLSET ...
+(= (DOM (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+DOM-UNIT
+Beginning proof of DOM-UNIT ...
+(= (DOM (UNIT X)) (IF (PAIR!IS-PAIR X) (UNIT (PAIR!FST X)) (NULLSET)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (DOM (UNIT X)))
+ (IN E (IF (PAIR!IS-PAIR X) (UNIT (PAIR!FST X)) (NULLSET)))
+ (NOT (IN E (IF (PAIR!IS-PAIR X) (UNIT (PAIR!FST X)) (NULLSET)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION, IN-DOM,
+SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (B) (= (PAIR!PAIR E B) X)) (AND (PAIR!IS-PAIR X) (= E (PAIR!FST X)))
+ (IMPLIES (PAIR!IS-PAIR X) (NOT (= E (PAIR!FST X)))))
+Instantiating (= B (PAIR!SND X)) gives ...
+(IF (OR (= (PAIR!PAIR E (PAIR!SND X)) X) (SOME (B) (= (PAIR!PAIR E B) X)))
+ (AND (PAIR!IS-PAIR X) (= E (PAIR!FST X)))
+ (IMPLIES (PAIR!IS-PAIR X) (NOT (= E (PAIR!FST X)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+DOM-UNION
+Beginning proof of DOM-UNION ...
+(= (DOM (UNION X Y)) (UNION (DOM X) (DOM Y)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (DOM (UNION X Y))) (IN E (UNION (DOM X) (DOM Y)))
+ (NOT (IN E (UNION (DOM X) (DOM Y)))))
+Which simplifies
+ when rewriting with UNION.DEFINITION, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+DOM-SETADD
+Beginning proof of DOM-SETADD ...
+(= (DOM (SETADD X Y))
+ (IF (PAIR!IS-PAIR X) (SETADD (PAIR!FST X) (DOM Y)) (DOM Y)))
+Assuming DOM-UNIT with the instantiations: (= X X) generates ...
+(IMPLIES
+ (= (DOM (UNIT X)) (IF (PAIR!IS-PAIR X) (UNIT (PAIR!FST X)) (NULLSET)))
+ (= (DOM (SETADD X Y))
+  (IF (PAIR!IS-PAIR X) (SETADD (PAIR!FST X) (DOM Y)) (DOM Y))))
+Assuming DOM-UNION with the instantiations: (= X (UNIT X)) (= Y Y) generates
+...
+(IMPLIES
+ (AND (= (DOM (UNION (UNIT X) Y)) (UNION (DOM (UNIT X)) (DOM Y)))
+  (= (DOM (UNIT X)) (IF (PAIR!IS-PAIR X) (UNIT (PAIR!FST X)) (NULLSET))))
+ (= (DOM (SETADD X Y))
+  (IF (PAIR!IS-PAIR X) (SETADD (PAIR!FST X) (DOM Y)) (DOM Y))))
+Which simplifies
+ when rewriting with UNION.COMMUTATIVE, SETRULES!UNION-SUBSET-RIGHT,
+SUBSET.NULLSET.LEFT, SETRULES!SETADD-UNION-LEFT, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES (= (DOM (SETADD X Y)) (UNION (DOM Y) (DOM (SETADD X (NULLSET)))))
+ (IF (PAIR!IS-PAIR X)
+  (IMPLIES (= (DOM (SETADD X (NULLSET))) (SETADD (PAIR!FST X) (NULLSET)))
+   (= (DOM (SETADD X Y)) (SETADD (PAIR!FST X) (DOM Y))))
+  (IMPLIES (= (DOM (SETADD X (NULLSET))) (NULLSET))
+   (= (DOM (SETADD X Y)) (DOM Y)))))
+Substituting (= (DOM (SETADD X Y)) (UNION (DOM Y) (DOM (SETADD X (NULLSET)))))
+             (= (DOM (SETADD X (NULLSET))) (NULLSET)) produces
+...
+(IMPLIES (= (DOM (SETADD X Y)) (UNION (DOM Y) (DOM (SETADD X (NULLSET)))))
+ (IF (PAIR!IS-PAIR X)
+  (IMPLIES (= (DOM (SETADD X (NULLSET))) (SETADD (PAIR!FST X) (NULLSET)))
+   (= (UNION (DOM Y) (DOM (SETADD X (NULLSET))))
+    (SETADD (PAIR!FST X) (DOM Y))))
+  (IMPLIES (= (DOM (SETADD X (NULLSET))) (NULLSET))
+   (= (UNION (DOM Y) (NULLSET)) (DOM Y)))))
+Substituting (= (DOM (SETADD X (NULLSET)))
+              (SETADD (PAIR!FST X) (NULLSET))) produces
+...
+(IMPLIES (= (DOM (SETADD X Y)) (UNION (DOM Y) (DOM (SETADD X (NULLSET)))))
+ (IF (PAIR!IS-PAIR X)
+  (IMPLIES (= (DOM (SETADD X (NULLSET))) (SETADD (PAIR!FST X) (NULLSET)))
+   (= (UNION (DOM Y) (SETADD (PAIR!FST X) (NULLSET)))
+    (SETADD (PAIR!FST X) (DOM Y))))
+  (IMPLIES (= (DOM (SETADD X (NULLSET))) (NULLSET))
+   (= (UNION (DOM Y) (NULLSET)) (DOM Y)))))
+Which simplifies
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETRULES!SETADD-UNION-RIGHT
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+DOM-CROSS
+Beginning proof of DOM-CROSS ...
+(= (DOM (PAIR!CROSS X Y)) (IF (= Y (NULLSET)) (NULLSET) X))
+Assuming SETRULES!SET-CASES with the instantiations: (= X Y) generates ...
+(IMPLIES (OR (= Y (NULLSET)) (SOME (E) (IN E Y)))
+ (= (DOM (PAIR!CROSS X Y)) (IF (= Y (NULLSET)) (NULLSET) X)))
+Which simplifies
+ when rewriting with DOM-NULLSET, PAIR!CROSS-NULLSET-RIGHT,
+SETRULES!EXTENSIONALITY-SUBGOAL, PAIR!IN-CROSS, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN
+IN-RAN
+Beginning proof of IN-RAN ...
+(= (IN B (RAN X)) (SOME (A) (IN (PAIR!PAIR A B) X)))
+Assuming RAN.DEFINITION with the instantiations: (= A$0 B) (= X X) generates
+...
+(IMPLIES
+ (= (IN B (RAN X)) (SOME (A) (AND (IN A (PAIRS X)) (= B (PAIR!SND A)))))
+ (= (IN B (RAN X)) (SOME (A$0) (IN (PAIR!PAIR A$0 B) X))))
+Splitting on (IN B (RAN X)) generates ...
+(IF (IN B (RAN X))
+ (IMPLIES
+  (= (IN B (RAN X)) (SOME (A) (AND (IN A (PAIRS X)) (= B (PAIR!SND A)))))
+  (= (IN B (RAN X)) (SOME (A$0) (IN (PAIR!PAIR A$0 B) X))))
+ (IMPLIES
+  (= (IN B (RAN X))
+   (SOME (A$1) (AND (IN A$1 (PAIRS X)) (= B (PAIR!SND A$1)))))
+  (= (IN B (RAN X)) (SOME (A$2) (IN (PAIR!PAIR A$2 B) X)))))
+Which simplifies
+ when rewriting with PAIRS.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IF (IN B (RAN X))
+ (IMPLIES
+  (= (TRUE) (SOME (A) (AND (IN A X) (PAIR!IS-PAIR A) (= B (PAIR!SND A)))))
+  (= (TRUE) (SOME (A$0) (IN (PAIR!PAIR A$0 B) X))))
+ (IMPLIES
+  (= (FALSE)
+   (SOME (A$1) (AND (IN A$1 X) (PAIR!IS-PAIR A$1) (= B (PAIR!SND A$1)))))
+  (= (FALSE) (SOME (A$2) (IN (PAIR!PAIR A$2 B) X)))))
+Prenexing produces ...
+(IF (IN B (RAN X))
+ (IMPLIES (AND (IN A X) (PAIR!IS-PAIR A) (= B (PAIR!SND A)))
+  (SOME (A$1) (IN (PAIR!PAIR A$1 B) X)))
+ (IMPLIES
+  (NOT (SOME (A$2) (AND (IN A$2 X) (PAIR!IS-PAIR A$2) (= B (PAIR!SND A$2)))))
+  (NOT (IN (PAIR!PAIR A$0 B) X))))
+Instantiating (= A$1 (PAIR!FST A)) gives ...
+(IF (IN B (RAN X))
+ (IMPLIES
+  (AND (IN A X) (PAIR!IS-PAIR A) (= B (PAIR!SND A))
+   (NOT (IN (PAIR!PAIR (PAIR!FST A) B) X)))
+  (SOME (A$1) (IN (PAIR!PAIR A$1 B) X)))
+ (IMPLIES
+  (NOT (SOME (A$2) (AND (IN A$2 X) (PAIR!IS-PAIR A$2) (= B (PAIR!SND A$2)))))
+  (NOT (IN (PAIR!PAIR A$0 B) X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(OR (IN B (RAN X))
+ (SOME (A) (AND (IN A X) (PAIR!IS-PAIR A) (= B (PAIR!SND A))))
+ (NOT (IN (PAIR!PAIR A$0 B) X)))
+Instantiating (= A (PAIR!PAIR A$0 B)) gives ...
+(OR (IN B (RAN X))
+ (AND (IN (PAIR!PAIR A B) X) (PAIR!IS-PAIR (PAIR!PAIR A B))
+  (= B (PAIR!SND (PAIR!PAIR A B))))
+ (SOME (A$0) (AND (IN A$0 X) (PAIR!IS-PAIR A$0) (= B (PAIR!SND A$0))))
+ (NOT (IN (PAIR!PAIR A B) X)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IN-RAN-1
+Beginning proof of IN-RAN-1 ...
+(IMPLIES (IN (PAIR!PAIR A B) X) (= (IN B (RAN X)) (TRUE)))
+Which simplifies
+ when rewriting with IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+DOM-INVERSE
+Beginning proof of DOM-INVERSE ...
+(= (DOM (INVERSE R)) (RAN R))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-RAN, FLIP-PAIR-PAIR,
+IN-INVERSE, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN-INVERSE
+Beginning proof of RAN-INVERSE ...
+(= (RAN (INVERSE R)) (DOM R))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-DOM, FLIP-PAIR-PAIR,
+IN-INVERSE, IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN-NULLSET
+Beginning proof of RAN-NULLSET ...
+(= (RAN (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN-UNION
+Beginning proof of RAN-UNION ...
+(= (RAN (UNION X Y)) (UNION (RAN X) (RAN Y)))
+Assuming DOM-INVERSE with the instantiations: (= R (UNION X Y)) generates ...
+(IMPLIES (= (DOM (INVERSE (UNION X Y))) (RAN (UNION X Y)))
+ (= (RAN (UNION X Y)) (UNION (RAN X) (RAN Y))))
+Which simplifies
+ when rewriting with DOM-INVERSE, DOM-UNION, INVERSE-UNION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+RAN-UNIT
+Beginning proof of RAN-UNIT ...
+(= (RAN (UNIT X)) (IF (PAIR!IS-PAIR X) (UNIT (PAIR!SND X)) (NULLSET)))
+Assuming DOM-INVERSE with the instantiations: (= R (UNIT X)) generates ...
+(IMPLIES (= (DOM (INVERSE (UNIT X))) (RAN (UNIT X)))
+ (= (RAN (UNIT X)) (IF (PAIR!IS-PAIR X) (UNIT (PAIR!SND X)) (NULLSET))))
+Which simplifies
+ with invocation of FLIP-PAIR
+ when rewriting with DOM-NULLSET, DOM-SETADD, INVERSE-NULLSET, INVERSE-SETADD,
+SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+RAN-SETADD
+Beginning proof of RAN-SETADD ...
+(= (RAN (SETADD X Y))
+ (IF (PAIR!IS-PAIR X) (SETADD (PAIR!SND X) (RAN Y)) (RAN Y)))
+Assuming DOM-INVERSE with the instantiations: (= R (SETADD X Y)) generates ...
+(IMPLIES (= (DOM (INVERSE (SETADD X Y))) (RAN (SETADD X Y)))
+ (= (RAN (SETADD X Y))
+  (IF (PAIR!IS-PAIR X) (SETADD (PAIR!SND X) (RAN Y)) (RAN Y))))
+Which simplifies
+ with invocation of FLIP-PAIR
+ when rewriting with DOM-INVERSE, DOM-SETADD, INVERSE-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+RAN-CROSS
+Beginning proof of RAN-CROSS ...
+(= (RAN (PAIR!CROSS X Y)) (IF (= X (NULLSET)) (NULLSET) Y))
+Assuming DOM-INVERSE with the instantiations: (= R (PAIR!CROSS X Y)) generates
+...
+(IMPLIES (= (DOM (INVERSE (PAIR!CROSS X Y))) (RAN (PAIR!CROSS X Y)))
+ (= (RAN (PAIR!CROSS X Y)) (IF (= X (NULLSET)) (NULLSET) Y)))
+Which simplifies
+ when rewriting with RAN-NULLSET, PAIR!CROSS-NULLSET-LEFT, DOM-CROSS,
+INVERSE-CROSS to ...
+(TRUE)
+DOM-SUBSET
+Beginning proof of DOM-SUBSET ...
+(IMPLIES (SUBSET X Y) (= (SUBSET (DOM X) (DOM Y)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+ (ALL (E$0 B)
+  (IMPLIES (IN (PAIR!PAIR E$0 B) X) (SOME (B$0) (IN (PAIR!PAIR E$0 B$0) Y)))))
+Instantiating (= E (PAIR!PAIR E$0 B)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN (PAIR!PAIR E B) X) (IN (PAIR!PAIR E B) Y))
+  (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 Y))) (IN (PAIR!PAIR E B) X))
+ (SOME (B$0) (IN (PAIR!PAIR E B$0) Y)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= B$0 B) to ...
+(TRUE)
+RAN-SUBSET
+Beginning proof of RAN-SUBSET ...
+(IMPLIES (SUBSET X Y) (= (SUBSET (RAN X) (RAN Y)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+ (ALL (E$0 A)
+  (IMPLIES (IN (PAIR!PAIR A E$0) X) (SOME (A$0) (IN (PAIR!PAIR A$0 E$0) Y)))))
+Instantiating (= E (PAIR!PAIR A E$0)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN (PAIR!PAIR A E) X) (IN (PAIR!PAIR A E) Y))
+  (ALL (E$0) (IMPLIES (IN E$0 X) (IN E$0 Y))) (IN (PAIR!PAIR A E) X))
+ (SOME (A$0) (IN (PAIR!PAIR A$0 E) Y)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= A$0 A) to ...
+(TRUE)
+RAN-NULL-IMP-DOM-NULL
+Beginning proof of RAN-NULL-IMP-DOM-NULL ...
+(IMPLIES (NOT (= (RAN X) (NULLSET))) (NOT (= (DOM X) (NULLSET))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES
+ (NOT (ALL (E) (IF (IN E (RAN X)) (IN E (NULLSET)) (NOT (IN E (NULLSET))))))
+ (NOT
+  (ALL (E$0)
+   (IF (IN E$0 (DOM X)) (IN E$0 (NULLSET)) (NOT (IN E$0 (NULLSET)))))))
+Which simplifies
+ when rewriting with IN-DOM, NULLSET.DEFINITION, IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (SOME (E A) (IN (PAIR!PAIR A E) X))
+ (SOME (E$0 B) (IN (PAIR!PAIR E$0 B) X)))
+Prenexing produces ...
+(IMPLIES (IN (PAIR!PAIR A E) X) (SOME (E$0 B) (IN (PAIR!PAIR E$0 B) X)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiations (= B E) (= E$0 A) to ...
+(TRUE)
+DOM-NULL-IFF-RAN-NULL
+Beginning proof of DOM-NULL-IFF-RAN-NULL ...
+(= (= (DOM X) (NULLSET)) (= (RAN X) (NULLSET)))
+Assuming RAN-NULL-IMP-DOM-NULL with the instantiations: (= X X) generates ...
+(IMPLIES (IMPLIES (NOT (= (RAN X) (NULLSET))) (NOT (= (DOM X) (NULLSET))))
+ (= (= (DOM X) (NULLSET)) (= (RAN X) (NULLSET))))
+Assuming RAN-NULL-IMP-DOM-NULL with the
+instantiations: (= X (INVERSE X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (RAN (INVERSE X)) (NULLSET)))
+   (NOT (= (DOM (INVERSE X)) (NULLSET))))
+  (IMPLIES (NOT (= (RAN X) (NULLSET))) (NOT (= (DOM X) (NULLSET)))))
+ (= (= (DOM X) (NULLSET)) (= (RAN X) (NULLSET))))
+Which simplifies
+ when rewriting with DOM-INVERSE, RAN-INVERSE to ...
+(TRUE)
+SUBSET-CROSS
+Beginning proof of SUBSET-CROSS ...
+(= (SUBSET A (PAIR!CROSS X Y))
+ (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y)))
+Splitting on (SUBSET A (PAIR!CROSS X Y)) generates ...
+(IF (SUBSET A (PAIR!CROSS X Y))
+ (= (SUBSET A (PAIR!CROSS X Y))
+  (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y)))
+ (= (SUBSET A (PAIR!CROSS X Y))
+  (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y))))
+Which simplifies to ...
+(IF (SUBSET A (PAIR!CROSS X Y))
+ (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y))
+ (IMPLIES (AND (IS-RELATION A) (SUBSET (DOM A) X)) (NOT (SUBSET (RAN A) Y))))
+Starting case 2 ...
+(IMPLIES (SUBSET A (PAIR!CROSS X Y))
+ (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y)))
+Assuming DOM-SUBSET with the
+instantiations: (= X A) (= Y (PAIR!CROSS X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (SUBSET A (PAIR!CROSS X Y))
+   (= (SUBSET (DOM A) (DOM (PAIR!CROSS X Y))) (TRUE)))
+  (SUBSET A (PAIR!CROSS X Y)))
+ (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y)))
+Assuming RAN-SUBSET with the
+instantiations: (= X A) (= Y (PAIR!CROSS X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (SUBSET A (PAIR!CROSS X Y))
+   (= (SUBSET (RAN A) (RAN (PAIR!CROSS X Y))) (TRUE)))
+  (IMPLIES (SUBSET A (PAIR!CROSS X Y))
+   (SUBSET (DOM A) (DOM (PAIR!CROSS X Y))))
+  (SUBSET A (PAIR!CROSS X Y)))
+ (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y)))
+Which simplifies
+ when rewriting with RAN-NULLSET, PAIR!CROSS-NULLSET-RIGHT, DOM-CROSS,
+SUBSET.NULLSET.LEFT, IS-RELATION-NULLSET, SUBSET.SELF, DOM-NULLSET,
+PAIR!CROSS-NULLSET-LEFT, SUBSET.NULLSET.RIGHT, RAN-CROSS to ...
+(IMPLIES
+ (AND (SUBSET A (PAIR!CROSS X Y)) (NOT (= X (NULLSET))) (SUBSET (RAN A) Y)
+  (NOT (= Y (NULLSET))) (SUBSET (DOM A) X))
+ (IS-RELATION A))
+Invoking (SUBSET A (PAIR!CROSS X Y)) gives ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E A) (IN E (PAIR!CROSS X Y))))
+  (NOT (= X (NULLSET))) (SUBSET (RAN A) Y) (NOT (= Y (NULLSET)))
+  (SUBSET (DOM A) X))
+ (IS-RELATION A))
+Invoking IS-RELATION gives ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E A) (IN E (PAIR!CROSS X Y))))
+  (NOT (= X (NULLSET))) (SUBSET (RAN A) Y) (NOT (= Y (NULLSET)))
+  (SUBSET (DOM A) X))
+ (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0))))
+Which simplifies
+ when rewriting with PAIR!IN-CROSS
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL
+ with the instantiation (= E X$0) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (SUBSET A (PAIR!CROSS X Y))) (IS-RELATION A) (SUBSET (DOM A) X))
+ (NOT (SUBSET (RAN A) Y)))
+Splitting
+on (AND (IS-RELATION A) (AND (SUBSET (DOM A) X) (SUBSET (RAN A) Y))) generates
+...
+(IF (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y))
+ (IMPLIES
+  (AND (NOT (SUBSET A (PAIR!CROSS X Y))) (IS-RELATION A) (SUBSET (DOM A) X))
+  (NOT (SUBSET (RAN A) Y)))
+ (IMPLIES
+  (AND (NOT (SUBSET A (PAIR!CROSS X Y))) (IS-RELATION A) (SUBSET (DOM A) X))
+  (NOT (SUBSET (RAN A) Y))))
+Which simplifies to ...
+(IMPLIES (AND (IS-RELATION A) (SUBSET (DOM A) X) (SUBSET (RAN A) Y))
+ (SUBSET A (PAIR!CROSS X Y)))
+Which simplifies
+ with invocation of SUBSET, IS-RELATION
+ when rewriting with PAIR!IN-CROSS, IN-RAN, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0)))
+  (ALL (E B) (IMPLIES (IN (PAIR!PAIR E B) A) (IN E X)))
+  (ALL (E$0 A$0) (IMPLIES (IN (PAIR!PAIR A$0 E$0) A) (IN E$0 Y))))
+ (ALL (E$1)
+  (IMPLIES (IN E$1 A) (AND (IN (PAIR!FST E$1) X) (IN (PAIR!SND E$1) Y)))))
+Instantiating (= X$0 E$1) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E A) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0)))
+  (ALL (E$0 B) (IMPLIES (IN (PAIR!PAIR E$0 B) A) (IN E$0 X)))
+  (ALL (E$1 A$0) (IMPLIES (IN (PAIR!PAIR A$0 E$1) A) (IN E$1 Y))) (IN E A))
+ (AND (IN (PAIR!FST E) X) (IN (PAIR!SND E) Y)))
+Instantiating (= E$0 (PAIR!FST E)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E A) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0)))
+  (ALL (B) (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) B) A) (IN (PAIR!FST E) X)))
+  (ALL (E$0 B$0) (IMPLIES (IN (PAIR!PAIR E$0 B$0) A) (IN E$0 X)))
+  (ALL (E$1 A$0) (IMPLIES (IN (PAIR!PAIR A$0 E$1) A) (IN E$1 Y))) (IN E A))
+ (AND (IN (PAIR!FST E) X) (IN (PAIR!SND E) Y)))
+Instantiating (= E$1 (PAIR!SND E)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E A) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0)))
+  (ALL (B) (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) B) A) (IN (PAIR!FST E) X)))
+  (ALL (E$0 B$0) (IMPLIES (IN (PAIR!PAIR E$0 B$0) A) (IN E$0 X)))
+  (ALL (A$0)
+   (IMPLIES (IN (PAIR!PAIR A$0 (PAIR!SND E)) A) (IN (PAIR!SND E) Y)))
+  (ALL (E$1 A$1) (IMPLIES (IN (PAIR!PAIR A$1 E$1) A) (IN E$1 Y))) (IN E A))
+ (AND (IN (PAIR!FST E) X) (IN (PAIR!SND E) Y)))
+Instantiating (= B (PAIR!SND E)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E A) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0)))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) (PAIR!SND E)) A) (IN (PAIR!FST E) X))
+  (ALL (B) (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) B) A) (IN (PAIR!FST E) X)))
+  (ALL (E$0 B$0) (IMPLIES (IN (PAIR!PAIR E$0 B$0) A) (IN E$0 X)))
+  (ALL (A$0)
+   (IMPLIES (IN (PAIR!PAIR A$0 (PAIR!SND E)) A) (IN (PAIR!SND E) Y)))
+  (ALL (E$1 A$1) (IMPLIES (IN (PAIR!PAIR A$1 E$1) A) (IN E$1 Y))) (IN E A))
+ (AND (IN (PAIR!FST E) X) (IN (PAIR!SND E) Y)))
+Instantiating (= A$0 (PAIR!FST E)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E A) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 A) (PAIR!IS-PAIR X$0)))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) (PAIR!SND E)) A) (IN (PAIR!FST E) X))
+  (ALL (B) (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) B) A) (IN (PAIR!FST E) X)))
+  (ALL (E$0 B$0) (IMPLIES (IN (PAIR!PAIR E$0 B$0) A) (IN E$0 X)))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) (PAIR!SND E)) A) (IN (PAIR!SND E) Y))
+  (ALL (A$0)
+   (IMPLIES (IN (PAIR!PAIR A$0 (PAIR!SND E)) A) (IN (PAIR!SND E) Y)))
+  (ALL (E$1 A$1) (IMPLIES (IN (PAIR!PAIR A$1 E$1) A) (IN E$1 Y))) (IN E A))
+ (AND (IN (PAIR!FST E) X) (IN (PAIR!SND E) Y)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IMAGE
+IN-IMAGE
+Beginning proof of IN-IMAGE ...
+(= (IN Y (IMAGE R X)) (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z Y) R))))
+Which simplifies
+ when rewriting with IN-RAN, IMAGE.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IMAGE-OF-NULLSET
+Beginning proof of IMAGE-OF-NULLSET ...
+(= (IMAGE R (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-IMAGE to ...
+(TRUE)
+IMAGE-THROUGH-NULLSET
+Beginning proof of IMAGE-THROUGH-NULLSET ...
+(= (IMAGE (NULLSET) X) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IMAGE-OF-UNION
+Beginning proof of IMAGE-OF-UNION ...
+(= (IMAGE R (UNION X Y)) (UNION (IMAGE R X) (IMAGE R Y)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (IMAGE R (UNION X Y))) (IN E (UNION (IMAGE R X) (IMAGE R Y)))
+ (NOT (IN E (UNION (IMAGE R X) (IMAGE R Y)))))
+Which simplifies
+ when rewriting with UNION.DEFINITION, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IF
+ (SOME (Z)
+  (IF (IN Z X) (IN (PAIR!PAIR Z E) R) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R))))
+ (OR (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))
+  (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))))
+ (NOT (SOME (Z$2) (AND (IN Z$2 Y) (IN (PAIR!PAIR Z$2 E) R)))))
+Starting case 2 ...
+(IMPLIES
+ (AND
+  (SOME (Z)
+   (IF (IN Z X) (IN (PAIR!PAIR Z E) R) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R))))
+  (NOT (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))))
+ (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IF (IN Z X) (IN (PAIR!PAIR Z E) R) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R)))
+  (NOT (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))))
+ (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiations (= Z$0 Z) (= Z$1 Z) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (NOT
+  (SOME (Z)
+   (IF (IN Z X) (IN (PAIR!PAIR Z E) R)
+    (AND (IN Z Y) (IN (PAIR!PAIR Z E) R)))))
+ (NOT (SOME (Z$2) (AND (IN Z$2 Y) (IN (PAIR!PAIR Z$2 E) R)))))
+Instantiating (= Z Z$2) gives ...
+(IMPLIES
+ (NOT
+  (OR
+   (IF (IN Z X) (IN (PAIR!PAIR Z E) R) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R)))
+   (SOME (Z$0)
+    (IF (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)
+     (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R))))))
+ (NOT (AND (IN Z Y) (IN (PAIR!PAIR Z E) R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IMAGE-THROUGH-UNION
+Beginning proof of IMAGE-THROUGH-UNION ...
+(= (IMAGE (UNION R S) X) (UNION (IMAGE R X) (IMAGE S X)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (IMAGE (UNION R S) X)) (IN E (UNION (IMAGE R X) (IMAGE S X)))
+ (NOT (IN E (UNION (IMAGE R X) (IMAGE S X)))))
+Which simplifies
+ when rewriting with UNION.DEFINITION, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES
+ (AND
+  (SOME (Z) (AND (IN Z X) (OR (IN (PAIR!PAIR Z E) R) (IN (PAIR!PAIR Z E) S))))
+  (NOT (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))))
+ (SOME (Z$1) (AND (IN Z$1 X) (IN (PAIR!PAIR Z$1 E) S))))
+Instantiating (= Z$1 Z) gives ...
+(IMPLIES
+ (AND (IN Z X) (OR (IN (PAIR!PAIR Z E) R) (IN (PAIR!PAIR Z E) S))
+  (NOT (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R))))
+  (NOT (AND (IN Z X) (IN (PAIR!PAIR Z E) S))))
+ (SOME (Z$1) (AND (IN Z$1 X) (IN (PAIR!PAIR Z$1 E) S))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Z$0 Z) to ...
+(TRUE)
+IMAGE-DOM
+Beginning proof of IMAGE-DOM ...
+(= (IMAGE R (DOM R)) (RAN R))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E) (IF (IN E (IMAGE R (DOM R))) (IN E (RAN R)) (NOT (IN E (RAN R)))))
+ (= (IMAGE R (DOM R)) (RAN R)))
+Prenexing produces ...
+(OR (IF (IN E (IMAGE R (DOM R))) (IN E (RAN R)) (NOT (IN E (RAN R))))
+ (= (IMAGE R (DOM R)) (RAN R)))
+Which simplifies
+ when rewriting with IN-RAN, IN-DOM, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (Z) (AND (SOME (B) (IN (PAIR!PAIR Z B) R)) (IN (PAIR!PAIR Z E) R)))
+ (OR (SOME (A) (IN (PAIR!PAIR A E) R)) (= (IMAGE R (DOM R)) (RAN R)))
+ (IMPLIES (SOME (A$0) (IN (PAIR!PAIR A$0 E) R)) (= (IMAGE R (DOM R)) (RAN R))))
+Starting case 2 ...
+(IMPLIES
+ (AND
+  (SOME (Z) (AND (SOME (B) (IN (PAIR!PAIR Z B) R)) (IN (PAIR!PAIR Z E) R)))
+  (NOT (SOME (A) (IN (PAIR!PAIR A E) R))))
+ (= (IMAGE R (DOM R)) (RAN R)))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR Z B) R) (IN (PAIR!PAIR Z E) R)
+  (NOT (SOME (A) (IN (PAIR!PAIR A E) R))))
+ (= (IMAGE R (DOM R)) (RAN R)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= A Z) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND
+  (NOT
+   (SOME (Z) (AND (SOME (B) (IN (PAIR!PAIR Z B) R)) (IN (PAIR!PAIR Z E) R))))
+  (SOME (A$0) (IN (PAIR!PAIR A$0 E) R)))
+ (= (IMAGE R (DOM R)) (RAN R)))
+Instantiating (= Z A$0) (= B E) gives ...
+(IMPLIES
+ (SOME (A)
+  (AND
+   (NOT
+    (OR (AND (IN (PAIR!PAIR A E) R) (IN (PAIR!PAIR A E) R))
+     (SOME (Z B) (AND (IN (PAIR!PAIR Z B) R) (IN (PAIR!PAIR Z E) R)))))
+   (IN (PAIR!PAIR A E) R)))
+ (= (IMAGE R (DOM R)) (RAN R)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IMAGE-CROSS
+Beginning proof of IMAGE-CROSS ...
+(= (IMAGE (PAIR!CROSS X Y) Z) (IF (= (INTER Z X) (NULLSET)) (NULLSET) Y))
+Which simplifies
+ when rewriting with SETRULES!INTER-NULLSET, INTER.COMMUTATIVE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IF (ALL (E) (IMPLIES (IN E X) (NOT (IN E Z))))
+ (= (IMAGE (PAIR!CROSS X Y) Z) (NULLSET)) (= (IMAGE (PAIR!CROSS X Y) Z) Y))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(IF (ALL (E) (IMPLIES (IN E X) (NOT (IN E Z))))
+ (OR
+  (ALL (E$0)
+   (IF (IN E$0 (IMAGE (PAIR!CROSS X Y) Z)) (IN E$0 (NULLSET))
+    (NOT (IN E$0 (NULLSET)))))
+  (= (IMAGE (PAIR!CROSS X Y) Z) (NULLSET)))
+ (OR
+  (ALL (E$1)
+   (IF (IN E$1 (IMAGE (PAIR!CROSS X Y) Z)) (IN E$1 Y) (NOT (IN E$1 Y))))
+  (= (IMAGE (PAIR!CROSS X Y) Z) Y)))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, PAIR!IN-CROSS, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IF (ALL (E) (IMPLIES (IN E X) (NOT (IN E Z))))
+ (IMPLIES (SOME (E$0 Z$0) (AND (IN Z$0 Z) (IN Z$0 X) (IN E$0 Y)))
+  (= (IMAGE (PAIR!CROSS X Y) Z) (NULLSET)))
+ (OR
+  (ALL (E$1)
+   (IF (SOME (Z$1) (AND (IN Z$1 Z) (IN Z$1 X) (IN E$1 Y))) (IN E$1 Y)
+    (NOT (IN E$1 Y))))
+  (= (IMAGE (PAIR!CROSS X Y) Z) Y)))
+Starting case 2 ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E X) (NOT (IN E Z))))
+  (SOME (E$0 Z$0) (AND (IN Z$0 Z) (IN Z$0 X) (IN E$0 Y))))
+ (= (IMAGE (PAIR!CROSS X Y) Z) (NULLSET)))
+Instantiating (= E Z$0) gives ...
+(IMPLIES
+ (SOME (Z$0)
+  (AND (IMPLIES (IN Z$0 X) (NOT (IN Z$0 Z)))
+   (ALL (E) (IMPLIES (IN E X) (NOT (IN E Z))))
+   (SOME (E$0) (AND (IN Z$0 Z) (IN Z$0 X) (IN E$0 Y)))))
+ (= (IMAGE (PAIR!CROSS X Y) Z) (NULLSET)))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (ALL (E) (IMPLIES (IN E X) (NOT (IN E Z)))))
+  (NOT
+   (ALL (E$1)
+    (IF (SOME (Z$1) (AND (IN Z$1 Z) (IN Z$1 X) (IN E$1 Y))) (IN E$1 Y)
+     (NOT (IN E$1 Y))))))
+ (= (IMAGE (PAIR!CROSS X Y) Z) Y))
+Instantiating (= Z$1 E) gives ...
+(IMPLIES
+ (SOME (E)
+  (AND (NOT (IMPLIES (IN E X) (NOT (IN E Z))))
+   (NOT
+    (ALL (E$0)
+     (IF
+      (OR (AND (IN E Z) (IN E X) (IN E$0 Y))
+       (SOME (Z$0) (AND (IN Z$0 Z) (IN Z$0 X) (IN E$0 Y))))
+      (IN E$0 Y) (NOT (IN E$0 Y)))))))
+ (= (IMAGE (PAIR!CROSS X Y) Z) Y))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IMAGE-MONOTONIC
+Beginning proof of IMAGE-MONOTONIC ...
+(IMPLIES (AND (SUBSET X Y) (SUBSET R S))
+ (= (SUBSET (IMAGE R X) (IMAGE S Y)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+  (ALL (E$0) (IMPLIES (IN E$0 R) (IN E$0 S))))
+ (ALL (E$1 Z)
+  (IMPLIES (AND (IN Z X) (IN (PAIR!PAIR Z E$1) R))
+   (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E$1) S))))))
+Instantiating (= Z$0 Z) gives ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+  (ALL (E$0) (IMPLIES (IN E$0 R) (IN E$0 S))))
+ (ALL (E$1 Z)
+  (IMPLIES
+   (AND (IN Z X) (IN (PAIR!PAIR Z E$1) R)
+    (NOT (AND (IN Z Y) (IN (PAIR!PAIR Z E$1) S))))
+   (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E$1) S))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiations (= E Z) (= E$0 (PAIR!PAIR Z E$1)) to ...
+(TRUE)
+IMAGE-SUBSET-RAN
+Beginning proof of IMAGE-SUBSET-RAN ...
+(SUBSET (IMAGE R X) (RAN R))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-RAN, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (AND (IN Z X) (IN (PAIR!PAIR Z E) R))
+ (SOME (A) (IN (PAIR!PAIR A E) R)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= A Z) to ...
+(TRUE)
+IMAGE-OF-SUPERSET-OF-DOM
+Beginning proof of IMAGE-OF-SUPERSET-OF-DOM ...
+(IMPLIES (SUBSET (DOM R) X) (= (IMAGE R X) (RAN R)))
+Assuming IMAGE-DOM with the instantiations: (= R R) generates ...
+(IMPLIES (AND (= (IMAGE R (DOM R)) (RAN R)) (SUBSET (DOM R) X))
+ (= (IMAGE R X) (RAN R)))
+Assuming IMAGE-MONOTONIC with the
+instantiations: (= R R) (= S R) (= X (DOM R)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (SUBSET (DOM R) X) (SUBSET R R))
+   (= (SUBSET (IMAGE R (DOM R)) (IMAGE R X)) (TRUE)))
+  (= (IMAGE R (DOM R)) (RAN R)) (SUBSET (DOM R) X))
+ (= (IMAGE R X) (RAN R)))
+Assuming IMAGE-SUBSET-RAN with the instantiations: (= R R) (= X X) generates
+...
+(IMPLIES
+ (AND (SUBSET (IMAGE R X) (RAN R))
+  (IMPLIES (AND (SUBSET (DOM R) X) (SUBSET R R))
+   (SUBSET (IMAGE R (DOM R)) (IMAGE R X)))
+  (= (IMAGE R (DOM R)) (RAN R)) (SUBSET (DOM R) X))
+ (= (IMAGE R X) (RAN R)))
+Assuming =.EXTENSIONAL.SUBSET with the
+instantiations: (= X (IMAGE R X)) (= Y (RAN R)) generates ...
+(IMPLIES
+ (AND
+  (= (= (IMAGE R X) (RAN R))
+   (AND (SUBSET (IMAGE R X) (RAN R)) (SUBSET (RAN R) (IMAGE R X))))
+  (SUBSET (IMAGE R X) (RAN R))
+  (IMPLIES (AND (SUBSET (DOM R) X) (SUBSET R R))
+   (SUBSET (IMAGE R (DOM R)) (IMAGE R X)))
+  (= (IMAGE R (DOM R)) (RAN R)) (SUBSET (DOM R) X))
+ (= (IMAGE R X) (RAN R)))
+Which simplifies
+ when rewriting with IMAGE-DOM, SUBSET.SELF to ...
+(TRUE)
+COMP
+IN-COMP
+Beginning proof of IN-COMP ...
+(= (IN X (COMP R S))
+ (AND (PAIR!IS-PAIR X)
+  (SOME (Y)
+   (AND (IN (PAIR!PAIR (PAIR!FST X) Y) R) (IN (PAIR!PAIR Y (PAIR!SND X)) S)))))
+Which simplifies
+ when rewriting with IN-RAN, IN-DOM, PAIR!IN-CROSS, COMP.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-RELATION-COMP
+Beginning proof of IS-RELATION-COMP ...
+(= (IS-RELATION (COMP R S)) (TRUE))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with IN-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+INVERSE-COMP
+Beginning proof of INVERSE-COMP ...
+(= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R)))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (INVERSE (COMP R S))) (IN E (COMP (INVERSE S) (INVERSE R)))
+   (NOT (IN E (COMP (INVERSE S) (INVERSE R))))))
+ (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+Prenexing produces ...
+(OR
+ (IF (IN E (INVERSE (COMP R S))) (IN E (COMP (INVERSE S) (INVERSE R)))
+  (NOT (IN E (COMP (INVERSE S) (INVERSE R)))))
+ (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+Which simplifies
+ with invocation of FLIP-PAIR
+ when rewriting with FLIP-PAIR-PAIR, IN-COMP, IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(IMPLIES (PAIR!IS-PAIR E)
+ (IF
+  (SOME (Y)
+   (AND (IN (PAIR!PAIR (PAIR!SND E) Y) R) (IN (PAIR!PAIR Y (PAIR!FST E)) S)))
+  (OR
+   (SOME (Y$0)
+    (AND (IN (PAIR!PAIR Y$0 (PAIR!FST E)) S)
+     (IN (PAIR!PAIR (PAIR!SND E) Y$0) R)))
+   (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+  (IMPLIES
+   (SOME (Y$1)
+    (AND (IN (PAIR!PAIR Y$1 (PAIR!FST E)) S)
+     (IN (PAIR!PAIR (PAIR!SND E) Y$1) R)))
+   (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (SOME (Y)
+   (AND (IN (PAIR!PAIR (PAIR!SND E) Y) R) (IN (PAIR!PAIR Y (PAIR!FST E)) S)))
+  (NOT
+   (SOME (Y$0)
+    (AND (IN (PAIR!PAIR Y$0 (PAIR!FST E)) S)
+     (IN (PAIR!PAIR (PAIR!SND E) Y$0) R)))))
+ (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+Instantiating (= Y$0 Y) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (SOME (Y)
+   (AND (IN (PAIR!PAIR (PAIR!SND E) Y) R) (IN (PAIR!PAIR Y (PAIR!FST E)) S)
+    (NOT
+     (OR
+      (AND (IN (PAIR!PAIR Y (PAIR!FST E)) S)
+       (IN (PAIR!PAIR (PAIR!SND E) Y) R))
+      (SOME (Y$0)
+       (AND (IN (PAIR!PAIR Y$0 (PAIR!FST E)) S)
+        (IN (PAIR!PAIR (PAIR!SND E) Y$0) R))))))))
+ (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (NOT
+   (SOME (Y)
+    (AND (IN (PAIR!PAIR (PAIR!SND E) Y) R)
+     (IN (PAIR!PAIR Y (PAIR!FST E)) S))))
+  (SOME (Y$1)
+   (AND (IN (PAIR!PAIR Y$1 (PAIR!FST E)) S)
+    (IN (PAIR!PAIR (PAIR!SND E) Y$1) R))))
+ (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+Instantiating (= Y Y$1) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (SOME (Y)
+   (AND
+    (NOT
+     (OR
+      (AND (IN (PAIR!PAIR (PAIR!SND E) Y) R)
+       (IN (PAIR!PAIR Y (PAIR!FST E)) S))
+      (SOME (Y$0)
+       (AND (IN (PAIR!PAIR (PAIR!SND E) Y$0) R)
+        (IN (PAIR!PAIR Y$0 (PAIR!FST E)) S)))))
+    (IN (PAIR!PAIR Y (PAIR!FST E)) S) (IN (PAIR!PAIR (PAIR!SND E) Y) R))))
+ (= (INVERSE (COMP R S)) (COMP (INVERSE S) (INVERSE R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+DOM-COMP
+Beginning proof of DOM-COMP ...
+(= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S)))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (DOM (COMP R S))) (IN E (IMAGE (INVERSE R) (DOM S)))
+   (NOT (IN E (IMAGE (INVERSE R) (DOM S))))))
+ (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+Prenexing produces ...
+(OR
+ (IF (IN E (DOM (COMP R S))) (IN E (IMAGE (INVERSE R) (DOM S)))
+  (NOT (IN E (IMAGE (INVERSE R) (DOM S)))))
+ (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+Which simplifies
+ when rewriting with FLIP-PAIR-PAIR, IN-INVERSE, IN-IMAGE, IN-COMP, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions FLIP-PAIR-IS-INVOLUTION, PAIR!IS-PAIR-BOOL,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (B Y) (AND (IN (PAIR!PAIR E Y) R) (IN (PAIR!PAIR Y B) S)))
+ (OR
+  (SOME (Z)
+   (AND (SOME (B$0) (IN (PAIR!PAIR Z B$0) S)) (IN (PAIR!PAIR E Z) R)))
+  (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+ (IMPLIES
+  (SOME (Z$0)
+   (AND (SOME (B$1) (IN (PAIR!PAIR Z$0 B$1) S)) (IN (PAIR!PAIR E Z$0) R)))
+  (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S)))))
+Starting case 2 ...
+(IMPLIES
+ (AND (SOME (B Y) (AND (IN (PAIR!PAIR E Y) R) (IN (PAIR!PAIR Y B) S)))
+  (NOT
+   (SOME (Z)
+    (AND (SOME (B$0) (IN (PAIR!PAIR Z B$0) S)) (IN (PAIR!PAIR E Z) R)))))
+ (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+Instantiating (= Z Y) (= B$0 B) gives ...
+(IMPLIES
+ (SOME (B Y)
+  (AND (IN (PAIR!PAIR E Y) R) (IN (PAIR!PAIR Y B) S)
+   (NOT
+    (OR (AND (IN (PAIR!PAIR Y B) S) (IN (PAIR!PAIR E Y) R))
+     (SOME (Z B$0) (AND (IN (PAIR!PAIR Z B$0) S) (IN (PAIR!PAIR E Z) R)))))))
+ (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (SOME (B Y) (AND (IN (PAIR!PAIR E Y) R) (IN (PAIR!PAIR Y B) S))))
+  (SOME (Z$0)
+   (AND (SOME (B$1) (IN (PAIR!PAIR Z$0 B$1) S)) (IN (PAIR!PAIR E Z$0) R))))
+ (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+Instantiating (= B B$1) (= Y Z$0) gives ...
+(IMPLIES
+ (SOME (Z B)
+  (AND
+   (NOT
+    (OR (AND (IN (PAIR!PAIR E Z) R) (IN (PAIR!PAIR Z B) S))
+     (SOME (B$0 Y) (AND (IN (PAIR!PAIR E Y) R) (IN (PAIR!PAIR Y B$0) S)))))
+   (IN (PAIR!PAIR Z B) S) (IN (PAIR!PAIR E Z) R)))
+ (= (DOM (COMP R S)) (IMAGE (INVERSE R) (DOM S))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+RAN-COMP
+Beginning proof of RAN-COMP ...
+(= (RAN (COMP R S)) (IMAGE S (RAN R)))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (RAN (COMP R S))) (IN E (IMAGE S (RAN R)))
+   (NOT (IN E (IMAGE S (RAN R))))))
+ (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+Prenexing produces ...
+(OR
+ (IF (IN E (RAN (COMP R S))) (IN E (IMAGE S (RAN R)))
+  (NOT (IN E (IMAGE S (RAN R)))))
+ (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+Which simplifies
+ when rewriting with IN-IMAGE, IN-COMP, IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (A Y) (AND (IN (PAIR!PAIR A Y) R) (IN (PAIR!PAIR Y E) S)))
+ (OR
+  (SOME (Z)
+   (AND (SOME (A$0) (IN (PAIR!PAIR A$0 Z) R)) (IN (PAIR!PAIR Z E) S)))
+  (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+ (IMPLIES
+  (SOME (Z$0)
+   (AND (SOME (A$1) (IN (PAIR!PAIR A$1 Z$0) R)) (IN (PAIR!PAIR Z$0 E) S)))
+  (= (RAN (COMP R S)) (IMAGE S (RAN R)))))
+Starting case 2 ...
+(IMPLIES
+ (AND (SOME (A Y) (AND (IN (PAIR!PAIR A Y) R) (IN (PAIR!PAIR Y E) S)))
+  (NOT
+   (SOME (Z)
+    (AND (SOME (A$0) (IN (PAIR!PAIR A$0 Z) R)) (IN (PAIR!PAIR Z E) S)))))
+ (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+Instantiating (= Z Y) (= A$0 A) gives ...
+(IMPLIES
+ (SOME (A Y)
+  (AND (IN (PAIR!PAIR A Y) R) (IN (PAIR!PAIR Y E) S)
+   (NOT
+    (OR (AND (IN (PAIR!PAIR A Y) R) (IN (PAIR!PAIR Y E) S))
+     (SOME (Z A$0) (AND (IN (PAIR!PAIR A$0 Z) R) (IN (PAIR!PAIR Z E) S)))))))
+ (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (SOME (A Y) (AND (IN (PAIR!PAIR A Y) R) (IN (PAIR!PAIR Y E) S))))
+  (SOME (Z$0)
+   (AND (SOME (A$1) (IN (PAIR!PAIR A$1 Z$0) R)) (IN (PAIR!PAIR Z$0 E) S))))
+ (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+Instantiating (= A A$1) (= Y Z$0) gives ...
+(IMPLIES
+ (SOME (Z A)
+  (AND
+   (NOT
+    (OR (AND (IN (PAIR!PAIR A Z) R) (IN (PAIR!PAIR Z E) S))
+     (SOME (A$0 Y) (AND (IN (PAIR!PAIR A$0 Y) R) (IN (PAIR!PAIR Y E) S)))))
+   (IN (PAIR!PAIR A Z) R) (IN (PAIR!PAIR Z E) S)))
+ (= (RAN (COMP R S)) (IMAGE S (RAN R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IMAGE-COMP
+Beginning proof of IMAGE-COMP ...
+(= (IMAGE (COMP R S) X) (IMAGE S (IMAGE R X)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (IMAGE (COMP R S) X)) (IN E (IMAGE S (IMAGE R X)))
+ (NOT (IN E (IMAGE S (IMAGE R X)))))
+Which simplifies
+ when rewriting with IN-COMP, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IF
+ (SOME (Z)
+  (AND (IN Z X)
+   (SOME (Y) (AND (IN (PAIR!PAIR Z Y) R) (IN (PAIR!PAIR Y E) S)))))
+ (SOME (Z$0)
+  (AND (SOME (Z$1) (AND (IN Z$1 X) (IN (PAIR!PAIR Z$1 Z$0) R)))
+   (IN (PAIR!PAIR Z$0 E) S)))
+ (NOT
+  (SOME (Z$2)
+   (AND (SOME (Z$3) (AND (IN Z$3 X) (IN (PAIR!PAIR Z$3 Z$2) R)))
+    (IN (PAIR!PAIR Z$2 E) S)))))
+Starting case 2 ...
+(IMPLIES
+ (SOME (Z)
+  (AND (IN Z X)
+   (SOME (Y) (AND (IN (PAIR!PAIR Z Y) R) (IN (PAIR!PAIR Y E) S)))))
+ (SOME (Z$0)
+  (AND (SOME (Z$1) (AND (IN Z$1 X) (IN (PAIR!PAIR Z$1 Z$0) R)))
+   (IN (PAIR!PAIR Z$0 E) S))))
+Instantiating (= Z$0 Y) (= Z$1 Z) gives ...
+(IMPLIES
+ (AND (IN Z X) (IN (PAIR!PAIR Z Y) R) (IN (PAIR!PAIR Y E) S)
+  (NOT (AND (IN Z X) (IN (PAIR!PAIR Z Y) R) (IN (PAIR!PAIR Y E) S))))
+ (SOME (Z$0 Z$1)
+  (AND (IN Z$1 X) (IN (PAIR!PAIR Z$1 Z$0) R) (IN (PAIR!PAIR Z$0 E) S))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (NOT
+  (SOME (Z)
+   (AND (IN Z X)
+    (SOME (Y) (AND (IN (PAIR!PAIR Z Y) R) (IN (PAIR!PAIR Y E) S))))))
+ (NOT
+  (SOME (Z$2)
+   (AND (SOME (Z$3) (AND (IN Z$3 X) (IN (PAIR!PAIR Z$3 Z$2) R)))
+    (IN (PAIR!PAIR Z$2 E) S)))))
+Prenexing produces ...
+(IMPLIES
+ (NOT
+  (SOME (Z$1)
+   (AND (IN Z$1 X)
+    (SOME (Y) (AND (IN (PAIR!PAIR Z$1 Y) R) (IN (PAIR!PAIR Y E) S))))))
+ (NOT (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 Z) R) (IN (PAIR!PAIR Z E) S))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND
+  (NOT
+   (SOME (Z$1)
+    (AND (IN Z$1 X)
+     (SOME (Y) (AND (IN (PAIR!PAIR Z$1 Y) R) (IN (PAIR!PAIR Y E) S))))))
+  (IN Z$0 X) (IN (PAIR!PAIR Z$0 Z) R))
+ (NOT (IN (PAIR!PAIR Z E) S)))
+Instantiating (= Z$1 Z$0) gives ...
+(IMPLIES
+ (AND
+  (NOT
+   (OR
+    (AND (IN Z X)
+     (SOME (Y) (AND (IN (PAIR!PAIR Z Y) R) (IN (PAIR!PAIR Y E) S))))
+    (SOME (Z$1)
+     (AND (IN Z$1 X)
+      (SOME (Y$0)
+       (AND (IN (PAIR!PAIR Z$1 Y$0) R) (IN (PAIR!PAIR Y$0 E) S)))))))
+  (IN Z X) (IN (PAIR!PAIR Z Z$0) R))
+ (NOT (IN (PAIR!PAIR Z$0 E) S)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Y Z$0) to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+COMP-NULLSET-LEFT
+Beginning proof of COMP-NULLSET-LEFT ...
+(= (COMP (NULLSET) R) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+COMP-NULLSET-RIGHT
+Beginning proof of COMP-NULLSET-RIGHT ...
+(= (COMP R (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+COMP-ASSOCIATIVE
+Beginning proof of COMP-ASSOCIATIVE ...
+(= (COMP (COMP R S) T) (COMP R (COMP S T)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (COMP (COMP R S) T)) (IN E (COMP R (COMP S T)))
+ (NOT (IN E (COMP R (COMP S T)))))
+Which simplifies
+ when rewriting with IN-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES (PAIR!IS-PAIR E)
+ (IF
+  (SOME (Y)
+   (AND
+    (SOME (Y$0)
+     (AND (IN (PAIR!PAIR (PAIR!FST E) Y$0) R) (IN (PAIR!PAIR Y$0 Y) S)))
+    (IN (PAIR!PAIR Y (PAIR!SND E)) T)))
+  (SOME (Y$1)
+   (AND (IN (PAIR!PAIR (PAIR!FST E) Y$1) R)
+    (SOME (Y$2)
+     (AND (IN (PAIR!PAIR Y$1 Y$2) S) (IN (PAIR!PAIR Y$2 (PAIR!SND E)) T)))))
+  (NOT
+   (SOME (Y$3)
+    (AND (IN (PAIR!PAIR (PAIR!FST E) Y$3) R)
+     (SOME (Y$4)
+      (AND (IN (PAIR!PAIR Y$3 Y$4) S)
+       (IN (PAIR!PAIR Y$4 (PAIR!SND E)) T))))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (SOME (Y)
+   (AND
+    (SOME (Y$0)
+     (AND (IN (PAIR!PAIR (PAIR!FST E) Y$0) R) (IN (PAIR!PAIR Y$0 Y) S)))
+    (IN (PAIR!PAIR Y (PAIR!SND E)) T))))
+ (SOME (Y$1)
+  (AND (IN (PAIR!PAIR (PAIR!FST E) Y$1) R)
+   (SOME (Y$2)
+    (AND (IN (PAIR!PAIR Y$1 Y$2) S) (IN (PAIR!PAIR Y$2 (PAIR!SND E)) T))))))
+Instantiating (= Y$1 Y$0) (= Y$2 Y) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E) (IN (PAIR!PAIR (PAIR!FST E) Y$0) R)
+  (IN (PAIR!PAIR Y$0 Y) S) (IN (PAIR!PAIR Y (PAIR!SND E)) T)
+  (NOT
+   (AND (IN (PAIR!PAIR (PAIR!FST E) Y$0) R) (IN (PAIR!PAIR Y$0 Y) S)
+    (IN (PAIR!PAIR Y (PAIR!SND E)) T))))
+ (SOME (Y$1 Y$2)
+  (AND (IN (PAIR!PAIR (PAIR!FST E) Y$1) R) (IN (PAIR!PAIR Y$1 Y$2) S)
+   (IN (PAIR!PAIR Y$2 (PAIR!SND E)) T))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (NOT
+   (SOME (Y)
+    (AND
+     (SOME (Y$0)
+      (AND (IN (PAIR!PAIR (PAIR!FST E) Y$0) R) (IN (PAIR!PAIR Y$0 Y) S)))
+     (IN (PAIR!PAIR Y (PAIR!SND E)) T)))))
+ (NOT
+  (SOME (Y$3)
+   (AND (IN (PAIR!PAIR (PAIR!FST E) Y$3) R)
+    (SOME (Y$4)
+     (AND (IN (PAIR!PAIR Y$3 Y$4) S) (IN (PAIR!PAIR Y$4 (PAIR!SND E)) T)))))))
+Instantiating (= Y Y$4) (= Y$0 Y$3) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR E)
+  (NOT
+   (OR
+    (AND (IN (PAIR!PAIR (PAIR!FST E) Y) R) (IN (PAIR!PAIR Y Y$0) S)
+     (IN (PAIR!PAIR Y$0 (PAIR!SND E)) T))
+    (SOME (Y$1 Y$2)
+     (AND (IN (PAIR!PAIR (PAIR!FST E) Y$2) R) (IN (PAIR!PAIR Y$2 Y$1) S)
+      (IN (PAIR!PAIR Y$1 (PAIR!SND E)) T))))))
+ (NOT
+  (AND (IN (PAIR!PAIR (PAIR!FST E) Y) R) (IN (PAIR!PAIR Y Y$0) S)
+   (IN (PAIR!PAIR Y$0 (PAIR!SND E)) T))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+COMP-MONOTONIC
+Beginning proof of COMP-MONOTONIC ...
+(IMPLIES (AND (SUBSET A C) (SUBSET B D))
+ (= (SUBSET (COMP A B) (COMP C D)) (TRUE)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E A) (IN E C)))
+  (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 D))))
+ (ALL (E$1 Y)
+  (IMPLIES
+   (AND (PAIR!IS-PAIR E$1) (IN (PAIR!PAIR (PAIR!FST E$1) Y) A)
+    (IN (PAIR!PAIR Y (PAIR!SND E$1)) B))
+   (SOME (Y$0)
+    (AND (IN (PAIR!PAIR (PAIR!FST E$1) Y$0) C)
+     (IN (PAIR!PAIR Y$0 (PAIR!SND E$1)) D))))))
+Instantiating (= Y$0 Y) gives ...
+(IMPLIES
+ (AND (ALL (E) (IMPLIES (IN E A) (IN E C)))
+  (ALL (E$0) (IMPLIES (IN E$0 B) (IN E$0 D))))
+ (ALL (E$1 Y)
+  (IMPLIES
+   (AND (PAIR!IS-PAIR E$1) (IN (PAIR!PAIR (PAIR!FST E$1) Y) A)
+    (IN (PAIR!PAIR Y (PAIR!SND E$1)) B)
+    (NOT
+     (AND (IN (PAIR!PAIR (PAIR!FST E$1) Y) C)
+      (IN (PAIR!PAIR Y (PAIR!SND E$1)) D))))
+   (SOME (Y$0)
+    (AND (IN (PAIR!PAIR (PAIR!FST E$1) Y$0) C)
+     (IN (PAIR!PAIR Y$0 (PAIR!SND E$1)) D))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL
+ with the
+instantiations (= E (PAIR!PAIR (PAIR!FST E$1) Y))
+               (= E$0 (PAIR!PAIR Y (PAIR!SND E$1))) to
+...
+(TRUE)
+DOM-RESTRICT
+IN-DOM-RESTRICT
+Beginning proof of IN-DOM-RESTRICT ...
+(= (IN X (DOM-RESTRICT Y R))
+ (AND (PAIR!IS-PAIR X) (IN X R) (IN (PAIR!FST X) Y)))
+Which simplifies
+ when rewriting with DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT
+IN-RAN-RESTRICT
+Beginning proof of IN-RAN-RESTRICT ...
+(= (IN X (RAN-RESTRICT R Y))
+ (AND (PAIR!IS-PAIR X) (IN X R) (IN (PAIR!SND X) Y)))
+Which simplifies
+ when rewriting with RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+DOM-RESTRICT-SUBSET
+Beginning proof of DOM-RESTRICT-SUBSET ...
+(SUBSET (DOM-RESTRICT X R) R)
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-SUBSET
+Beginning proof of RAN-RESTRICT-SUBSET ...
+(SUBSET (RAN-RESTRICT R X) R)
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-RELATION-DOM-RESTRICT
+Beginning proof of IS-RELATION-DOM-RESTRICT ...
+(= (IS-RELATION (DOM-RESTRICT X R)) (TRUE))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-RELATION-RAN-RESTRICT
+Beginning proof of IS-RELATION-RAN-RESTRICT ...
+(= (IS-RELATION (RAN-RESTRICT R X)) (TRUE))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+INVERSE-DOM-RESTRICT
+Beginning proof of INVERSE-DOM-RESTRICT ...
+(= (INVERSE (DOM-RESTRICT X R)) (RAN-RESTRICT (INVERSE R) X))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, RAN-RESTRICT.DEFINITION,
+FST-FLIP-PAIR, IS-PAIR-FLIP-PAIR, DOM-RESTRICT.DEFINITION, IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+INVERSE-RAN-RESTRICT
+Beginning proof of INVERSE-RAN-RESTRICT ...
+(= (INVERSE (RAN-RESTRICT R X)) (DOM-RESTRICT X (INVERSE R)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DOM-RESTRICT.DEFINITION,
+SND-FLIP-PAIR, IS-PAIR-FLIP-PAIR, RAN-RESTRICT.DEFINITION, IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+DOM-DOM-RESTRICT
+Beginning proof of DOM-DOM-RESTRICT ...
+(= (DOM (DOM-RESTRICT X R)) (INTER X (DOM R)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+DOM-RESTRICT.DEFINITION, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+RAN-DOM-RESTRICT
+Beginning proof of RAN-DOM-RESTRICT ...
+(= (RAN (DOM-RESTRICT X R)) (IMAGE R X))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (RAN (DOM-RESTRICT X R))) (IN E (IMAGE R X))
+   (NOT (IN E (IMAGE R X)))))
+ (= (RAN (DOM-RESTRICT X R)) (IMAGE R X)))
+Prenexing produces ...
+(OR
+ (IF (IN E (RAN (DOM-RESTRICT X R))) (IN E (IMAGE R X))
+  (NOT (IN E (IMAGE R X))))
+ (= (RAN (DOM-RESTRICT X R)) (IMAGE R X)))
+Which simplifies
+ when rewriting with IN-IMAGE, DOM-RESTRICT.DEFINITION, IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (A) (AND (IN (PAIR!PAIR A E) R) (IN A X)))
+ (OR (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))
+  (= (RAN (DOM-RESTRICT X R)) (IMAGE R X)))
+ (IMPLIES (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))
+  (= (RAN (DOM-RESTRICT X R)) (IMAGE R X))))
+Splitting on (IN A X) generates ...
+(IF
+ (SOME (A)
+  (IF (IN A X) (AND (IN (PAIR!PAIR A E) R) (IN A X))
+   (AND (IN (PAIR!PAIR A E) R) (IN A X))))
+ (OR (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))
+  (= (RAN (DOM-RESTRICT X R)) (IMAGE R X)))
+ (IMPLIES (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR Z$0 E) R)))
+  (= (RAN (DOM-RESTRICT X R)) (IMAGE R X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= A Z$0) to ...
+(TRUE)
+DOM-RAN-RESTRICT
+Beginning proof of DOM-RAN-RESTRICT ...
+(= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (DOM (RAN-RESTRICT R X))) (IN E (IMAGE (INVERSE R) X))
+   (NOT (IN E (IMAGE (INVERSE R) X)))))
+ (= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X)))
+Prenexing produces ...
+(OR
+ (IF (IN E (DOM (RAN-RESTRICT R X))) (IN E (IMAGE (INVERSE R) X))
+  (NOT (IN E (IMAGE (INVERSE R) X))))
+ (= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X)))
+Which simplifies
+ when rewriting with FLIP-PAIR-PAIR, IN-INVERSE, IN-IMAGE,
+RAN-RESTRICT.DEFINITION, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions FLIP-PAIR-IS-INVOLUTION, PAIR!IS-PAIR-BOOL,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (B) (AND (IN (PAIR!PAIR E B) R) (IN B X)))
+ (OR (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR E Z) R)))
+  (= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X)))
+ (IMPLIES (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR E Z$0) R)))
+  (= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X))))
+Splitting on (IN B X) generates ...
+(IF
+ (SOME (B)
+  (IF (IN B X) (AND (IN (PAIR!PAIR E B) R) (IN B X))
+   (AND (IN (PAIR!PAIR E B) R) (IN B X))))
+ (OR (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR E Z) R)))
+  (= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X)))
+ (IMPLIES (SOME (Z$0) (AND (IN Z$0 X) (IN (PAIR!PAIR E Z$0) R)))
+  (= (DOM (RAN-RESTRICT R X)) (IMAGE (INVERSE R) X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= B Z$0) to ...
+(TRUE)
+RAN-RAN-RESTRICT
+Beginning proof of RAN-RAN-RESTRICT ...
+(= (RAN (RAN-RESTRICT R X)) (INTER (RAN R) X))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+RAN-RESTRICT.DEFINITION, IN-RAN, INTER.COMMUTATIVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+DOM-RESTRICT-IGNORES-OFF-DOMAIN
+Beginning proof of DOM-RESTRICT-IGNORES-OFF-DOMAIN ...
+(= (DOM-RESTRICT X R) (DOM-RESTRICT (INTER X (DOM R)) R))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (DOM-RESTRICT X R)) (IN E (DOM-RESTRICT (INTER X (DOM R)) R))
+ (NOT (IN E (DOM-RESTRICT (INTER X (DOM R)) R))))
+Which simplifies
+ when rewriting with IN-DOM, INTER.DEFINITION, DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES (AND (IN E R) (PAIR!IS-PAIR E) (IN (PAIR!FST E) X))
+ (SOME (B) (IN (PAIR!PAIR (PAIR!FST E) B) R)))
+Instantiating (= B (PAIR!SND E)) gives ...
+(IMPLIES
+ (AND (IN E R) (PAIR!IS-PAIR E) (IN (PAIR!FST E) X)
+  (NOT (IN (PAIR!PAIR (PAIR!FST E) (PAIR!SND E)) R)))
+ (SOME (B) (IN (PAIR!PAIR (PAIR!FST E) B) R)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-IGNORES-OFF-RAN
+Beginning proof of RAN-RESTRICT-IGNORES-OFF-RAN ...
+(= (RAN-RESTRICT R X) (RAN-RESTRICT R (INTER X (RAN R))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (RAN-RESTRICT R X)) (IN E (RAN-RESTRICT R (INTER X (RAN R))))
+ (NOT (IN E (RAN-RESTRICT R (INTER X (RAN R))))))
+Which simplifies
+ when rewriting with IN-RAN, INTER.DEFINITION, RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES (AND (IN E R) (PAIR!IS-PAIR E) (IN (PAIR!SND E) X))
+ (SOME (A) (IN (PAIR!PAIR A (PAIR!SND E)) R)))
+Instantiating (= A (PAIR!FST E)) gives ...
+(IMPLIES
+ (AND (IN E R) (PAIR!IS-PAIR E) (IN (PAIR!SND E) X)
+  (NOT (IN (PAIR!PAIR (PAIR!FST E) (PAIR!SND E)) R)))
+ (SOME (A) (IN (PAIR!PAIR A (PAIR!SND E)) R)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-DOM-RESTRICT
+Beginning proof of RAN-RESTRICT-DOM-RESTRICT ...
+(= (RAN-RESTRICT (DOM-RESTRICT X R) Y) (DOM-RESTRICT X (RAN-RESTRICT R Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DOM-RESTRICT.DEFINITION,
+RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+DOM-RESTRICT-DOM-RESTRICT
+Beginning proof of DOM-RESTRICT-DOM-RESTRICT ...
+(= (DOM-RESTRICT X (DOM-RESTRICT Y R)) (DOM-RESTRICT (INTER X Y) R))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+RAN-RESTRICT-RAN-RESTRICT
+Beginning proof of RAN-RESTRICT-RAN-RESTRICT ...
+(= (RAN-RESTRICT (RAN-RESTRICT R X) Y) (RAN-RESTRICT R (INTER X Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+DOM-RESTRICT-BY-NULLSET
+Beginning proof of DOM-RESTRICT-BY-NULLSET ...
+(= (DOM-RESTRICT (NULLSET) R) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+DOM-RESTRICT-NULLSET
+Beginning proof of DOM-RESTRICT-NULLSET ...
+(= (DOM-RESTRICT X (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+DOM-RESTRICT.DEFINITION to ...
+(TRUE)
+RAN-RESTRICT-BY-NULLSET
+Beginning proof of RAN-RESTRICT-BY-NULLSET ...
+(= (RAN-RESTRICT R (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-NULLSET
+Beginning proof of RAN-RESTRICT-NULLSET ...
+(= (RAN-RESTRICT (NULLSET) X) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+RAN-RESTRICT.DEFINITION to ...
+(TRUE)
+DOM-RESTRICT-UNION
+Beginning proof of DOM-RESTRICT-UNION ...
+(= (DOM-RESTRICT X (UNION R S)) (UNION (DOM-RESTRICT X R) (DOM-RESTRICT X S)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+RAN-RESTRICT-UNION
+Beginning proof of RAN-RESTRICT-UNION ...
+(= (RAN-RESTRICT (UNION R S) X) (UNION (RAN-RESTRICT R X) (RAN-RESTRICT S X)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+DOM-RESTRICT-UNIT
+Beginning proof of DOM-RESTRICT-UNIT ...
+(= (DOM-RESTRICT X (UNIT Y))
+ (IF (AND (PAIR!IS-PAIR Y) (IN (PAIR!FST Y) X)) (UNIT Y) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, DOM-RESTRICT.DEFINITION, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-UNIT
+Beginning proof of RAN-RESTRICT-UNIT ...
+(= (RAN-RESTRICT (UNIT X) Y)
+ (IF (AND (PAIR!IS-PAIR X) (IN (PAIR!SND X) Y)) (UNIT X) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, RAN-RESTRICT.DEFINITION, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IMAGE-DOM-RESTRICT
+Beginning proof of IMAGE-DOM-RESTRICT ...
+(= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y)))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (IMAGE (DOM-RESTRICT X R) Y)) (IN E (IMAGE R (INTER X Y)))
+   (NOT (IN E (IMAGE R (INTER X Y))))))
+ (= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y))))
+Prenexing produces ...
+(OR
+ (IF (IN E (IMAGE (DOM-RESTRICT X R) Y)) (IN E (IMAGE R (INTER X Y)))
+  (NOT (IN E (IMAGE R (INTER X Y)))))
+ (= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y))))
+Which simplifies
+ when rewriting with INTER.DEFINITION, DOM-RESTRICT.DEFINITION, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (IN Z X)))
+ (OR (SOME (Z$0) (AND (IN Z$0 X) (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R)))
+  (= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y))))
+ (IMPLIES (SOME (Z$1) (AND (IN Z$1 X) (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R)))
+  (= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y)))))
+Splitting on (IN Z X) generates ...
+(IF
+ (SOME (Z)
+  (IF (IN Z X) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (IN Z X))
+   (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (IN Z X))))
+ (OR (SOME (Z$0) (AND (IN Z$0 X) (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R)))
+  (= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y))))
+ (IMPLIES (SOME (Z$1) (AND (IN Z$1 X) (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R)))
+  (= (IMAGE (DOM-RESTRICT X R) Y) (IMAGE R (INTER X Y)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Z Z$1) to ...
+(TRUE)
+IMAGE-RAN-RESTRICT
+Beginning proof of IMAGE-RAN-RESTRICT ...
+(= (IMAGE (RAN-RESTRICT R X) Y) (INTER (IMAGE R Y) X))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (IMAGE (RAN-RESTRICT R X) Y)) (IN E (INTER (IMAGE R Y) X))
+   (NOT (IN E (INTER (IMAGE R Y) X)))))
+ (= (IMAGE (RAN-RESTRICT R X) Y) (INTER (IMAGE R Y) X)))
+Prenexing produces ...
+(OR
+ (IF (IN E (IMAGE (RAN-RESTRICT R X) Y)) (IN E (INTER (IMAGE R Y) X))
+  (NOT (IN E (INTER (IMAGE R Y) X))))
+ (= (IMAGE (RAN-RESTRICT R X) Y) (INTER (IMAGE R Y) X)))
+Which simplifies
+ when rewriting with INTER.DEFINITION, INTER.COMMUTATIVE,
+RAN-RESTRICT.DEFINITION, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (IN E X)))
+ (IF (IN E X)
+  (OR (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R)))
+   (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))
+  (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))
+ (IMPLIES
+  (AND (IN E X) (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))))
+  (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y)))))
+Splitting on (IN E X) generates ...
+(IF (IN E X)
+ (IF (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (IN E X)))
+  (IF (IN E X)
+   (OR (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R)))
+    (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))
+   (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))
+  (IMPLIES
+   (AND (IN E X) (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))))
+   (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y)))))
+ (IF (SOME (Z$2) (AND (IN Z$2 Y) (IN (PAIR!PAIR Z$2 E) R) (IN E X)))
+  (IF (IN E X)
+   (OR (SOME (Z$3) (AND (IN Z$3 Y) (IN (PAIR!PAIR Z$3 E) R)))
+    (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))
+   (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))
+  (IMPLIES
+   (AND (IN E X) (SOME (Z$4) (AND (IN Z$4 Y) (IN (PAIR!PAIR Z$4 E) R))))
+   (= (IMAGE (RAN-RESTRICT R X) Y) (INTER X (IMAGE R Y))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Z Z$1) to ...
+(TRUE)
+DOM-RESTRICT-BY-SUPERSET-DOM
+Beginning proof of DOM-RESTRICT-BY-SUPERSET-DOM ...
+(IMPLIES (AND (IS-RELATION R) (SUBSET (DOM R) X)) (= (DOM-RESTRICT X R) R))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (AND (IS-RELATION R) (SUBSET (DOM R) X))
+ (ALL (E) (IF (IN E (DOM-RESTRICT X R)) (IN E R) (NOT (IN E R)))))
+Which simplifies
+ with invocation of SUBSET, IS-RELATION
+ when rewriting with DOM-RESTRICT.DEFINITION, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (ALL (X$0) (IMPLIES (IN X$0 R) (PAIR!IS-PAIR X$0)))
+  (ALL (E B) (IMPLIES (IN (PAIR!PAIR E B) R) (IN E X))))
+ (ALL (E$0) (IMPLIES (IN E$0 R) (IN (PAIR!FST E$0) X))))
+Instantiating (= X$0 E$0) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E R) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 R) (PAIR!IS-PAIR X$0)))
+  (ALL (E$0 B) (IMPLIES (IN (PAIR!PAIR E$0 B) R) (IN E$0 X))) (IN E R))
+ (IN (PAIR!FST E) X))
+Instantiating (= E$0 (PAIR!FST E)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E R) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 R) (PAIR!IS-PAIR X$0)))
+  (ALL (B) (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) B) R) (IN (PAIR!FST E) X)))
+  (ALL (E$0 B$0) (IMPLIES (IN (PAIR!PAIR E$0 B$0) R) (IN E$0 X))) (IN E R))
+ (IN (PAIR!FST E) X))
+Instantiating (= B (PAIR!SND E)) gives ...
+(IMPLIES
+ (AND (IMPLIES (IN E R) (PAIR!IS-PAIR E))
+  (ALL (X$0) (IMPLIES (IN X$0 R) (PAIR!IS-PAIR X$0)))
+  (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) (PAIR!SND E)) R) (IN (PAIR!FST E) X))
+  (ALL (B) (IMPLIES (IN (PAIR!PAIR (PAIR!FST E) B) R) (IN (PAIR!FST E) X)))
+  (ALL (E$0 B$0) (IMPLIES (IN (PAIR!PAIR E$0 B$0) R) (IN E$0 X))) (IN E R))
+ (IN (PAIR!FST E) X))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-BY-SUPERSET-RAN
+Beginning proof of RAN-RESTRICT-BY-SUPERSET-RAN ...
+(IMPLIES (AND (IS-RELATION R) (SUBSET (RAN R) X)) (= (RAN-RESTRICT R X) R))
+Assuming INVERSE-DOM-RESTRICT with the
+instantiations: (= X X) (= R (INVERSE R)) generates ...
+(IMPLIES
+ (AND
+  (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+   (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+  (IS-RELATION R) (SUBSET (RAN R) X))
+ (= (RAN-RESTRICT R X) R))
+Splitting on (SUBSET (RAN R) X) generates ...
+(IF (SUBSET (RAN R) X)
+ (IMPLIES
+  (AND
+   (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+    (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+   (IS-RELATION R) (SUBSET (RAN R) X))
+  (= (RAN-RESTRICT R X) R))
+ (IMPLIES
+  (AND
+   (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+    (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+   (IS-RELATION R) (SUBSET (RAN R) X))
+  (= (RAN-RESTRICT R X) R)))
+Splitting on (IS-RELATION R) generates ...
+(IF (IS-RELATION R)
+ (IF (SUBSET (RAN R) X)
+  (IMPLIES
+   (AND
+    (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+     (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+    (IS-RELATION R) (SUBSET (RAN R) X))
+   (= (RAN-RESTRICT R X) R))
+  (IMPLIES
+   (AND
+    (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+     (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+    (IS-RELATION R) (SUBSET (RAN R) X))
+   (= (RAN-RESTRICT R X) R)))
+ (IF (SUBSET (RAN R) X)
+  (IMPLIES
+   (AND
+    (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+     (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+    (IS-RELATION R) (SUBSET (RAN R) X))
+   (= (RAN-RESTRICT R X) R))
+  (IMPLIES
+   (AND
+    (= (INVERSE (DOM-RESTRICT X (INVERSE R)))
+     (RAN-RESTRICT (INVERSE (INVERSE R)) X))
+    (IS-RELATION R) (SUBSET (RAN R) X))
+   (= (RAN-RESTRICT R X) R))))
+Which simplifies
+ when rewriting with INVERSE-DOM-RESTRICT, INVERSE-INVERSE,
+DOM-RESTRICT-BY-SUPERSET-DOM, DOM-INVERSE, IS-RELATION-INVERSE to ...
+(TRUE)
+DOM-REMOVE
+IN-DOM-REMOVE
+Beginning proof of IN-DOM-REMOVE ...
+(= (IN X (DOM-REMOVE Y R))
+ (AND (PAIR!IS-PAIR X) (IN X R) (NOT (IN (PAIR!FST X) Y))))
+Which simplifies
+ with invocation of DOM-REMOVE
+ when rewriting with IN-DOM, DIFF.DEFINITION, DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IN X R) (PAIR!IS-PAIR X)
+  (NOT (SOME (B) (IN (PAIR!PAIR (PAIR!FST X) B) R))))
+ (IN (PAIR!FST X) Y))
+Instantiating (= B (PAIR!SND X)) gives ...
+(IMPLIES
+ (AND (IN X R) (PAIR!IS-PAIR X)
+  (NOT
+   (OR (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) R)
+    (SOME (B) (IN (PAIR!PAIR (PAIR!FST X) B) R)))))
+ (IN (PAIR!FST X) Y))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-REMOVE
+IN-RAN-REMOVE
+Beginning proof of IN-RAN-REMOVE ...
+(= (IN X (RAN-REMOVE R Y))
+ (AND (PAIR!IS-PAIR X) (IN X R) (NOT (IN (PAIR!SND X) Y))))
+Which simplifies
+ with invocation of RAN-REMOVE
+ when rewriting with IN-RAN, DIFF.DEFINITION, RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IN X R) (PAIR!IS-PAIR X)
+  (NOT (SOME (A) (IN (PAIR!PAIR A (PAIR!SND X)) R))))
+ (IN (PAIR!SND X) Y))
+Instantiating (= A (PAIR!FST X)) gives ...
+(IMPLIES
+ (AND (IN X R) (PAIR!IS-PAIR X)
+  (NOT
+   (OR (IN (PAIR!PAIR (PAIR!FST X) (PAIR!SND X)) R)
+    (SOME (A) (IN (PAIR!PAIR A (PAIR!SND X)) R)))))
+ (IN (PAIR!SND X) Y))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+DOM-REMOVE-SUBSET
+Beginning proof of DOM-REMOVE-SUBSET ...
+(SUBSET (DOM-REMOVE X R) R)
+Which simplifies
+ with invocation of SUBSET, DOM-REMOVE
+ when rewriting with IN-DOM, DIFF.DEFINITION, DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-REMOVE-SUBSET
+Beginning proof of RAN-REMOVE-SUBSET ...
+(SUBSET (RAN-REMOVE R X) R)
+Which simplifies
+ with invocation of SUBSET, RAN-REMOVE
+ when rewriting with IN-RAN, DIFF.DEFINITION, RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+IS-RELATION-DOM-REMOVE
+Beginning proof of IS-RELATION-DOM-REMOVE ...
+(= (IS-RELATION (DOM-REMOVE X R)) (TRUE))
+Which simplifies
+ with invocation of DOM-REMOVE
+ when rewriting with IS-RELATION-DOM-RESTRICT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+IS-RELATION-RAN-REMOVE
+Beginning proof of IS-RELATION-RAN-REMOVE ...
+(= (IS-RELATION (RAN-REMOVE R X)) (TRUE))
+Which simplifies
+ with invocation of RAN-REMOVE
+ when rewriting with IS-RELATION-RAN-RESTRICT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+INVERSE-DOM-REMOVE
+Beginning proof of INVERSE-DOM-REMOVE ...
+(= (INVERSE (DOM-REMOVE X R)) (RAN-REMOVE (INVERSE R) X))
+Which simplifies
+ with invocation of RAN-REMOVE, DOM-REMOVE
+ when rewriting with RAN-INVERSE, INVERSE-DOM-RESTRICT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+INVERSE-RAN-REMOVE
+Beginning proof of INVERSE-RAN-REMOVE ...
+(= (INVERSE (RAN-REMOVE R X)) (DOM-REMOVE X (INVERSE R)))
+Which simplifies
+ with invocation of DOM-REMOVE, RAN-REMOVE
+ when rewriting with DOM-INVERSE, INVERSE-RAN-RESTRICT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+DOM-DOM-REMOVE
+Beginning proof of DOM-DOM-REMOVE ...
+(= (DOM (DOM-REMOVE X R)) (DIFF (DOM R) X))
+Which simplifies
+ with invocation of DOM-REMOVE
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, SUBSET.SELF,
+SETRULES!INTER-DIFF-LEFT, DOM-DOM-RESTRICT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-DOM-REMOVE
+Beginning proof of RAN-DOM-REMOVE ...
+(SUBSET (DIFF (RAN R) (IMAGE R X)) (RAN (DOM-REMOVE X R)))
+Which simplifies
+ with invocation of SUBSET, DOM-REMOVE
+ when rewriting with IN-DOM, DIFF.DEFINITION, IN-IMAGE, UNION.DEFINITION,
+IN-RAN, SETRULES!SUBSET-DIFF-LEFT, RAN-DOM-RESTRICT
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2,
+SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR A E) R)
+  (NOT (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))))
+ (SOME (Z$0)
+  (AND (SOME (B) (IN (PAIR!PAIR Z$0 B) R)) (NOT (IN Z$0 X))
+   (IN (PAIR!PAIR Z$0 E) R))))
+Instantiating (= Z$0 A) gives ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR A E) R)
+  (NOT (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z E) R))))
+  (NOT
+   (AND (SOME (B) (IN (PAIR!PAIR A B) R)) (NOT (IN A X))
+    (IN (PAIR!PAIR A E) R))))
+ (SOME (Z$0)
+  (AND (SOME (B$0) (IN (PAIR!PAIR Z$0 B$0) R)) (NOT (IN Z$0 X))
+   (IN (PAIR!PAIR Z$0 E) R))))
+Instantiating (= Z A) gives ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR A E) R)
+  (NOT
+   (OR (AND (IN A X) (IN (PAIR!PAIR A E) R))
+    (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR Z E) R)))))
+  (NOT
+   (AND (SOME (B) (IN (PAIR!PAIR A B) R)) (NOT (IN A X))
+    (IN (PAIR!PAIR A E) R))))
+ (SOME (Z$0)
+  (AND (SOME (B$0) (IN (PAIR!PAIR Z$0 B$0) R)) (NOT (IN Z$0 X))
+   (IN (PAIR!PAIR Z$0 E) R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= B E) to ...
+(TRUE)
+RAN-RAN-REMOVE
+Beginning proof of RAN-RAN-REMOVE ...
+(= (RAN (RAN-REMOVE R X)) (DIFF (RAN R) X))
+Which simplifies
+ with invocation of RAN-REMOVE
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, SUBSET.SELF,
+SETRULES!INTER-DIFF-RIGHT, RAN-RAN-RESTRICT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+DOM-RAN-REMOVE
+Beginning proof of DOM-RAN-REMOVE ...
+(SUBSET (DIFF (DOM R) (IMAGE (INVERSE R) X)) (DOM (RAN-REMOVE R X)))
+Which simplifies
+ with invocation of SUBSET, RAN-REMOVE
+ when rewriting with IN-RAN, DIFF.DEFINITION, FLIP-PAIR-PAIR, IN-INVERSE,
+IN-IMAGE, UNION.DEFINITION, IN-DOM, SETRULES!SUBSET-DIFF-LEFT, DOM-RAN-RESTRICT
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR E B) R)
+  (NOT (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR E Z) R)))))
+ (SOME (Z$0)
+  (AND (SOME (A) (IN (PAIR!PAIR A Z$0) R)) (NOT (IN Z$0 X))
+   (IN (PAIR!PAIR E Z$0) R))))
+Instantiating (= Z$0 B) gives ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR E B) R)
+  (NOT (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR E Z) R))))
+  (NOT
+   (AND (SOME (A) (IN (PAIR!PAIR A B) R)) (NOT (IN B X))
+    (IN (PAIR!PAIR E B) R))))
+ (SOME (Z$0)
+  (AND (SOME (A$0) (IN (PAIR!PAIR A$0 Z$0) R)) (NOT (IN Z$0 X))
+   (IN (PAIR!PAIR E Z$0) R))))
+Instantiating (= Z B) gives ...
+(IMPLIES
+ (AND (IN (PAIR!PAIR E B) R)
+  (NOT
+   (OR (AND (IN B X) (IN (PAIR!PAIR E B) R))
+    (SOME (Z) (AND (IN Z X) (IN (PAIR!PAIR E Z) R)))))
+  (NOT
+   (AND (SOME (A) (IN (PAIR!PAIR A B) R)) (NOT (IN B X))
+    (IN (PAIR!PAIR E B) R))))
+ (SOME (Z$0)
+  (AND (SOME (A$0) (IN (PAIR!PAIR A$0 Z$0) R)) (NOT (IN Z$0 X))
+   (IN (PAIR!PAIR E Z$0) R))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= A E) to ...
+(TRUE)
+DOM-REMOVE-IGNORES-OFF-DOMAIN
+Beginning proof of DOM-REMOVE-IGNORES-OFF-DOMAIN ...
+(= (DOM-REMOVE X R) (DOM-REMOVE (INTER X (DOM R)) R))
+Which simplifies
+ with invocation of DOM-REMOVE
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SETRULES!INTER-SUBSET-RIGHT,
+SUBSET.NULLSET.LEFT, SETRULES!SUBSET-DIFF-RIGHT, SETRULES!DIFF-SUPERSET,
+SUBSET.SELF, SETRULES!DIFF-INTER
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-REMOVE-IGNORES-OFF-RAN
+Beginning proof of RAN-REMOVE-IGNORES-OFF-RAN ...
+(= (RAN-REMOVE R X) (RAN-REMOVE R (INTER X (RAN R))))
+Which simplifies
+ with invocation of RAN-REMOVE
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SETRULES!INTER-SUBSET-RIGHT,
+SUBSET.NULLSET.LEFT, SETRULES!SUBSET-DIFF-RIGHT, SETRULES!DIFF-SUPERSET,
+SUBSET.SELF, SETRULES!DIFF-INTER
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-REMOVE-DOM-REMOVE
+Beginning proof of RAN-REMOVE-DOM-REMOVE ...
+(= (RAN-REMOVE (DOM-REMOVE X R) Y) (DOM-REMOVE X (RAN-REMOVE R Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-DOM-REMOVE,
+IN-RAN-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-REMOVE-DOM-RESTRICT
+Beginning proof of RAN-REMOVE-DOM-RESTRICT ...
+(= (RAN-REMOVE (DOM-RESTRICT X R) Y) (DOM-RESTRICT X (RAN-REMOVE R Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DOM-RESTRICT.DEFINITION,
+IN-RAN-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-RESTRICT-DOM-REMOVE
+Beginning proof of RAN-RESTRICT-DOM-REMOVE ...
+(= (RAN-RESTRICT (DOM-REMOVE X R) Y) (DOM-REMOVE X (RAN-RESTRICT R Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-DOM-REMOVE,
+RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+DOM-REMOVE-DOM-REMOVE
+Beginning proof of DOM-REMOVE-DOM-REMOVE ...
+(= (DOM-REMOVE X (DOM-REMOVE Y R)) (DOM-REMOVE (UNION X Y) R))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-DOM-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+DOM-REMOVE-DOM-RESTRICT
+Beginning proof of DOM-REMOVE-DOM-RESTRICT ...
+(= (DOM-REMOVE X (DOM-RESTRICT Y R)) (DOM-RESTRICT (DIFF Y X) R))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+DOM-RESTRICT.DEFINITION, IN-DOM-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+DOM-RESTRICT-DOM-REMOVE
+Beginning proof of DOM-RESTRICT-DOM-REMOVE ...
+(= (DOM-RESTRICT X (DOM-REMOVE Y R)) (DOM-RESTRICT (DIFF X Y) R))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+IN-DOM-REMOVE, DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-REMOVE-RAN-REMOVE
+Beginning proof of RAN-REMOVE-RAN-REMOVE ...
+(= (RAN-REMOVE (RAN-REMOVE R X) Y) (RAN-REMOVE R (UNION X Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-RAN-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+RAN-REMOVE-RAN-RESTRICT
+Beginning proof of RAN-REMOVE-RAN-RESTRICT ...
+(= (RAN-REMOVE (RAN-RESTRICT R X) Y) (RAN-RESTRICT R (DIFF X Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+RAN-RESTRICT.DEFINITION, IN-RAN-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-RESTRICT-RAN-REMOVE
+Beginning proof of RAN-RESTRICT-RAN-REMOVE ...
+(= (RAN-RESTRICT (RAN-REMOVE R X) Y) (RAN-RESTRICT R (DIFF Y X)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+IN-RAN-REMOVE, RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+DOM-REMOVE-BY-NULLSET
+Beginning proof of DOM-REMOVE-BY-NULLSET ...
+(IMPLIES (IS-RELATION R) (= (DOM-REMOVE (NULLSET) R) R))
+Which simplifies
+ with invocation of DOM-REMOVE, IS-RELATION
+ when rewriting with DOM-RESTRICT-BY-SUPERSET-DOM, SUBSET.SELF,
+SETRULES!DIFF-NULLSET-RIGHT
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+DOM-REMOVE-NULLSET
+Beginning proof of DOM-REMOVE-NULLSET ...
+(= (DOM-REMOVE X (NULLSET)) (NULLSET))
+Which simplifies
+ with invocation of DOM-REMOVE
+ when rewriting with DOM-RESTRICT-BY-SUPERSET-DOM, SUBSET.SELF,
+IS-RELATION-NULLSET, SETRULES!DIFF-SUPERSET, SUBSET.NULLSET.LEFT, DOM-NULLSET
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-REMOVE-BY-NULLSET
+Beginning proof of RAN-REMOVE-BY-NULLSET ...
+(IMPLIES (IS-RELATION R) (= (RAN-REMOVE R (NULLSET)) R))
+Which simplifies
+ with invocation of RAN-REMOVE, IS-RELATION
+ when rewriting with RAN-RESTRICT-BY-SUPERSET-RAN, SUBSET.SELF,
+SETRULES!DIFF-NULLSET-RIGHT
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-REMOVE-NULLSET
+Beginning proof of RAN-REMOVE-NULLSET ...
+(= (RAN-REMOVE (NULLSET) X) (NULLSET))
+Which simplifies
+ with invocation of RAN-REMOVE
+ when rewriting with RAN-RESTRICT-BY-SUPERSET-RAN, SUBSET.SELF,
+IS-RELATION-NULLSET, SETRULES!DIFF-SUPERSET, SUBSET.NULLSET.LEFT, RAN-NULLSET
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+DOM-REMOVE-UNION
+Beginning proof of DOM-REMOVE-UNION ...
+(= (DOM-REMOVE X (UNION R S)) (UNION (DOM-REMOVE X R) (DOM-REMOVE X S)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-DOM-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+RAN-REMOVE-UNION
+Beginning proof of RAN-REMOVE-UNION ...
+(= (RAN-REMOVE (UNION R S) X) (UNION (RAN-REMOVE R X) (RAN-REMOVE S X)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-RAN-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+DOM-REMOVE-UNIT
+Beginning proof of DOM-REMOVE-UNIT ...
+(= (DOM-REMOVE X (UNIT Y))
+ (IF (AND (PAIR!IS-PAIR Y) (NOT (IN (PAIR!FST Y) X))) (UNIT Y) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, IN-DOM-REMOVE, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-REMOVE-UNIT
+Beginning proof of RAN-REMOVE-UNIT ...
+(= (RAN-REMOVE (UNIT X) Y)
+ (IF (AND (PAIR!IS-PAIR X) (NOT (IN (PAIR!SND X) Y))) (UNIT X) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, IN-RAN-REMOVE, SETRULES!UNIT-TO-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IMAGE-DOM-REMOVE
+Beginning proof of IMAGE-DOM-REMOVE ...
+(= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X)))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (IMAGE (DOM-REMOVE X R) Y)) (IN E (IMAGE R (DIFF Y X)))
+   (NOT (IN E (IMAGE R (DIFF Y X))))))
+ (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X))))
+Prenexing produces ...
+(OR
+ (IF (IN E (IMAGE (DOM-REMOVE X R) Y)) (IN E (IMAGE R (DIFF Y X)))
+  (NOT (IN E (IMAGE R (DIFF Y X)))))
+ (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X))))
+Which simplifies
+ when rewriting with DIFF.DEFINITION, IN-DOM-REMOVE, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!IS-PAIR-BOOL,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (NOT (IN Z X))))
+ (OR (SOME (Z$0) (AND (IN Z$0 Y) (NOT (IN Z$0 X)) (IN (PAIR!PAIR Z$0 E) R)))
+  (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X))))
+ (IMPLIES
+  (SOME (Z$1) (AND (IN Z$1 Y) (NOT (IN Z$1 X)) (IN (PAIR!PAIR Z$1 E) R)))
+  (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X)))))
+Splitting on (IN Z X) generates ...
+(IF
+ (SOME (Z)
+  (IF (IN Z X) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (NOT (IN Z X)))
+   (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (NOT (IN Z X)))))
+ (OR (SOME (Z$0) (AND (IN Z$0 Y) (NOT (IN Z$0 X)) (IN (PAIR!PAIR Z$0 E) R)))
+  (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X))))
+ (IMPLIES
+  (SOME (Z$1) (AND (IN Z$1 Y) (NOT (IN Z$1 X)) (IN (PAIR!PAIR Z$1 E) R)))
+  (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Z Z$1) to ...
+(IMPLIES
+ (AND (SOME (Z) (AND (NOT (IN Z X)) (IN Z Y) (IN (PAIR!PAIR Z E) R)))
+  (NOT
+   (SOME (Z$0) (AND (IN Z$0 Y) (NOT (IN Z$0 X)) (IN (PAIR!PAIR Z$0 E) R)))))
+ (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (IN Z X)) (IN Z Y) (IN (PAIR!PAIR Z E) R)
+  (NOT
+   (SOME (Z$0) (AND (IN Z$0 Y) (NOT (IN Z$0 X)) (IN (PAIR!PAIR Z$0 E) R)))))
+ (= (IMAGE (DOM-REMOVE X R) Y) (IMAGE R (DIFF Y X))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Z$0 Z) to ...
+(TRUE)
+IMAGE-RAN-REMOVE
+Beginning proof of IMAGE-RAN-REMOVE ...
+(= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X))
+Applying SETRULES!EXTENSIONALITY-SUBGOAL gives ...
+(OR
+ (ALL (E)
+  (IF (IN E (IMAGE (RAN-REMOVE R X) Y)) (IN E (DIFF (IMAGE R Y) X))
+   (NOT (IN E (DIFF (IMAGE R Y) X)))))
+ (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+Prenexing produces ...
+(OR
+ (IF (IN E (IMAGE (RAN-REMOVE R X) Y)) (IN E (DIFF (IMAGE R Y) X))
+  (NOT (IN E (DIFF (IMAGE R Y) X))))
+ (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+Which simplifies
+ when rewriting with DIFF.DEFINITION, IN-RAN-REMOVE, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!IS-PAIR-BOOL,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IF (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (NOT (IN E X))))
+ (IF (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R)))
+  (IMPLIES (IN E X) (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+  (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+ (IMPLIES
+  (AND (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))) (NOT (IN E X)))
+  (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X))))
+Splitting on (IN E X) generates ...
+(IF (IN E X)
+ (IF (SOME (Z) (AND (IN Z Y) (IN (PAIR!PAIR Z E) R) (NOT (IN E X))))
+  (IF (SOME (Z$0) (AND (IN Z$0 Y) (IN (PAIR!PAIR Z$0 E) R)))
+   (IMPLIES (IN E X) (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+   (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+  (IMPLIES
+   (AND (SOME (Z$1) (AND (IN Z$1 Y) (IN (PAIR!PAIR Z$1 E) R))) (NOT (IN E X)))
+   (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X))))
+ (IF (SOME (Z$2) (AND (IN Z$2 Y) (IN (PAIR!PAIR Z$2 E) R) (NOT (IN E X))))
+  (IF (SOME (Z$3) (AND (IN Z$3 Y) (IN (PAIR!PAIR Z$3 E) R)))
+   (IMPLIES (IN E X) (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+   (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))
+  (IMPLIES
+   (AND (SOME (Z$4) (AND (IN Z$4 Y) (IN (PAIR!PAIR Z$4 E) R))) (NOT (IN E X)))
+   (= (IMAGE (RAN-REMOVE R X) Y) (DIFF (IMAGE R Y) X)))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR
+ with the instantiation (= Z$2 Z$4) to ...
+(TRUE)
+DOM-REMOVE-BY-SUPERSET-DOM
+Beginning proof of DOM-REMOVE-BY-SUPERSET-DOM ...
+(IMPLIES (AND (IS-RELATION R) (SUBSET (DOM R) X))
+ (= (DOM-REMOVE X R) (NULLSET)))
+Which simplifies
+ with invocation of DOM-REMOVE, SUBSET, IS-RELATION
+ when rewriting with DOM-RESTRICT-BY-NULLSET, SETRULES!DIFF-SUPERSET, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+RAN-REMOVE-BY-SUPERSET-RAN
+Beginning proof of RAN-REMOVE-BY-SUPERSET-RAN ...
+(IMPLIES (AND (IS-RELATION R) (SUBSET (RAN R) X))
+ (= (RAN-REMOVE R X) (NULLSET)))
+Which simplifies
+ with invocation of RAN-REMOVE, SUBSET, IS-RELATION
+ when rewriting with RAN-RESTRICT-BY-NULLSET, SETRULES!DIFF-SUPERSET, IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+ID
+IS-RELATION-ID
+Beginning proof of IS-RELATION-ID ...
+(= (IS-RELATION (ID X)) (TRUE))
+Which simplifies
+ with invocation of IS-RELATION
+ when rewriting with PAIR!IN-CROSS, ID.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+INVERSE-ID
+Beginning proof of INVERSE-ID ...
+(= (INVERSE (ID X)) (ID X))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, SND-FLIP-PAIR,
+FST-FLIP-PAIR, IS-PAIR-FLIP-PAIR, PAIR!IN-CROSS, ID.DEFINITION, IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, FLIP-PAIR-IS-INVOLUTION to ...
+(TRUE)
+DOM-ID
+Beginning proof of DOM-ID ...
+(= (DOM (ID X)) X)
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, PAIR!IN-CROSS,
+ID.DEFINITION, IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN-ID
+Beginning proof of RAN-ID ...
+(= (RAN (ID X)) X)
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, PAIR!IN-CROSS,
+ID.DEFINITION, IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+IN-ID
+Beginning proof of IN-ID ...
+(= (IN X (ID Y))
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) Y) (= (PAIR!SND X) (PAIR!FST X))))
+Which simplifies
+ when rewriting with PAIR!IN-CROSS, ID.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IMAGE-ID
+Beginning proof of IMAGE-ID ...
+(= (IMAGE (ID X) Y) (INTER X Y))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (IMAGE (ID X) Y)) (IN E (INTER X Y)) (NOT (IN E (INTER X Y))))
+Which simplifies
+ when rewriting with INTER.DEFINITION, PAIR!IN-CROSS, ID.DEFINITION, IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+DOM-RESTRICT-ID
+Beginning proof of DOM-RESTRICT-ID ...
+(= (DOM-RESTRICT X (ID Y)) (ID (INTER X Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+INTER.ASSOCIATIVE, INTER.PERMUTATIVE, PAIR!CROSS-INTER-LEFT,
+PAIR!CROSS-INTER-RIGHT, PAIR!IN-CROSS, ID.DEFINITION, DOM-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+RAN-RESTRICT-ID
+Beginning proof of RAN-RESTRICT-ID ...
+(= (RAN-RESTRICT (ID X) Y) (ID (INTER X Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+INTER.ASSOCIATIVE, INTER.PERMUTATIVE, PAIR!CROSS-INTER-LEFT,
+PAIR!CROSS-INTER-RIGHT, PAIR!IN-CROSS, ID.DEFINITION, RAN-RESTRICT.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+DOM-REMOVE-ID
+Beginning proof of DOM-REMOVE-ID ...
+(= (DOM-REMOVE X (ID Y)) (ID (DIFF Y X)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+DIFF.DEFINITION, SETRULES!DIFF-DIFF, PAIR!CROSS-DIFF-LEFT,
+PAIR!CROSS-DIFF-RIGHT, PAIR!IN-CROSS, ID.DEFINITION, IN-DOM-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, PAIR!IS-PAIR-BOOL,
+SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+RAN-REMOVE-ID
+Beginning proof of RAN-REMOVE-ID ...
+(= (RAN-REMOVE (ID X) Y) (ID (DIFF X Y)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+DIFF.DEFINITION, SETRULES!DIFF-DIFF, PAIR!CROSS-DIFF-LEFT,
+PAIR!CROSS-DIFF-RIGHT, PAIR!IN-CROSS, ID.DEFINITION, IN-RAN-REMOVE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, PAIR!IS-PAIR-BOOL,
+SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+COMP-ID-LEFT
+Beginning proof of COMP-ID-LEFT ...
+(= (COMP (ID X) R) (DOM-RESTRICT X R))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (COMP (ID X) R)) (IN E (DOM-RESTRICT X R))
+ (NOT (IN E (DOM-RESTRICT X R))))
+Which simplifies
+ when rewriting with DOM-RESTRICT.DEFINITION, PAIR!IN-CROSS, ID.DEFINITION,
+IN-COMP
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+COMP-ID-RIGHT
+Beginning proof of COMP-ID-RIGHT ...
+(= (COMP R (ID X)) (RAN-RESTRICT R X))
+Assuming INVERSE-COMP with the
+instantiations: (= R (ID X)) (= S (INVERSE R)) generates ...
+(IMPLIES
+ (= (INVERSE (COMP (ID X) (INVERSE R)))
+  (COMP (INVERSE (INVERSE R)) (INVERSE (ID X))))
+ (= (COMP R (ID X)) (RAN-RESTRICT R X)))
+Which simplifies
+ when rewriting with INVERSE-ID, INVERSE-INVERSE, INVERSE-DOM-RESTRICT,
+COMP-ID-LEFT to ...
+(TRUE)
+ID-NULLSET
+Beginning proof of ID-NULLSET ...
+(= (ID (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+PAIR!CROSS-NULLSET-RIGHT, ID.DEFINITION to ...
+(TRUE)
+SUBSET-ID-ID
+Beginning proof of SUBSET-ID-ID ...
+(= (SUBSET (ID X) (ID Y)) (SUBSET X Y))
+Splitting on (SUBSET X Y) generates ...
+(IF (SUBSET X Y) (= (SUBSET (ID X) (ID Y)) (SUBSET X Y))
+ (= (SUBSET (ID X) (ID Y)) (SUBSET X Y)))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with PAIR!IN-CROSS, ID.DEFINITION
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(OR (ALL (E) (IMPLIES (IN E X) (IN E Y)))
+ (=
+  (ALL (E$0)
+   (IMPLIES
+    (AND (PAIR!IS-PAIR E$0) (IN (PAIR!FST E$0) X) (IN (PAIR!SND E$0) X)
+     (= (PAIR!FST E$0) (PAIR!SND E$0)))
+    (IN (PAIR!FST E$0) Y)))
+  (FALSE)))
+Instantiating (= E$0 (PAIR!PAIR E E)) gives ...
+(OR (IMPLIES (IN E X) (IN E Y))
+ (NOT
+  (AND
+   (IMPLIES
+    (AND (PAIR!IS-PAIR (PAIR!PAIR E E)) (IN (PAIR!FST (PAIR!PAIR E E)) X)
+     (IN (PAIR!SND (PAIR!PAIR E E)) X)
+     (= (PAIR!FST (PAIR!PAIR E E)) (PAIR!SND (PAIR!PAIR E E))))
+    (IN (PAIR!FST (PAIR!PAIR E E)) Y))
+   (ALL (E$0)
+    (IMPLIES
+     (AND (PAIR!IS-PAIR E$0) (IN (PAIR!FST E$0) X) (IN (PAIR!SND E$0) X)
+      (= (PAIR!FST E$0) (PAIR!SND E$0)))
+     (IN (PAIR!FST E$0) Y))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+=-ID-ID
+Beginning proof of =-ID-ID ...
+(= (= (ID X) (ID Y)) (= X Y))
+Splitting on (= X Y) generates ...
+(IF (= X Y) (= (= (ID X) (ID Y)) (= X Y)) (= (= (ID X) (ID Y)) (= X Y)))
+Assuming DOM-ID with the instantiations: (= X X) generates ...
+(IMPLIES (= (DOM (ID X)) X)
+ (IF (= X Y) (= (= (ID X) (ID Y)) (= X Y)) (= (= (ID X) (ID Y)) (= X Y))))
+Assuming DOM-ID with the instantiations: (= X Y) generates ...
+(IMPLIES (AND (= (DOM (ID Y)) Y) (= (DOM (ID X)) X))
+ (IF (= X Y) (= (= (ID X) (ID Y)) (= X Y)) (= (= (ID X) (ID Y)) (= X Y))))
+Which simplifies to ...
+(TRUE)
+REL
+IN-REL
+Beginning proof of IN-REL ...
+(= (IN R (REL X Y))
+ (AND (IS-RELATION R) (SUBSET (DOM R) X) (SUBSET (RAN R) Y)))
+Invoking REL gives ...
+(= (IN R (POWERSET (PAIR!CROSS X Y)))
+ (AND (IS-RELATION R) (SUBSET (DOM R) X) (SUBSET (RAN R) Y)))
+Which simplifies
+ when rewriting with SUBSET-CROSS, POWERSET.DEFINITION to ...
+(TRUE)
+REL-NULLSET-LEFT
+Beginning proof of REL-NULLSET-LEFT ...
+(= (REL (NULLSET) X) (UNIT (NULLSET)))
+Which simplifies
+ with invocation of REL
+ when rewriting with SETRULES!UNIT-TO-SETADD, PAIR!CROSS-NULLSET-LEFT to ...
+(= (POWERSET (NULLSET)) (SETADD (NULLSET) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, SUBSET.NULLSET.RIGHT, POWERSET.DEFINITION to ...
+(TRUE)
+REL-NULLSET-RIGHT
+Beginning proof of REL-NULLSET-RIGHT ...
+(= (REL X (NULLSET)) (UNIT (NULLSET)))
+Which simplifies
+ with invocation of REL
+ when rewriting with SETRULES!UNIT-TO-SETADD, PAIR!CROSS-NULLSET-RIGHT to ...
+(= (POWERSET (NULLSET)) (SETADD (NULLSET) (NULLSET)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, SUBSET.NULLSET.RIGHT, POWERSET.DEFINITION to ...
+(TRUE)
+Done.

@@ -1,0 +1,29 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/optspec.ver"
+OPTIONAL
+NO
+YES
+NO-IS-OPTIONAL
+Beginning proof of NO-IS-OPTIONAL ...
+(= (IN (NO) (OPTIONAL X)) (TRUE))
+YES-IS-OPTIONAL
+Beginning proof of YES-IS-OPTIONAL ...
+(= (IN (YES X) (OPTIONAL Y)) (IN X Y))
+IN-OPTIONAL
+Beginning proof of IN-OPTIONAL ...
+(= (IN X (OPTIONAL Y)) (OR (= X (NO)) (SOME (Z) (AND (= X (YES Z)) (IN Z Y)))))
+EQUAL-YES-YES
+Beginning proof of EQUAL-YES-YES ...
+(= (= (YES X) (YES Y)) (= X Y))
+YES-IS-NOT-NO
+Beginning proof of YES-IS-NOT-NO ...
+(NOT (= (YES X) (NO)))
+THE-OPTION
+THE-OPTION-YES
+Beginning proof of THE-OPTION-YES ...
+(= (THE-OPTION (YES X)) X)
+IN-OPTIONAL-2
+Beginning proof of IN-OPTIONAL-2 ...
+(= (IN X (OPTIONAL S))
+ (OR (= X (NO)) (AND (= X (YES (THE-OPTION X))) (IN (THE-OPTION X) S))))
+Done.

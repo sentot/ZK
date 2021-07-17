@@ -1,0 +1,185 @@
+;;; n-tuples, for n from 2 to 7
+;;;
+;;; Functions defined:
+;;;
+;;; Constructors:
+;;;
+;;;   (2tuple x1 x2)
+;;;   (3tuple x1 x2 x3)
+;;;   (4tuple x1 x2 x3 x4)
+;;;   (5tuple x1 x2 x3 x4 x5)
+;;;   (6tuple x1 x2 x3 x4 x5 x6)
+;;;   (7tuple x1 x2 x3 x4 x5 x6 x7)
+;;;
+;;; Recognizers:
+;;;
+;;;   (is-2tuple x)
+;;;   (is-3tuple x)
+;;;   (is-4tuple x)
+;;;   (is-5tuple x)
+;;;   (is-6tuple x)
+;;;   (is-7tuple x)
+;;;
+;;; Accessors (projection functions):
+;;; (function pn gets the nth component from m-tuple with m >= n)
+;;;
+;;;   (p1 x)
+;;;   (p2 x)
+;;;   (p3 x)
+;;;   (p4 x)
+;;;   (p5 x)
+;;;   (p6 x)
+;;;   (p7 x)
+
+;;; Constructors
+
+(function-stub 2tuple (x1 x2))
+(function-stub 3tuple (x1 x2 x3))
+(function-stub 4tuple (x1 x2 x3 x4))
+(function-stub 5tuple (x1 x2 x3 x4 x5))
+(function-stub 6tuple (x1 x2 x3 x4 x5 x6))
+(function-stub 7tuple (x1 x2 x3 x4 x5 x6 x7))
+
+;;; Recognizers
+
+(function-stub is-2tuple (x))
+(function-stub is-3tuple (x))
+(function-stub is-4tuple (x))
+(function-stub is-5tuple (x))
+(function-stub is-6tuple (x))
+(function-stub is-7tuple (x))
+
+;;; Projections
+
+(function-stub p1 (x))
+(function-stub p2 (x))
+(function-stub p3 (x))
+(function-stub p4 (x))
+(function-stub p5 (x))
+(function-stub p6 (x))
+(function-stub p7 (x))
+
+;;; Rules
+
+(grule is-2tuple-2tuple (x1 x2)
+  (is-2tuple (2tuple x1 x2)))
+
+(frule 2tuple-composition (x)
+  (implies (is-2tuple x)
+	   (= x (2tuple (p1 x) (p2 x)))))
+
+(grule p1-2tuple (x1 x2)
+  (= (p1 (2tuple x1 x2)) x1))
+
+(grule p2-2tuple (x1 x2)
+  (= (p2 (2tuple x1 x2)) x2))
+
+(grule is-3tuple-3tuple (x1 x2 x3)
+  (is-3tuple (3tuple x1 x2 x3)))
+
+(frule 3tuple-composition (x)
+  (implies (is-3tuple x)
+	   (= x (3tuple (p1 x) (p2 x) (p3 x)))))
+
+(grule p1-3tuple (x1 x2 x3)
+  (= (p1 (3tuple x1 x2 x3)) x1))
+
+(grule p2-3tuple (x1 x2 x3)
+  (= (p2 (3tuple x1 x2 x3)) x2))
+
+(grule p3-3tuple (x1 x2 x3)
+  (= (p3 (3tuple x1 x2 x3)) x3))
+
+(grule is-4tuple-4tuple (x1 x2 x3 x4)
+  (is-4tuple (4tuple x1 x2 x3 x4)))
+
+(frule 4tuple-composition (x)
+  (implies (is-4tuple x)
+	   (= x (4tuple (p1 x) (p2 x) (p3 x) (p4 x)))))
+
+(grule p1-4tuple (x1 x2 x3 x4)
+  (= (p1 (4tuple x1 x2 x3 x4)) x1))
+
+(grule p2-4tuple (x1 x2 x3 x4)
+  (= (p2 (4tuple x1 x2 x3 x4)) x2))
+
+(grule p3-4tuple (x1 x2 x3 x4)
+  (= (p3 (4tuple x1 x2 x3 x4)) x3))
+
+(grule p4-4tuple (x1 x2 x3 x4)
+  (= (p4 (4tuple x1 x2 x3 x4)) x4))
+
+(grule is-5tuple-5tuple (x1 x2 x3 x4 x5)
+  (is-5tuple (5tuple x1 x2 x3 x4 x5)))
+
+(frule 5tuple-composition (x)
+  (implies (is-5tuple x)
+	   (= x (5tuple (p1 x) (p2 x) (p3 x) (p4 x) (p5 x)))))
+
+(grule p1-5tuple (x1 x2 x3 x4 x5)
+  (= (p1 (5tuple x1 x2 x3 x4 x5)) x1))
+
+(grule p2-5tuple (x1 x2 x3 x4 x5)
+  (= (p2 (5tuple x1 x2 x3 x4 x5)) x2))
+
+(grule p3-5tuple (x1 x2 x3 x4 x5)
+  (= (p3 (5tuple x1 x2 x3 x4 x5)) x3))
+
+(grule p4-5tuple (x1 x2 x3 x4 x5)
+  (= (p4 (5tuple x1 x2 x3 x4 x5)) x4))
+
+(grule p5-5tuple (x1 x2 x3 x4 x5)
+  (= (p5 (5tuple x1 x2 x3 x4 x5)) x5))
+
+(grule is-6tuple-6tuple (x1 x2 x3 x4 x5 x6)
+  (is-6tuple (6tuple x1 x2 x3 x4 x5 x6)))
+
+(frule 6tuple-composition (x)
+  (implies (is-6tuple x)
+	   (= x (6tuple (p1 x) (p2 x) (p3 x) (p4 x) (p5 x) (p6 x)))))
+
+(grule p1-6tuple (x1 x2 x3 x4 x5 x6)
+  (= (p1 (6tuple x1 x2 x3 x4 x5 x6)) x1))
+
+(grule p2-6tuple (x1 x2 x3 x4 x5 x6)
+  (= (p2 (6tuple x1 x2 x3 x4 x5 x6)) x2))
+
+(grule p3-6tuple (x1 x2 x3 x4 x5 x6)
+  (= (p3 (6tuple x1 x2 x3 x4 x5 x6)) x3))
+
+(grule p4-6tuple (x1 x2 x3 x4 x5 x6)
+  (= (p4 (6tuple x1 x2 x3 x4 x5 x6)) x4))
+
+(grule p5-6tuple (x1 x2 x3 x4 x5 x6)
+  (= (p5 (6tuple x1 x2 x3 x4 x5 x6)) x5))
+
+(grule p6-6tuple (x1 x2 x3 x4 x5 x6)
+  (= (p6 (6tuple x1 x2 x3 x4 x5 x6)) x6))
+
+(grule is-7tuple-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (is-7tuple (7tuple x1 x2 x3 x4 x5 x6 x7)))
+
+(frule 7tuple-composition (x)
+  (implies (is-7tuple x)
+	   (= x (7tuple (p1 x) (p2 x) (p3 x) (p4 x) (p5 x) (p6 x) (p7 x)))))
+
+(grule p1-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p1 (7tuple x1 x2 x3 x4 x5 x6 x7)) x1))
+
+(grule p2-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p2 (7tuple x1 x2 x3 x4 x5 x6 x7)) x2))
+
+(grule p3-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p3 (7tuple x1 x2 x3 x4 x5 x6 x7)) x3))
+
+(grule p4-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p4 (7tuple x1 x2 x3 x4 x5 x6 x7)) x4))
+
+(grule p5-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p5 (7tuple x1 x2 x3 x4 x5 x6 x7)) x5))
+
+(grule p6-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p6 (7tuple x1 x2 x3 x4 x5 x6 x7)) x6))
+
+(grule p7-7tuple (x1 x2 x3 x4 x5 x6 x7)
+  (= (p7 (7tuple x1 x2 x3 x4 x5 x6 x7)) x7))

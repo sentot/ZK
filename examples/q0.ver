@@ -1,0 +1,525 @@
+;;; Q0 stand-alone example file
+;;;
+;;; Q0 is a version of simple type theory.
+;;; The original Q0 is described by Peter Andrews in his book on logic.
+;;;
+;;; Here, we use a version of the logic based on combinators, thus
+;;; avoiding the need to lambda-terms.  (There is a "combinatory abstraction"
+;;; algorithm that turns lambda-expressions into combinator terms.)
+;;;
+;;; Besides the basic combinator terms, Q0 has a function (Q t), for
+;;; each type t, which is the equality function for that type.
+
+;;; Part 1:
+;;; spec for Q0
+
+;;; types
+
+(function-stub ind ())
+(function-stub prop ())
+(function-stub fun (t u))
+
+(function-stub colon (x t))
+
+(rule colon-prop (x)
+  (= (colon x (prop))
+     (= (type-of x) (bool))))
+
+;;; application
+
+(function-stub ap (f x))
+
+(grule ap-type (f x t u)
+  (implies (and (colon f (fun t u))
+		(colon x t))
+	   (colon (ap f x) u)))
+
+;;; Three special cases are needed to cover the possibilities of
+;;; t, u, or both being (prop).  In that case, we want to use
+;;; (= (type-of ...) (bool)) instead of (colon ... (prop)),
+;;; so that EVES can apply propositional reasoning.
+
+(grule ap-type-1 (f x)
+  (implies (and (colon f (fun (prop) (prop)))
+		(= (type-of x) (bool)))
+	   (= (type-of (ap f x)) (bool))))
+(use ap-type (f f) (x x) (t (prop)) (u (prop)))
+(rewrite)
+
+(grule ap-type-2 (f x t)
+  (implies (and (colon f (fun t (prop)))
+		(colon x t))
+	   (= (type-of (ap f x)) (bool))))
+(use ap-type (f f) (x x) (t t) (u (prop)))
+(with-disabled (ap-type) (rewrite))
+
+(grule ap-type-3 (f x u)
+  (implies (and (colon f (fun (prop) u))
+		(= (type-of x) (bool)))
+	   (colon (ap f x) u)))
+(use ap-type (f f) (x x) (t (prop)) (u u))
+(rewrite)
+
+;;; combinators
+
+;;; we introduce S and K axiomatically, then define I, B, and C
+
+(function-stub K (t u))
+
+(grule K-type (t u)
+  (colon (K t u) (fun t (fun u t))))
+
+(rule ap-K (t u x y)
+  (implies (and (colon x t)
+		(colon y u))
+	   (= (ap (ap (K t u) x) y)
+	      x)))
+
+(function-stub S (t u v))
+
+(grule S-type (t u v)
+  (colon (S t u v) (fun (fun t (fun u v)) (fun (fun t u) (fun t v)))))
+
+(rule ap-S (t u v x y z)
+  (implies (and (colon x (fun t (fun u v)))
+		(colon y (fun t u))
+		(colon z t))
+	   (= (ap (ap (ap (S t u v) x) y) z)
+	      (ap (ap x z) (ap y z)))))
+
+;;; derived combinators
+
+;;; I = SKK has the reduction rule Ix => x
+
+(disabled (function I (t) ()
+	    (ap (ap (S t (fun t t) t)
+		    (K t (fun t t)))
+		(K t t))))
+
+(grule I-type (t)
+  (colon (I t) (fun t t)))
+(with-enabled (I) (reduce))
+
+(rule ap-I (t x)
+  (implies (colon x t)
+	   (= (ap (I t) x)
+	      x)))
+(with-enabled (I) (reduce))
+
+;;; B = S(KS)K has the reduction rule Bfgx => f(gx)
+
+(disabled (function B (t u v) ()
+	    (ap (ap (S (fun u v) (fun t (fun u v)) (fun (fun t u) (fun t v)))
+		    (ap (K (fun (fun t (fun u v)) (fun (fun t u) (fun t v)))
+			   (fun u v))
+			(S t u v)))
+		(K (fun u v) t))))
+
+(grule B-type (t u v)
+  (colon (B t u v) (fun (fun u v) (fun (fun t u) (fun t v)))))
+(with-enabled (B) (reduce))
+
+(rule ap-B (t u v f g x)
+  (implies (and (colon f (fun u v))
+		(colon g (fun t u))
+		(colon x t))
+	   (= (ap (ap (ap (B t u v) f) g) x)
+	      (ap f (ap g x)))))
+(with-enabled (B) (reduce))
+
+;;; C = S(BBS)(KK) has the reduction rule Cfxy => fyx
+
+(disabled (function C (t u v) ()
+	    (ap (ap (S (fun t (fun u v))
+		       (fun u (fun t u))
+		       (fun u (fun t v)))
+		    (ap (ap (B (fun t (fun u v))
+			       (fun (fun t u) (fun t v))
+			       (fun (fun u (fun t u)) (fun u (fun t v))))
+			    (B u (fun t u) (fun t v)))
+			(S t u v)))
+		(ap (K (fun u (fun t u)) (fun t (fun u v)))
+		    (K u t)))))
+
+(grule C-type (t u v)
+  (colon (C t u v) (fun (fun t (fun u v)) (fun u (fun t v)))))
+(with-enabled (C) (reduce))
+
+(rule ap-C (x y z t u v)
+  (implies (and (colon x (fun t (fun u v)))
+		(colon y u)
+		(colon z t))
+	   (= (ap (ap (ap (C t u v) x) y) z)
+	      (ap (ap x z) y))))
+(with-enabled (C) (reduce))
+
+;;; The primitives of Q0
+
+(function-stub Q (t))
+
+(grule Q-type (t)
+  (colon (Q t) (fun t (fun t (prop)))))
+
+(function-stub IOTA ())
+
+(grule IOTA-type ()
+  (colon (IOTA) (fun (fun (ind) (prop)) (ind))))
+
+;;; The axioms
+
+(rule ap-Q (t x y)
+  (implies (and (colon x t)
+		(colon y t))
+	   (= (ap (ap (Q t) x) y)
+	      (= x y))))
+
+(disabled
+ (rule extensionality (t u f g)
+  (implies (and (colon f (fun t u))
+		(colon g (fun t u)))
+	   (= (= f g)
+	      (all (x) (implies (colon x t)
+				(= (ap f x) (ap g x))))))))
+
+(axiom IOTA-Q (x)
+  (implies (colon x (ind))
+	   (= (ap (IOTA)
+		  (ap (Q (ind)) x))
+	      x)))
+
+
+;;; Part 2.  Applications
+
+;;; development of q0
+
+;;; Boolean Functions
+;;;
+;;; For each of the basic functions, we prove a rule replacing
+;;; the application of the function to booleans by the corresponding
+;;; EVES function.
+;;;
+;;; Since 0-ary functions can not be disabled in EVES, we give each
+;;; function a dummy parameter.
+
+;; (const Qnot () () ((Q (o o o)) (false o)))
+
+(disabled
+ (function Qnot (x) ()
+    (ap (Q (prop)) (false))))
+
+(grule Qnot-type (x)
+  (colon (Qnot x) (fun (prop) (prop))))
+(WITH-ENABLED (QNOT) (REDUCE))
+
+(rule ap-Qnot (x p)
+  (implies (colon p (prop))
+	   (= (ap (Qnot x) p)
+	      (not p))))
+(WITH-ENABLED (QNOT) (REDUCE))
+
+;; (const Qand ()
+;;     (lambda (x o)
+;;      (lambda (y o)
+;;         ((Q (o (o (o o o)) (o (o o o))))
+;;          (lambda (g (o o o)) ((g (o o o)) (true o) (true o)))
+;;          (lambda (g (o o o)) ((g (o o o)) (x o) (y o)))))))
+
+(disabled 
+  (FUNCTION QAND (x) ()
+    (AP
+     (AP
+      (B (PROP)
+	    (FUN (PROP)
+		    (FUN (FUN (PROP) (FUN (PROP) (PROP)))
+			    (PROP)))
+	    (FUN (PROP) (PROP)))
+      (AP
+       (B (PROP)
+	     (FUN (FUN (PROP) (FUN (PROP) (PROP)))
+		     (PROP))
+	     (PROP))
+       (AP
+	(Q (FUN (FUN (PROP) (FUN (PROP) (PROP)))
+		      (PROP)))
+	(AP
+	 (AP
+	  (C (FUN (PROP) (FUN (PROP) (PROP))) (PROP)
+		(PROP))
+	  (AP (AP (C (FUN (PROP) (FUN (PROP) (PROP)))
+			      (PROP) (FUN (PROP) (PROP)))
+			(I (FUN (PROP)
+				      (FUN (PROP) (PROP)))))
+	      (TRUE)))
+	 (TRUE)))))
+     (AP
+      (AP
+       (B (PROP)
+	     (FUN (FUN (PROP) (FUN (PROP) (PROP)))
+		     (FUN (PROP) (PROP)))
+	     (FUN (PROP)
+		     (FUN (FUN (PROP) (FUN (PROP) (PROP)))
+			     (PROP))))
+       (C (FUN (PROP)
+		     (FUN (PROP) (PROP))) (PROP) (PROP)))
+      (AP (C (FUN (PROP) (FUN (PROP) (PROP))) (PROP)
+		   (FUN (PROP) (PROP)))
+	     (I (FUN (PROP) (FUN (PROP) (PROP)))))))))
+
+(grule Qand-type (x)
+  (colon (Qand x) (fun (prop) (fun (prop) (prop)))))
+(WITH-ENABLED (QAND) (REDUCE))
+
+(rule ap-Qand (a x y)
+  (implies (and (colon x (prop))
+		(colon y (prop)))
+	   (= (ap (ap (Qand a) x) y)
+	      (and x y))))
+(WITH-ENABLED (EXTENSIONALITY QAND) (REDUCE))
+(INSTANTIATE (X$0 (AP (K (FUN (PROP) (PROP)) (PROP))
+			 (I (PROP)))))
+(INSTANTIATE (X$1 (K (PROP) (PROP))))
+(REWRITE)
+
+;; (const Qimp ()
+;;   (lambda (x o)
+;;     (lambda (y o)
+;;       ((Q (o o o)) ((Qand (o o o)) (x o) (y o)) (x o)))))
+
+(disabled
+  (FUNCTION QIMP (x) ()
+    (AP
+     (AP
+      (S (PROP) (PROP) (FUN (PROP) (PROP)))
+      (AP
+       (AP
+	(B (PROP) (FUN (PROP) (FUN (PROP) (PROP)))
+	      (FUN (PROP) (FUN (PROP) (PROP))))
+	(C (PROP) (PROP) (PROP)))
+       (AP
+	(AP (B (PROP) (FUN (PROP) (PROP))
+		     (FUN (PROP) (FUN (PROP) (PROP))))
+	       (AP (B (PROP) (PROP) (FUN (PROP) (PROP)))
+		      (Q (PROP))))
+	(QAND x))))
+     (I (PROP)))))
+
+(grule Qimp-type (x)
+  (colon (Qimp x) (fun (prop) (fun (prop) (prop)))))
+(with-enabled (Qimp) (reduce))
+
+(rule ap-Qimp (a x y)
+  (implies (and (colon x (prop))
+		(colon y (prop)))
+	   (= (ap (ap (Qimp a) x) y)
+	      (implies x y))))
+(with-enabled (Qimp) (reduce))
+
+;; (const Qor ()
+;;  (lambda (x o)
+;;    (lambda (y o)
+;;      ((Qnot (o o))
+;;       ((Qand (o o o)) ((Qnot (o o)) (x o)) ((Qnot (o o)) (y o)))))))
+
+(disabled
+  (FUNCTION QOR (x) ()
+    (AP
+     (AP
+      (B (PROP)
+	    (FUN (PROP) (PROP))
+	    (FUN (PROP) (PROP)))
+      (AP (B (PROP) (PROP) (PROP)) (QNOT x)))
+     (AP
+      (AP
+       (C (PROP)
+	     (FUN (PROP) (PROP))
+	     (FUN (PROP) (PROP)))
+       (AP
+	(AP
+	 (B (PROP) (FUN (PROP) (PROP))
+	       (FUN (FUN (PROP) (PROP))
+		       (FUN (PROP) (PROP))))
+	 (B (PROP) (PROP) (PROP)))
+	(AP (AP (B (PROP) (PROP) (FUN (PROP) (PROP)))
+		      (QAND x))
+	       (QNOT x))))
+      (QNOT x)))))
+
+(grule Qor-type (x)
+  (colon (Qor x) (fun (prop) (fun (prop) (prop)))))
+(with-enabled (Qor) (reduce))
+
+(rule ap-Qor (a x y)
+  (implies (and (colon x (prop))
+		(colon y (prop)))
+	   (= (ap (ap (Qor a) x) y)
+	      (or x y))))
+(with-enabled (Qor) (reduce))
+
+
+;; Quantification
+
+;; (const forall (t) ((Q (o (o t)(o t))) ((K (o t o)) (true o))))
+(disabled
+ (function FORALL (t) ()
+   (ap (Q (fun t (prop)))
+       (ap (K (prop) t) (true)))))
+
+(grule FORALL-type (t)
+  (colon (FORALL t) (fun (fun t (prop)) (prop))))
+(with-enabled (forall) (reduce))
+
+(rule ap-FORALL (t p)
+  (implies (colon p (fun t (prop)))
+	   (= (ap (FORALL t) p)
+	      (all (x) (implies (colon x t)
+				(ap p x))))))
+(WITH-ENABLED (FORALL)
+ (REDUCE))
+(SPLIT (ALL (X) (IMPLIES (COLON X T) (AP P X))))
+(SIMPLIFY)
+(WITH-ENABLED (EXTENSIONALITY)
+ (REWRITE))
+(INSTANTIATE (X$0 X))
+(SIMPLIFY)
+
+;; (const FORSOME (t)
+;;    (lambda (p (o t))
+;;      ((Qnot o) ((FORALL (o (o t)))
+;;                     (lambda (x t) ((Qnot o) ((P (o t)) (x t))))))))
+
+(disabled
+ (FUNCTION FORSOME (T) ()
+    (AP (AP (B (FUN T (PROP)) (PROP) (PROP)) (QNOT t))
+        (AP (AP (B (FUN T (PROP)) (FUN T (PROP)) (PROP)) (FORALL T))
+            (AP (B T (PROP) (PROP)) (QNOT t))))))
+
+(grule FORSOME-type (t)
+  (colon (FORSOME t) (fun (fun t (prop)) (prop))))
+(with-enabled (forsome) (reduce))
+
+(rule ap-FORSOME (t p)
+  (implies (colon p (fun t (prop)))
+	   (= (ap (FORSOME t) p)
+	      (some (x) (and (colon x t)
+			     (ap p x))))))
+(WITH-ENABLED (FORSOME)
+ (REDUCE))
+(INSTANTIATE (X$0 X))
+(SIMPLIFY)
+
+;; (const FOR1 (t)
+;;   (lambda (p (o t))
+;;     ((forsome (o (o t)))
+;;        (lambda (y t)
+;;           ((Q (o (o t)(o t))) (p (o t)) ((Q (o t t)) (y t)))))))
+
+(disabled
+ (FUNCTION FOR1 (T) ()
+    (AP (AP (B (FUN T (PROP)) (FUN T (PROP)) (PROP)) (FORSOME T))
+        (AP (AP (C (FUN T (PROP)) (FUN T (FUN T (PROP))) (FUN T (PROP)))
+                (AP (AP (B (FUN T (PROP)) (FUN (FUN T (PROP)) (PROP))
+                           (FUN (FUN T (FUN T (PROP))) (FUN T (PROP))))
+                        (B T (FUN T (PROP)) (PROP)))
+                    (Q (FUN T (PROP)))))
+            (Q T)))))
+
+
+(grule FOR1-type (t)
+  (colon (FOR1 t) (fun (fun t (prop)) (prop))))
+(with-enabled (for1) (reduce))
+    
+
+;;; Prop 5305 is from Andrews' book on Q0
+;; (axiom prop5305 (t) ((p (o t)))
+;;   ((Q (o o o))
+;;    ((for1 (o (o t))) (p (o t)))
+;;    ((forsome (o (o t)))
+;;     (lambda (y t)
+;;       ((forall (o (o t)))
+;;        (lambda (z t)
+;;          ((Q (o o o)) ((p (o t)) (z t))
+;; 			 ((Q (o t t)) (y t) (z t)))))))))
+
+(AXIOM PROP5305 (T P)
+  (IMPLIES (COLON P (FUN T (PROP)))
+	   (AP (AP (Q (PROP)) (AP (FOR1 T) P))
+	       (AP (FORSOME T)
+		   (AP (AP (B T (FUN T (PROP)) (PROP)) (FORALL T))
+		       (AP (AP (B T (FUN T (PROP)) (FUN T (PROP)))
+			       (AP (S T (PROP) (PROP))
+				   (AP (AP (B T (PROP) (FUN (PROP) (PROP)))
+					   (Q (PROP)))
+				       P)))
+			   (Q T)))))))
+(with-enabled (for1) (reduce))
+(split (and (colon p (fun t (prop)))
+            (some (x)
+                  (and (colon x t)
+                       (= p (ap (Q t) x))))))
+(with-enabled (extensionality) (rewrite))
+
+
+
+;; Sets
+
+;;(const Qsub (t)
+;;  (lambda (x (o t))
+;;    (lambda (y (o t))
+;;      ((forall (o (o t))) (lambda (z t) 
+;;        ((Qimp (o o o)) ((x (o t)) (z t)) ((y (o t)) (z t))))))))
+
+(FUNCTION QSUB (T) ()
+    (AP (AP (B (FUN T (PROP)) (FUN (FUN T (PROP)) (FUN T (PROP)))
+               (FUN (FUN T (PROP)) (PROP)))
+            (AP (B (FUN T (PROP)) (FUN T (PROP)) (PROP)) (FORALL T)))
+        (AP (AP (B (FUN T (PROP)) (FUN T (FUN (PROP) (PROP)))
+                   (FUN (FUN T (PROP)) (FUN T (PROP))))
+                (S T (PROP) (PROP)))
+            (AP (B T (PROP) (FUN (PROP) (PROP))) (QIMP t)))))
+
+(grule Qsub-type (t)
+  (colon (Qsub t) (fun (fun t (prop)) (fun (fun t (prop)) (prop)))))
+(reduce)
+
+(axiom Qsub-self (x t)
+  (implies (colon x (fun t (prop)))
+	   (= (ap (ap (Qsub t) x) x)
+	      (true))))
+(reduce)
+
+
+;; (const Qunion (t)
+;;  (lambda (x (o t))
+;;    (lambda (y (o t))
+;;      (lambda (z t) ((Qor (o o o)) ((x (o t)) (z t)) ((y (o t)) (z t)))))))
+
+(FUNCTION QUNION (T) ()
+    (AP (AP (B (FUN T (PROP)) (FUN T (FUN (PROP) (PROP)))
+               (FUN (FUN T (PROP)) (FUN T (PROP))))
+            (S T (PROP) (PROP)))
+        (AP (B T (PROP) (FUN (PROP) (PROP))) (QOR t))))
+
+(grule Qunion-type (t)
+  (colon (Qunion t) (fun (fun t (prop)) (fun (fun t (prop)) (fun t (prop))))))
+(reduce)
+
+;; (rule Qunion-self (t) ((x (o t)))
+;;    (= ((Qunion ((o t)(o t)(o t))) (x (o t)) (x (o t)))
+;;       (x (o t))))
+
+(RULE QUNION-SELF (T X)
+      (IMPLIES (COLON X (FUN T (PROP)))
+	       (= (AP (AP (QUNION T) X) X) X)))
+(with-enabled (extensionality) (reduce))
+
+;; (rule Qsub-Qunion (t) ((x (o t)) (y (o t)))
+;;   ((Qsub (o (o t)(o t)))
+;;    (x (o t))
+;;    ((Qunion ((o t)(o t)(o t))) (x (o t))(y (o t)))))
+
+(RULE QSUB-QUNION (T X Y)
+      (IMPLIES (AND (COLON X (FUN T (PROP)))
+		    (COLON Y (FUN T (PROP))))
+               (= (AP (AP (QSUB T) X) (AP (AP (QUNION T) X) Y))
+		  (TRUE))))
+(REDUCE)

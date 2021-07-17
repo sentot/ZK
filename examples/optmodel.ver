@@ -1,0 +1,90 @@
+;;; "optional" values
+;;;
+;;; an optional X is either an X or a nothing.
+;;;
+
+(zf-function optional (X)
+  (select (S (powerset X))
+    (or (= S (nullset))
+	(some (y) (and (in y X) (= s (unit y)))))))
+
+(function no () () (nullset))
+
+(function yes (x) () (unit x))
+
+(rule no-is-optional (X)
+  (= (in (no) (optional X))
+     (true)))
+(reduce)
+
+(rule yes-is-optional (x Y)
+  (= (in (yes x) (optional Y))
+     (in x Y)))
+(reduce)
+
+(disabled
+ (rule in-optional (x Y)
+  (= (in x (optional Y))
+     (or (= x (no))
+	 (some (z) (and (= x (yes z))
+			(in z Y)))))))
+(reduce)
+(cases)
+(split (in z y))
+(simplify)
+(split (in z y))
+(simplify)
+(next)
+(apply =.extensional.subset (= x (nullset)))
+(invoke subset)
+(rewrite)
+(instantiate (e$0 e))
+(simplify)
+(prenex)
+(rewrite)
+(rearrange)
+(equality-substitute)
+(rewrite)
+(next)
+
+(rule equal-yes-yes (x y)
+  (= (= (yes x) (yes y))
+     (= x y)))
+(reduce)
+(apply =.extensional.subset (= (unit x) (unit y)))
+(reduce)
+
+(grule yes-is-not-no (x)
+  (not (= (yes x) (no))))
+(apply =.extensional.subset)
+(invoke subset)
+(reduce)
+
+(function the-option (x) ()
+  (cup x))
+
+(grule the-option-yes (x)
+  (= (the-option (yes x))
+     x))
+(reduce)
+(apply =.extensional.subset)
+(reduce)
+
+(axiom in-optional-2 (x S)
+  (= (in x (optional S))
+     (or (= x (no))
+	 (and (= x (yes (the-option x)))
+	      (in (the-option x) S)))))
+(use in-optional (x x) (y s))
+(split (in x (optional s)))
+(with-disabled (optional) (rewrite))
+(cases)
+(prenex)
+(equality-substitute x)
+(rewrite)
+(next)
+(prenex)
+(equality-substitute x)
+(rewrite)
+(next)
+

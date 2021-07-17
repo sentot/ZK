@@ -1,0 +1,1106 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/intfnmodel.ver"
+Warning RULE-LOOPS for FN!FUNCTION-EXTENSIONALITY:
+ The rule FN!FUNCTION-EXTENSIONALITY loops upon itself.
+Warning RULE-CONDITION-LOOPS for ELEM!>=-TRANSITIVE:
+ The rule ELEM!>=-TRANSITIVE applies to its own condition.
+Warning RULE-LOOPS for ELEM!>=-PRED-DEVELOPMENT:
+ The rule ELEM!>=-PRED-DEVELOPMENT loops upon itself.
+Warning RULE-CONDITION-LOOPS for ELEM!ASSYMETRY:
+ The rule ELEM!ASSYMETRY applies to its own condition.
+Warning RULE-LOOPS for ELEM!RANGE-BOTTOM-EXPANSION:
+ The rule ELEM!RANGE-BOTTOM-EXPANSION loops upon itself.
+Warning RULE-LOOPS for ELEM!RANGE-TOP-EXPANSION:
+ The rule ELEM!RANGE-TOP-EXPANSION loops upon itself.
+ADD
+IN-ADD
+Beginning proof of IN-ADD ...
+(= (IN X (ADD K))
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (+ (PAIR!FST X) K))))
+Assuming ADD.DEFINITION with the instantiations: (= I$0 X) (= K K) generates
+...
+(IMPLIES
+ (= (IN X (ADD K)) (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (+ I K))))))
+ (= (IN X (ADD K))
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+   (= (PAIR!SND X) (+ (PAIR!FST X) K)))))
+Splitting
+on (AND (PAIR!IS-PAIR X)
+    (AND (IN (PAIR!FST X) (INT))
+     (= (PAIR!SND X) (+ (PAIR!FST X) K)))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (+ (PAIR!FST X) K)))
+ (IMPLIES
+  (= (IN X (ADD K)) (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (+ I K))))))
+  (= (IN X (ADD K))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (+ (PAIR!FST X) K)))))
+ (IMPLIES
+  (= (IN X (ADD K))
+   (SOME (I$0) (AND (IN I$0 (INT)) (= X (PAIR!PAIR I$0 (+ I$0 K))))))
+  (= (IN X (ADD K))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (+ (PAIR!FST X) K))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (+ K (PAIR!FST X)))
+  (= (IN X (ADD K))
+   (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (+ I K)))))))
+ (= (IN X (ADD K)) (TRUE)))
+Instantiating (= I (PAIR!FST X)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (+ K (PAIR!FST X)))
+  (= (IN X (ADD K))
+   (OR
+    (AND (IN (PAIR!FST X) (INT))
+     (= X (PAIR!PAIR (PAIR!FST X) (+ (PAIR!FST X) K))))
+    (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (+ I K))))))))
+ (IN X (ADD K)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-ADD
+Beginning proof of IS-FUNCTION-ADD ...
+(= (FN!IS-FUNCTION (ADD K)) (TRUE))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-ADD
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-ADD
+Beginning proof of DOM-ADD ...
+(= (REL!DOM (ADD K)) (INT))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-ADD, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN-ADD
+Beginning proof of RAN-ADD ...
+(IMPLIES (IN K (INT)) (= (REL!RAN (ADD K)) (INT)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IN K (INT))
+ (ALL (E) (IF (IN E (REL!RAN (ADD K))) (IN E (INT)) (NOT (IN E (INT))))))
+Which simplifies
+ when rewriting with IN-ADD, REL!IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (IN K (INT))
+ (ALL (E)
+  (IF (SOME (A) (AND (IN A (INT)) (= E (+ K A)))) (IN E (INT))
+   (NOT (IN E (INT))))))
+Instantiating (= A (- E K)) gives ...
+(IMPLIES (IN K (INT))
+ (ALL (E)
+  (IF
+   (OR (AND (IN (- E K) (INT)) (= E (+ K (- E K))))
+    (SOME (A) (AND (IN A (INT)) (= E (+ K A)))))
+   (IN E (INT)) (NOT (IN E (INT))))))
+Which simplifies to ...
+(TRUE)
+INVERSE-ADD
+Beginning proof of INVERSE-ADD ...
+(IMPLIES (IN K (INT)) (= (REL!INVERSE (ADD K)) (ADD (NEGATE K))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IN K (INT))
+ (ALL (E)
+  (IF (IN E (REL!INVERSE (ADD K))) (IN E (ADD (NEGATE K)))
+   (NOT (IN E (ADD (NEGATE K)))))))
+Which simplifies
+ when rewriting with REL!SND-FLIP-PAIR, REL!FST-FLIP-PAIR,
+REL!IS-PAIR-FLIP-PAIR, IN-ADD, REL!IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, REL!FLIP-PAIR-IS-INVOLUTION,
+REL!INVERSE-INVERSE to ...
+(TRUE)
+APPLY-ADD
+Beginning proof of APPLY-ADD ...
+(IMPLIES (IN X (INT)) (= (FN!APPLY (ADD K) X) (+ X K)))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (ADD K)) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION (ADD K)) (IN X (REL!DOM (ADD K))))
+   (IN (PAIR!PAIR X (FN!APPLY (ADD K) X)) (ADD K)))
+  (IN X (INT)))
+ (= (FN!APPLY (ADD K) X) (+ X K)))
+Which simplifies
+ when rewriting with IN-ADD, DOM-ADD, IS-FUNCTION-ADD
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+COMP-ADD-ADD
+Beginning proof of COMP-ADD-ADD ...
+(IMPLIES (AND (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (ADD M) (ADD N)) (ADD (+ M N))))
+Assuming FN!FUNCTION-EXTENSIONALITY with the
+instantiations: (= F (REL!COMP (ADD M) (ADD N))) (= G (ADD (+ M N))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!COMP (ADD M) (ADD N)))
+    (FN!IS-FUNCTION (ADD (+ M N))))
+   (= (= (REL!COMP (ADD M) (ADD N)) (ADD (+ M N)))
+    (AND (= (REL!DOM (REL!COMP (ADD M) (ADD N))) (REL!DOM (ADD (+ M N))))
+     (ALL (X)
+      (IMPLIES (IN X (REL!DOM (REL!COMP (ADD M) (ADD N))))
+       (= (FN!APPLY (REL!COMP (ADD M) (ADD N)) X)
+        (FN!APPLY (ADD (+ M N)) X)))))))
+  (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (ADD M) (ADD N)) (ADD (+ M N))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN M (INT)) (IN N (INT))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!COMP (ADD M) (ADD N)))
+    (FN!IS-FUNCTION (ADD (+ M N))))
+   (= (= (REL!COMP (ADD M) (ADD N)) (ADD (+ M N)))
+    (AND (= (REL!DOM (REL!COMP (ADD M) (ADD N))) (REL!DOM (ADD (+ M N))))
+     (ALL (X)
+      (IMPLIES (IN X (REL!DOM (REL!COMP (ADD M) (ADD N))))
+       (= (FN!APPLY (REL!COMP (ADD M) (ADD N)) X)
+        (FN!APPLY (ADD (+ M N)) X))))))))
+ (= (REL!COMP (ADD M) (ADD N)) (ADD (+ M N))))
+Which simplifies
+ when rewriting with FN!APPLY-COMP, APPLY-ADD, RAN-ADD,
+REL!IMAGE-OF-SUPERSET-OF-DOM, SUBSET.SELF, DOM-ADD, INVERSE-ADD, REL!DOM-COMP,
+FN!IS-FUNCTION-COMP-FUNCTIONS, IS-FUNCTION-ADD
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions REL!INVERSE-INVERSE, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+ADD-0-IS-ID
+Beginning proof of ADD-0-IS-ID ...
+(= (ADD 0) (REL!ID (INT)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, REL!IN-ID, IN-ADD
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IMAGE-ADD-RANGE
+Beginning proof of IMAGE-ADD-RANGE ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)))
+ (= (REL!IMAGE (ADD I) (RANGE J K)) (RANGE (+ I J) (+ I K))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE (ADD I) (RANGE J K))) (IN E (RANGE (+ I J) (+ I K)))
+   (NOT (IN E (RANGE (+ I J) (+ I K)))))))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE (ADD I) (RANGE J K)))
+   (AND (>= E (+ I J)) (>= (+ I K) E))
+   (IMPLIES (>= E (+ I J)) (NOT (>= (+ I K) E))))))
+Prenexing produces ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)))
+ (IF (IN E (REL!IMAGE (ADD I) (RANGE J K)))
+  (AND (>= E (+ I J)) (>= (+ I K) E))
+  (IMPLIES (>= E (+ I J)) (NOT (>= (+ I K) E)))))
+Assuming FN!IN-PRE-IMAGE-OF-FUNCTION with the
+instantiations: (= F (REL!INVERSE (ADD I))) (= X E)
+                (= Y (RANGE J K)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (FN!IS-FUNCTION (REL!INVERSE (ADD I)))
+   (= (IN E (REL!IMAGE (REL!INVERSE (REL!INVERSE (ADD I))) (RANGE J K)))
+    (AND (IN E (REL!DOM (REL!INVERSE (ADD I))))
+     (IN (FN!APPLY (REL!INVERSE (ADD I)) E) (RANGE J K)))))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)))
+ (IF (IN E (REL!IMAGE (ADD I) (RANGE J K)))
+  (AND (>= E (+ I J)) (>= (+ I K) E))
+  (IMPLIES (>= E (+ I J)) (NOT (>= (+ I K) E)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT))
+  (IMPLIES (FN!IS-FUNCTION (REL!INVERSE (ADD I)))
+   (= (IN E (REL!IMAGE (REL!INVERSE (REL!INVERSE (ADD I))) (RANGE J K)))
+    (AND (IN E (REL!DOM (REL!INVERSE (ADD I))))
+     (IN (FN!APPLY (REL!INVERSE (ADD I)) E) (RANGE J K))))))
+ (IF (IN E (REL!IMAGE (ADD I) (RANGE J K)))
+  (AND (>= E (+ I J)) (>= (+ I K) E))
+  (IMPLIES (>= E (+ I J)) (NOT (>= (+ I K) E)))))
+Which simplifies
+ when rewriting with RANGE.DEFINITION, APPLY-ADD, DOM-ADD, IS-FUNCTION-ADD,
+INVERSE-ADD
+ forward chaining using >=.SAME.TYPE, FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to ...
+(TRUE)
+PLUS
+IN-PLUS
+Beginning proof of IN-PLUS ...
+(= (IN X (PLUS))
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (ADD (PAIR!FST X)))))
+Assuming PLUS.DEFINITION with the instantiations: (= X$0 X) generates ...
+(IMPLIES
+ (= (IN X (PLUS))
+  (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (ADD X$0))))))
+ (= (IN X (PLUS))
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+   (= (PAIR!SND X) (ADD (PAIR!FST X))))))
+Splitting
+on (AND (PAIR!IS-PAIR X)
+    (AND (IN (PAIR!FST X) (INT))
+     (= (PAIR!SND X) (ADD (PAIR!FST X))))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (ADD (PAIR!FST X))))
+ (IMPLIES
+  (= (IN X (PLUS))
+   (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (ADD X$0))))))
+  (= (IN X (PLUS))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (ADD (PAIR!FST X))))))
+ (IMPLIES
+  (= (IN X (PLUS))
+   (SOME (X$1) (AND (IN X$1 (INT)) (= X (PAIR!PAIR X$1 (ADD X$1))))))
+  (= (IN X (PLUS))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (ADD (PAIR!FST X)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (ADD (PAIR!FST X)))
+  (= (IN X (PLUS))
+   (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (ADD X$0)))))))
+ (= (IN X (PLUS)) (TRUE)))
+Instantiating (= X$0 (PAIR!FST X)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (ADD (PAIR!FST X)))
+  (= (IN X (PLUS))
+   (OR
+    (AND (IN (PAIR!FST X) (INT))
+     (= X (PAIR!PAIR (PAIR!FST X) (ADD (PAIR!FST X)))))
+    (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (ADD X$0))))))))
+ (IN X (PLUS)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-PLUS
+Beginning proof of IS-FUNCTION-PLUS ...
+(= (FN!IS-FUNCTION (PLUS)) (TRUE))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-PLUS
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-PLUS
+Beginning proof of DOM-PLUS ...
+(= (REL!DOM (PLUS)) (INT))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-PLUS, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+APPLY-PLUS
+Beginning proof of APPLY-PLUS ...
+(IMPLIES (IN K (INT)) (= (FN!APPLY (PLUS) K) (ADD K)))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (PLUS)) (= X K) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION (PLUS)) (IN K (REL!DOM (PLUS))))
+   (IN (PAIR!PAIR K (FN!APPLY (PLUS) K)) (PLUS)))
+  (IN K (INT)))
+ (= (FN!APPLY (PLUS) K) (ADD K)))
+Which simplifies
+ when rewriting with IN-PLUS, DOM-PLUS, IS-FUNCTION-PLUS
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+MULTIPLES-OF
+MULTIPLES-OF-0
+Beginning proof of MULTIPLES-OF-0 ...
+(= (MULTIPLES-OF 0) (UNIT 0))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+SETADD.DEFINITION, MULTIPLES-OF.DEFINITION, SETRULES!UNIT-TO-SETADD to ...
+(TRUE)
+MULTIPLES-OF-1
+Beginning proof of MULTIPLES-OF-1 ...
+(= (MULTIPLES-OF 1) (INT))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL,
+MULTIPLES-OF.DEFINITION to ...
+(TRUE)
+MULTIPLES-OF--1
+Beginning proof of MULTIPLES-OF--1 ...
+(= (MULTIPLES-OF -1) (INT))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IF (IN E (MULTIPLES-OF -1)) (IN E (INT)) (NOT (IN E (INT))))
+Which simplifies
+ when rewriting with MULTIPLES-OF.DEFINITION to ...
+(IMPLIES (IN E (INT)) (SOME (X) (AND (IN X (INT)) (= E (* -1 X)))))
+Instantiating (= X (NEGATE E)) gives ...
+(IMPLIES
+ (AND (IN E (INT)) (NOT (AND (IN (NEGATE E) (INT)) (= E (* -1 (NEGATE E))))))
+ (SOME (X) (AND (IN X (INT)) (= E (* -1 X)))))
+Which simplifies to ...
+(TRUE)
+MULTIPLY-BY
+IN-MULTIPLY-BY
+Beginning proof of IN-MULTIPLY-BY ...
+(= (IN X (MULTIPLY-BY K))
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (* (PAIR!FST X) K))))
+Assuming MULTIPLY-BY.DEFINITION with the
+instantiations: (= I$0 X) (= K K) generates ...
+(IMPLIES
+ (= (IN X (MULTIPLY-BY K))
+  (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (* I K))))))
+ (= (IN X (MULTIPLY-BY K))
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+   (= (PAIR!SND X) (* (PAIR!FST X) K)))))
+Splitting
+on (AND (PAIR!IS-PAIR X)
+    (AND (IN (PAIR!FST X) (INT))
+     (= (PAIR!SND X) (* (PAIR!FST X) K)))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (* (PAIR!FST X) K)))
+ (IMPLIES
+  (= (IN X (MULTIPLY-BY K))
+   (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (* I K))))))
+  (= (IN X (MULTIPLY-BY K))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (* (PAIR!FST X) K)))))
+ (IMPLIES
+  (= (IN X (MULTIPLY-BY K))
+   (SOME (I$0) (AND (IN I$0 (INT)) (= X (PAIR!PAIR I$0 (* I$0 K))))))
+  (= (IN X (MULTIPLY-BY K))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (* (PAIR!FST X) K))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (* (PAIR!FST X) K))
+  (= (IN X (MULTIPLY-BY K))
+   (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (* I K)))))))
+ (= (IN X (MULTIPLY-BY K)) (TRUE)))
+Instantiating (= I (PAIR!FST X)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (* (PAIR!FST X) K))
+  (= (IN X (MULTIPLY-BY K))
+   (OR
+    (AND (IN (PAIR!FST X) (INT))
+     (= X (PAIR!PAIR (PAIR!FST X) (* (PAIR!FST X) K))))
+    (SOME (I) (AND (IN I (INT)) (= X (PAIR!PAIR I (* I K))))))))
+ (IN X (MULTIPLY-BY K)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-MULTIPLY-BY
+Beginning proof of IS-FUNCTION-MULTIPLY-BY ...
+(= (FN!IS-FUNCTION (MULTIPLY-BY K)) (TRUE))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-MULTIPLY-BY
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-MULTIPLY-BY
+Beginning proof of DOM-MULTIPLY-BY ...
+(= (REL!DOM (MULTIPLY-BY K)) (INT))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-MULTIPLY-BY,
+REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+RAN-MULTIPLY-BY
+Beginning proof of RAN-MULTIPLY-BY ...
+(IMPLIES (IN K (INT)) (= (REL!RAN (MULTIPLY-BY K)) (MULTIPLES-OF K)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IN K (INT))
+ (ALL (E)
+  (IF (IN E (REL!RAN (MULTIPLY-BY K))) (IN E (MULTIPLES-OF K))
+   (NOT (IN E (MULTIPLES-OF K))))))
+Which simplifies
+ when rewriting with MULTIPLES-OF.DEFINITION, IN-MULTIPLY-BY, REL!IN-RAN
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(IMPLIES (IN K (INT))
+ (ALL (E X)
+  (IF (SOME (A) (AND (IN A (INT)) (= E (* A K))))
+   (AND (IN E (INT)) (SOME (X$0) (AND (IN X$0 (INT)) (= E (* K X$0)))))
+   (IMPLIES (IN E (INT)) (NOT (AND (IN X (INT)) (= E (* K X))))))))
+Prenexing produces ...
+(IMPLIES (IN K (INT))
+ (IF (SOME (A) (AND (IN A (INT)) (= E (* A K))))
+  (AND (IN E (INT)) (SOME (X$0) (AND (IN X$0 (INT)) (= E (* K X$0)))))
+  (IMPLIES (IN E (INT)) (NOT (AND (IN X (INT)) (= E (* K X)))))))
+Starting case 2 ...
+(IMPLIES (AND (IN K (INT)) (SOME (A) (AND (IN A (INT)) (= E (* A K)))))
+ (AND (IN E (INT)) (SOME (X$0) (AND (IN X$0 (INT)) (= E (* K X$0))))))
+Instantiating (= X$0 A) gives ...
+(IMPLIES (AND (IN K (INT)) (IN A (INT)) (= E (* A K)))
+ (AND (IN E (INT))
+  (OR (AND (IN A (INT)) (= E (* K A)))
+   (SOME (X) (AND (IN X (INT)) (= E (* K X)))))))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IN K (INT)) (NOT (SOME (A) (AND (IN A (INT)) (= E (* A K)))))
+  (IN E (INT)))
+ (NOT (AND (IN X (INT)) (= E (* K X)))))
+Instantiating (= A X) gives ...
+(IMPLIES
+ (AND (IN K (INT))
+  (NOT
+   (OR (AND (IN X (INT)) (= E (* X K)))
+    (SOME (A) (AND (IN A (INT)) (= E (* A K))))))
+  (IN E (INT)))
+ (NOT (AND (IN X (INT)) (= E (* K X)))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+APPLY-MULTIPLY-BY
+Beginning proof of APPLY-MULTIPLY-BY ...
+(IMPLIES (IN X (INT)) (= (FN!APPLY (MULTIPLY-BY K) X) (* X K)))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (MULTIPLY-BY K)) (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (MULTIPLY-BY K)) (IN X (REL!DOM (MULTIPLY-BY K))))
+   (IN (PAIR!PAIR X (FN!APPLY (MULTIPLY-BY K) X)) (MULTIPLY-BY K)))
+  (IN X (INT)))
+ (= (FN!APPLY (MULTIPLY-BY K) X) (* X K)))
+Which simplifies
+ when rewriting with IN-MULTIPLY-BY, DOM-MULTIPLY-BY, IS-FUNCTION-MULTIPLY-BY
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+COMP-MULTIPLY-BY-MULTIPLY-BY
+Beginning proof of COMP-MULTIPLY-BY-MULTIPLY-BY ...
+(IMPLIES (AND (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N))))
+Assuming FN!FUNCTION-EXTENSIONALITY with the
+instantiations: (= F (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+                (= G (MULTIPLY-BY (* M N))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+    (FN!IS-FUNCTION (MULTIPLY-BY (* M N))))
+   (= (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N)))
+    (AND
+     (= (REL!DOM (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+      (REL!DOM (MULTIPLY-BY (* M N))))
+     (ALL (X)
+      (IMPLIES (IN X (REL!DOM (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N))))
+       (= (FN!APPLY (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) X)
+        (FN!APPLY (MULTIPLY-BY (* M N)) X)))))))
+  (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N))))
+Assuming REL!IMAGE-OF-SUPERSET-OF-DOM with the
+instantiations: (= R (REL!INVERSE (MULTIPLY-BY M))) (= X (INT)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (SUBSET (REL!DOM (REL!INVERSE (MULTIPLY-BY M))) (INT))
+   (= (REL!IMAGE (REL!INVERSE (MULTIPLY-BY M)) (INT))
+    (REL!RAN (REL!INVERSE (MULTIPLY-BY M)))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+    (FN!IS-FUNCTION (MULTIPLY-BY (* M N))))
+   (= (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N)))
+    (AND
+     (= (REL!DOM (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+      (REL!DOM (MULTIPLY-BY (* M N))))
+     (ALL (X)
+      (IMPLIES (IN X (REL!DOM (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N))))
+       (= (FN!APPLY (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) X)
+        (FN!APPLY (MULTIPLY-BY (* M N)) X)))))))
+  (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN M (INT)) (IN N (INT))
+  (IMPLIES (SUBSET (REL!DOM (REL!INVERSE (MULTIPLY-BY M))) (INT))
+   (= (REL!IMAGE (REL!INVERSE (MULTIPLY-BY M)) (INT))
+    (REL!RAN (REL!INVERSE (MULTIPLY-BY M)))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+    (FN!IS-FUNCTION (MULTIPLY-BY (* M N))))
+   (= (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N)))
+    (AND
+     (= (REL!DOM (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)))
+      (REL!DOM (MULTIPLY-BY (* M N))))
+     (ALL (X)
+      (IMPLIES (IN X (REL!DOM (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N))))
+       (= (FN!APPLY (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) X)
+        (FN!APPLY (MULTIPLY-BY (* M N)) X))))))))
+ (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N))))
+Which simplifies
+ when rewriting with FN!APPLY-COMP, APPLY-MULTIPLY-BY, REL!DOM-COMP,
+FN!IS-FUNCTION-COMP-FUNCTIONS, IS-FUNCTION-MULTIPLY-BY, DOM-MULTIPLY-BY,
+REL!RAN-INVERSE, REL!IMAGE-OF-SUPERSET-OF-DOM, RAN-MULTIPLY-BY, REL!DOM-INVERSE
+ forward chaining using FN!FUNCTION-IS-RELATION
+ with the assumptions FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to ...
+(IMPLIES
+ (AND (IN M (INT)) (IN N (INT))
+  (NOT (= (REL!IMAGE (REL!INVERSE (MULTIPLY-BY M)) (INT)) (INT))))
+ (NOT
+  (= (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N)))
+   (FALSE))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with DOM-MULTIPLY-BY, REL!RAN-INVERSE,
+REL!IMAGE-OF-SUPERSET-OF-DOM, MULTIPLES-OF.DEFINITION, RAN-MULTIPLY-BY,
+REL!DOM-INVERSE
+ with the assumptions REL!INVERSE-INVERSE to ...
+(TRUE)
+MULTIPLY-BY-1-IS-ID
+Beginning proof of MULTIPLY-BY-1-IS-ID ...
+(= (MULTIPLY-BY 1) (REL!ID (INT)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, REL!IN-ID, IN-MULTIPLY-BY
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+INVERSE-MULTIPLY-BY--1
+Beginning proof of INVERSE-MULTIPLY-BY--1 ...
+(= (REL!INVERSE (MULTIPLY-BY -1)) (MULTIPLY-BY -1))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, REL!SND-FLIP-PAIR,
+REL!FST-FLIP-PAIR, REL!IS-PAIR-FLIP-PAIR, IN-MULTIPLY-BY, REL!IN-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, REL!FLIP-PAIR-IS-INVOLUTION,
+REL!INVERSE-INVERSE to ...
+(TRUE)
+*-MONOTONIC
+Beginning proof of *-MONOTONIC ...
+(IMPLIES (AND (IN X (INT)) (IN Y (INT)) (IN Z (INT)) (> X 0))
+ (= (>= (* X Y) (* X Z)) (>= Y Z)))
+Splitting on (>= (* X (- Y Z)) 0) generates ...
+(IF (>= (* X (- Y Z)) 0)
+ (IMPLIES (AND (IN X (INT)) (IN Y (INT)) (IN Z (INT)) (> X 0))
+  (= (>= (* X Y) (* X Z)) (>= Y Z)))
+ (IMPLIES (AND (IN X (INT)) (IN Y (INT)) (IN Z (INT)) (> X 0))
+  (= (>= (* X Y) (* X Z)) (>= Y Z))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+IS-FUNCTION-INVERSE-MULTIPLY-BY
+Beginning proof of IS-FUNCTION-INVERSE-MULTIPLY-BY ...
+(IMPLIES (AND (IN I (INT)) (NOT (= I 0)))
+ (= (FN!IS-FUNCTION (REL!INVERSE (MULTIPLY-BY I))) (TRUE)))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with REL!FLIP-PAIR-PAIR, REL!IN-INVERSE, IN-MULTIPLY-BY,
+REL!IS-RELATION-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions REL!FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL,
+REL!INVERSE-INVERSE to ...
+(IMPLIES (AND (IN I (INT)) (NOT (= I 0)))
+ (ALL (B)
+  (IMPLIES (IN B (INT))
+   (ALL (C) (IMPLIES (AND (IN C (INT)) (= (* B I) (* C I))) (= B C))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN I (INT)) (NOT (= I 0)) (IN B (INT)) (IN C (INT))
+  (= (* B I) (* C I)))
+ (= B C))
+Assuming *-MONOTONIC with the
+instantiations: (= X I) (= Y B) (= Z C) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN I (INT)) (IN B (INT)) (IN C (INT)) (> I 0))
+   (= (>= (* I B) (* I C)) (>= B C)))
+  (IN I (INT)) (NOT (= I 0)) (IN B (INT)) (IN C (INT)) (= (* B I) (* C I)))
+ (= B C))
+Assuming *-MONOTONIC with the
+instantiations: (= X (NEGATE I)) (= Y B) (= Z C) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN B (INT)) (IN C (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) B) (* (NEGATE I) C)) (>= B C)))
+  (IMPLIES (AND (IN I (INT)) (IN B (INT)) (IN C (INT)) (>= I (SUCC 0)))
+   (= (>= (* I B) (* I C)) (>= B C)))
+  (IN I (INT)) (NOT (= I 0)) (IN B (INT)) (IN C (INT)) (= (* B I) (* C I)))
+ (= B C))
+Assuming *-MONOTONIC with the
+instantiations: (= X (NEGATE I)) (= Y C) (= Z B) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN C (INT)) (IN B (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) C) (* (NEGATE I) B)) (>= C B)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN B (INT)) (IN C (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) B) (* (NEGATE I) C)) (>= B C)))
+  (IMPLIES (AND (IN I (INT)) (IN B (INT)) (IN C (INT)) (>= I (SUCC 0)))
+   (= (>= (* I B) (* I C)) (>= B C)))
+  (IN I (INT)) (NOT (= I 0)) (IN B (INT)) (IN C (INT)) (= (* B I) (* C I)))
+ (= B C))
+Assuming *-MONOTONIC with the
+instantiations: (= X I) (= Y C) (= Z B) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN I (INT)) (IN C (INT)) (IN B (INT)) (> I 0))
+   (= (>= (* I C) (* I B)) (>= C B)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN C (INT)) (IN B (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) C) (* (NEGATE I) B)) (>= C B)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN B (INT)) (IN C (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) B) (* (NEGATE I) C)) (>= B C)))
+  (IMPLIES (AND (IN I (INT)) (IN B (INT)) (IN C (INT)) (>= I (SUCC 0)))
+   (= (>= (* I B) (* I C)) (>= B C)))
+  (IN I (INT)) (NOT (= I 0)) (IN B (INT)) (IN C (INT)) (= (* B I) (* C I)))
+ (= B C))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+IMAGE-MULTIPLY-POSITIVE-RANGE
+Beginning proof of IMAGE-MULTIPLY-POSITIVE-RANGE ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (> I 0))
+ (= (REL!IMAGE (MULTIPLY-BY I) (RANGE J K))
+  (INTER (MULTIPLES-OF I) (RANGE (* I J) (* I K)))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I (SUCC 0)))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE (MULTIPLY-BY I) (RANGE J K)))
+   (IN E (INTER (MULTIPLES-OF I) (RANGE (* I J) (* I K))))
+   (NOT (IN E (INTER (MULTIPLES-OF I) (RANGE (* I J) (* I K))))))))
+Prenexing produces ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I (SUCC 0)))
+ (IF (IN E (REL!IMAGE (MULTIPLY-BY I) (RANGE J K)))
+  (IN E (INTER (MULTIPLES-OF I) (RANGE (* I J) (* I K))))
+  (NOT (IN E (INTER (MULTIPLES-OF I) (RANGE (* I J) (* I K)))))))
+Which simplifies
+ when rewriting with MULTIPLES-OF.DEFINITION, INTER.DEFINITION,
+INTER.COMMUTATIVE, IN-MULTIPLY-BY, RANGE.DEFINITION, REL!IN-IMAGE
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, SUCC.INT to ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1))
+ (IF (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))
+  (AND (>= E (* I J)) (>= (* I K) E)
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))
+  (IMPLIES (AND (>= E (* I J)) (>= (* I K) E))
+   (NOT (SOME (X$0) (AND (IN X$0 (INT)) (= E (* I X$0))))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1)
+  (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I)))))
+ (AND (>= E (* I J)) (>= (* I K) E)
+  (SOME (X) (AND (IN X (INT)) (= E (* I X))))))
+Instantiating (= X Z) gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1) (>= Z J) (>= K Z)
+  (= E (* Z I)))
+ (AND (>= E (* I J)) (>= (* I K) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Assuming *-MONOTONIC with the
+instantiations: (= X I) (= Y K) (= Z Z) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN I (INT)) (IN K (INT)) (IN Z (INT)) (> I 0))
+   (= (>= (* I K) (* I Z)) (>= K Z)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1) (>= Z J) (>= K Z)
+  (= E (* Z I)))
+ (AND (>= E (* I J)) (>= (* I K) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Assuming *-MONOTONIC with the
+instantiations: (= X I) (= Y Z) (= Z J) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN I (INT)) (IN Z (INT)) (IN J (INT)) (> I 0))
+   (= (>= (* I Z) (* I J)) (>= Z J)))
+  (IMPLIES (AND (IN I (INT)) (IN K (INT)) (IN Z (INT)) (>= I (SUCC 0)))
+   (= (>= (* I K) (* I Z)) (>= K Z)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1) (>= Z J) (>= K Z)
+  (= E (* Z I)))
+ (AND (>= E (* I J)) (>= (* I K) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1) (>= Z J) (>= K Z)
+  (= E (* Z I))
+  (IMPLIES (AND (IN I (INT)) (IN Z (INT)) (IN J (INT)) (> I 0))
+   (= (>= (* I Z) (* I J)) (>= Z J)))
+  (IMPLIES (AND (IN I (INT)) (IN K (INT)) (IN Z (INT)) (>= I (SUCC 0)))
+   (= (>= (* I K) (* I Z)) (>= K Z))))
+ (AND (>= E (* I J)) (>= (* I K) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1)
+  (NOT (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))) (>= E (* I J))
+  (>= (* I K) E))
+ (NOT (SOME (X$0) (AND (IN X$0 (INT)) (= E (* I X$0))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1)
+  (NOT (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))) (>= E (* I J))
+  (>= (* I K) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Instantiating (= Z X) gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1)
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))))
+  (>= E (* I J)) (>= (* I K) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Assuming *-MONOTONIC with the
+instantiations: (= X I) (= Y K) (= Z X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN I (INT)) (IN K (INT)) (IN X (INT)) (> I 0))
+   (= (>= (* I K) (* I X)) (>= K X)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1)
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))))
+  (>= E (* I J)) (>= (* I K) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Assuming *-MONOTONIC with the
+instantiations: (= X I) (= Y X) (= Z J) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN I (INT)) (IN X (INT)) (IN J (INT)) (> I 0))
+   (= (>= (* I X) (* I J)) (>= X J)))
+  (IMPLIES (AND (IN I (INT)) (IN K (INT)) (IN X (INT)) (>= I (SUCC 0)))
+   (= (>= (* I K) (* I X)) (>= K X)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1)
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))))
+  (>= E (* I J)) (>= (* I K) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= I 1) (>= E (* I J))
+  (>= (* I K) E)
+  (IMPLIES (AND (IN I (INT)) (IN X (INT)) (IN J (INT)) (> I 0))
+   (= (>= (* I X) (* I J)) (>= X J)))
+  (IMPLIES (AND (IN I (INT)) (IN K (INT)) (IN X (INT)) (>= I (SUCC 0)))
+   (= (>= (* I K) (* I X)) (>= K X)))
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I)))))))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IMAGE-MULTIPLY-NEGATIVE-RANGE
+Beginning proof of IMAGE-MULTIPLY-NEGATIVE-RANGE ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (< I 0))
+ (= (REL!IMAGE (MULTIPLY-BY I) (RANGE J K))
+  (INTER (MULTIPLES-OF I) (RANGE (* I K) (* I J)))))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (SUCC I) 0))
+ (ALL (E)
+  (IF (IN E (REL!IMAGE (MULTIPLY-BY I) (RANGE J K)))
+   (IN E (INTER (MULTIPLES-OF I) (RANGE (* I K) (* I J))))
+   (NOT (IN E (INTER (MULTIPLES-OF I) (RANGE (* I K) (* I J))))))))
+Prenexing produces ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (SUCC I) 0))
+ (IF (IN E (REL!IMAGE (MULTIPLY-BY I) (RANGE J K)))
+  (IN E (INTER (MULTIPLES-OF I) (RANGE (* I K) (* I J))))
+  (NOT (IN E (INTER (MULTIPLES-OF I) (RANGE (* I K) (* I J)))))))
+Which simplifies
+ when rewriting with MULTIPLES-OF.DEFINITION, INTER.DEFINITION,
+INTER.COMMUTATIVE, IN-MULTIPLY-BY, RANGE.DEFINITION, REL!IN-IMAGE,
+SUCC.INT.RULE
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, SUCC.INT to ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0))
+ (IF (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))
+  (AND (>= E (* I K)) (>= (* I J) E)
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))
+  (IMPLIES (AND (>= E (* I K)) (>= (* I J) E))
+   (NOT (SOME (X$0) (AND (IN X$0 (INT)) (= E (* I X$0))))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0)
+  (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I)))))
+ (AND (>= E (* I K)) (>= (* I J) E)
+  (SOME (X) (AND (IN X (INT)) (= E (* I X))))))
+Instantiating (= X Z) gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0) (>= Z J) (>= K Z)
+  (= E (* Z I)))
+ (AND (>= E (* I K)) (>= (* I J) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Assuming *-MONOTONIC with the
+instantiations: (= X (NEGATE I)) (= Y K) (= Z Z) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN K (INT)) (IN Z (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) K) (* (NEGATE I) Z)) (>= K Z)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0) (>= Z J) (>= K Z)
+  (= E (* Z I)))
+ (AND (>= E (* I K)) (>= (* I J) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Assuming *-MONOTONIC with the
+instantiations: (= X (NEGATE I)) (= Y Z) (= Z J) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN Z (INT)) (IN J (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) Z) (* (NEGATE I) J)) (>= Z J)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN K (INT)) (IN Z (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) K) (* (NEGATE I) Z)) (>= K Z)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0) (>= Z J) (>= K Z)
+  (= E (* Z I)))
+ (AND (>= E (* I K)) (>= (* I J) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= Z J) (>= K Z) (= E (* Z I))
+  (<= (+ 1 I) 0)
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN Z (INT)) (IN J (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) Z) (* (NEGATE I) J)) (>= Z J)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN K (INT)) (IN Z (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) K) (* (NEGATE I) Z)) (>= K Z))))
+ (AND (>= E (* I K)) (>= (* I J) E)
+  (OR (AND (IN Z (INT)) (= E (* I Z)))
+   (SOME (X) (AND (IN X (INT)) (= E (* I X)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0)
+  (NOT (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))) (>= E (* I K))
+  (>= (* I J) E))
+ (NOT (SOME (X$0) (AND (IN X$0 (INT)) (= E (* I X$0))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0)
+  (NOT (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))) (>= E (* I K))
+  (>= (* I J) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Instantiating (= Z X) gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0)
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))))
+  (>= E (* I K)) (>= (* I J) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Assuming *-MONOTONIC with the
+instantiations: (= X (NEGATE I)) (= Y K) (= Z X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN K (INT)) (IN X (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) K) (* (NEGATE I) X)) (>= K X)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0)
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))))
+  (>= E (* I K)) (>= (* I J) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Assuming *-MONOTONIC with the
+instantiations: (= X (NEGATE I)) (= Y X) (= Z J) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN X (INT)) (IN J (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) X) (* (NEGATE I) J)) (>= X J)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN K (INT)) (IN X (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) K) (* (NEGATE I) X)) (>= K X)))
+  (IN I (INT)) (IN J (INT)) (IN K (INT)) (<= (+ 1 I) 0)
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I))))))
+  (>= E (* I K)) (>= (* I J) E))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (>= E (* I K)) (>= (* I J) E)
+  (<= (+ 1 I) 0)
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN X (INT)) (IN J (INT)) (> (NEGATE I) 0))
+   (= (>= (* (NEGATE I) X) (* (NEGATE I) J)) (>= X J)))
+  (IMPLIES
+   (AND (IN (NEGATE I) (INT)) (IN K (INT)) (IN X (INT))
+    (>= (NEGATE I) (SUCC 0)))
+   (= (>= (* (NEGATE I) K) (* (NEGATE I) X)) (>= K X)))
+  (NOT
+   (OR (AND (>= X J) (>= K X) (= E (* X I)))
+    (SOME (Z) (AND (>= Z J) (>= K Z) (= E (* Z I)))))))
+ (NOT (AND (IN X (INT)) (= E (* I X)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+TIMES
+IN-TIMES
+Beginning proof of IN-TIMES ...
+(= (IN X (TIMES))
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X)))))
+Assuming TIMES.DEFINITION with the instantiations: (= X$0 X) generates ...
+(IMPLIES
+ (= (IN X (TIMES))
+  (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (MULTIPLY-BY X$0))))))
+ (= (IN X (TIMES))
+  (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+   (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X))))))
+Splitting
+on (AND (PAIR!IS-PAIR X)
+    (AND (IN (PAIR!FST X) (INT))
+     (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X))))) generates
+...
+(IF
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X))))
+ (IMPLIES
+  (= (IN X (TIMES))
+   (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (MULTIPLY-BY X$0))))))
+  (= (IN X (TIMES))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X))))))
+ (IMPLIES
+  (= (IN X (TIMES))
+   (SOME (X$1) (AND (IN X$1 (INT)) (= X (PAIR!PAIR X$1 (MULTIPLY-BY X$1))))))
+  (= (IN X (TIMES))
+   (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+    (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X)))))))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X)))
+  (= (IN X (TIMES))
+   (SOME (X$0) (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (MULTIPLY-BY X$0)))))))
+ (= (IN X (TIMES)) (TRUE)))
+Instantiating (= X$0 (PAIR!FST X)) gives ...
+(IMPLIES
+ (AND (PAIR!IS-PAIR X) (IN (PAIR!FST X) (INT))
+  (= (PAIR!SND X) (MULTIPLY-BY (PAIR!FST X)))
+  (= (IN X (TIMES))
+   (OR
+    (AND (IN (PAIR!FST X) (INT))
+     (= X (PAIR!PAIR (PAIR!FST X) (MULTIPLY-BY (PAIR!FST X)))))
+    (SOME (X$0)
+     (AND (IN X$0 (INT)) (= X (PAIR!PAIR X$0 (MULTIPLY-BY X$0))))))))
+ (IN X (TIMES)))
+Which simplifies
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+IS-FUNCTION-TIMES
+Beginning proof of IS-FUNCTION-TIMES ...
+(= (FN!IS-FUNCTION (TIMES)) (TRUE))
+Which simplifies
+ with invocation of REL!IS-RELATION, FN!IS-FUNCTION
+ when rewriting with IN-TIMES
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+DOM-TIMES
+Beginning proof of DOM-TIMES ...
+(= (REL!DOM (TIMES)) (INT))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, IN-TIMES, REL!IN-DOM
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+APPLY-TIMES
+Beginning proof of APPLY-TIMES ...
+(IMPLIES (IN K (INT)) (= (FN!APPLY (TIMES) K) (MULTIPLY-BY K)))
+Assuming FN!APPLY-DEFINITION with the
+instantiations: (= F (TIMES)) (= X K) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION (TIMES)) (IN K (REL!DOM (TIMES))))
+   (IN (PAIR!PAIR K (FN!APPLY (TIMES) K)) (TIMES)))
+  (IN K (INT)))
+ (= (FN!APPLY (TIMES) K) (MULTIPLY-BY K)))
+Which simplifies
+ when rewriting with IN-TIMES, DOM-TIMES, IS-FUNCTION-TIMES
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+Done.

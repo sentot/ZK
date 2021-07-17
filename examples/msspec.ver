@@ -1,0 +1,1290 @@
+
+;;; ============ Message types ============
+
+;;; The various message types are disjoint.  We make use of tag-of to
+;;; formalize the disjointness.
+
+(function-stub tag-of (x))
+(function-stub value-of (x))
+
+;;; ============ Basic Messages ============
+
+;;; Basic messages include nonces, principals, and text.
+
+;;; Nonces.
+
+(function-stub nonces ())
+(function-stub nonce (n))
+
+(frule tag-of-nonce (n)
+  (implies (in n (nonces))
+           (= (tag-of n) 0)))
+
+(grule nonce-in-nonces (n)
+  (in (nonce n) (nonces)))
+
+(grule value-of-nonce (n)
+  (= (value-of (nonce n)) (ord n)))
+
+(rule nonce-value-of (n)
+  (implies (in n (nonces))
+           (= (nonce (value-of n)) n)))
+
+;;; Principals
+
+(function-stub principals ())
+(function-stub principal (p))
+
+(frule tag-of-principal (n)
+  (implies (in n (principals))
+           (= (tag-of n) 1)))
+
+(grule principal-in-principals (p)
+  (in (principal p) (principals)))
+
+(grule value-of-principal (p)
+  (= (value-of (principal p)) (ord p)))
+
+(rule principal-value-of (n)
+  (implies (in n (principals))
+           (= (principal (value-of n)) n)))
+
+;;; Text
+
+(function-stub text-messages ())
+(function-stub text (t))
+
+(frule tag-of-text (t)
+  (implies (in t (text-messages))
+           (= (tag-of t) 2)))
+
+(grule text-in-text-messages (t) (in (text t) (text-messages)))
+
+(grule value-of-text (t)
+  (= (value-of (text t)) (ord t)))
+
+
+
+;;; ============ Keys ============
+
+;;; We are assuming that the key to encryption includes the algorithm.
+
+;;; The keys include symmetric and asymmetric keys.
+
+(function-stub symmetric-keys ())
+(function-stub symkey (k))
+
+(frule tag-of-symkey (k)
+  (implies (in k (symmetric-keys)) (= (tag-of k) 5)))
+
+(grule symkey-in-symmetric-keys (k)
+  (in (symkey k) (symmetric-keys)))
+
+(grule value-of-symkey (k)
+  (= (value-of (symkey k)) (ord k)))
+
+(rule symkey-value-of (n)
+  (implies (in n (symmetric-keys))
+           (= (symkey (value-of n)) n)))
+
+
+(function-stub public-keys ())
+(function-stub pubkey (k))
+
+(frule tag-of-pubkey (k)
+  (implies (in k (public-keys)) (= (tag-of k) 6)))
+
+(grule pubkey-in-public-keys (k)
+  (in (pubkey k) (public-keys)))
+
+(grule value-of-pubkey (k)
+  (= (value-of (pubkey k)) (ord k)))
+
+(rule pubkey-value-of (n)
+  (implies (in n (public-keys))
+           (= (pubkey (value-of n)) n)))
+
+(function-stub secret-keys ())
+(function-stub seckey (k))
+
+(frule tag-of-seckey (k)
+  (implies (in k (secret-keys)) (= (tag-of k) 7)))
+
+(grule seckey-in-secret-keys (k)
+  (in (seckey k) (secret-keys)))
+
+(grule value-of-seckey (k) (= (value-of (seckey k)) (ord k)))
+
+(rule seckey-value-of (n)
+  (implies (in n (secret-keys))
+           (= (seckey (value-of n)) n)))
+
+(disabled
+  (function asymmetric-keys () () (union (public-keys) (secret-keys))))
+
+(frule tag-of-asymmetric-keys (k)
+  (implies (in k (asymmetric-keys))
+           (and (>= (tag-of k) 6)
+                (<= (tag-of k) 7))))
+
+(frule public-key-is-asymmetric (k)
+  (implies (in k (public-keys))
+           (in k (asymmetric-keys))))
+
+(frule secret-key-is-asymmetric (k)
+  (implies (in k (secret-keys))
+           (in k (asymmetric-keys))))
+
+(disabled
+ (function keys () () (union (symmetric-keys) (asymmetric-keys))))
+
+(frule tag-of-keys (k)
+  (implies (in k (keys))
+           (and (>= (tag-of k) 5)
+                (<= (tag-of k) 7))))
+
+(frule symmetric-key-in-keys (k)
+  (implies (in k (symmetric-keys))
+           (in k (keys))))
+
+(frule asymmetric-key-in-keys (k)
+  (implies (in k (asymmetric-keys))
+           (in k (keys))))
+
+(function-stub inverse (k))
+
+(rule inverse-symmetric (k)
+  (implies (in k (symmetric-keys))
+           (= (inverse k) k)))
+
+(disabled
+ (rule inverse-pubkey (k)
+   (implies (in k (public-keys))
+            (= (inverse k) (seckey (value-of k))))))
+
+(disabled
+ (rule inverse-seckey (k)
+   (implies (in k (secret-keys))
+            (= (inverse k) (pubkey (value-of k))))))
+
+(grule inverse-asymmetric (k)
+  (implies (in k (asymmetric-keys))
+           (in (inverse k) (asymmetric-keys))))
+
+(rule inverse-in-keys (k)
+  (= (in (inverse k) (keys)) (in k (keys))))
+
+(grule inverse-in-keys-1 (k)
+  (implies (in k (keys))
+           (in (inverse k) (keys))))
+
+(rule inverse-inverse (k)
+  (implies (in k (keys))
+           (= (inverse (inverse k)) k)))
+
+(grule tag-of-inverse-1 (k)
+  (implies (in k (keys))
+           (>= (tag-of (inverse k)) 5)))
+
+(grule tag-of-inverse-2 (k)
+  (implies (in k (keys))
+           (<= (tag-of (inverse k)) 7)))
+
+;;; ============ Encryption =============
+
+(function-stub encrypt (d k))
+
+(grule tag-of-encrypt (d k) (= (tag-of (encrypt d k)) 10))
+
+(rule encrypt-injective (d1 d2 k1 k2)
+  (= (= (encrypt d1 k1) (encrypt d2 k2)) (and (= d1 d2)(= k1 k2))))
+
+(function-stub endt (e))
+(function-stub enky (e))
+
+(grule endt-encrypt (d k)
+  (= (endt (encrypt d k)) d))
+
+(grule enky-encrypt (d k)
+  (= (enky (encrypt d k)) k))
+
+(function-stub share-encrypt (d k1 k2))
+
+(grule tag-of-share-encrypt (d k1 k2)
+  (= (tag-of (share-encrypt d k1 k2)) 11))
+
+(rule share-encrypt-injective (d1 d2 k1 k2 k3 k4)
+  (= (= (share-encrypt d1 k1 k2) (share-encrypt d2 k3 k4))
+     (and (= d1 d2)(= k1 k3)(= k2 k4))))
+
+(function-stub shendt (e))
+(function-stub shenky1 (e))
+(function-stub shenky2 (e))
+
+(grule shendt-share-encrypt (d k1 k2)
+  (= (shendt (share-encrypt d k1 k2)) d))
+
+(grule shenky1-share-encrypt (d k1 k2)
+  (= (shenky1 (share-encrypt d k1 k2)) k1))
+
+(grule shenky2-share-encrypt (d k1 k2)
+  (= (shenky2 (share-encrypt d k1 k2)) k2))
+
+
+;;; ============= Aggregation ================
+
+(function-stub combine (d1 d2))
+
+(grule tag-of-combine (d1 d2)
+  (= (tag-of (combine d1 d2)) 12))
+
+(rule combine-injective (c1 c2 d1 d2)
+  (= (= (combine c1 c2) (combine d1 d2)) (and (= c1 d1)(= c2 d2))))
+
+(function-stub cb1 (c))
+(function-stub cb2 (c))
+
+(grule cb1-combine (d1 d2)
+  (= (cb1 (combine d1 d2)) d1))
+
+(grule cb2-combine (d1 d2)
+  (= (cb2 (combine d1 d2)) d2))
+
+
+;;; ============= Hashing ===============
+
+(function-stub hash (m))
+
+(grule tag-of-hash (m) (= (tag-of (hash m)) 13))
+
+(rule hash-injective (m1 m2)
+  (= (= (hash m1) (hash m2)) (= m1 m2)))
+
+(function-stub hsdt (c))
+
+(grule hsdt-hash (m)
+  (= (hsdt (hash m)) m))
+
+;;; ==== Now, formalize the set of messages. ====
+
+(load nat)
+
+(disabled
+ (function basic-messages () ()
+   (union (nonces)
+          (union (principals)
+                 (text-messages)))))
+
+(frule tag-of-basic-messages (k)
+  (implies (in k (basic-messages))
+           (and (>= (tag-of k) 0)
+                (<= (tag-of k) 2))))
+
+(frule nonce-in-basic-messages (k)
+  (implies (in k (nonces))
+           (in k (basic-messages))))
+
+(frule principal-in-basic-messages (k)
+  (implies (in k (principals))
+           (in k (basic-messages))))
+
+(frule text-in-basic-messages (k)
+  (implies (in k (text-messages))
+           (in k (basic-messages))))
+
+(disabled
+ (function atomic-messages () ()
+    (union (keys) (basic-messages))))
+
+(frule tag-of-atomic-messages (k)
+  (implies (in k (atomic-messages))
+           (and (>= (tag-of k) 0)
+                (<= (tag-of k) 7))))
+
+(frule key-in-atomic-messages (k)
+  (implies (in k (keys))
+           (in k (atomic-messages))))
+
+(frule basic-message-in-atomic-messages (k)
+  (implies (in k (basic-messages))
+           (in k (atomic-messages))))
+
+(function-stub messages ())
+
+(frule atomic-message-in-messages (m)
+  (implies (in m (atomic-messages))
+           (in m (messages))))
+
+(function-stub encrypt-messages ())
+
+(axiom encrypt-messages-are-constructed (x)
+  (implies (in x (encrypt-messages))
+           (some (m k) (and (in m (messages))
+                            (in k (keys))
+                            (= x (encrypt m k))))))
+
+(grule encrypt-in-encrypt-messages (m k)
+  (implies (and (in m (messages))
+                (in k (keys)))
+           (in (encrypt m k) (encrypt-messages))))
+
+(frule tag-of-encrypt-messages (m)
+  (implies (in m (encrypt-messages)) (= (tag-of m) 10)))
+
+(frule encrypt-message-in-messages (m)
+  (implies (in m (encrypt-messages))
+           (in m (messages))))
+
+(function-stub share-encrypt-messages ())
+
+(axiom share-encrypt-messages-are-constructed (x)
+  (implies (in x (share-encrypt-messages))
+           (some (m k1 k2) (and (in m (messages))
+                                (in k1 (asymmetric-keys))
+                                (in k2 (asymmetric-keys))
+                                (= x (share-encrypt m k1 k2))))))
+
+(grule share-encrypt-in-share-encrypt-messages (m k1 k2)
+  (implies (and (in m (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys)))
+           (in (share-encrypt m k1 k2) (share-encrypt-messages))))
+
+(frule tag-of-share-encrypt-messages (m)
+  (implies (in m (share-encrypt-messages)) (= (tag-of m) 11)))
+
+(frule share-encrypt-message-in-messages (m)
+  (implies (in m (share-encrypt-messages))
+           (in m (messages))))
+
+(function-stub combine-messages ())
+
+(axiom combine-messages-are-constructed (x)
+  (implies (in x (combine-messages))
+           (some (m1 m2) (and (in m1 (messages))
+                              (in m2 (messages))
+                              (= x (combine m1 m2))))))
+
+(grule combine-in-combine-messages (m1 m2)
+  (implies (and (in m1 (messages))
+                (in m2 (messages)))
+           (in (combine m1 m2) (combine-messages))))
+
+(frule tag-of-combine-messages (m)
+  (implies (in m (combine-messages)) (= (tag-of m) 12)))
+
+(frule combine-message-in-messages (m)
+  (implies (in m (combine-messages))
+           (in m (messages))))
+
+(function-stub hash-messages ())
+
+(axiom hash-messages-are-constructed (x)
+  (implies (in x (hash-messages))
+           (some (m) (and (in m (messages))
+                          (= x (hash m))))))
+
+(grule hash-in-hash-messages (m)
+  (implies (in m (messages))
+           (in (hash m) (hash-messages))))
+
+(frule tag-of-hash-messages (m)
+  (implies (in m (hash-messages)) (= (tag-of m) 13)))
+
+(frule hash-message-in-messages (m)
+  (implies (in m (hash-messages))
+           (in m (messages))))
+
+(disabled
+ (rule in-messages-definition (d)
+   (= (in d (messages))
+      (or (in d (atomic-messages))
+          (in d (encrypt-messages))
+          (in d (share-encrypt-messages))
+          (in d (combine-messages))
+          (in d (hash-messages))))))
+
+
+;;; ============ Knowledge ============
+
+(function-stub known-in (d s))
+
+(frule known-in-in-messages (x s)
+  (implies (known-in x s)
+           (in x (messages))))
+
+(axiom combine-in-messages-consequence (c1 c2)
+  (implies (in (combine c1 c2) (messages))
+           (and (in c1 (messages)) (in c2 (messages)))))
+
+(axiom encrypt-in-messages-consequence (c k)
+  (implies (in (encrypt c k) (messages))
+           (and (in c (messages))
+                (in k (keys)))))
+
+(axiom share-encrypt-in-messages-consequence (c k1 k2)
+  (implies (in (share-encrypt c k1 k2) (messages))
+           (and (in c (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys)))))
+
+(grule known-in-bool (m s)
+  (= (type-of (known-in m s)) (bool)))
+
+(axiom known-in-transitive (m s1 s2)
+  (implies (and (known-in m s1)
+                (all (c) (implies (in c s1) (known-in c s2))))
+           (known-in m s2)))
+
+(rule a1a2 (c1 c2 s)
+  (= (known-in (combine c1 c2) s)
+     (and (known-in c1 s) (known-in c2 s))))
+
+(rule a3 (c k s)
+  (implies (and (in k (keys))
+                (known-in c s)
+                (known-in k s))
+           (= (known-in (encrypt c k) s) (true))))
+
+(rule a3b (c k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (known-in c s)
+                (known-in k1 s)
+                (known-in k2 s))
+           (= (known-in (share-encrypt c k1 k2) s) (true))))
+
+(rule a3c (c k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (known-in c s)
+                (known-in (inverse k1) s)
+                (known-in (inverse k2) s))
+           (= (known-in (share-encrypt c k1 k2) s) (true))))
+
+(axiom a4 (c k s)
+  (implies (and (in k (keys))
+                (known-in (encrypt c k) s)
+                (known-in (inverse k) s))
+           (known-in c s)))
+
+(axiom a4b (c k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (known-in (share-encrypt c k1 k2) s)
+                (known-in k1 s)
+                (known-in k2 s))
+           (known-in c s)))
+
+(axiom a4c (c k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (known-in (share-encrypt c k1 k2) s)
+                (known-in (inverse k1) s)
+                (known-in (inverse k2) s))
+           (known-in c s)))
+
+(rule a7 (m s)
+  (implies (and (in m (messages))
+                (in m s))
+           (= (known-in m s) (true))))
+
+(rule a12 (c s)
+  (implies (known-in c s)
+           (= (known-in (hash c) s) (true))))
+
+
+;;; ============= comp-of ==============
+
+(function-stub comp-of (d s))
+
+(frule comp-of-in-messages (x s)
+  (implies (comp-of x s)
+           (in x (messages))))
+
+(grule comp-of-bool (s1 s2)
+  (= (type-of (comp-of s1 s2)) (bool)))
+
+(axiom comp-of-transitive (m s1 s2)
+  (implies (and (comp-of m s1)
+                (all (c) (implies (and (in c s1) (in c (messages)))
+                                  (comp-of c s2))))
+           (comp-of m s2)))
+
+(axiom b1 (c1 c2 s)
+  (implies (comp-of (combine c1 c2) s)
+           (and (comp-of c1 s) (comp-of c2 s))))
+
+(axiom b2 (c k s)
+  (implies (and (in k (keys))
+                (comp-of (encrypt c k) s)
+                (comp-of (inverse k) s))
+           (comp-of c s)))
+
+(axiom b2b (c k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (comp-of (share-encrypt c k1 k2) s)
+                (comp-of k1 s)
+                (comp-of k2 s))
+           (comp-of c s)))
+
+(axiom b2c (c k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (comp-of (share-encrypt c k1 k2) s)
+                (comp-of (inverse k1) s)
+                (comp-of (inverse k2) s))
+           (comp-of c s)))
+
+(rule b5 (m s)
+  (implies (and (in m (messages))
+                (in m s))
+           (= (comp-of m s) (true))))
+
+
+;;; ====== negation of comp-of =======
+
+(rule c1 (c c2 k s)
+  (implies
+    (and (in k (keys))
+         (not (comp-of (inverse k) s))
+         (not (= c (encrypt c2 k))))
+    (= (comp-of c (setadd (encrypt c2 k) s))
+       (comp-of c s))))
+
+(rule c1b (c c2 k1 k2 s)
+  (implies (and (in c (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (not (= c (share-encrypt c2 k1 k2)))
+                (not (and (comp-of k1 s) (comp-of k2 s)))
+                (not (and (comp-of (inverse k1) s)
+                          (comp-of (inverse k2) s))))
+           (= (comp-of c (setadd (share-encrypt c2 k1 k2) s))
+              (comp-of c s))))
+
+(rule c1c (c c2 s)
+  (implies (and (in c (messages))
+                (not (= c (hash c2))))
+           (= (comp-of c (setadd (hash c2) s))
+              (comp-of c s))))
+
+(rule c2 (c c2 k s)
+  (implies
+    (and (not (comp-of c (setadd c2 s)))
+         (in c2 (messages))
+         (in k (keys))
+         (not (= c (encrypt c2 k))))
+    (= (comp-of c (setadd (encrypt c2 k) s))
+       (false))))
+
+(rule c2b (c c2 k1 k2 s)
+  (implies
+    (and (not (comp-of c (setadd c2 s)))
+         (in c2 (messages))
+         (in k1 (asymmetric-keys))
+         (in k2 (asymmetric-keys))
+         (not (= c (share-encrypt c2 k1 k2))))
+    (= (comp-of c (setadd (share-encrypt c2 k1 k2) s))
+       (false))))
+
+(rule c3 (c x s)
+  (implies
+    (and (in c (messages))
+         (not (= c x))
+         (in x (basic-messages)))
+    (= (comp-of c (setadd x s))
+       (comp-of c s))))
+
+(rule c4 (c d1 d2 s)
+ (implies
+  (and
+   (in c (messages))
+   (in d1 (messages))
+   (in d2 (messages))
+   (not
+    (comp-of c (union s (make-set d1 d2))))
+   (not (= c (combine d1 d2))))
+  (= (comp-of c (setadd (combine d1 d2) s)) (false))))
+
+(rule c5 (c) (= (comp-of c (nullset)) (false)))
+
+(function-stub set-of-keys (x))
+
+(disabled
+ (rule c7 (c s)
+   (implies (and (not (in c s))
+                 (set-of-keys s))
+            (= (comp-of c s) (false)))))
+
+(disabled
+  (rule set-of-keys-definition (s)
+    (= (set-of-keys s) (subset s (keys)))))
+
+(rule c8 (k s)
+  (implies (and (in k (keys)) (set-of-keys s))
+           (= (set-of-keys (setadd k s)) (true))))
+
+(rule c9 ()
+  (= (set-of-keys (nullset)) (true)))
+
+
+;;; ======== Conversion from known-in to comp-of =======
+
+(frule d1 (s1 s)
+  (implies (not (known-in s1 s)) (not (comp-of s1 s))))
+
+(axiom d2 (b s)
+  (implies (and (in b (atomic-messages)) (not (comp-of b s)))
+           (not (known-in b s))))
+
+(rule d2-rule (b s)
+  (implies (in b (atomic-messages))
+           (= (known-in b s) (comp-of b s))))
+
+(rule d3 (c k s)
+  (implies (and (in c (messages))
+                (in k (keys))
+                (not (comp-of k s)))
+           (= (known-in (encrypt c k) s)
+              (comp-of (encrypt c k) s))))
+
+(rule d3b (c k1 k2 s)
+  (implies (and (in c (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (not (or (and (comp-of k1 s) (comp-of k2 s))
+                         (and (comp-of (inverse k1) s)
+                              (comp-of (inverse k2) s)))))
+           (= (known-in (share-encrypt c k1 k2) s)
+              (comp-of (share-encrypt c k1 k2) s))))
+
+(rule d4 (c k s)
+  (implies (and (in c (messages))
+                (in k (keys))
+                (not (known-in c s)))
+           (= (known-in (encrypt c k) s)
+              (comp-of (encrypt c k) s))))
+
+(rule d4b (c k1 k2 s)
+  (implies (and (in c (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (not (known-in c s)))
+           (= (known-in (share-encrypt c k1 k2) s)
+              (comp-of (share-encrypt c k1 k2) s))))
+
+(rule d6 (c s)
+  (implies (and (in c (messages))
+                (not (known-in c s)))
+           (= (known-in (hash c) s)
+              (comp-of (hash c) s))))
+
+
+;;; ============ Parts ============
+
+(function-stub parts (S))
+
+(rule parts-contains-self (S T)
+  (implies (subset S T)
+           (= (subset S (parts T))
+              (true))))
+
+(rule parts-subset-self-2 (x S)
+  (implies (and (in x S)
+                (in x (messages)))
+           (= (in x (parts S))
+              (true))))
+
+(rule parts-null ()
+  (= (parts (nullset)) (nullset)))
+
+(rule subset-setadd (x S T)
+  (implies (subset S T)
+           (= (subset S (setadd x T))
+              (true))))
+
+(load setrules)
+
+(rule parts-setadd-atomic (x S)
+  (implies (in x (atomic-messages))
+           (= (parts (setadd x S))
+              (setadd x (parts S)))))
+
+(rule parts-setadd-combination (m1 m2 S)
+  (implies (and (in m1 (messages))
+                (in m2 (messages)))
+           (= (parts (setadd (combine m1 m2) S))
+              (setadd (combine m1 m2)
+                      (parts (setadd m1 (setadd m2 S)))))))
+
+(rule parts-setadd-encryption (m k S)
+  (implies (and (in m (messages))
+                (in k (keys)))
+           (= (parts (setadd (encrypt m k) S))
+              (setadd (encrypt m k)
+                      (parts (setadd m S))))))
+
+(rule parts-setadd-share-encryption (m k1 k2 S)
+  (implies (and (in m (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys)))
+           (= (parts (setadd (share-encrypt m k1 k2) S))
+              (setadd (share-encrypt m k1 k2)
+                      (parts (setadd m S))))))
+
+(rule parts-setadd-hash (m S)
+  (implies (in m (messages))
+           (= (parts (setadd (hash m) S))
+              (setadd (hash m)
+                      (parts (setadd m S))))))
+
+(rule not-part-implies-not-comp-of (m S)
+  (implies (not (in m (parts S)))
+           (= (comp-of m S)
+              (false))))
+
+(rule parts-atomic (s)
+  (implies (subset s (atomic-messages))
+           (= (parts s) s)))
+
+(rule parts-union (s1 s2)
+  (= (parts (union s1 s2)) (union (parts s1) (parts s2))))
+
+(axiom parts-implies-part-of-member (m s)
+  (implies (in m (parts s))
+	   (some (x) (and (in x s)
+			  (in m (parts (unit x)))))))
+
+;;; ============= Miscellaneous stuff ===============
+
+(axiom known-in-subset (c s1 s2)
+  (implies (and (known-in c s1)
+                (subset s1 s2))
+           (known-in c s2)))
+
+(axiom comp-of-subset (c s1 s2)
+  (implies (and (comp-of c s1)
+                (subset s1 s2))
+           (comp-of c s2)))
+
+(rule strong-c4 (c d1 d2 s)
+ (implies
+  (and
+   (in c (messages))
+   (in d1 (messages))
+   (in d2 (messages))
+   (not (= c (combine d1 d2))))
+  (= (comp-of c (setadd (combine d1 d2) s))
+     (comp-of c (union s (make-set d1 d2))))))
+
+(function-stub size (m))
+
+(grule size-nat (m)
+  (>= (size m) 0))
+
+(frule size-atomic (m)
+  (implies (in m (atomic-messages))
+           (= (size m) 0)))
+
+(frule size-cb1 (m)
+  (implies (in m (combine-messages))
+           (<= (size (cb1 m)) (- (size m) 1))))
+
+(frule size-cb2 (m)
+  (implies (in m (combine-messages))
+           (<= (size (cb2 m)) (- (size m) 1))))
+
+(frule size-endt (m)
+  (implies (in m (encrypt-messages))
+           (<= (size (endt m)) (- (size m) 1))))
+
+(frule size-enky (m)
+  (implies (in m (encrypt-messages))
+           (<= (size (enky m)) (- (size m) 1))))
+
+(frule size-shendt (m)
+  (implies (in m (share-encrypt-messages))
+           (<= (size (shendt m)) (- (size m) 1))))
+
+(frule size-shenky1 (m)
+  (implies (in m (share-encrypt-messages))
+           (<= (size (shenky1 m)) (- (size m) 1))))
+
+(frule size-shenky2 (m)
+  (implies (in m (share-encrypt-messages))
+           (<= (size (shenky2 m)) (- (size m) 1))))
+
+(frule size-hsdt (m)
+  (implies (in m (hash-messages))
+           (<= (size (hsdt m)) (- (size m) 1))))
+
+(disabled
+  (rule known-in-setadd-junk (m j s)
+    (implies (not (in j (messages)))
+             (= (known-in m (setadd j s))
+                (known-in m s)))))
+
+(disabled
+  (rule comp-of-setadd-junk (m j s)
+    (implies (not (in j (messages)))
+             (= (comp-of m (setadd j s))
+                (comp-of m s)))))
+
+(rule known-add-encrypt-is-comp-of (m n k s)
+  (implies (and (in k (keys))
+                (not (known-in (inverse k) s))
+                (not (known-in m s))
+                (<= (size m) (size (encrypt n k))))
+           (= (known-in m (setadd (encrypt n k) s))
+              (comp-of m (setadd (encrypt n k) s)))))
+
+(rule known-add-share-encrypt-is-comp-of (m n k1 k2 s)
+  (implies (and (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (not (and (known-in k1 s) (known-in k2 s)))
+                (not (and (known-in (inverse k1) s)
+                          (known-in (inverse k2) s)))
+                (not (known-in m s))
+                (<= (size m) (size (share-encrypt n k1 k2))))
+           (= (known-in m (setadd (share-encrypt n k1 k2) s))
+              (comp-of m (setadd (share-encrypt n k1 k2) s)))))
+
+(rule known-add-hash-is-comp-of (m n s)
+  (implies (and (not (known-in m s))
+                (<= (size m) (size (hash n))))
+           (= (known-in m (setadd (hash n) s))
+              (comp-of m (setadd (hash n) s)))))
+
+(axiom comp-of-setadd-key (k m s)
+  (implies
+   (and (in k (keys))
+        (not (= m k))
+        (not (comp-of m s))
+        (not (some (m2) (comp-of (encrypt m2 (inverse k)) s)))
+        (not (some (m2 k2) (and (in k2 (asymmetric-keys))
+                                (comp-of (share-encrypt m2 k k2) s))))
+        (not (some (m2 k2) (and (in k2 (asymmetric-keys))
+                                (comp-of (share-encrypt m2 (inverse k) k2)
+                                         s))))
+        (not (some (m2 k2) (and (in k2 (asymmetric-keys))
+                                (comp-of (share-encrypt m2 k2 k) s))))
+        (not (some (m2 k2) (and (in k2 (asymmetric-keys))
+                                (comp-of (share-encrypt m2 k2 (inverse k))
+                                         s)))))
+   (not (comp-of m (setadd k s)))))
+
+
+;;; ========== Computational Rules ============
+
+(disabled
+ (function xcomp-of (m keys msgs) ()
+   (comp-of m (union keys msgs))))
+
+(grule xcomp-of-bool (m keys msgs)
+  (= (type-of (xcomp-of m keys msgs)) (bool)))
+
+(rule xcomp-of-basic (m keys b msgs)
+  (implies (and (in m (messages))
+                (in b (basic-messages)))
+           (= (xcomp-of m keys (setadd b msgs))
+              (or (= m b)
+                  (xcomp-of m keys msgs)))))
+
+(rule xcomp-of-key (m keys k msgs)
+  (implies (and (in m (messages))
+                (in k (keys)))
+           (= (xcomp-of m keys (setadd k msgs))
+              (xcomp-of m (setadd k keys) msgs))))
+
+(rule xcomp-of-combine (m keys m1 m2 msgs)
+  (implies (and (in m (messages))
+                (in m1 (messages))
+                (in m2 (messages))
+                (subset keys (messages))
+                (subset msgs (messages)))          
+           (= (xcomp-of m keys (setadd (combine m1 m2) msgs))
+              (or (= m (combine m1 m2))
+                  (xcomp-of m keys (setadd m1 (setadd m2 msgs)))))))
+
+(rule xcomp-of-encryption (m keys m1 k msgs)
+  (implies (and (in m (messages))
+                (in m1 (messages))
+                (in k (keys))
+                (subset keys (messages))
+                (subset msgs (messages)))
+           (= (xcomp-of m keys (setadd (encrypt m1 k) msgs))
+              (or (= m (encrypt m1 k))
+                  (if (xcomp-of (inverse k) keys msgs)
+                      (xcomp-of m keys (setadd m1 msgs))
+                      (xcomp-of m keys msgs))))))
+
+(rule xcomp-of-shared-encryption (m keys m1 k1 k2 msgs)
+  (implies (and (in m (messages))
+                (in m1 (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (subset keys (messages))
+                (subset msgs (messages)))
+           (= (xcomp-of m keys (setadd (share-encrypt m1 k1 k2) msgs))
+              (or (= m (share-encrypt m1 k1 k2))
+                  (if (or (and (xcomp-of (inverse k1) keys msgs)
+                               (xcomp-of (inverse k2) keys msgs))
+                          (and (xcomp-of k1 keys msgs)
+                               (xcomp-of k2 keys msgs)))
+                      (xcomp-of m keys (setadd m1 msgs))
+                      (xcomp-of m keys msgs))))))
+
+(rule xcomp-of-base (m keys)
+  (implies (subset keys (keys))
+           (= (xcomp-of m keys (nullset))
+              (in m keys))))
+
+(disabled
+ (rule comp-of-calculation (m msgs)
+   (= (comp-of m msgs)
+      (xcomp-of m (nullset) msgs))))
+
+
+;;; ============= Freshness =============
+
+(disabled
+ (function is-fresh (k seen) ()
+  (and (not (in k (parts seen)))
+       ;(not (in (inverse k) (parts seen)))
+       (not (some (m) (in (encrypt m k) (parts seen))))
+       (not (some (m) (in (encrypt m (inverse k)) (parts seen))))
+       (all (m k2)
+         (and (not (in (share-encrypt m k k2) (parts seen)))
+              (not (in (share-encrypt m (inverse k) k2)
+                       (parts seen)))
+              (not (in (share-encrypt m k2 k) (parts seen)))
+              (not (in (share-encrypt m k2 (inverse k))
+                       (parts seen)))
+              )))))
+
+(rule comp-of-setadd-fresh-key (m k s)
+  (implies (and (in k (keys))
+                (is-fresh k s))
+           (= (comp-of m (setadd k s))
+              (or (= m k)
+                  (comp-of m s)))))
+
+;;; ======== Additional message theory rules ========
+
+(rule strong-d3-d4 (c k s)
+  (implies (and (in c (messages))
+                (in k (keys)))
+           (= (known-in (encrypt c k) s)
+              (or (comp-of (encrypt c k) s)
+                  (and (known-in c s)
+                       (comp-of k s))))))
+
+(rule strong-d3-d4-b (c k1 k2 s)
+  (implies (and (in c (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys)))
+           (= (known-in (share-encrypt c k1 k2) s)
+              (or (comp-of (share-encrypt c k1 k2) s)
+                  (and (known-in c s)
+                       (or (and (comp-of k1 s)
+                                (comp-of k2 s))
+                           (and (comp-of (inverse k1) s)
+                                (comp-of (inverse k2) s))))))))
+
+
+;;; strong comp-of rules...
+
+(rule non-part-not-xcomp (m k s)
+  (implies (not (in m (parts (union k s))))
+           (= (xcomp-of m k s)
+              (false))))
+
+(rule public-keys-are-messages ()
+  (= (subset (public-keys) (messages))
+     (true)))
+
+(rule xcomp-union (m keys s)
+  (= (xcomp-of m keys (union (public-keys) S))
+     (xcomp-of m (union (public-keys) keys) S)))
+
+(rule xcomp-of-hash (m keys m1 msgs)
+  (implies (and (in m (messages))
+                (in m1 (messages))
+                (subset keys (messages))
+                (subset msgs (messages)))
+           (= (xcomp-of m keys (setadd (hash m1) msgs))
+              (or (= m (hash m1))
+                  (xcomp-of m keys msgs)))))
+
+(rule xcomp-of-public-key (k keys msgs)
+  (implies (and (in k (public-keys))
+                (in k keys)
+                (subset keys (messages))
+                (subset msgs (messages)))
+           (= (xcomp-of k keys msgs) (true))))
+
+(axiom in-parts-subset (k s1 s2)
+  (implies (and (in k (parts s2))
+                (subset s2 s1))
+           (in k (parts s1))))
+
+(axiom is-fresh-subset (k s1 s2)
+  (implies (and (is-fresh k s1)
+                (subset s2 s1))
+           (is-fresh k s2)))
+
+(rule is-fresh-union (k s1 s2)
+  (= (is-fresh k (union s1 s2))
+     (and (is-fresh k s1)
+          (is-fresh k s2))))
+
+(rule is-fresh-atomic (k s)
+  (implies (subset s (atomic-messages))
+           (= (is-fresh k s)
+              ;(and
+               (not (in k s))
+                  ; (not (in (inverse k) s)))
+               )))
+
+(rule public-keys-are-atomic-messages ()
+  (= (subset (public-keys) (atomic-messages))
+     (true)))
+
+(rule strong-d6 (c s)
+  (implies (in c (messages))
+           (= (known-in (hash c) s)
+              (or (comp-of (hash c) s)
+                  (known-in c s)))))
+
+;;; strong-c3
+
+(rule comp-of-setadd-basic (m b s)
+  (implies (in b (basic-messages))
+           (= (comp-of m (setadd b s))
+              (or (= m b)
+                  (comp-of m s)))))
+
+(rule comp-of-setadd (m1 m2 s)
+  (implies (comp-of m1 s)
+           (= (comp-of m1 (setadd m2 s)) (true))))
+
+(rule known-in-of-setadd (m1 m2 s)
+  (implies (known-in m1 s)
+           (= (known-in m1 (setadd m2 s)) (true))))
+
+(frule inverse-of-secret-key-is-public (sk)
+  (implies (in sk (secret-keys))
+           (in (inverse sk) (public-keys))))
+
+;;; New January 4th
+
+(rule inverse-equality (k1 k2)
+  (implies (and (in k1 (keys))
+                (in k2 (keys)))
+           (= (= (inverse k1) (inverse k2))
+              (= k1 k2))))
+
+(rule known-in-setadd-combine (m m1 m2 s)
+  (implies (and (in m (messages))
+                (in m1 (messages))
+                (in m2 (messages))
+                (subset s (messages)))
+           (= (known-in m (setadd (combine m1 m2) s))
+              (known-in m (setadd m1 (setadd m2 s))))))
+
+(rule principals-subset-of-messages ()
+  (= (subset (principals) (messages)) (true)))
+
+(rule text-messages-subset-of-messages ()
+  (= (subset (text-messages) (messages)) (true)))
+
+;;; New March 2000
+
+(rule principal-atomic ()
+  (= (subset (principals) (atomic-messages)) (true)))
+
+(rule text-message-atomic ()
+  (= (subset (text-messages) (atomic-messages)) (true)))
+
+(axiom parts-transitive (m1 m2 s)
+  (implies (and (in m1 (messages))
+                (in m2 (messages))
+                (in m1 (parts (setadd m2 (nullset))))
+                (in m2 (parts s)))
+           (in m1 (parts s))))
+
+(axiom encrypt-in-parts (m k s)
+  (implies (and (in m (messages))
+                (in k (keys))
+                (in (encrypt m k) (parts s)))
+           (in m (parts s))))
+
+(axiom share-encrypt-in-parts (m k1 k2 s)
+  (implies (and (in m (messages))
+                (in k1 (asymmetric-keys))
+                (in k2 (asymmetric-keys))
+                (in (share-encrypt m k1 k2) (parts s)))
+           (in m (parts s))))
+
+(axiom hash-in-parts (m s)
+  (implies (and (in m (messages))
+                (in (hash m) (parts s)))
+           (in m (parts s))))
+
+(axiom encrypted-message-theorem (m k m2 s)
+  (implies (and (in m (messages))
+                (in k (keys))
+                (in m2 (messages))
+                (known-in m2 s)
+                (not (in (encrypt m k) (parts s)))
+                (not (known-in k s)))
+           (not (in (encrypt m k) (parts (setadd m2 (nullset)))))))
+
+(axiom size-part (m1 m2)
+  (implies (and (in m1 (messages))
+                (in m2 (messages))
+                (in m1 (parts (setadd m2 (nullset)))))
+           (>= (size m2) (size m1))))
+
+(axiom encrypted-message-theorem-2 (m k m1 s)
+  (implies (and (in m (messages))
+                (in k (keys))
+                (is-fresh k s)
+                (in m1 (messages))
+                (in (encrypt m k) (parts (setadd m1 (nullset))))
+                (known-in m1 (setadd k s)))
+           (known-in (encrypt m k) (setadd k s))))
+
+
+
+;;; ======== Added March 2001 ========
+
+
+(grule set-of-nonces-not-empty ()
+  (not (= (nonces) (nullset))))
+
+(grule set-of-principals-not-empty ()
+  (not (= (principals) (nullset))))
+
+(grule set-of-text-messages-not-empty ()
+  (not (= (text-messages) (nullset))))
+
+(grule set-of-basic-messages-not-empty ()
+  (not (= (basic-messages) (nullset))))
+
+(grule set-of-public-keys-not-empty ()
+  (not (= (public-keys) (nullset))))
+
+(grule set-of-secret-keys-not-empty ()
+  (not (= (secret-keys) (nullset))))
+
+(grule set-of-asymmetric-keys-not-empty ()
+  (not (= (asymmetric-keys) (nullset))))
+
+(grule set-of-symmetric-keys-not-empty ()
+  (not (= (symmetric-keys) (nullset))))
+
+(grule set-of-keys-not-empty ()
+  (not (= (keys) (nullset))))
+
+(grule set-of-atomic-messages-not-empty ()
+  (not (= (atomic-messages) (nullset))))
+
+(grule set-of-encrypt-messages-not-empty ()
+  (not (= (encrypt-messages) (nullset))))
+
+(grule set-of-share-encrypt-messages-not-empty ()
+  (not (= (share-encrypt-messages) (nullset))))
+
+(grule set-of-combine-messages-not-empty ()
+  (not (= (combine-messages) (nullset))))
+
+(grule set-of-hash-messages-not-empty ()
+  (not (= (hash-messages) (nullset))))
+
+(grule set-of-messages-not-empty ()
+  (not (= (messages) (nullset))))
+
+(rule in-parts-setadd (m m1 s)
+  (implies (not (= s (nullset)))
+           (= (in m (parts (setadd m1 s)))
+              (or (in m (parts (setadd m1 (nullset))))
+                  (in m (parts s))))))
+
+(rule in-parts-add-known-in (k m s)
+  (implies (known-in m s)
+           (= (in k (parts (setadd m s)))
+              (or (in k (parts (setadd m (nullset))))
+                  (in k (parts s))))))
+
+(rule atomic-in-parts-add-known-in (k m s)
+  (implies (and (known-in m s)
+                (in k (atomic-messages)))
+           (= (in k (parts (setadd m s)))
+              (in k (parts s)))))
+
+(rule not-known-in-nullset (m)
+  (= (known-in m (nullset)) (false)))
+
+(frule inverse-in-asymmetric-keys (k)
+  (implies (in (inverse k) (asymmetric-keys))
+           (in k (asymmetric-keys))))
+
+
+(rule comp-of-setadd-fresh (m1 m2 s)
+  (implies (and (in m2 (atomic-messages))
+                (is-fresh m2 s)
+                (not (= m1 m2)))
+           (= (comp-of m1 (setadd m2 s))
+              (comp-of m1 s))))
+
+;;; stronger c1
+
+(disabled
+ (rule comp-of-setadd-encrypt (m msg key ms)
+   (implies (and (in m (messages))
+		 (in msg (messages))
+		 (in key (keys)))
+	    (= (comp-of m (setadd (encrypt msg key) ms))
+	       (or (= m (encrypt msg key))
+		   (comp-of m ms)
+		   (and (comp-of (inverse key) ms)
+			(comp-of m (setadd msg ms))))))))
+
+;;; comp-of is a minimally closed set
+
+(function is-closed-under-decombination (S) ()
+  (all (m1 m2)
+    (implies (and (in m1 (messages))
+                  (in m2 (messages))
+                  (in (combine m1 m2) S))
+             (and (in m1 S)
+                  (in m2 S)))))
+
+(function is-closed-under-decryption (S) ()
+  (all (m k)
+    (implies (and (in m (messages))
+                  (in k (keys))
+                  (in (encrypt m k) S)
+		  (in (inverse k) S))
+             (in m S))))
+
+(function is-closed-under-share-decryption (S) ()
+  (all (m k1 k2)
+    (implies (and (in m (messages))
+                  (in k1 (asymmetric-keys))
+                  (in k2 (asymmetric-keys))
+                  (in (share-encrypt m k1 k2) S)
+		  (or (subset (make-set k1 k2) S)
+		      (subset (make-set (inverse k1) (inverse k2)) S)))
+	     (in m S))))
+
+(axiom comp-of-smallest-closed (m S T)
+  (implies (and (comp-of m S)
+		(subset S T)
+		(is-closed-under-decombination T)
+		(is-closed-under-decryption T)
+		(is-closed-under-share-decryption T))
+	   (in m T)))

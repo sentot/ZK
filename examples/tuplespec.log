@@ -1,0 +1,141 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/tuplespec.ver"
+2TUPLE
+3TUPLE
+4TUPLE
+5TUPLE
+6TUPLE
+7TUPLE
+IS-2TUPLE
+IS-3TUPLE
+IS-4TUPLE
+IS-5TUPLE
+IS-6TUPLE
+IS-7TUPLE
+P1
+P2
+P3
+P4
+P5
+P6
+P7
+IS-2TUPLE-2TUPLE
+Beginning proof of IS-2TUPLE-2TUPLE ...
+(IS-2TUPLE (2TUPLE X1 X2))
+2TUPLE-COMPOSITION
+Beginning proof of 2TUPLE-COMPOSITION ...
+(IMPLIES (IS-2TUPLE X) (= X (2TUPLE (P1 X) (P2 X))))
+P1-2TUPLE
+Beginning proof of P1-2TUPLE ...
+(= (P1 (2TUPLE X1 X2)) X1)
+P2-2TUPLE
+Beginning proof of P2-2TUPLE ...
+(= (P2 (2TUPLE X1 X2)) X2)
+IS-3TUPLE-3TUPLE
+Beginning proof of IS-3TUPLE-3TUPLE ...
+(IS-3TUPLE (3TUPLE X1 X2 X3))
+3TUPLE-COMPOSITION
+Beginning proof of 3TUPLE-COMPOSITION ...
+(IMPLIES (IS-3TUPLE X) (= X (3TUPLE (P1 X) (P2 X) (P3 X))))
+P1-3TUPLE
+Beginning proof of P1-3TUPLE ...
+(= (P1 (3TUPLE X1 X2 X3)) X1)
+P2-3TUPLE
+Beginning proof of P2-3TUPLE ...
+(= (P2 (3TUPLE X1 X2 X3)) X2)
+P3-3TUPLE
+Beginning proof of P3-3TUPLE ...
+(= (P3 (3TUPLE X1 X2 X3)) X3)
+IS-4TUPLE-4TUPLE
+Beginning proof of IS-4TUPLE-4TUPLE ...
+(IS-4TUPLE (4TUPLE X1 X2 X3 X4))
+4TUPLE-COMPOSITION
+Beginning proof of 4TUPLE-COMPOSITION ...
+(IMPLIES (IS-4TUPLE X) (= X (4TUPLE (P1 X) (P2 X) (P3 X) (P4 X))))
+P1-4TUPLE
+Beginning proof of P1-4TUPLE ...
+(= (P1 (4TUPLE X1 X2 X3 X4)) X1)
+P2-4TUPLE
+Beginning proof of P2-4TUPLE ...
+(= (P2 (4TUPLE X1 X2 X3 X4)) X2)
+P3-4TUPLE
+Beginning proof of P3-4TUPLE ...
+(= (P3 (4TUPLE X1 X2 X3 X4)) X3)
+P4-4TUPLE
+Beginning proof of P4-4TUPLE ...
+(= (P4 (4TUPLE X1 X2 X3 X4)) X4)
+IS-5TUPLE-5TUPLE
+Beginning proof of IS-5TUPLE-5TUPLE ...
+(IS-5TUPLE (5TUPLE X1 X2 X3 X4 X5))
+5TUPLE-COMPOSITION
+Beginning proof of 5TUPLE-COMPOSITION ...
+(IMPLIES (IS-5TUPLE X) (= X (5TUPLE (P1 X) (P2 X) (P3 X) (P4 X) (P5 X))))
+P1-5TUPLE
+Beginning proof of P1-5TUPLE ...
+(= (P1 (5TUPLE X1 X2 X3 X4 X5)) X1)
+P2-5TUPLE
+Beginning proof of P2-5TUPLE ...
+(= (P2 (5TUPLE X1 X2 X3 X4 X5)) X2)
+P3-5TUPLE
+Beginning proof of P3-5TUPLE ...
+(= (P3 (5TUPLE X1 X2 X3 X4 X5)) X3)
+P4-5TUPLE
+Beginning proof of P4-5TUPLE ...
+(= (P4 (5TUPLE X1 X2 X3 X4 X5)) X4)
+P5-5TUPLE
+Beginning proof of P5-5TUPLE ...
+(= (P5 (5TUPLE X1 X2 X3 X4 X5)) X5)
+IS-6TUPLE-6TUPLE
+Beginning proof of IS-6TUPLE-6TUPLE ...
+(IS-6TUPLE (6TUPLE X1 X2 X3 X4 X5 X6))
+6TUPLE-COMPOSITION
+Beginning proof of 6TUPLE-COMPOSITION ...
+(IMPLIES (IS-6TUPLE X)
+ (= X (6TUPLE (P1 X) (P2 X) (P3 X) (P4 X) (P5 X) (P6 X))))
+P1-6TUPLE
+Beginning proof of P1-6TUPLE ...
+(= (P1 (6TUPLE X1 X2 X3 X4 X5 X6)) X1)
+P2-6TUPLE
+Beginning proof of P2-6TUPLE ...
+(= (P2 (6TUPLE X1 X2 X3 X4 X5 X6)) X2)
+P3-6TUPLE
+Beginning proof of P3-6TUPLE ...
+(= (P3 (6TUPLE X1 X2 X3 X4 X5 X6)) X3)
+P4-6TUPLE
+Beginning proof of P4-6TUPLE ...
+(= (P4 (6TUPLE X1 X2 X3 X4 X5 X6)) X4)
+P5-6TUPLE
+Beginning proof of P5-6TUPLE ...
+(= (P5 (6TUPLE X1 X2 X3 X4 X5 X6)) X5)
+P6-6TUPLE
+Beginning proof of P6-6TUPLE ...
+(= (P6 (6TUPLE X1 X2 X3 X4 X5 X6)) X6)
+IS-7TUPLE-7TUPLE
+Beginning proof of IS-7TUPLE-7TUPLE ...
+(IS-7TUPLE (7TUPLE X1 X2 X3 X4 X5 X6 X7))
+7TUPLE-COMPOSITION
+Beginning proof of 7TUPLE-COMPOSITION ...
+(IMPLIES (IS-7TUPLE X)
+ (= X (7TUPLE (P1 X) (P2 X) (P3 X) (P4 X) (P5 X) (P6 X) (P7 X))))
+P1-7TUPLE
+Beginning proof of P1-7TUPLE ...
+(= (P1 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X1)
+P2-7TUPLE
+Beginning proof of P2-7TUPLE ...
+(= (P2 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X2)
+P3-7TUPLE
+Beginning proof of P3-7TUPLE ...
+(= (P3 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X3)
+P4-7TUPLE
+Beginning proof of P4-7TUPLE ...
+(= (P4 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X4)
+P5-7TUPLE
+Beginning proof of P5-7TUPLE ...
+(= (P5 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X5)
+P6-7TUPLE
+Beginning proof of P6-7TUPLE ...
+(= (P6 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X6)
+P7-7TUPLE
+Beginning proof of P7-7TUPLE ...
+(= (P7 (7TUPLE X1 X2 X3 X4 X5 X6 X7)) X7)
+Done.

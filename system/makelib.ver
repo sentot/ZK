@@ -1,0 +1,196 @@
+;;; Build the example ZK library
+
+;;; The library is assumed to be initially empty.
+
+
+(set-library "../library/")
+
+
+;;; ----- Making the specs.
+
+(reset)
+(read "../examples/srspec.ver")
+(make setrules spec)
+
+(reset)
+(read "../examples/capspec.ver")
+(make cap spec)
+
+(reset)
+(read "../examples/natspec.ver")
+(make nat spec)
+
+(reset)
+(read "../examples/pairspec.ver")
+(make pair spec)
+
+(reset)
+(read "../examples/djuspec.ver")
+(make dju spec)
+
+(reset)
+(read "../examples/seqspec.ver")
+(make seq spec)
+
+(reset)
+(read "../examples/elemspec.ver")
+(make elem spec)
+
+(reset)
+(read "../examples/relspec.ver")
+(make rel spec)
+
+(reset)
+(read "../examples/fnspec.ver")
+(make fn spec)
+
+(reset)
+(read "../examples/pairfnspec.ver")
+(make pairfn spec)
+
+(reset)
+(read "../examples/intfnspec.ver")
+(make intfn spec)
+
+(reset)
+(read "../examples/finitespec.ver")
+(make finite spec)
+
+(reset)
+(read "../examples/zseqspec.ver")
+(make zseq spec)
+
+(reset)
+(read "../examples/fixptspec.ver")
+(make fixpt spec)
+
+(reset)
+(read "../examples/btspec.ver")
+(make bt spec)
+
+(reset)
+(read "../examples/trspec.ver")
+(make tr spec)
+
+(reset)
+(read "../examples/prspec.ver")
+(make pr spec)
+
+(reset)
+(read "../examples/unitspec.ver")
+(make unit spec)
+
+(reset)
+(read "../examples/lambdaspec.ver")
+(make lambda spec)
+
+(reset)
+(read "../examples/tuplespec.ver")
+(make tuple spec)
+
+(reset)
+(read "../examples/optspec.ver")
+(make option spec)
+
+(reset)
+(read "../examples/msspec.ver")
+(make ms spec)
+
+(reset)
+(read "../examples/pkspec.ver")
+(make pk spec)
+
+
+;;; ----- Making the models
+
+(reset)
+(read "../examples/btmodel.ver")
+(make bt model)
+
+(reset)
+(read "../examples/capmodel.ver")
+(make cap model)
+
+(reset)
+(read "../examples/djumodel.ver")
+(make dju model)
+
+(reset)
+(read "../examples/elemmodel.ver")
+(make elem model)
+
+(reset)
+(read "../examples/finitemodel.ver")
+(make finite model)
+
+(reset)
+(read "../examples/fixptmodel.ver")
+(make fixpt model)
+
+(reset)
+(read "../examples/fnmodel.ver")
+(make fn model)
+
+(reset)
+(read "../examples/intfnmodel.ver")
+(make intfn model)
+
+(reset)
+(read "../examples/lambdamodel.ver")
+(make lambda model)
+
+(reset)
+(read "../examples/natmodel.ver")
+(make nat model)
+
+(reset)
+(read "../examples/pairfnmodel.ver")
+(make pairfn model)
+
+(reset)
+(read "../examples/pairmodel.ver")
+(make pair model)
+
+(reset)
+(read "../examples/prmodel.ver")
+(make pr model)
+
+(reset)
+(read "../examples/relmodel.ver")
+(make rel model)
+
+(reset)
+(read "../examples/seqmodel.ver")
+(make seq model)
+
+(reset)
+(read "../examples/srmodel.ver")
+(make setrules model)
+
+(reset)
+(read "../examples/trmodel.ver")
+(make tr model)
+
+(reset)
+(read "../examples/tuplemodel.ver")
+(make tuple model)
+
+(reset)
+(read "../examples/unitmodel.ver")
+(make unit model)
+
+(reset)
+(read "../examples/zseqmodel.ver")
+(make zseq model)
+
+(reset)
+(read "../examples/optmodel.ver")
+(make option model)
+
+(reset)
+(read "../examples/msmodel.ver")
+(make ms model)
+
+(reset)
+(read "../examples/pkmodel.ver")
+(make pk model)

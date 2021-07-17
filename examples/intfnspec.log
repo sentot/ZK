@@ -1,0 +1,99 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/intfnspec.ver"
+Warning RULE-LOOPS for FN!FUNCTION-EXTENSIONALITY:
+ The rule FN!FUNCTION-EXTENSIONALITY loops upon itself.
+ADD
+IS-FUNCTION-ADD
+Beginning proof of IS-FUNCTION-ADD ...
+(= (FN!IS-FUNCTION (ADD K)) (TRUE))
+DOM-ADD
+Beginning proof of DOM-ADD ...
+(= (REL!DOM (ADD K)) (INT))
+RAN-ADD
+Beginning proof of RAN-ADD ...
+(IMPLIES (IN K (INT)) (= (REL!RAN (ADD K)) (INT)))
+APPLY-ADD
+Beginning proof of APPLY-ADD ...
+(IMPLIES (IN X (INT)) (= (FN!APPLY (ADD K) X) (+ X K)))
+INVERSE-ADD
+Beginning proof of INVERSE-ADD ...
+(IMPLIES (IN K (INT)) (= (REL!INVERSE (ADD K)) (ADD (NEGATE K))))
+COMP-ADD-ADD
+Beginning proof of COMP-ADD-ADD ...
+(IMPLIES (AND (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (ADD M) (ADD N)) (ADD (+ M N))))
+ADD-0-IS-ID
+Beginning proof of ADD-0-IS-ID ...
+(= (ADD 0) (REL!ID (INT)))
+IMAGE-ADD-RANGE
+Beginning proof of IMAGE-ADD-RANGE ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)))
+ (= (REL!IMAGE (ADD I) (RANGE J K)) (RANGE (+ I J) (+ I K))))
+PLUS
+IS-FUNCTION-PLUS
+Beginning proof of IS-FUNCTION-PLUS ...
+(= (FN!IS-FUNCTION (PLUS)) (TRUE))
+DOM-PLUS
+Beginning proof of DOM-PLUS ...
+(= (REL!DOM (PLUS)) (INT))
+APPLY-PLUS
+Beginning proof of APPLY-PLUS ...
+(IMPLIES (IN K (INT)) (= (FN!APPLY (PLUS) K) (ADD K)))
+MULTIPLES-OF
+MULTIPLES-OF-0
+Beginning proof of MULTIPLES-OF-0 ...
+(= (MULTIPLES-OF 0) (UNIT 0))
+MULTIPLES-OF-1
+Beginning proof of MULTIPLES-OF-1 ...
+(= (MULTIPLES-OF 1) (INT))
+MULTIPLES-OF--1
+Beginning proof of MULTIPLES-OF--1 ...
+(= (MULTIPLES-OF -1) (INT))
+MULTIPLY-BY
+IS-FUNCTION-MULTIPLY-BY
+Beginning proof of IS-FUNCTION-MULTIPLY-BY ...
+(= (FN!IS-FUNCTION (MULTIPLY-BY K)) (TRUE))
+IS-FUNCTION-INVERSE-MULTIPLY-BY
+Beginning proof of IS-FUNCTION-INVERSE-MULTIPLY-BY ...
+(IMPLIES (AND (IN I (INT)) (NOT (= I 0)))
+ (= (FN!IS-FUNCTION (REL!INVERSE (MULTIPLY-BY I))) (TRUE)))
+DOM-MULTIPLY-BY
+Beginning proof of DOM-MULTIPLY-BY ...
+(= (REL!DOM (MULTIPLY-BY K)) (INT))
+RAN-MULTIPLY-BY
+Beginning proof of RAN-MULTIPLY-BY ...
+(IMPLIES (IN K (INT)) (= (REL!RAN (MULTIPLY-BY K)) (MULTIPLES-OF K)))
+APPLY-MULTIPLY-BY
+Beginning proof of APPLY-MULTIPLY-BY ...
+(IMPLIES (IN X (INT)) (= (FN!APPLY (MULTIPLY-BY K) X) (* X K)))
+COMP-MULTIPLY-BY-MULTIPLY-BY
+Beginning proof of COMP-MULTIPLY-BY-MULTIPLY-BY ...
+(IMPLIES (AND (IN M (INT)) (IN N (INT)))
+ (= (REL!COMP (MULTIPLY-BY M) (MULTIPLY-BY N)) (MULTIPLY-BY (* M N))))
+MULTIPLY-BY-1-IS-ID
+Beginning proof of MULTIPLY-BY-1-IS-ID ...
+(= (MULTIPLY-BY 1) (REL!ID (INT)))
+INVERSE-MULTIPLY-BY--1
+Beginning proof of INVERSE-MULTIPLY-BY--1 ...
+(= (REL!INVERSE (MULTIPLY-BY -1)) (MULTIPLY-BY -1))
+IMAGE-MULTIPLY-POSITIVE-RANGE
+Beginning proof of IMAGE-MULTIPLY-POSITIVE-RANGE ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (> I 0))
+ (= (REL!IMAGE (MULTIPLY-BY I) (RANGE J K))
+  (INTER (MULTIPLES-OF I) (RANGE (* I J) (* I K)))))
+IMAGE-MULTIPLY-NEGATIVE-RANGE
+Beginning proof of IMAGE-MULTIPLY-NEGATIVE-RANGE ...
+(IMPLIES (AND (IN I (INT)) (IN J (INT)) (IN K (INT)) (< I 0))
+ (= (REL!IMAGE (MULTIPLY-BY I) (RANGE J K))
+  (INTER (MULTIPLES-OF I) (RANGE (* I K) (* I J)))))
+TIMES
+IS-FUNCTION-TIMES
+Beginning proof of IS-FUNCTION-TIMES ...
+(= (FN!IS-FUNCTION (TIMES)) (TRUE))
+DOM-TIMES
+Beginning proof of DOM-TIMES ...
+(= (REL!DOM (TIMES)) (INT))
+APPLY-TIMES
+Beginning proof of APPLY-TIMES ...
+(IMPLIES (IN K (INT)) (= (FN!APPLY (TIMES) K) (MULTIPLY-BY K)))
+Done.

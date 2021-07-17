@@ -1,0 +1,170 @@
+
+;;; A simple hardware proof, using the HOL relational model of circuit elements
+;;;
+
+;;; Signals
+
+(function is-signal (x) ()
+  (= (type-of x) (bool)))
+
+(frule is-signal-type (x)
+  (implies (is-signal x)
+	   (= (type-of x) (bool))))
+(REDUCE)
+
+(function power () ()
+  (true))
+
+(function ground () ()
+  (false))
+
+(function signal-value (x) ()
+  (if x 1 0))
+
+(grule signal-value-type (x)
+  (= (type-of (signal-value x))
+     (int)))
+(REDUCE)
+
+;;; CMOS components
+
+(function p-transistor (control in out) ()
+  (implies (not control)
+	   (= in out)))
+
+(function n-transistor (control in out) ()
+  (implies control
+	   (= in out)))
+
+;;; A full adder
+
+(function adder (in0 in1 carry-in out carry-out) ()
+  (some (p1 p2 p3 p4 p5 p6 p7 p8 p9 p10)
+    (and (p-transistor in0 (power) p7)
+	 (p-transistor in1 (power) p7)
+	 (p-transistor carry-in p7 p1)
+	 (n-transistor carry-in p1 p9)
+	 (n-transistor in1 p9 (ground))
+	 (n-transistor in0 p9 (ground))
+
+	 (p-transistor in0 (power) p8)
+	 (p-transistor in1 p8 p1)
+	 (n-transistor in1 p1 p10)
+	 (n-transistor in0 p10 (ground))
+
+	 (p-transistor p1 (power) carry-out)
+	 (n-transistor p1 carry-out (ground))
+
+	 (p-transistor p1 (power) p2)
+	 (p-transistor in0 p2 p4)
+	 (p-transistor in1 p2 p3)
+	 (p-transistor carry-in (power) p3)
+	 (p-transistor p1 p3 p4)
+	 (n-transistor p1 p4 p6)
+	 (n-transistor carry-in p6 (ground))
+	 (n-transistor in1 p6 p5)
+	 (n-transistor in0 p4 p5)
+	 (n-transistor p1 p5 (ground))
+
+	 (p-transistor p4 (power) out)
+	 (n-transistor p4 out (ground)))))
+
+;;; The specification
+
+(rule adder-spec (in0 in1 carry-in out carry-out)
+  (implies (and (is-signal in0)
+		(is-signal in1)
+		(is-signal carry-in)
+		 (is-signal out)
+		 (is-signal carry-out))
+	   (= (adder in0 in1 carry-in out carry-out)
+	      (= (+ (* 2 (signal-value carry-out))
+		    (signal-value out))
+		 (+ (signal-value in0)
+		    (signal-value in1)
+		    (signal-value carry-in))))))
+(REDUCE)
+
+;;; Now we use the full adder to build a ripple-carry adder
+
+;;; Busses
+
+(function-stub is-bus (x width))
+
+(function-stub drop-lsb (bus))
+
+(grule drop-lsb-is-bus (bus width)
+  (implies (and (is-bus bus width)
+		(>= width 1))
+	   (is-bus (drop-lsb bus) (+ -1 width))))
+
+(function-stub lsb (bus))
+
+(grule lsb-is-signal (bus width)
+  (implies (and (is-bus bus width)
+		(>= width 1))
+	   (is-signal (lsb bus))))
+
+(function bus-value (bus width)
+    ((measure width))
+  (if (>= width 1)
+      (+ (* 2 (bus-value (drop-lsb bus) (+ -1 width)))
+	 (signal-value (lsb bus)))
+      0))
+(REDUCE)
+
+(grule bus-value-type (bus width)
+  (implies (is-bus bus width)
+	   (= (type-of (bus-value bus width)) (int))))
+(INDUCT)
+(REDUCE)
+
+;;; The circuit
+
+(function bus-adder (b0 b1 carry-in out carry-out width)
+    ((measure width))
+  (if (>= width 1)
+      (some (internal-carry)
+	(and (is-signal internal-carry)
+	     (bus-adder (drop-lsb b0)
+			(drop-lsb b1)
+			internal-carry
+			(drop-lsb out)
+			carry-out
+			(+ -1 width))
+	     (adder (lsb b0) (lsb b1) carry-in (lsb out) internal-carry)))
+      (= carry-out carry-in)))
+(reduce)
+
+;;; The spec
+
+(function position-value (pos)
+    ((measure pos))
+  (if (>= pos 2)
+      (* 2 (position-value (+ -1 pos)))
+      1))
+(REDUCE)
+
+(rule bus-adder-spec (b0 b1 carry-in out carry-out width)
+  (implies (and (>= width 0)
+		(is-bus b0 width)
+		(is-bus b1 width)
+		(is-signal carry-in)
+		(is-bus out width)
+		(is-signal carry-out)
+		(bus-adder b0 b1 carry-in out carry-out width))
+	   (= (+ (* (position-value (+ width 1)) (signal-value carry-out))
+		 (bus-value out width))
+	      (+ (signal-value carry-in)
+		 (bus-value b0 width)
+		 (bus-value b1 width)))))
+(INDUCT)
+(CASES)
+(INVOKE (BUS-ADDER B0 B1 CARRY-IN OUT CARRY-OUT WIDTH))
+(PRENEX)
+(INSTANTIATE (INTERNAL-CARRY$0 INTERNAL-CARRY))
+(REARRANGE)
+(WITH-DISABLED (BUS-ADDER ADDER IS-SIGNAL SIGNAL-VALUE) (REDUCE))
+(NEXT)
+(REDUCE)
+(NEXT)

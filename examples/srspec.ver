@@ -1,0 +1,303 @@
+
+;;; Additional facts about the basic set functions
+;;; Perhaps this should be part of the initial theory
+;;;
+
+;;; versions of extensionality that can be used for rewriting
+
+(disabled
+  (rule extensionality (x y)
+    (= (= x y)
+       (all (e) (if (in e x) (in e y) (not (in e y)))))))
+
+(disabled
+  (rule extensionality-subgoal (x y)
+    (implies (all (e) (if (in e x) (in e y) (not (in e y))))
+	     (= (= x y) (true)))))
+
+;;; two simple "case analysis" axioms
+
+(axiom set-cases (x)
+  (or (= x (nullset))
+      (some (e) (in e x))))
+
+(axiom set-decomposition (x)
+  (or (= x (nullset))
+      (some (a b)
+	(and (in a x)
+	     (not (in a b))
+	     (= x (setadd a b))))))
+
+;;; setadd
+
+(rule setadd-commutes (a b x)
+  (= (setadd a (setadd b x))
+     (setadd b (setadd a x))))
+
+(rule setadd-idempotent (a x)
+  (= (setadd a (setadd a x))
+     (setadd a x)))
+
+(rule setadd-non-null (a x)
+  (= (= (setadd a x) (nullset))
+     (false)))
+
+(rule setadd-cancellation (a x y)
+  (implies (and (not (in a x))
+		(not (in a y)))
+	   (= (= (setadd a x) (setadd a y))
+	      (= x y))))
+
+(rule setadd-left-equality-test (a x y)
+  (implies (not (in a y))
+	   (= (= (setadd a x) y)
+	      (false))))
+
+(rule setadd-right-equality-test (a x y)
+  (implies (not (in a x))
+	   (= (= x (setadd a y))
+	      (false))))
+
+(disabled
+  (rule setadd-member (a x)
+    (implies (in a x)
+	     (= (setadd a x) x))))
+
+(rule subset-setadd (a b c)
+  (= (subset (setadd a b) c)
+     (and (in a c)
+	  (subset b c))))
+
+;;; union
+
+(rule setadd-union-left (a x y)
+  (= (union (setadd a x) y)
+     (setadd a (union x y))))
+
+(rule setadd-union-right (a x y)
+  (= (union x (setadd a y))
+     (setadd a (union x y))))
+
+(rule subset-union-left (s t u)
+  (= (subset (union s t) u)
+     (and (subset s u)
+	  (subset t u))))
+
+(rule union-self-associated (s t)
+  (= (union s (union s t))
+     (union s t)))
+
+(rule subset-union-right (s t u)
+  (implies (or (subset s t)
+	       (subset s u))
+	   (= (subset s (union t u))
+	      (true))))
+
+(grule subset-union-relation-1 (s t)
+  (subset s (union s t)))
+
+(grule subset-union-relation-2 (s t)
+  (subset t (union s t)))
+
+(rule union-subset-left (s t)
+  (implies (subset t s)
+	   (= (union s t) s)))
+
+(rule union-subset-right (s t)
+  (implies (subset s t)
+	   (= (union s t) t)))
+
+;;; intersection
+
+(disabled
+ (rule setadd-inter-left (a x y)
+   (= (inter (setadd a x) y)
+      (if (in a y)
+	  (setadd a (inter x y))
+	  (inter x y)))))
+
+(disabled
+  (rule setadd-inter-right (a x y)
+    (= (inter x (setadd a y))
+       (if (in a x)
+	   (setadd a (inter x y))
+	   (inter x y)))))
+
+(rule setadd-inter-left-member (a x y)
+  (implies (in a y)
+	   (= (inter (setadd a x) y)
+	      (setadd a (inter x y)))))
+
+(rule setadd-inter-left-nonmember (a x y)
+  (implies (not (in a y))
+	   (= (inter (setadd a x) y)
+	      (inter x y))))
+
+(rule setadd-inter-right-member (a x y)
+  (implies (in a x)
+	   (= (inter x (setadd a y))
+	      (setadd a (inter x y)))))
+
+(rule setadd-inter-right-nonmember (a x y)
+  (implies (not (in a x))
+	   (= (inter x (setadd a y))
+	      (inter x y))))
+
+(rule inter-self-associated (s t)
+  (= (inter s (inter s t))
+     (inter s t)))
+
+(rule subset-inter-left (s t u)
+  (implies (or (subset s u)
+	       (subset t u))
+	   (= (subset (inter s t) u)
+	      (true))))
+
+(rule subset-inter-right (s t u)
+  (= (subset s (inter t u))
+     (and (subset s t)
+	  (subset s u))))
+
+(grule subset-inter-relation-1 (s t)
+  (subset (inter s t) s))
+
+(grule subset-inter-relation-2 (s t)
+  (subset (inter s t) t))
+
+(rule inter-subset-left (s t)
+  (implies (subset t s)
+	   (= (inter s t) t)))
+
+(rule inter-subset-right (s t)
+  (implies (subset s t)
+	   (= (inter s t) s)))
+
+(rule inter-nullset (s t)
+  (= (= (inter s t) (nullset))
+     (all (e) (not (and (in e s) (in e t))))))
+
+(rule inter-union-distribution (s t u)
+  (= (inter s (union t u))
+     (union (inter s t)
+	    (inter s u))))
+
+(rule inter-diff-left (s t u)
+  (= (inter (diff s t) u)
+     (diff (inter s u) t)))
+
+(rule inter-diff-right (s t u)
+  (= (inter s (diff t u))
+     (diff (inter s t) u)))
+
+;;; diff
+
+(disabled
+  (rule setadd-diff (a x y)
+    (= (diff (setadd a x) y)
+       (if (in a y)
+	   (diff x y)
+	   (setadd a (diff x y))))))
+
+(rule setadd-diff-left-member (a x y)
+  (implies (in a y)
+	   (= (diff (setadd a x) y)
+	      (diff x y))))
+
+(rule setadd-diff-left-nonmember (a x y)
+  (implies (not (in a y))
+	   (= (diff (setadd a x) y)
+	      (setadd a (diff x y)))))
+
+(grule subset-diff-relation (s t)
+  (subset (diff s t) s))
+
+(rule subset-diff-left (s t u)
+  (= (subset (diff s t) u)
+     (subset s (union t u))))
+
+(rule subset-diff-right (s t u)
+  (= (subset s (diff t u))
+     (and (subset s t)
+	  (= (inter s u) (nullset)))))
+
+(rule diff-self (s)				; subsumed by diff-superset
+  (= (diff s s)
+     (nullset)))
+
+(rule diff-nullset-right (s)
+  (= (diff s (nullset))
+     s))
+
+(rule diff-nullset-left (s)			; subsumed by diff-superset
+  (= (diff (nullset) s)
+     (nullset)))
+
+(rule diff-diff (s t u)
+  (= (diff (diff s t) u)
+     (diff s (union t u))))
+
+(rule diff-inter (s t u)
+  (= (diff s (inter t u))
+     (union (diff s t) (diff s u))))
+
+(rule diff-=-nullset (s t)
+  (= (= (diff s t) (nullset))
+     (subset s t)))
+
+(rule diff-superset (s t)
+  (implies (subset s t)
+	   (= (diff s t) (nullset))))
+
+;;; delta
+
+(rule delta-expansion (x y)
+  (= (delta x y)
+     (union (diff x y)
+	    (diff y x))))
+
+;;; unit sets
+;;;
+;;; unit is normalized away; setadd is used instead.
+
+(rule unit-to-setadd (x)
+  (= (unit x)
+     (setadd x (nullset))))
+
+
+;;; Special cases of regularity
+
+(rule in-self (s)
+  (= (in s s)
+     (false)))
+
+(axiom no-2-cycle (s t)
+  (not (and (in s t)
+	    (in t s))))
+
+;;; Cup
+
+(rule cup-nullset ()
+  (= (cup (nullset))
+     (nullset)))
+
+(rule cup-union (x y)
+  (= (cup (union x y))
+     (union (cup x) (cup y))))
+
+(rule cup-unit (x)
+  (= (cup (unit x))
+     x))
+
+(rule cup-setadd (x y)
+  (= (cup (setadd x y))
+     (union x (cup y))))
+
+(rule member-subset-cup (x y)
+  (implies (in x y)
+	   (= (subset x (cup y)) (true))))
+
+(disabled
+ (rule cup-subset (x y)
+   (= (subset (cup x) y)
+      (all (z) (implies (in z x)
+			(subset z y))))))

@@ -1,0 +1,694 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/hol-example.ver"
+EXP
+Beginning proof of EXP ...
+(IF (> E 0) (M< (+ -1 E) E) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+EXP-TYPE
+Beginning proof of EXP-TYPE ...
+(IMPLIES (IN B (INT)) (= (TYPE-OF (EXP B E)) (INT)))
+Which simplifies to ...
+(TRUE)
+EXP-BY-1
+Beginning proof of EXP-BY-1 ...
+(IMPLIES (IN B (INT)) (= (EXP B 1) B))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT, EXP-TYPE to ...
+(TRUE)
+EXP-1
+Beginning proof of EXP-1 ...
+(= (EXP 1 E) 1)
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (> E 0) (*P* (+ -1 E))) (*P* E))
+  (IMPLIES (NOT (> E 0)) (*P* E)))
+ produces ...
+(AND (IMPLIES (AND (> E 0) (= (EXP 1 (+ -1 E)) 1)) (= (EXP 1 E) 1))
+ (IMPLIES (NOT (> E 0)) (= (EXP 1 E) 1)))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+*-NON-NEGATIVE
+Beginning proof of *-NON-NEGATIVE ...
+(IMPLIES (AND (>= X 0) (>= Y 0)) (>= (* X Y) 0))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+EXP-PLUS
+Beginning proof of EXP-PLUS ...
+(IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+ (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(IMPLIES (AND (>= E1 0) (>= E2 0) (IN BASE (INT)))
+ (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))
+
+ Returning to :
+Beginning proof of EXP-PLUS ...
+(IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+ (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (> E1 0) (*P* BASE (+ -1 E1) E2)) (*P* BASE E1 E2))
+  (IMPLIES (NOT (> E1 0)) (*P* BASE E1 E2)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (> E1 0)
+   (IMPLIES (AND (<= 0 (+ -1 E1)) (<= 0 E2) (IN BASE (INT)))
+    (= (EXP BASE (+ -1 E1 E2)) (* (EXP BASE (+ -1 E1)) (EXP BASE E2)))))
+  (IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+   (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2)))))
+ (IMPLIES (NOT (> E1 0))
+  (IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+   (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE, SUCC.INT to ...
+(TRUE)
+EXP-NONNEGATIVE
+Beginning proof of EXP-NONNEGATIVE ...
+(IMPLIES (>= B 0) (>= (EXP B E) 0))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (> E 0) (*P* B (+ -1 E))) (*P* B E))
+  (IMPLIES (NOT (> E 0)) (*P* B E)))
+ produces ...
+(AND
+ (IMPLIES (AND (> E 0) (IMPLIES (>= B 0) (>= (EXP B (+ -1 E)) 0)))
+  (IMPLIES (>= B 0) (>= (EXP B E) 0)))
+ (IMPLIES (NOT (> E 0)) (IMPLIES (>= B 0) (>= (EXP B E) 0))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions *-NON-NEGATIVE, SUCC.INT to ...
+(TRUE)
+EXP-POSITIVE
+Beginning proof of EXP-POSITIVE ...
+(IMPLIES (>= B 1) (>= (EXP B E) 1))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (> E 0) (*P* B (+ -1 E))) (*P* B E))
+  (IMPLIES (NOT (> E 0)) (*P* B E)))
+ produces ...
+(AND
+ (IMPLIES (AND (> E 0) (IMPLIES (>= B 1) (>= (EXP B (+ -1 E)) 1)))
+  (IMPLIES (>= B 1) (>= (EXP B E) 1)))
+ (IMPLIES (NOT (> E 0)) (IMPLIES (>= B 1) (>= (EXP B E) 1))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions *-NON-NEGATIVE, EXP-NONNEGATIVE, SUCC.INT to ...
+(TRUE)
+DIV-MOD-FACT
+Beginning proof of DIV-MOD-FACT ...
+(IMPLIES (AND (>= X 0) (>= D 1))
+ (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D)) (< (MOD X D) D)))
+Which simplifies
+ when rewriting with SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(IMPLIES (AND (>= X 0) (>= D 1))
+ (AND (= X (+ (MOD X D) (* D (DIV X D)))) (>= (MOD X D) 0)
+  (>= D (+ 1 (MOD X D)))))
+
+ Returning to :
+Beginning proof of DIV-MOD-FACT ...
+(IMPLIES (AND (>= X 0) (>= D 1))
+ (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D)) (< (MOD X D) D)))
+Inducting using the following scheme ...
+ (AND
+  (IMPLIES
+   (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+    (IF (> D 0) (>= X D) (<= X D)) (*P* D (- X D)))
+   (*P* D X))
+  (IMPLIES
+   (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+    (NOT (IF (> D 0) (>= X D) (<= X D)))
+    (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D))) (*P* D (+ X D)))
+   (*P* D X))
+  (IMPLIES
+   (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+    (NOT (IF (> D 0) (>= X D) (<= X D)))
+    (NOT (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D)))))
+   (*P* D X))
+  (IMPLIES
+   (NOT (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))))
+   (*P* D X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+   (IF (> D 0) (>= X D) (<= X D))
+   (IMPLIES (AND (>= (- X D) 0) (>= D 1))
+    (AND (= (- X D) (+ (* D (DIV (- X D) D)) (MOD (- X D) D)))
+     (<= 0 (MOD (- X D) D)) (< (MOD (- X D) D) D))))
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D))
+    (< (MOD X D) D))))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+   (NOT (IF (> D 0) (>= X D) (<= X D)))
+   (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D)))
+   (IMPLIES (AND (>= (+ X D) 0) (>= D 1))
+    (AND (= (+ X D) (+ (* D (DIV (+ X D) D)) (MOD (+ X D) D)))
+     (<= 0 (MOD (+ X D) D)) (< (MOD (+ X D) D) D))))
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D))
+    (< (MOD X D) D))))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+   (NOT (IF (> D 0) (>= X D) (<= X D)))
+   (NOT (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D)))))
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D))
+    (< (MOD X D) D))))
+ (IMPLIES
+  (NOT (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))))
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D))
+    (< (MOD X D) D)))))
+Which simplifies
+ with invocation of MOD, DIV
+ when rewriting with SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions *-NON-NEGATIVE, SUCC.INT to ...
+(TRUE)
+DIV-MOD-1
+Beginning proof of DIV-MOD-1 ...
+(IMPLIES (AND (>= X 0) (>= D 1)) (= X (+ (* D (DIV X D)) (MOD X D))))
+Assuming DIV-MOD-FACT with the instantiations: (= X X) (= D D) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D)) (< (MOD X D) D)))
+  (>= X 0) (>= D 1))
+ (= X (+ (* D (DIV X D)) (MOD X D))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+DIV-MOD-2
+Beginning proof of DIV-MOD-2 ...
+(IMPLIES (AND (>= X 0) (>= D 1)) (<= 0 (MOD X D)))
+Assuming DIV-MOD-FACT with the instantiations: (= X X) (= D D) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D)) (< (MOD X D) D)))
+  (>= X 0) (>= D 1))
+ (>= (MOD X D) 0))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT, DIV-MOD-1 to ...
+(TRUE)
+DIV-MOD-3
+Beginning proof of DIV-MOD-3 ...
+(IMPLIES (AND (>= X 0) (>= D 1)) (<= (MOD X D) (+ -1 D)))
+Assuming DIV-MOD-FACT with the instantiations: (= X X) (= D D) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (>= X 0) (>= D 1))
+   (AND (= X (+ (* D (DIV X D)) (MOD X D))) (<= 0 (MOD X D)) (< (MOD X D) D)))
+  (>= X 0) (>= D 1))
+ (>= (+ -1 D) (MOD X D)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT, DIV-MOD-2, DIV-MOD-1 to ...
+(TRUE)
+*-MONOTONIC
+Beginning proof of *-MONOTONIC ...
+(IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (>= Z 1))
+ (= (>= X Y) (>= (* Z X) (* Z Y))))
+Splitting on (>= X Y) generates ...
+(IF (>= X Y)
+ (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (>= Z 1))
+  (= (>= X Y) (>= (* Z X) (* Z Y))))
+ (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (>= Z 1))
+  (= (>= X Y) (>= (* Z X) (* Z Y)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IF (>= X Y)
+ (IMPLIES (AND (= (TYPE-OF X) (INT)) (>= Z 1))
+  (= (TRUE) (>= (* Z X) (* Z Y))))
+ (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (>= Z 1))
+  (= (FALSE) (>= (* Z X) (* Z Y)))))
+Splitting on (>= (* Z (- X Y)) 0) generates ...
+(IF (>= (* Z (- X Y)) 0)
+ (IF (>= X Y)
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (>= Z 1))
+   (= (TRUE) (>= (* Z X) (* Z Y))))
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (>= Z 1))
+   (= (FALSE) (>= (* Z X) (* Z Y)))))
+ (IF (>= X Y)
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (>= Z 1))
+   (= (TRUE) (>= (* Z X) (* Z Y))))
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (>= Z 1))
+   (= (FALSE) (>= (* Z X) (* Z Y))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+DIV-MOD-4-LEMMA
+Beginning proof of DIV-MOD-4-LEMMA ...
+(IMPLIES
+ (AND (= (TYPE-OF D) (INT)) (= (TYPE-OF X) (INT)) (= (TYPE-OF R) (INT))
+  (= (+ (* D X) R) 0) (< (NEGATE D) R) (< R D))
+ (AND (= R 0) (= X 0)))
+Assuming *-MONOTONIC with the
+instantiations: (= Z D) (= X X) (= Y 1) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF 1) (INT)) (>= D 1))
+   (= (>= X 1) (>= (* D X) (* 1 D))))
+  (= (TYPE-OF D) (INT)) (= (TYPE-OF X) (INT)) (= (TYPE-OF R) (INT))
+  (= (+ (* D X) R) 0) (>= R (SUCC (NEGATE D))) (>= D (SUCC R)))
+ (AND (= R 0) (= X 0)))
+Assuming *-MONOTONIC with the
+instantiations: (= Z D) (= X -1) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF -1) (INT)) (= (TYPE-OF X) (INT)) (>= D 1))
+   (= (<= X -1) (>= (* D -1) (* D X))))
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF 1) (INT)) (>= D 1))
+   (= (>= X 1) (>= (* D X) (* 1 D))))
+  (= (TYPE-OF D) (INT)) (= (TYPE-OF X) (INT)) (= (TYPE-OF R) (INT))
+  (= (+ (* D X) R) 0) (>= R (SUCC (NEGATE D))) (>= D (SUCC R)))
+ (AND (= R 0) (= X 0)))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF D) (INT)) (= (TYPE-OF X) (INT)) (= (TYPE-OF R) (INT))
+  (= (+ (* D X) R) 0) (>= R (SUCC (NEGATE D))) (>= D (SUCC R))
+  (IMPLIES (AND (= (TYPE-OF -1) (INT)) (= (TYPE-OF X) (INT)) (>= D 1))
+   (= (<= X -1) (>= (* D -1) (* D X))))
+  (IMPLIES (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF 1) (INT)) (>= D 1))
+   (= (>= X 1) (>= (* D X) (* 1 D)))))
+ (AND (= R 0) (= X 0)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions *-NON-NEGATIVE, SUCC.INT to ...
+(TRUE)
+DIV-MOD-4
+Beginning proof of DIV-MOD-4 ...
+(IMPLIES
+ (AND (>= X 0) (>= D 1) (= (TYPE-OF Q) (INT)) (= X (+ R (* D Q))) (<= 0 R)
+  (< R D))
+ (AND (= Q (DIV X D)) (= R (MOD X D))))
+Assuming DIV-MOD-4-LEMMA with the
+instantiations: (= D D) (= X (- (DIV X D) Q)) (= R (- (MOD X D) R)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (= (TYPE-OF D) (INT)) (= (TYPE-OF (- (DIV X D) Q)) (INT))
+    (= (TYPE-OF (- (MOD X D) R)) (INT))
+    (= (+ (* D (- (DIV X D) Q)) (- (MOD X D) R)) 0)
+    (< (NEGATE D) (- (MOD X D) R)) (< (- (MOD X D) R) D))
+   (AND (= (- (MOD X D) R) 0) (= (- (DIV X D) Q) 0)))
+  (>= X 0) (>= D 1) (= (TYPE-OF Q) (INT)) (= X (+ R (* D Q))) (>= R 0)
+  (>= D (SUCC R)))
+ (AND (= Q (DIV X D)) (= R (MOD X D))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF Q) (INT)) (>= X 0) (>= D 1) (>= R 0) (= X (+ R (* D Q)))
+  (>= D (SUCC R))
+  (IMPLIES
+   (AND (= (TYPE-OF D) (INT)) (= (TYPE-OF (- (DIV X D) Q)) (INT))
+    (= (TYPE-OF (- (MOD X D) R)) (INT))
+    (= (+ (* D (- (DIV X D) Q)) (- (MOD X D) R)) 0)
+    (< (NEGATE D) (- (MOD X D) R)) (< (- (MOD X D) R) D))
+   (AND (= (- (MOD X D) R) 0) (= (- (DIV X D) Q) 0))))
+ (AND (= Q (DIV X D)) (= R (MOD X D))))
+Which simplifies
+ when rewriting with SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions DIV-MOD-2, DIV-MOD-3, DIV-MOD-1, SUCC.INT to ...
+(TRUE)
+DIV-NONNEGATIVE
+Beginning proof of DIV-NONNEGATIVE ...
+(IMPLIES (AND (>= X 0) (>= D 1)) (>= (DIV X D) 0))
+Inducting using the following scheme ...
+ (AND
+  (IMPLIES
+   (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+    (IF (> D 0) (>= X D) (<= X D)) (*P* D (- X D)))
+   (*P* D X))
+  (IMPLIES
+   (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+    (NOT (IF (> D 0) (>= X D) (<= X D)))
+    (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D))) (*P* D (+ X D)))
+   (*P* D X))
+  (IMPLIES
+   (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+    (NOT (IF (> D 0) (>= X D) (<= X D)))
+    (NOT (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D)))))
+   (*P* D X))
+  (IMPLIES
+   (NOT (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))))
+   (*P* D X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+   (IF (> D 0) (>= X D) (<= X D))
+   (IMPLIES (AND (>= (- X D) 0) (>= D 1)) (>= (DIV (- X D) D) 0)))
+  (IMPLIES (AND (>= X 0) (>= D 1)) (>= (DIV X D) 0)))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+   (NOT (IF (> D 0) (>= X D) (<= X D)))
+   (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D)))
+   (IMPLIES (AND (>= (+ X D) 0) (>= D 1)) (>= (DIV (+ X D) D) 0)))
+  (IMPLIES (AND (>= X 0) (>= D 1)) (>= (DIV X D) 0)))
+ (IMPLIES
+  (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))
+   (NOT (IF (> D 0) (>= X D) (<= X D)))
+   (NOT (IF (> D 0) (>= (NEGATE X) D) (>= X (NEGATE D)))))
+  (IMPLIES (AND (>= X 0) (>= D 1)) (>= (DIV X D) 0)))
+ (IMPLIES
+  (NOT (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF D) (INT)) (NOT (= D 0))))
+  (IMPLIES (AND (>= X 0) (>= D 1)) (>= (DIV X D) 0))))
+Which simplifies
+ with invocation of DIV
+ forward chaining using >=.SAME.TYPE
+ with the assumptions DIV-MOD-1, SUCC.INT to ...
+(TRUE)
+*-DISTRIBUTES-OVER-+
+Beginning proof of *-DISTRIBUTES-OVER-+ ...
+(IMPLIES
+ (AND (= (TYPE-OF X) (INT)) (= (TYPE-OF Y) (INT)) (= (TYPE-OF Z) (INT)))
+ (= (* X (+ Y Z)) (+ (* X Y) (* X Z))))
+Which simplifies to ...
+(TRUE)
+DIV-DIV-FACT
+Beginning proof of DIV-DIV-FACT ...
+(IMPLIES (AND (>= X 0) (> Y 0) (> Z 0))
+ (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+  (= (MOD X (* Y Z)) (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+Assuming DIV-MOD-4 with the
+instantiations: (= D (* Y Z)) (= X X) (= Q (DIV (DIV X Y) Z))
+                (= R (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= X 0) (>= (* Y Z) 1) (= (TYPE-OF (DIV (DIV X Y) Z)) (INT))
+    (= X (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y) (* Y Z (DIV (DIV X Y) Z))))
+    (<= 0 (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))
+    (< (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) (* Y Z)))
+   (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+    (= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) (MOD X (* Y Z)))))
+  (>= X 0) (>= Y (SUCC 0)) (>= Z (SUCC 0)))
+ (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+  (= (MOD X (* Y Z)) (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+Assuming *-DISTRIBUTES-OVER-+ with the
+instantiations: (= X Y) (= Y (MOD (DIV X Y) Z))
+                (= Z (* Z (DIV (DIV X Y) Z))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (= (TYPE-OF Y) (INT)) (= (TYPE-OF (MOD (DIV X Y) Z)) (INT))
+    (= (TYPE-OF (* Z (DIV (DIV X Y) Z))) (INT)))
+   (= (* Y (+ (MOD (DIV X Y) Z) (* Z (DIV (DIV X Y) Z))))
+    (+ (* Y (MOD (DIV X Y) Z)) (* Y Z (DIV (DIV X Y) Z)))))
+  (IMPLIES
+   (AND (>= X 0) (>= (* Y Z) 1) (= (TYPE-OF (DIV (DIV X Y) Z)) (INT))
+    (= X (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y) (* Y Z (DIV (DIV X Y) Z))))
+    (>= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) 0)
+    (>= (* Y Z) (SUCC (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+   (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+    (= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) (MOD X (* Y Z)))))
+  (>= X 0) (>= Y (SUCC 0)) (>= Z (SUCC 0)))
+ (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+  (= (MOD X (* Y Z)) (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+Assuming *-MONOTONIC with the
+instantiations: (= Z Y) (= X (+ -1 Z)) (= Y (MOD (DIV X Y) Z)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (= (TYPE-OF (+ -1 Z)) (INT)) (= (TYPE-OF (MOD (DIV X Y) Z)) (INT))
+    (>= Y 1))
+   (= (>= (+ -1 Z) (MOD (DIV X Y) Z))
+    (>= (* Y (+ -1 Z)) (* Y (MOD (DIV X Y) Z)))))
+  (IMPLIES
+   (AND (= (TYPE-OF Y) (INT)) (= (TYPE-OF (MOD (DIV X Y) Z)) (INT))
+    (= (TYPE-OF (* Z (DIV (DIV X Y) Z))) (INT)))
+   (= (* Y (+ (MOD (DIV X Y) Z) (* Z (DIV (DIV X Y) Z))))
+    (+ (* Y (MOD (DIV X Y) Z)) (* Y Z (DIV (DIV X Y) Z)))))
+  (IMPLIES
+   (AND (>= X 0) (>= (* Y Z) 1) (= (TYPE-OF (DIV (DIV X Y) Z)) (INT))
+    (= X (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y) (* Y Z (DIV (DIV X Y) Z))))
+    (>= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) 0)
+    (>= (* Y Z) (SUCC (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+   (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+    (= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) (MOD X (* Y Z)))))
+  (>= X 0) (>= Y (SUCC 0)) (>= Z (SUCC 0)))
+ (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+  (= (MOD X (* Y Z)) (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= X 0) (>= Y (SUCC 0)) (>= Z (SUCC 0))
+  (IMPLIES
+   (AND (= (TYPE-OF (+ -1 Z)) (INT)) (= (TYPE-OF (MOD (DIV X Y) Z)) (INT))
+    (>= Y 1))
+   (= (>= (+ -1 Z) (MOD (DIV X Y) Z))
+    (>= (* Y (+ -1 Z)) (* Y (MOD (DIV X Y) Z)))))
+  (IMPLIES
+   (AND (= (TYPE-OF Y) (INT)) (= (TYPE-OF (MOD (DIV X Y) Z)) (INT))
+    (= (TYPE-OF (* Z (DIV (DIV X Y) Z))) (INT)))
+   (= (* Y (+ (MOD (DIV X Y) Z) (* Z (DIV (DIV X Y) Z))))
+    (+ (* Y (MOD (DIV X Y) Z)) (* Y Z (DIV (DIV X Y) Z)))))
+  (IMPLIES
+   (AND (= (TYPE-OF (DIV (DIV X Y) Z)) (INT)) (>= X 0) (>= (* Y Z) 1)
+    (= X (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y) (* Y Z (DIV (DIV X Y) Z))))
+    (>= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) 0)
+    (>= (* Y Z) (SUCC (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+   (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+    (= (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)) (MOD X (* Y Z))))))
+ (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+  (= (MOD X (* Y Z)) (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+Which simplifies
+ when rewriting with SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions *-NON-NEGATIVE, DIV-MOD-2, DIV-MOD-3, DIV-MOD-1,
+DIV-NONNEGATIVE, SUCC.INT to ...
+(TRUE)
+DIV-DIV
+Beginning proof of DIV-DIV ...
+(IMPLIES (AND (>= X 0) (> Y 0) (> Z 0)) (= (DIV (DIV X Y) Z) (DIV X (* Y Z))))
+Assuming DIV-DIV-FACT with the
+instantiations: (= X X) (= Y Y) (= Z Z) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (>= X 0) (> Y 0) (> Z 0))
+   (AND (= (DIV (DIV X Y) Z) (DIV X (* Y Z)))
+    (= (MOD X (* Y Z)) (+ (* Y (MOD (DIV X Y) Z)) (MOD X Y)))))
+  (>= X 0) (>= Y (SUCC 0)) (>= Z (SUCC 0)))
+ (= (DIV (DIV X Y) Z) (DIV X (* Y Z))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions DIV-MOD-2, DIV-MOD-3, *-NON-NEGATIVE, DIV-MOD-1,
+DIV-NONNEGATIVE, SUCC.INT to ...
+(TRUE)
+DIV-PRODUCT
+Beginning proof of DIV-PRODUCT ...
+(IMPLIES (AND (>= D 1) (>= X 0) (>= Y 0))
+ (= (DIV (+ Y (* D X)) D) (+ X (DIV Y D))))
+Assuming DIV-MOD-4 with the
+instantiations: (= X (+ (* D X) Y)) (= D D) (= Q (+ X (DIV Y D)))
+                (= R (MOD Y D)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= (+ (* D X) Y) 0) (>= D 1) (= (TYPE-OF (+ X (DIV Y D))) (INT))
+    (= (+ (* D X) Y) (+ (MOD Y D) (* D (+ X (DIV Y D))))) (<= 0 (MOD Y D))
+    (< (MOD Y D) D))
+   (AND (= (+ X (DIV Y D)) (DIV (+ (* D X) Y) D))
+    (= (MOD Y D) (MOD (+ (* D X) Y) D))))
+  (>= D 1) (>= X 0) (>= Y 0))
+ (= (DIV (+ Y (* D X)) D) (+ X (DIV Y D))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= D 1) (>= X 0) (>= Y 0)
+  (IMPLIES
+   (AND (= (TYPE-OF (+ X (DIV Y D))) (INT)) (>= D 1) (>= (+ (* D X) Y) 0)
+    (= (+ (* D X) Y) (+ (MOD Y D) (* D (+ X (DIV Y D))))) (<= 0 (MOD Y D))
+    (< (MOD Y D) D))
+   (AND (= (+ X (DIV Y D)) (DIV (+ (* D X) Y) D))
+    (= (MOD Y D) (MOD (+ (* D X) Y) D)))))
+ (= (DIV (+ Y (* D X)) D) (+ X (DIV Y D))))
+Which simplifies
+ when rewriting with SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT, DIV-MOD-2, DIV-MOD-3, *-NON-NEGATIVE,
+DIV-MOD-1, DIV-NONNEGATIVE to ...
+(TRUE)
+HOL-PROBLEM
+Beginning proof of HOL-PROBLEM ...
+(IMPLIES (AND (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (< I N))
+ (=
+  (+ (DIV (+ (* (EXP 2 (- N I)) (* A (MOD B (EXP 2 I)))) (DIV C (EXP 2 I))) 2)
+   (* (MOD (DIV B (EXP 2 I)) 2) (* A (EXP 2 (+ -1 N)))))
+  (+ (* (EXP 2 (- N (+ I 1))) (* A (MOD B (EXP 2 (+ I 1)))))
+   (DIV C (EXP 2 (+ I 1))))))
+Invoking (EXP 2 (- N I)) gives ...
+(IMPLIES (AND (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (SUCC I)))
+ (=
+  (+
+   (DIV
+    (+
+     (* (IF (>= (- N I) (SUCC 0)) (* 2 (EXP 2 (+ -1 (- N I)))) 1) A
+      (MOD B (EXP 2 I)))
+     (DIV C (EXP 2 I)))
+    2)
+   (* (MOD (DIV B (EXP 2 I)) 2) A (EXP 2 (+ -1 N))))
+  (+ (* (EXP 2 (- N (+ I 1))) A (MOD B (EXP 2 (+ I 1))))
+   (DIV C (EXP 2 (+ I 1))))))
+Assuming DIV-DIV-FACT with the
+instantiations: (= X B) (= Y (EXP 2 I)) (= Z 2) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (>= B 0) (> (EXP 2 I) 0) (> 2 0))
+   (AND (= (DIV (DIV B (EXP 2 I)) 2) (DIV B (* (EXP 2 I) 2)))
+    (= (MOD B (* (EXP 2 I) 2))
+     (+ (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)) (MOD B (EXP 2 I))))))
+  (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (SUCC I)))
+ (=
+  (+
+   (DIV
+    (+
+     (* (IF (>= (- N I) (SUCC 0)) (* 2 (EXP 2 (+ -1 (- N I)))) 1) A
+      (MOD B (EXP 2 I)))
+     (DIV C (EXP 2 I)))
+    2)
+   (* (MOD (DIV B (EXP 2 I)) 2) A (EXP 2 (+ -1 N))))
+  (+ (* (EXP 2 (- N (+ I 1))) A (MOD B (EXP 2 (+ I 1))))
+   (DIV C (EXP 2 (+ I 1))))))
+Assuming EXP-PLUS with the
+instantiations: (= BASE 2) (= E1 (+ -1 (- N I))) (= E2 I) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (<= 0 (+ -1 (- N I))) (<= 0 I) (IN 2 (INT)))
+   (= (EXP 2 (+ -1 (- N I) I)) (* (EXP 2 (+ -1 (- N I))) (EXP 2 I))))
+  (IMPLIES (AND (>= B 0) (>= (EXP 2 I) (SUCC 0)) (<= (SUCC 0) 2))
+   (AND (= (DIV (DIV B (EXP 2 I)) 2) (DIV B (* (EXP 2 I) 2)))
+    (= (MOD B (* (EXP 2 I) 2))
+     (+ (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)) (MOD B (EXP 2 I))))))
+  (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (SUCC I)))
+ (=
+  (+
+   (DIV
+    (+
+     (* (IF (>= (- N I) (SUCC 0)) (* 2 (EXP 2 (+ -1 (- N I)))) 1) A
+      (MOD B (EXP 2 I)))
+     (DIV C (EXP 2 I)))
+    2)
+   (* (MOD (DIV B (EXP 2 I)) 2) A (EXP 2 (+ -1 N))))
+  (+ (* (EXP 2 (- N (+ I 1))) A (MOD B (EXP 2 (+ I 1))))
+   (DIV C (EXP 2 (+ I 1))))))
+Assuming *-DISTRIBUTES-OVER-+ with the
+instantiations: (= X (* A (EXP 2 (+ -1 (- N I))))) (= Y (MOD B (EXP 2 I)))
+                (= Z (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (= (TYPE-OF (* A (EXP 2 (+ -1 (- N I))))) (INT))
+    (= (TYPE-OF (MOD B (EXP 2 I))) (INT))
+    (= (TYPE-OF (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2))) (INT)))
+   (=
+    (* A (EXP 2 (+ -1 (- N I)))
+     (+ (MOD B (EXP 2 I)) (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2))))
+    (+ (* A (EXP 2 (+ -1 (- N I))) (MOD B (EXP 2 I)))
+     (* A (EXP 2 (+ -1 (- N I))) (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)))))
+  (IMPLIES (AND (>= (+ -1 (- N I)) 0) (>= I 0) (IN 2 (INT)))
+   (= (EXP 2 (+ -1 (- N I) I)) (* (EXP 2 (+ -1 (- N I))) (EXP 2 I))))
+  (IMPLIES (AND (>= B 0) (>= (EXP 2 I) (SUCC 0)) (<= (SUCC 0) 2))
+   (AND (= (DIV (DIV B (EXP 2 I)) 2) (DIV B (* (EXP 2 I) 2)))
+    (= (MOD B (* (EXP 2 I) 2))
+     (+ (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)) (MOD B (EXP 2 I))))))
+  (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (SUCC I)))
+ (=
+  (+
+   (DIV
+    (+
+     (* (IF (>= (- N I) (SUCC 0)) (* 2 (EXP 2 (+ -1 (- N I)))) 1) A
+      (MOD B (EXP 2 I)))
+     (DIV C (EXP 2 I)))
+    2)
+   (* (MOD (DIV B (EXP 2 I)) 2) A (EXP 2 (+ -1 N))))
+  (+ (* (EXP 2 (- N (+ I 1))) A (MOD B (EXP 2 (+ I 1))))
+   (DIV C (EXP 2 (+ I 1))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (SUCC I))
+  (IMPLIES
+   (AND (= (TYPE-OF (* A (EXP 2 (+ -1 (- N I))))) (INT))
+    (= (TYPE-OF (MOD B (EXP 2 I))) (INT))
+    (= (TYPE-OF (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2))) (INT)))
+   (=
+    (* A (EXP 2 (+ -1 (- N I)))
+     (+ (MOD B (EXP 2 I)) (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2))))
+    (+ (* A (EXP 2 (+ -1 (- N I))) (MOD B (EXP 2 I)))
+     (* A (EXP 2 (+ -1 (- N I))) (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)))))
+  (IMPLIES (AND (IN 2 (INT)) (>= I 0) (>= (+ -1 (- N I)) 0))
+   (= (EXP 2 (+ -1 (- N I) I)) (* (EXP 2 (+ -1 (- N I))) (EXP 2 I))))
+  (IMPLIES (AND (>= B 0) (>= (EXP 2 I) (SUCC 0)) (<= (SUCC 0) 2))
+   (AND (= (DIV (DIV B (EXP 2 I)) 2) (DIV B (* (EXP 2 I) 2)))
+    (= (MOD B (* (EXP 2 I) 2))
+     (+ (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)) (MOD B (EXP 2 I)))))))
+ (=
+  (+
+   (DIV
+    (+
+     (* (IF (>= (- N I) (SUCC 0)) (* 2 (EXP 2 (+ -1 (- N I)))) 1) A
+      (MOD B (EXP 2 I)))
+     (DIV C (EXP 2 I)))
+    2)
+   (* (MOD (DIV B (EXP 2 I)) 2) A (EXP 2 (+ -1 N))))
+  (+ (* (EXP 2 (- N (+ I 1))) A (MOD B (EXP 2 (+ I 1))))
+   (DIV C (EXP 2 (+ I 1))))))
+Which simplifies
+ when rewriting with EXP-BY-1, EXP-PLUS, DIV-PRODUCT, DIV-DIV, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions DIV-MOD-1, DIV-NONNEGATIVE, DIV-MOD-2, DIV-MOD-3,
+*-NON-NEGATIVE, EXP-NONNEGATIVE, EXP-POSITIVE, SUCC.INT to ...
+(IMPLIES
+ (AND (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (+ 1 I))
+  (= (EXP 2 (+ -1 N)) (* (EXP 2 (+ -1 (* -1 I) N)) (EXP 2 I)))
+  (= (MOD B (* 2 (EXP 2 I)))
+   (+ (MOD B (EXP 2 I)) (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)))))
+ (=
+  (+ (DIV C (* 2 (EXP 2 I))) (* A (EXP 2 (+ -1 N)) (MOD (DIV B (EXP 2 I)) 2))
+   (* A (EXP 2 (+ -1 (* -1 I) N)) (MOD B (EXP 2 I))))
+  (+ (DIV C (* 2 (EXP 2 I)))
+   (* A (EXP 2 (+ -1 (* -1 I) N)) (MOD B (* 2 (EXP 2 I)))))))
+Substituting (= (EXP 2 (+ -1 N)) (* (EXP 2 (+ -1 (+ (* -1 I) N))) (EXP 2 I)))
+             (= (MOD B (* 2 (EXP 2 I)))
+              (+ (MOD B (EXP 2 I))
+               (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)))) produces
+...
+(IMPLIES
+ (AND (>= A 0) (>= B 0) (>= C 0) (>= N 0) (>= I 0) (>= N (+ 1 I))
+  (= (EXP 2 (+ -1 N)) (* (EXP 2 (+ -1 (* -1 I) N)) (EXP 2 I)))
+  (= (MOD B (* 2 (EXP 2 I)))
+   (+ (MOD B (EXP 2 I)) (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)))))
+ (=
+  (+ (DIV C (* 2 (EXP 2 I)))
+   (* A (EXP 2 (+ -1 (* -1 I) N)) (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2))
+   (* A (EXP 2 (+ -1 (* -1 I) N)) (MOD B (EXP 2 I))))
+  (+ (DIV C (* 2 (EXP 2 I)))
+   (* A (EXP 2 (+ -1 (* -1 I) N))
+    (+ (MOD B (EXP 2 I)) (* (EXP 2 I) (MOD (DIV B (EXP 2 I)) 2)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions DIV-MOD-1, DIV-NONNEGATIVE, DIV-MOD-2, DIV-MOD-3,
+*-NON-NEGATIVE, EXP-NONNEGATIVE, EXP-POSITIVE to ...
+(TRUE)
+Done.

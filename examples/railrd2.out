@@ -1,0 +1,4594 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/railrd2.ver"
+TRAINS
+IS-TRAIN
+IN-TRAINS
+Beginning proof of IN-TRAINS ...
+(= (IN TR (TRAINS)) (IS-TRAIN TR))
+Which simplifies
+ with invocation of IS-TRAIN to ...
+(TRUE)
+IS-TRAIN-BOOL
+Beginning proof of IS-TRAIN-BOOL ...
+(= (TYPE-OF (IS-TRAIN TR)) (BOOL))
+Which simplifies
+ with invocation of IS-TRAIN
+ when rewriting with IN-TRAINS to ...
+(TRUE)
+ENTER-SENSOR
+ENTER-CROSSING
+EXIT-CROSSING
+ENTER-SENSOR-IS-NAT
+Beginning proof of ENTER-SENSOR-IS-NAT ...
+(>= (ENTER-SENSOR TR) 0)
+ENTER-CROSSING-IS-NAT
+Beginning proof of ENTER-CROSSING-IS-NAT ...
+(>= (ENTER-CROSSING TR) 0)
+EXIT-CROSSING-IS-NAT
+Beginning proof of EXIT-CROSSING-IS-NAT ...
+(>= (EXIT-CROSSING TR) 0)
+TRAIN-CROSSING-BOUNDS
+Beginning proof of TRAIN-CROSSING-BOUNDS ...
+(IMPLIES (IS-TRAIN TR)
+ (AND (>= (ENTER-CROSSING TR) (+ (ENTER-SENSOR TR) 300))
+  (>= (+ (ENTER-SENSOR TR) 1000) (ENTER-CROSSING TR))
+  (>= (EXIT-CROSSING TR) (ENTER-CROSSING TR))))
+CROSSING-INTERVAL
+DOWN-MODE
+RAISE
+LOWER
+GATE-POSITION
+Beginning proof of GATE-POSITION ...
+(IF (>= T 1) (M< (+ -1 T) T) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+GATE-POSITION-BOUNDS
+Beginning proof of GATE-POSITION-BOUNDS ...
+(AND (>= (GATE-POSITION T) 0) (<= (GATE-POSITION T) 90))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= T 1) (DOWN-MODE T) (*P* (+ -1 T))) (*P* T))
+  (IMPLIES (AND (>= T 1) (NOT (DOWN-MODE T)) (*P* (+ -1 T))) (*P* T))
+  (IMPLIES (NOT (>= T 1)) (*P* T)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= T 1) (DOWN-MODE T) (>= (GATE-POSITION (+ -1 T)) 0)
+   (<= (GATE-POSITION (+ -1 T)) 90))
+  (AND (>= (GATE-POSITION T) 0) (<= (GATE-POSITION T) 90)))
+ (IMPLIES
+  (AND (>= T 1) (NOT (DOWN-MODE T)) (>= (GATE-POSITION (+ -1 T)) 0)
+   (<= (GATE-POSITION (+ -1 T)) 90))
+  (AND (>= (GATE-POSITION T) 0) (<= (GATE-POSITION T) 90)))
+ (IMPLIES (NOT (>= T 1))
+  (AND (>= (GATE-POSITION T) 0) (<= (GATE-POSITION T) 90))))
+Which simplifies
+ with invocation of RAISE, GATE-POSITION, LOWER, DOWN-MODE
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-SENSOR-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+GATE-POSITION-INT
+Beginning proof of GATE-POSITION-INT ...
+(= (TYPE-OF (GATE-POSITION T)) (INT))
+Assuming GATE-POSITION-BOUNDS with the instantiations: (= T T) generates ...
+(IMPLIES (AND (>= (GATE-POSITION T) 0) (<= (GATE-POSITION T) 90))
+ (= (TYPE-OF (GATE-POSITION T)) (INT)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+GATE-DOWN
+GATE-UP
+GATE-UP-AT-ZERO
+Beginning proof of GATE-UP-AT-ZERO ...
+(GATE-UP 0)
+Which simplifies
+ with invocation of GATE-POSITION, GATE-UP
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+IS-OCCUPANCY-INTERVAL
+LOWER-N
+LOWER-N-THM
+Beginning proof of LOWER-N-THM ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+ (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= T2 1) (DOWN-MODE T2) (*P* T1 (+ -1 T2))) (*P* T1 T2))
+  (IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (*P* T1 (+ -1 T2)))
+   (*P* T1 T2))
+  (IMPLIES (NOT (>= T2 1)) (*P* T1 T2)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= T2 1) (DOWN-MODE T2)
+   (IMPLIES
+    (AND (>= T1 0) (>= (+ -1 T2) T1)
+     (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3))))
+    (= (GATE-POSITION (+ -1 T2))
+     (LOWER-N (GATE-POSITION T1) (- (+ -1 T2) T1)))))
+  (IMPLIES
+   (AND (>= T1 0) (>= T2 T1)
+    (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1)))))
+ (IMPLIES
+  (AND (>= T2 1) (NOT (DOWN-MODE T2))
+   (IMPLIES
+    (AND (>= T1 0) (>= (+ -1 T2) T1)
+     (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3))))
+    (= (GATE-POSITION (+ -1 T2))
+     (LOWER-N (GATE-POSITION T1) (- (+ -1 T2) T1)))))
+  (IMPLIES
+   (AND (>= T1 0) (>= T2 T1)
+    (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1)))))
+ (IMPLIES (NOT (>= T2 1))
+  (IMPLIES
+   (AND (>= T1 0) (>= T2 T1)
+    (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1))))))
+Starting case 3 ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2)
+  (IMPLIES
+   (AND (>= T1 0) (>= (+ -1 T2) T1)
+    (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION (+ -1 T2))
+    (LOWER-N (GATE-POSITION T1) (- (+ -1 T2) T1))))
+  (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+ (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1))))
+Invoking (GATE-POSITION T2) gives ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2)
+  (IMPLIES
+   (AND (>= T1 0) (>= (+ -1 T2) T1)
+    (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION (+ -1 T2))
+    (LOWER-N (GATE-POSITION T1) (- (+ -1 T2) T1))))
+  (>= T1 0) (>= T2 T1)
+  (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))
+ (=
+  (IF (>= T2 1)
+   (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+    (RAISE (GATE-POSITION (+ -1 T2))))
+   90)
+  (LOWER-N (GATE-POSITION T1) (- T2 T1))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IF (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3)))
+   (IMPLIES
+    (AND
+     (= (GATE-POSITION (+ -1 T2))
+      (LOWER-N (GATE-POSITION T1) (+ -1 (* -1 T1) T2)))
+     (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))
+    (= (LOWER (GATE-POSITION (+ -1 T2)))
+     (LOWER-N (GATE-POSITION T1) (+ (* -1 T1) T2))))
+   (IMPLIES
+    (ALL (T3$1) (IMPLIES (AND (>= T3$1 T1) (>= T2 T3$1)) (DOWN-MODE T3$1)))
+    (= (LOWER (GATE-POSITION (+ -1 T2)))
+     (LOWER-N (GATE-POSITION T1) (+ (* -1 T1) T2)))))
+  (IMPLIES (>= T2 T1)
+   (= (LOWER (GATE-POSITION (+ -1 T2))) (LOWER-N (GATE-POSITION T1) 0)))))
+Invoking LOWER gives ...
+(IMPLIES (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IMPLIES
+   (IF (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3)))
+    (AND
+     (= (GATE-POSITION (+ -1 T2))
+      (LOWER-N (GATE-POSITION T1) (+ -1 (* -1 T1) T2)))
+     (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))
+    (ALL (T3$1) (IMPLIES (AND (>= T3$1 T1) (>= T2 T3$1)) (DOWN-MODE T3$1))))
+   (=
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (LOWER-N (GATE-POSITION T1) (+ (* -1 T1) T2))))
+  (IMPLIES (>= T2 T1)
+   (=
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (LOWER-N (GATE-POSITION T1) 0)))))
+Invoking LOWER-N gives ...
+(IMPLIES (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IMPLIES
+   (IF (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3)))
+    (AND
+     (= (GATE-POSITION (+ -1 T2))
+      (IF
+       (AND (>= (+ -1 (* -1 T1) T2) 0)
+        (>= (- (GATE-POSITION T1) (+ -1 (* -1 T1) T2)) 0))
+       (- (GATE-POSITION T1) (+ -1 (* -1 T1) T2)) 0))
+     (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))
+    (ALL (T3$1) (IMPLIES (AND (>= T3$1 T1) (>= T2 T3$1)) (DOWN-MODE T3$1))))
+   (=
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (IF
+     (AND (>= (+ (* -1 T1) T2) 0)
+      (>= (- (GATE-POSITION T1) (+ (* -1 T1) T2)) 0))
+     (- (GATE-POSITION T1) (+ (* -1 T1) T2)) 0)))
+  (IMPLIES (>= T2 T1)
+   (=
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (IF (AND (>= 0 0) (>= (- (GATE-POSITION T1) 0) 0))
+     (- (GATE-POSITION T1) 0) 0)))))
+Starting case 3.2 ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (>= (+ -1 T2) T1)
+  (IF (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3)))
+   (AND
+    (= (GATE-POSITION (+ -1 T2))
+     (IF
+      (AND (>= (+ -1 (* -1 T1) T2) 0)
+       (>= (- (GATE-POSITION T1) (+ -1 (* -1 T1) T2)) 0))
+      (- (GATE-POSITION T1) (+ -1 (* -1 T1) T2)) 0))
+    (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))
+   (ALL (T3$1) (IMPLIES (AND (>= T3$1 T1) (>= T2 T3$1)) (DOWN-MODE T3$1)))))
+ (=
+  (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+   (GATE-POSITION (+ -1 T2)))
+  (IF
+   (AND (>= (+ (* -1 T1) T2) 0)
+    (>= (- (GATE-POSITION T1) (+ (* -1 T1) T2)) 0))
+   (- (GATE-POSITION T1) (+ (* -1 T1) T2)) 0)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (>= (+ -1 T2) T1)
+  (NOT (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3))))
+  (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF (>= (+ T1 (* -1 T2) (GATE-POSITION T1)) 0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) (+ T1 (* -1 T2) (GATE-POSITION T1)))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF (>= (+ T1 (* -1 T2) (GATE-POSITION T1)) 0)
+   (= (GATE-POSITION (+ -1 T2)) (+ T1 (* -1 T2) (GATE-POSITION T1)))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Instantiating (= T3$0 T3) gives ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (>= (+ -1 T2) T1)
+  (SOME (T3)
+   (AND (NOT (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3)))
+    (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))
+    (ALL (T3$0) (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0)) (DOWN-MODE T3$0))))))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF (>= (+ T1 (* -1 T2) (GATE-POSITION T1)) 0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) (+ T1 (* -1 T2) (GATE-POSITION T1)))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF (>= (+ T1 (* -1 T2) (GATE-POSITION T1)) 0)
+   (= (GATE-POSITION (+ -1 T2)) (+ T1 (* -1 T2) (GATE-POSITION T1)))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Starting case 3.1 ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+ (=
+  (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+   (GATE-POSITION (+ -1 T2)))
+  (IF (AND (>= 0 0) (>= (- (GATE-POSITION T1) 0) 0)) (- (GATE-POSITION T1) 0)
+   0)))
+Splitting on (= T1 T2) generates ...
+(IF (= T1 T2)
+ (IMPLIES
+  (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+  (=
+   (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+    (GATE-POSITION (+ -1 T2)))
+   (IF (AND (>= 0 0) (>= (- (GATE-POSITION T1) 0) 0)) (- (GATE-POSITION T1) 0)
+    0)))
+ (IMPLIES
+  (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+  (=
+   (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+    (GATE-POSITION (+ -1 T2)))
+   (IF (AND (>= 0 0) (>= (- (GATE-POSITION T1) 0) 0)) (- (GATE-POSITION T1) 0)
+    0))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (DOWN-MODE T2))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF (>= (GATE-POSITION T1) 0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF (>= (GATE-POSITION T1) 0)
+   (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Substituting (= T1 T2) produces ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (DOWN-MODE T2))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF (>= (GATE-POSITION T2) 0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T2))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF (>= (GATE-POSITION T2) 0)
+   (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T2))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Invoking (GATE-POSITION T2) gives ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (DOWN-MODE T2))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF
+   (>=
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90)
+    0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2)))
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF
+   (>=
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90)
+    0)
+   (= (GATE-POSITION (+ -1 T2))
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (DOWN-MODE T2))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF (>= (LOWER (GATE-POSITION (+ -1 T2))) 0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) (LOWER (GATE-POSITION (+ -1 T2))))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF (>= (LOWER (GATE-POSITION (+ -1 T2))) 0)
+   (= (GATE-POSITION (+ -1 T2)) (LOWER (GATE-POSITION (+ -1 T2))))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Invoking LOWER gives ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (DOWN-MODE T2))
+ (IF (>= (GATE-POSITION (+ -1 T2)) 1)
+  (IF
+   (>=
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    0)
+   (= (+ -1 (GATE-POSITION (+ -1 T2)))
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2))))
+   (= (+ -1 (GATE-POSITION (+ -1 T2))) 0))
+  (IF
+   (>=
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    0)
+   (= (GATE-POSITION (+ -1 T2))
+    (IF (>= (GATE-POSITION (+ -1 T2)) 1) (- (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2))))
+   (= (GATE-POSITION (+ -1 T2)) 0))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (= T1 T2) (>= T2 1) (DOWN-MODE T2)
+  (NOT (>= (GATE-POSITION (+ -1 T2)) 1)))
+ (>= (GATE-POSITION (+ -1 T2)) 0))
+Assuming GATE-POSITION-BOUNDS with the
+instantiations: (= T (- T2 1)) generates ...
+(IMPLIES
+ (AND (>= (GATE-POSITION (- T2 1)) 0) (<= (GATE-POSITION (- T2 1)) 90)
+  (= T1 T2) (>= T2 1) (DOWN-MODE T2) (NOT (>= (GATE-POSITION (+ -1 T2)) 1)))
+ (>= (GATE-POSITION (+ -1 T2)) 0))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+Starting case 2 ...
+(IMPLIES
+ (AND (>= T2 1) (NOT (DOWN-MODE T2))
+  (IMPLIES
+   (AND (>= T1 0) (>= (+ -1 T2) T1)
+    (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= (+ -1 T2) T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION (+ -1 T2))
+    (LOWER-N (GATE-POSITION T1) (- (+ -1 T2) T1))))
+  (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+ (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT
+ with the instantiation (= T3 T2) to ...
+(IMPLIES
+ (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0) (NOT (>= (+ -1 T2) T1))
+  (>= T2 T1) (ALL (T3) (IMPLIES (>= T3 T1) (NOT (>= T2 T3)))))
+ (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) 0)))
+Instantiating (= T3 T1) gives ...
+(IMPLIES
+ (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0) (NOT (>= (+ -1 T2) T1))
+  (>= T2 T1) (IMPLIES (>= T1 T1) (NOT (>= T2 T1)))
+  (ALL (T3) (IMPLIES (>= T3 T1) (NOT (>= T2 T3)))))
+ (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) 0)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (>= T2 1)) (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 T1) (>= T2 T3)) (DOWN-MODE T3))))
+ (= (GATE-POSITION T2) (LOWER-N (GATE-POSITION T1) (- T2 T1))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (NOT (>= T2 1)) (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 0) (<= T3 0)) (DOWN-MODE 0))))
+ (= (GATE-POSITION 0) (LOWER-N (GATE-POSITION 0) 0)))
+Invoking DOWN-MODE gives ...
+(IMPLIES
+ (AND (NOT (>= T2 1)) (>= T1 0) (>= T2 T1)
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 0) (<= T3 0))
+    (SOME (TR)
+     (AND (IS-TRAIN TR) (<= (+ (ENTER-SENSOR TR) 1) 0)
+      (>= (EXIT-CROSSING TR) 0))))))
+ (= (GATE-POSITION 0) (LOWER-N (GATE-POSITION 0) 0)))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-SENSOR-IS-NAT, IS-TRAIN-BOOL
+ with the instantiation (= T3 0) to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+GATE-DOWN-THM
+Beginning proof of GATE-DOWN-THM ...
+(IMPLIES
+ (AND (>= T 90)
+  (ALL (T3) (IMPLIES (AND (>= T3 (- T 90)) (>= T T3)) (DOWN-MODE T3))))
+ (GATE-DOWN T))
+Invoking GATE-DOWN gives ...
+(IMPLIES
+ (AND (>= T 90)
+  (ALL (T3) (IMPLIES (AND (>= T3 (- T 90)) (>= T T3)) (DOWN-MODE T3))))
+ (= (GATE-POSITION T) 0))
+Assuming LOWER-N-THM with the
+instantiations: (= T1 (- T 90)) (= T2 T) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= (- T 90) 0) (>= T (- T 90))
+    (ALL (T3) (IMPLIES (AND (>= T3 (- T 90)) (>= T T3)) (DOWN-MODE T3))))
+   (= (GATE-POSITION T) (LOWER-N (GATE-POSITION (- T 90)) (- T (- T 90)))))
+  (>= T 90)
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (- T 90)) (>= T T3$0)) (DOWN-MODE T3$0))))
+ (= (GATE-POSITION T) 0))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT
+ with the instantiation (= T3 T3$0) to ...
+(IMPLIES
+ (AND (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3)) (DOWN-MODE T3)))
+  (= (GATE-POSITION T) (LOWER-N (GATE-POSITION (+ -90 T)) 90)))
+ (= (GATE-POSITION T) 0))
+Invoking LOWER-N gives ...
+(IMPLIES
+ (AND (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3)) (DOWN-MODE T3)))
+  (= (GATE-POSITION T)
+   (IF (AND (>= 90 0) (>= (- (GATE-POSITION (+ -90 T)) 90) 0))
+    (- (GATE-POSITION (+ -90 T)) 90) 0)))
+ (= (GATE-POSITION T) 0))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3)) (DOWN-MODE T3)))
+  (>= (+ -90 (GATE-POSITION (+ -90 T))) 0)
+  (= (GATE-POSITION T) (+ -90 (GATE-POSITION (+ -90 T)))))
+ (= (GATE-POSITION T) 0))
+Assuming GATE-POSITION-BOUNDS with the
+instantiations: (= T (- T 90)) generates ...
+(IMPLIES
+ (AND (>= (GATE-POSITION (- T 90)) 0) (<= (GATE-POSITION (- T 90)) 90)
+  (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3)) (DOWN-MODE T3)))
+  (>= (+ -90 (GATE-POSITION (+ -90 T))) 0)
+  (= (GATE-POSITION T) (+ -90 (GATE-POSITION (+ -90 T)))))
+ (= (GATE-POSITION T) 0))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+SAFETY-THM-1
+Beginning proof of SAFETY-THM-1 ...
+(IMPLIES (SOME (TR) (AND (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR))))
+ (GATE-DOWN T))
+Prenexing produces ...
+(IMPLIES (AND (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR))) (GATE-DOWN T))
+Assuming GATE-DOWN-THM with the instantiations: (= T T) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= T 90)
+    (ALL (T3) (IMPLIES (AND (>= T3 (- T 90)) (>= T T3)) (DOWN-MODE T3))))
+   (GATE-DOWN T))
+  (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR)))
+ (GATE-DOWN T))
+Invoking CROSSING-INTERVAL gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= T 90)
+    (ALL (T3) (IMPLIES (AND (>= T3 (- T 90)) (>= T T3)) (DOWN-MODE T3))))
+   (GATE-DOWN T))
+  (IS-TRAIN TR) (IN T (RANGE (ENTER-CROSSING TR) (EXIT-CROSSING TR))))
+ (GATE-DOWN T))
+Splitting on (IS-TRAIN TR) generates ...
+(IF (IS-TRAIN TR)
+ (IMPLIES
+  (AND
+   (IMPLIES
+    (AND (>= T 90)
+     (ALL (T3) (IMPLIES (AND (>= T3 (- T 90)) (>= T T3)) (DOWN-MODE T3))))
+    (GATE-DOWN T))
+   (IS-TRAIN TR) (IN T (RANGE (ENTER-CROSSING TR) (EXIT-CROSSING TR))))
+  (GATE-DOWN T))
+ (IMPLIES
+  (AND
+   (IMPLIES
+    (AND (>= T 90)
+     (ALL (T3$0)
+      (IMPLIES (AND (>= T3$0 (- T 90)) (>= T T3$0)) (DOWN-MODE T3$0))))
+    (GATE-DOWN T))
+   (IS-TRAIN TR) (IN T (RANGE (ENTER-CROSSING TR) (EXIT-CROSSING TR))))
+  (GATE-DOWN T)))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES (IS-TRAIN TR)
+ (IF (>= T 90)
+  (IMPLIES
+   (AND
+    (NOT
+     (ALL (T3) (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3)) (DOWN-MODE T3))))
+    (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+   (GATE-DOWN T))
+  (IMPLIES (AND (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+   (GATE-DOWN T))))
+Starting case 2 ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90)
+  (NOT (ALL (T3) (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3)) (DOWN-MODE T3))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Invoking DOWN-MODE gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90)
+  (NOT
+   (ALL (T3)
+    (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3))
+     (SOME (TR$0)
+      (AND (IS-TRAIN TR$0) (>= T3 (+ (ENTER-SENSOR TR$0) 1))
+       (>= (EXIT-CROSSING TR$0) T3))))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Instantiating (= T3 T) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90)
+  (NOT
+   (AND
+    (IMPLIES (AND (>= T (+ -90 T)) (>= T T))
+     (SOME (TR$0)
+      (AND (IS-TRAIN TR$0) (>= T (+ (ENTER-SENSOR TR$0) 1))
+       (>= (EXIT-CROSSING TR$0) T))))
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3))
+      (SOME (TR$1)
+       (AND (IS-TRAIN TR$1) (>= T3 (+ (ENTER-SENSOR TR$1) 1))
+        (>= (EXIT-CROSSING TR$1) T3)))))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+ENTER-SENSOR-IS-NAT, IS-TRAIN-BOOL
+ with the instantiation (= TR$0 TR) to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90)
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (+ 1 (ENTER-SENSOR TR$0)))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (NOT
+   (ALL (T3)
+    (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3))
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1) (>= T3 (+ 1 (ENTER-SENSOR TR$1)))
+       (>= (EXIT-CROSSING TR$1) T3))))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90) (IS-TRAIN TR$0) (>= T (+ 1 (ENTER-SENSOR TR$0)))
+  (>= (EXIT-CROSSING TR$0) T)
+  (NOT
+   (IMPLIES (AND (>= T3 (+ -90 T)) (>= T T3))
+    (SOME (TR$1)
+     (AND (IS-TRAIN TR$1) (>= T3 (+ 1 (ENTER-SENSOR TR$1)))
+      (>= (EXIT-CROSSING TR$1) T3)))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+ENTER-SENSOR-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90) (IS-TRAIN TR$0) (>= T (+ 1 (ENTER-SENSOR TR$0)))
+  (>= (EXIT-CROSSING TR$0) T) (>= T3 (+ -90 T)) (>= T T3)
+  (NOT
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1) (>= T3 (+ 1 (ENTER-SENSOR TR$1)))
+     (>= (EXIT-CROSSING TR$1) T3))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Instantiating (= TR$1 TR) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T 90) (IS-TRAIN TR$0) (>= T (+ 1 (ENTER-SENSOR TR$0)))
+  (>= (EXIT-CROSSING TR$0) T) (>= T3 (+ -90 T)) (>= T T3)
+  (NOT
+   (OR
+    (AND (IS-TRAIN TR) (>= T3 (+ 1 (ENTER-SENSOR TR)))
+     (>= (EXIT-CROSSING TR) T3))
+    (SOME (TR$1)
+     (AND (IS-TRAIN TR$1) (>= T3 (+ 1 (ENTER-SENSOR TR$1)))
+      (>= (EXIT-CROSSING TR$1) T3)))))
+  (>= T (ENTER-CROSSING TR)) (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+ENTER-SENSOR-IS-NAT, IS-TRAIN-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (NOT (>= T 90)) (>= T (ENTER-CROSSING TR))
+  (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Assuming TRAIN-CROSSING-BOUNDS with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= (ENTER-CROSSING TR) (+ (ENTER-SENSOR TR) 300))
+    (>= (+ (ENTER-SENSOR TR) 1000) (ENTER-CROSSING TR))
+    (>= (EXIT-CROSSING TR) (ENTER-CROSSING TR))))
+  (IS-TRAIN TR) (NOT (>= T 90)) (>= T (ENTER-CROSSING TR))
+  (>= (EXIT-CROSSING TR) T))
+ (GATE-DOWN T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-SENSOR-IS-NAT,
+ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+SAFETY-THM-2
+Beginning proof of SAFETY-THM-2 ...
+(IMPLIES
+ (SOME (T1 T2) (AND (IS-OCCUPANCY-INTERVAL T1 T2) (IN T (RANGE T1 T2))))
+ (GATE-DOWN T))
+Prenexing produces ...
+(IMPLIES (AND (IS-OCCUPANCY-INTERVAL T1 T2) (IN T (RANGE T1 T2)))
+ (GATE-DOWN T))
+Invoking IS-OCCUPANCY-INTERVAL gives ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (- T1 1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ T2 1) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE T1 T2))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))
+  (IN T (RANGE T1 T2)))
+ (GATE-DOWN T))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (+ -1 T1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ 1 T2) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 T1) (>= T2 T3))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))
+  (>= T T1) (>= T2 T))
+ (GATE-DOWN T))
+Instantiating (= T3 T) gives ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (+ -1 T1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ 1 T2) (CROSSING-INTERVAL TR2)))))
+  (IMPLIES (AND (>= T T1) (>= T2 T))
+   (SOME (TR3) (AND (IS-TRAIN TR3) (IN T (CROSSING-INTERVAL TR3)))))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 T1) (>= T2 T3))
+    (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0))))))
+  (>= T T1) (>= T2 T))
+ (GATE-DOWN T))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (+ -1 T1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ 1 T2) (CROSSING-INTERVAL TR2)))))
+  (>= T T1) (>= T2 T)
+  (SOME (TR3) (AND (IS-TRAIN TR3) (IN T (CROSSING-INTERVAL TR3))))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 T1) (>= T2 T3))
+    (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0)))))))
+ (GATE-DOWN T))
+Prenexing produces ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (+ -1 T1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ 1 T2) (CROSSING-INTERVAL TR2)))))
+  (>= T T1) (>= T2 T) (IS-TRAIN TR3) (IN T (CROSSING-INTERVAL TR3))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 T1) (>= T2 T3))
+    (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0)))))))
+ (GATE-DOWN T))
+Assuming SAFETY-THM-1 generates ...
+(IMPLIES
+ (AND
+  (ALL (T$0)
+   (IMPLIES (SOME (TR) (AND (IS-TRAIN TR) (IN T$0 (CROSSING-INTERVAL TR))))
+    (GATE-DOWN T$0)))
+  (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (+ -1 T1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ 1 T2) (CROSSING-INTERVAL TR2)))))
+  (>= T T1) (>= T2 T) (IS-TRAIN TR3) (IN T (CROSSING-INTERVAL TR3))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 T1) (>= T2 T3))
+    (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0)))))))
+ (GATE-DOWN T))
+Instantiating (= T$0 T) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (SOME (TR) (AND (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR))))
+   (GATE-DOWN T))
+  (ALL (T$0)
+   (IMPLIES
+    (SOME (TR$0) (AND (IS-TRAIN TR$0) (IN T$0 (CROSSING-INTERVAL TR$0))))
+    (GATE-DOWN T$0)))
+  (>= T1 0) (>= T2 T1)
+  (NOT
+   (SOME (TR1) (AND (IS-TRAIN TR1) (IN (+ -1 T1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN (+ 1 T2) (CROSSING-INTERVAL TR2)))))
+  (>= T T1) (>= T2 T) (IS-TRAIN TR3) (IN T (CROSSING-INTERVAL TR3))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 T1) (>= T2 T3))
+    (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0)))))))
+ (GATE-DOWN T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions IS-TRAIN-BOOL
+ with the instantiation (= TR TR3) to ...
+(TRUE)
+RAISE-N
+RAISE-N-THM
+Beginning proof of RAISE-N-THM ...
+(IMPLIES
+ (AND (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+ (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= T2 1) (DOWN-MODE T2) (*P* T1 (+ -1 T2))) (*P* T1 T2))
+  (IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (*P* T1 (+ -1 T2)))
+   (*P* T1 T2))
+  (IMPLIES (NOT (>= T2 1)) (*P* T1 T2)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= T2 1) (DOWN-MODE T2)
+   (IMPLIES
+    (AND (>= T1 0) (>= (+ -1 T2) T1)
+     (ALL (T3)
+      (IMPLIES (AND (>= T3 (+ T1 1)) (>= (+ -1 T2) T3))
+       (NOT (DOWN-MODE T3)))))
+    (= (GATE-POSITION (+ -1 T2))
+     (RAISE-N (GATE-POSITION T1) (- (+ -1 T2) T1)))))
+  (IMPLIES
+   (AND (>= T1 0) (>= T2 T1)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1)))))
+ (IMPLIES
+  (AND (>= T2 1) (NOT (DOWN-MODE T2))
+   (IMPLIES
+    (AND (>= T1 0) (>= (+ -1 T2) T1)
+     (ALL (T3)
+      (IMPLIES (AND (>= T3 (+ T1 1)) (>= (+ -1 T2) T3))
+       (NOT (DOWN-MODE T3)))))
+    (= (GATE-POSITION (+ -1 T2))
+     (RAISE-N (GATE-POSITION T1) (- (+ -1 T2) T1)))))
+  (IMPLIES
+   (AND (>= T1 0) (>= T2 T1)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1)))))
+ (IMPLIES (NOT (>= T2 1))
+  (IMPLIES
+   (AND (>= T1 0) (>= T2 T1)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1))))))
+Starting case 3 ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2)
+  (IMPLIES
+   (AND (>= T1 0) (>= (+ -1 T2) T1)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ T1 1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION (+ -1 T2))
+    (RAISE-N (GATE-POSITION T1) (- (+ -1 T2) T1))))
+  (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+ (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT
+ with the instantiation (= T3 T2) to ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+ (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) 0)))
+Invoking RAISE-N gives ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+ (= (GATE-POSITION T2)
+  (IF (AND (>= 0 0) (<= (+ 0 (GATE-POSITION T1)) 90)) (+ 0 (GATE-POSITION T1))
+   90)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= T2 1) (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+ (<= (GATE-POSITION T1) 90))
+Assuming GATE-POSITION-BOUNDS with the instantiations: (= T T1) generates ...
+(IMPLIES
+ (AND (>= (GATE-POSITION T1) 0) (<= (GATE-POSITION T1) 90) (>= T2 1)
+  (DOWN-MODE T2) (>= T1 0) (NOT (>= (+ -1 T2) T1)) (>= T2 T1))
+ (<= (GATE-POSITION T1) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+Starting case 2 ...
+(IMPLIES
+ (AND (>= T2 1) (NOT (DOWN-MODE T2))
+  (IMPLIES
+   (AND (>= T1 0) (>= (+ -1 T2) T1)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ T1 1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION (+ -1 T2))
+    (RAISE-N (GATE-POSITION T1) (- (+ -1 T2) T1))))
+  (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+ (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1))))
+Invoking (GATE-POSITION T2) gives ...
+(IMPLIES
+ (AND (>= T2 1) (NOT (DOWN-MODE T2))
+  (IMPLIES
+   (AND (>= T1 0) (>= (+ -1 T2) T1)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ T1 1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION (+ -1 T2))
+    (RAISE-N (GATE-POSITION T1) (- (+ -1 T2) T1))))
+  (>= T1 0) (>= T2 T1)
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ T1 1)) (>= T2 T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (=
+  (IF (>= T2 1)
+   (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+    (RAISE (GATE-POSITION (+ -1 T2))))
+   90)
+  (RAISE-N (GATE-POSITION T1) (- T2 T1))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IF
+   (ALL (T3)
+    (IMPLIES (AND (>= T3 (+ 1 T1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3))))
+   (IMPLIES
+    (AND
+     (= (GATE-POSITION (+ -1 T2))
+      (RAISE-N (GATE-POSITION T1) (+ -1 (* -1 T1) T2)))
+     (ALL (T3$0)
+      (IMPLIES (AND (>= T3$0 (+ 1 T1)) (>= T2 T3$0)) (NOT (DOWN-MODE T3$0)))))
+    (= (RAISE (GATE-POSITION (+ -1 T2)))
+     (RAISE-N (GATE-POSITION T1) (+ (* -1 T1) T2))))
+   (IMPLIES
+    (ALL (T3$1)
+     (IMPLIES (AND (>= T3$1 (+ 1 T1)) (>= T2 T3$1)) (NOT (DOWN-MODE T3$1))))
+    (= (RAISE (GATE-POSITION (+ -1 T2)))
+     (RAISE-N (GATE-POSITION T1) (+ (* -1 T1) T2)))))
+  (IMPLIES (>= T2 T1)
+   (= (RAISE (GATE-POSITION (+ -1 T2))) (RAISE-N (GATE-POSITION T1) 0)))))
+Invoking RAISE gives ...
+(IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IMPLIES
+   (IF
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ 1 T1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3))))
+    (AND
+     (= (GATE-POSITION (+ -1 T2))
+      (RAISE-N (GATE-POSITION T1) (+ -1 (* -1 T1) T2)))
+     (ALL (T3$0)
+      (IMPLIES (AND (>= T3$0 (+ 1 T1)) (>= T2 T3$0)) (NOT (DOWN-MODE T3$0)))))
+    (ALL (T3$1)
+     (IMPLIES (AND (>= T3$1 (+ 1 T1)) (>= T2 T3$1)) (NOT (DOWN-MODE T3$1)))))
+   (=
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (RAISE-N (GATE-POSITION T1) (+ (* -1 T1) T2))))
+  (IMPLIES (>= T2 T1)
+   (=
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (RAISE-N (GATE-POSITION T1) 0)))))
+Invoking RAISE-N gives ...
+(IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IMPLIES
+   (IF
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ 1 T1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3))))
+    (AND
+     (= (GATE-POSITION (+ -1 T2))
+      (IF
+       (AND (>= (+ -1 (* -1 T1) T2) 0)
+        (<= (+ (GATE-POSITION T1) -1 (* -1 T1) T2) 90))
+       (+ (GATE-POSITION T1) -1 (* -1 T1) T2) 90))
+     (ALL (T3$0)
+      (IMPLIES (AND (>= T3$0 (+ 1 T1)) (>= T2 T3$0)) (NOT (DOWN-MODE T3$0)))))
+    (ALL (T3$1)
+     (IMPLIES (AND (>= T3$1 (+ 1 T1)) (>= T2 T3$1)) (NOT (DOWN-MODE T3$1)))))
+   (=
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (IF
+     (AND (>= (+ (* -1 T1) T2) 0) (<= (+ (GATE-POSITION T1) (* -1 T1) T2) 90))
+     (+ (GATE-POSITION T1) (* -1 T1) T2) 90)))
+  (IMPLIES (>= T2 T1)
+   (=
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    (IF (AND (>= 0 0) (<= (+ 0 (GATE-POSITION T1)) 90))
+     (+ 0 (GATE-POSITION T1)) 90)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IMPLIES
+   (AND
+    (NOT
+     (ALL (T3)
+      (IMPLIES (AND (>= T3 (+ 1 T1)) (>= (+ -1 T2) T3))
+       (NOT (DOWN-MODE T3)))))
+    (ALL (T3$0)
+     (IMPLIES (AND (>= T3$0 (+ 1 T1)) (>= T2 T3$0)) (NOT (DOWN-MODE T3$0)))))
+   (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+    (IF (<= (+ (* -1 T1) T2 (GATE-POSITION T1)) 90)
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) (+ (* -1 T1) T2 (GATE-POSITION T1)))
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+    (IF (<= (+ (* -1 T1) T2 (GATE-POSITION T1)) 90)
+     (= (GATE-POSITION (+ -1 T2)) (+ (* -1 T1) T2 (GATE-POSITION T1)))
+     (= (GATE-POSITION (+ -1 T2)) 90))))
+  (IMPLIES (>= T2 T1)
+   (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+    (IF (<= (GATE-POSITION T1) 90)
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+    (IF (<= (GATE-POSITION T1) 90)
+     (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+     (= (GATE-POSITION (+ -1 T2)) 90))))))
+Instantiating (= T3$0 T3) gives ...
+(IMPLIES (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0))
+ (IF (>= (+ -1 T2) T1)
+  (IMPLIES
+   (SOME (T3)
+    (AND
+     (NOT
+      (IMPLIES (AND (>= T3 (+ 1 T1)) (>= (+ -1 T2) T3)) (NOT (DOWN-MODE T3))))
+     (IMPLIES (AND (>= T3 (+ 1 T1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))
+     (ALL (T3$0)
+      (IMPLIES (AND (>= T3$0 (+ 1 T1)) (>= T2 T3$0))
+       (NOT (DOWN-MODE T3$0))))))
+   (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+    (IF (<= (+ (* -1 T1) T2 (GATE-POSITION T1)) 90)
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) (+ (* -1 T1) T2 (GATE-POSITION T1)))
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+    (IF (<= (+ (* -1 T1) T2 (GATE-POSITION T1)) 90)
+     (= (GATE-POSITION (+ -1 T2)) (+ (* -1 T1) T2 (GATE-POSITION T1)))
+     (= (GATE-POSITION (+ -1 T2)) 90))))
+  (IMPLIES (>= T2 T1)
+   (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+    (IF (<= (GATE-POSITION T1) 90)
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+     (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+    (IF (<= (GATE-POSITION T1) 90)
+     (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+     (= (GATE-POSITION (+ -1 T2)) 90))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0) (NOT (>= (+ -1 T2) T1))
+  (>= T2 T1))
+ (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+  (IF (<= (GATE-POSITION T1) 90)
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+  (IF (<= (GATE-POSITION T1) 90)
+   (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+   (= (GATE-POSITION (+ -1 T2)) 90))))
+Splitting on (= T1 T2) generates ...
+(IF (= T1 T2)
+ (IMPLIES
+  (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0) (NOT (>= (+ -1 T2) T1))
+   (>= T2 T1))
+  (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+   (IF (<= (GATE-POSITION T1) 90)
+    (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+    (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+   (IF (<= (GATE-POSITION T1) 90)
+    (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+    (= (GATE-POSITION (+ -1 T2)) 90))))
+ (IMPLIES
+  (AND (>= T2 1) (NOT (DOWN-MODE T2)) (>= T1 0) (NOT (>= (+ -1 T2) T1))
+   (>= T2 T1))
+  (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+   (IF (<= (GATE-POSITION T1) 90)
+    (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+    (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+   (IF (<= (GATE-POSITION T1) 90)
+    (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+    (= (GATE-POSITION (+ -1 T2)) 90)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2)))
+ (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+  (IF (<= (GATE-POSITION T1) 90)
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T1))
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+  (IF (<= (GATE-POSITION T1) 90)
+   (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T1))
+   (= (GATE-POSITION (+ -1 T2)) 90))))
+Substituting (= T1 T2) produces ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2)))
+ (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+  (IF (<= (GATE-POSITION T2) 90)
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) (GATE-POSITION T2))
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+  (IF (<= (GATE-POSITION T2) 90)
+   (= (GATE-POSITION (+ -1 T2)) (GATE-POSITION T2))
+   (= (GATE-POSITION (+ -1 T2)) 90))))
+Invoking (GATE-POSITION T2) gives ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2)))
+ (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+  (IF
+   (<=
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90)
+    90)
+   (= (+ 1 (GATE-POSITION (+ -1 T2)))
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90))
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+  (IF
+   (<=
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90)
+    90)
+   (= (GATE-POSITION (+ -1 T2))
+    (IF (>= T2 1)
+     (IF (DOWN-MODE T2) (LOWER (GATE-POSITION (+ -1 T2)))
+      (RAISE (GATE-POSITION (+ -1 T2))))
+     90))
+   (= (GATE-POSITION (+ -1 T2)) 90))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2)))
+ (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+  (IF (<= (RAISE (GATE-POSITION (+ -1 T2))) 90)
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) (RAISE (GATE-POSITION (+ -1 T2))))
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+  (IF (<= (RAISE (GATE-POSITION (+ -1 T2))) 90)
+   (= (GATE-POSITION (+ -1 T2)) (RAISE (GATE-POSITION (+ -1 T2))))
+   (= (GATE-POSITION (+ -1 T2)) 90))))
+Invoking RAISE gives ...
+(IMPLIES (AND (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2)))
+ (IF (<= (GATE-POSITION (+ -1 T2)) 89)
+  (IF
+   (<=
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    90)
+   (= (+ 1 (GATE-POSITION (+ -1 T2)))
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2))))
+   (= (+ 1 (GATE-POSITION (+ -1 T2))) 90))
+  (IF
+   (<=
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2)))
+    90)
+   (= (GATE-POSITION (+ -1 T2))
+    (IF (<= (GATE-POSITION (+ -1 T2)) 89) (+ (GATE-POSITION (+ -1 T2)) 1)
+     (GATE-POSITION (+ -1 T2))))
+   (= (GATE-POSITION (+ -1 T2)) 90))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2))
+  (NOT (<= (GATE-POSITION (+ -1 T2)) 89)))
+ (<= (GATE-POSITION (+ -1 T2)) 90))
+Assuming GATE-POSITION-BOUNDS with the
+instantiations: (= T (- T2 1)) generates ...
+(IMPLIES
+ (AND (>= (GATE-POSITION (- T2 1)) 0) (<= (GATE-POSITION (- T2 1)) 90)
+  (= T1 T2) (>= T2 1) (NOT (DOWN-MODE T2))
+  (NOT (<= (GATE-POSITION (+ -1 T2)) 89)))
+ (<= (GATE-POSITION (+ -1 T2)) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (>= T2 1)) (>= T1 0) (>= T2 T1)
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ T1 1)) (>= T2 T3)) (NOT (DOWN-MODE T3)))))
+ (= (GATE-POSITION T2) (RAISE-N (GATE-POSITION T1) (- T2 T1))))
+Which simplifies
+ with invocation of RAISE-N, GATE-POSITION
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+GATE-UP-THM
+Beginning proof of GATE-UP-THM ...
+(IMPLIES
+ (AND (>= T 90)
+  (ALL (T3) (IMPLIES (AND (>= T3 (- T 89)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+ (GATE-UP T))
+Invoking GATE-UP gives ...
+(IMPLIES
+ (AND (>= T 90)
+  (ALL (T3) (IMPLIES (AND (>= T3 (- T 89)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+ (= (GATE-POSITION T) 90))
+Assuming RAISE-N-THM with the
+instantiations: (= T1 (- T 90)) (= T2 T) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= (- T 90) 0) (>= T (- T 90))
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ (- T 90) 1)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+   (= (GATE-POSITION T) (RAISE-N (GATE-POSITION (- T 90)) (- T (- T 90)))))
+  (>= T 90)
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (- T 89)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (GATE-POSITION T) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT
+ with the instantiation (= T3 T3$0) to ...
+(IMPLIES
+ (AND (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3))))
+  (= (GATE-POSITION T) (RAISE-N (GATE-POSITION (+ -90 T)) 90)))
+ (= (GATE-POSITION T) 90))
+Invoking RAISE-N gives ...
+(IMPLIES
+ (AND (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3))))
+  (= (GATE-POSITION T)
+   (IF (AND (>= 90 0) (<= (+ (GATE-POSITION (+ -90 T)) 90) 90))
+    (+ (GATE-POSITION (+ -90 T)) 90) 90)))
+ (= (GATE-POSITION T) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3))))
+  (<= (+ 90 (GATE-POSITION (+ -90 T))) 90)
+  (= (GATE-POSITION T) (+ 90 (GATE-POSITION (+ -90 T)))))
+ (= (GATE-POSITION T) 90))
+Assuming GATE-POSITION-BOUNDS with the
+instantiations: (= T (- T 90)) generates ...
+(IMPLIES
+ (AND (>= (GATE-POSITION (- T 90)) 0) (<= (GATE-POSITION (- T 90)) 90)
+  (>= (+ -90 T) 0) (>= T (+ -90 T))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3))))
+  (<= (+ 90 (GATE-POSITION (+ -90 T))) 90)
+  (= (GATE-POSITION T) (+ 90 (GATE-POSITION (+ -90 T)))))
+ (= (GATE-POSITION T) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+NAT-INDUCTION
+Beginning proof of NAT-INDUCTION ...
+(IF (>= I 1) (M< (+ -1 I) I) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+GATE-UP-THM-2
+Beginning proof of GATE-UP-THM-2 ...
+(IMPLIES
+ (ALL (T3) (IMPLIES (AND (>= T3 (- T 89)) (>= T T3)) (NOT (DOWN-MODE T3))))
+ (GATE-UP T))
+Assuming GATE-UP-THM with the instantiations: (= T T) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (>= T 90)
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (- T 89)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+   (GATE-UP T))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (- T 89)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (GATE-UP T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the instantiation (= T3 T3$0) to ...
+(IMPLIES
+ (AND (NOT (>= T 90))
+  (ALL (T3) (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+ (GATE-UP T))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= T 1) (*P* (+ -1 T))) (*P* T))
+  (IMPLIES (NOT (>= T 1)) (*P* T)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= T 1)
+   (IMPLIES
+    (AND (NOT (>= (+ -1 T) 90))
+     (ALL (T3)
+      (IMPLIES (AND (>= T3 (+ -89 -1 T)) (>= (+ -1 T) T3))
+       (NOT (DOWN-MODE T3)))))
+    (GATE-UP (+ -1 T))))
+  (IMPLIES
+   (AND (NOT (>= T 90))
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+   (GATE-UP T)))
+ (IMPLIES (NOT (>= T 1))
+  (IMPLIES
+   (AND (NOT (>= T 90))
+    (ALL (T3)
+     (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3)))))
+   (GATE-UP T))))
+Invoking GATE-UP gives ...
+(AND
+ (IMPLIES
+  (AND (>= T 1)
+   (IMPLIES
+    (AND (NOT (>= (+ -1 T) 90))
+     (ALL (T3)
+      (IMPLIES (AND (>= T3 (+ -89 -1 T)) (>= (+ -1 T) T3))
+       (NOT (DOWN-MODE T3)))))
+    (= (GATE-POSITION (+ -1 T)) 90))
+   (NOT (>= T 90))
+   (ALL (T3$0)
+    (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+  (= (GATE-POSITION T) 90))
+ (IMPLIES
+  (AND (NOT (>= T 1)) (NOT (>= T 90))
+   (ALL (T3$1)
+    (IMPLIES (AND (>= T3$1 (+ -89 T)) (>= T T3$1)) (NOT (DOWN-MODE T3$1)))))
+  (= (GATE-POSITION T) 90)))
+Invoking (GATE-POSITION T) gives ...
+(AND
+ (IMPLIES
+  (AND (>= T 1)
+   (IMPLIES
+    (AND (NOT (>= (+ -1 T) 90))
+     (ALL (T3)
+      (IMPLIES (AND (>= T3 (+ -89 -1 T)) (>= (+ -1 T) T3))
+       (NOT (DOWN-MODE T3)))))
+    (= (GATE-POSITION (+ -1 T)) 90))
+   (NOT (>= T 90))
+   (ALL (T3$0)
+    (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+  (=
+   (IF (>= T 1)
+    (IF (DOWN-MODE T) (LOWER (GATE-POSITION (+ -1 T)))
+     (RAISE (GATE-POSITION (+ -1 T))))
+    90)
+   90))
+ (IMPLIES
+  (AND (NOT (>= T 1)) (NOT (>= T 90))
+   (ALL (T3$1)
+    (IMPLIES (AND (>= T3$1 (+ -89 T)) (>= T T3$1)) (NOT (DOWN-MODE T3$1)))))
+  (=
+   (IF (>= T 1)
+    (IF (DOWN-MODE T) (LOWER (GATE-POSITION (+ -1 T)))
+     (RAISE (GATE-POSITION (+ -1 T))))
+    90)
+   90)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT
+ with the instantiation (= T3$0 T) to ...
+(IMPLIES (AND (>= T 1) (NOT (>= (+ -1 T) 90)))
+ (IF
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 (+ -90 T)) (>= (+ -1 T) T3)) (NOT (DOWN-MODE T3))))
+  (IMPLIES
+   (AND (= (GATE-POSITION (+ -1 T)) 90) (NOT (>= T 90))
+    (ALL (T3$0)
+     (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+   (= (RAISE 90) 90))
+  (IMPLIES
+   (AND (NOT (>= T 90))
+    (ALL (T3$1)
+     (IMPLIES (AND (>= T3$1 (+ -89 T)) (>= T T3$1)) (NOT (DOWN-MODE T3$1)))))
+   (= (RAISE (GATE-POSITION (+ -1 T))) 90))))
+Starting case 2 ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 (+ -90 T)) (>= (+ -1 T) T3)) (NOT (DOWN-MODE T3))))
+  (= (GATE-POSITION (+ -1 T)) 90) (NOT (>= T 90))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE 90) 90))
+Invoking RAISE gives ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 (+ -90 T)) (>= (+ -1 T) T3)) (NOT (DOWN-MODE T3))))
+  (= (GATE-POSITION (+ -1 T)) 90) (NOT (>= T 90))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (IF (>= 89 90) (+ 90 1) 90) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90))
+  (NOT
+   (ALL (T3)
+    (IMPLIES (AND (>= T3 (+ -90 T)) (>= (+ -1 T) T3)) (NOT (DOWN-MODE T3)))))
+  (NOT (>= T 90))
+  (ALL (T3$1)
+   (IMPLIES (AND (>= T3$1 (+ -89 T)) (>= T T3$1)) (NOT (DOWN-MODE T3$1)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Prenexing produces ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90))
+  (NOT
+   (IMPLIES (AND (>= T3 (+ -90 T)) (>= (+ -1 T) T3)) (NOT (DOWN-MODE T3))))
+  (NOT (>= T 90))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90)) (>= T3 (+ -90 T)) (>= (+ -1 T) T3)
+  (DOWN-MODE T3) (NOT (>= T 90))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Instantiating (= T3$0 T3) gives ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90)) (>= T3 (+ -90 T)) (>= (+ -1 T) T3)
+  (DOWN-MODE T3) (NOT (>= T 90))
+  (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3)))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions GATE-POSITION-INT to ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90)) (>= T3 (+ -90 T)) (>= (+ -1 T) T3)
+  (DOWN-MODE T3) (NOT (>= T 90)) (NOT (>= T3 (+ -89 T)))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Invoking (DOWN-MODE T3) gives ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90)) (>= T3 (+ -90 T)) (>= (+ -1 T) T3)
+  (SOME (TR)
+   (AND (IS-TRAIN TR) (>= T3 (+ (ENTER-SENSOR TR) 1))
+    (>= (EXIT-CROSSING TR) T3)))
+  (NOT (>= T 90)) (NOT (>= T3 (+ -89 T)))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Prenexing produces ...
+(IMPLIES
+ (AND (>= T 1) (NOT (>= (+ -1 T) 90)) (>= T3 (+ -90 T)) (>= (+ -1 T) T3)
+  (IS-TRAIN TR) (>= T3 (+ (ENTER-SENSOR TR) 1)) (>= (EXIT-CROSSING TR) T3)
+  (NOT (>= T 90)) (NOT (>= T3 (+ -89 T)))
+  (ALL (T3$0)
+   (IMPLIES (AND (>= T3$0 (+ -89 T)) (>= T T3$0)) (NOT (DOWN-MODE T3$0)))))
+ (= (RAISE (GATE-POSITION (+ -1 T))) 90))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-SENSOR-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+UTILITY-THM-1
+Beginning proof of UTILITY-THM-1 ...
+(IMPLIES
+ (NOT
+  (SOME (TR)
+   (AND (IS-TRAIN TR)
+    (IN T (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89))))))
+ (GATE-UP T))
+Assuming GATE-UP-THM-2 with the instantiations: (= T T) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (ALL (T3) (IMPLIES (AND (>= T3 (- T 89)) (>= T T3)) (NOT (DOWN-MODE T3))))
+   (GATE-UP T))
+  (NOT
+   (SOME (TR)
+    (AND (IS-TRAIN TR)
+     (IN T (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89)))))))
+ (GATE-UP T))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(OR
+ (ALL (T3) (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3))))
+ (SOME (TR)
+  (AND (IS-TRAIN TR) (>= T (+ -1000 (ENTER-CROSSING TR)))
+   (>= (+ 89 (EXIT-CROSSING TR)) T)))
+ (GATE-UP T))
+Prenexing produces ...
+(OR (IMPLIES (AND (>= T3 (+ -89 T)) (>= T T3)) (NOT (DOWN-MODE T3)))
+ (SOME (TR)
+  (AND (IS-TRAIN TR) (>= T (+ -1000 (ENTER-CROSSING TR)))
+   (>= (+ 89 (EXIT-CROSSING TR)) T)))
+ (GATE-UP T))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (>= T3 (+ -89 T)) (>= T T3) (DOWN-MODE T3)
+  (NOT
+   (SOME (TR)
+    (AND (IS-TRAIN TR) (>= T (+ -1000 (ENTER-CROSSING TR)))
+     (>= (+ 89 (EXIT-CROSSING TR)) T)))))
+ (GATE-UP T))
+Invoking DOWN-MODE gives ...
+(IMPLIES
+ (AND (>= T3 (+ -89 T)) (>= T T3)
+  (SOME (TR)
+   (AND (IS-TRAIN TR) (>= T3 (+ (ENTER-SENSOR TR) 1))
+    (>= (EXIT-CROSSING TR) T3)))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= T (+ -1000 (ENTER-CROSSING TR$0)))
+     (>= (+ 89 (EXIT-CROSSING TR$0)) T)))))
+ (GATE-UP T))
+Prenexing produces ...
+(IMPLIES
+ (AND (>= T3 (+ -89 T)) (>= T T3) (IS-TRAIN TR)
+  (>= T3 (+ (ENTER-SENSOR TR) 1)) (>= (EXIT-CROSSING TR) T3)
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= T (+ -1000 (ENTER-CROSSING TR$0)))
+     (>= (+ 89 (EXIT-CROSSING TR$0)) T)))))
+ (GATE-UP T))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+ENTER-SENSOR-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (>= T3 (+ -89 T)) (>= T T3) (IS-TRAIN TR)
+  (>= T3 (+ 1 (ENTER-SENSOR TR))) (>= (EXIT-CROSSING TR) T3)
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= T (+ -1000 (ENTER-CROSSING TR$0)))
+     (>= (+ 89 (EXIT-CROSSING TR$0)) T)))))
+ (GATE-UP T))
+Instantiating (= TR$0 TR) gives ...
+(IMPLIES
+ (AND (>= T3 (+ -89 T)) (>= T T3) (IS-TRAIN TR)
+  (>= T3 (+ 1 (ENTER-SENSOR TR))) (>= (EXIT-CROSSING TR) T3)
+  (NOT
+   (OR
+    (AND (IS-TRAIN TR) (>= T (+ -1000 (ENTER-CROSSING TR)))
+     (>= (+ 89 (EXIT-CROSSING TR)) T))
+    (SOME (TR$0)
+     (AND (IS-TRAIN TR$0) (>= T (+ -1000 (ENTER-CROSSING TR$0)))
+      (>= (+ 89 (EXIT-CROSSING TR$0)) T))))))
+ (GATE-UP T))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+ENTER-SENSOR-IS-NAT, IS-TRAIN-BOOL to ...
+(TRUE)
+LIVENESS-ASSUMPTION
+Beginning proof of LIVENESS-ASSUMPTION ...
+(IMPLIES (IS-TRAIN TR)
+ (SOME (T)
+  (AND (>= T (EXIT-CROSSING TR))
+   (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))))
+SET-OF-VACANT-POINTS-AFTER
+SET-OF-OCCUPIED-POINTS-BEFORE
+INTERVAL-LOB
+INTERVAL-HIB
+INTERVAL-LOB-LEMMA
+Beginning proof of INTERVAL-LOB-LEMMA ...
+(IMPLIES (IS-TRAIN TR)
+ (IN (INTERVAL-LOB TR) (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+Invoking INTERVAL-LOB gives ...
+(IMPLIES (IS-TRAIN TR)
+ (IN
+  (NAT!SMALLEST-NAT-MEMBER
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N (ENTER-CROSSING TR))
+                (= X
+                 (SET-OF-OCCUPIED-POINTS-BEFORE
+                  (ENTER-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (IN (ENTER-CROSSING TR)
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN (ENTER-CROSSING TR) (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (ENTER-CROSSING TR))))
+  (IS-TRAIN TR))
+ (IN
+  (NAT!SMALLEST-NAT-MEMBER
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+Which simplifies
+ when rewriting with NAT!IN-NAT, SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, ENTER-CROSSING-IS-NAT to ...
+(IF
+ (SOME (TR$0)
+  (AND (IS-TRAIN TR$0) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR$0))))
+ (IMPLIES
+  (AND
+   (NOT
+    (ALL (T2)
+     (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+      (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2)))))))
+   (IS-TRAIN TR))
+  (AND
+   (IN
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (INT))
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1)
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      (CROSSING-INTERVAL TR$1))))
+   (ALL (T2$0)
+    (IMPLIES
+     (AND
+      (>= T2$0
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+      (>= (ENTER-CROSSING TR) T2$0))
+     (SOME (TR2$0)
+      (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0))))))))
+ (IMPLIES (IS-TRAIN TR)
+  (AND
+   (IN
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (INT))
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (SOME (TR$2)
+    (AND (IS-TRAIN TR$2)
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      (CROSSING-INTERVAL TR$2))))
+   (ALL (T2$1)
+    (IMPLIES
+     (AND
+      (>= T2$1
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+      (>= (ENTER-CROSSING TR) T2$1))
+     (SOME (TR2$1)
+      (AND (IS-TRAIN TR2$1) (IN T2$1 (CROSSING-INTERVAL TR2$1)))))))))
+Instantiating (= TR$0 TR) gives ...
+(IF
+ (OR (AND (IS-TRAIN TR) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR)))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR$0)))))
+ (IMPLIES
+  (AND
+   (NOT
+    (ALL (T2)
+     (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+      (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2)))))))
+   (IS-TRAIN TR))
+  (AND
+   (IN
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (INT))
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1)
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      (CROSSING-INTERVAL TR$1))))
+   (ALL (T2$0)
+    (IMPLIES
+     (AND
+      (>= T2$0
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+      (>= (ENTER-CROSSING TR) T2$0))
+     (SOME (TR2$0)
+      (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0))))))))
+ (IMPLIES (IS-TRAIN TR)
+  (AND
+   (IN
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (INT))
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (SOME (TR$2)
+    (AND (IS-TRAIN TR$2)
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      (CROSSING-INTERVAL TR$2))))
+   (ALL (T2$1)
+    (IMPLIES
+     (AND
+      (>= T2$1
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+      (>= (ENTER-CROSSING TR) T2$1))
+     (SOME (TR2$1)
+      (AND (IS-TRAIN TR2$1) (IN T2$1 (CROSSING-INTERVAL TR2$1)))))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiation (= TR2 TR) to ...
+(TRUE)
+INTERVAL-HIB-LEMMA
+Beginning proof of INTERVAL-HIB-LEMMA ...
+(IMPLIES (IS-TRAIN TR)
+ (IN (+ (INTERVAL-HIB TR) 1) (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Invoking INTERVAL-HIB gives ...
+(IMPLIES (IS-TRAIN TR)
+ (IN
+  (+
+   (-
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    1)
+   1)
+  (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Assuming LIVENESS-ASSUMPTION with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (SOME (T)
+    (AND (>= T (EXIT-CROSSING TR))
+     (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))))
+  (IS-TRAIN TR))
+ (IN
+  (+
+   (-
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    1)
+   1)
+  (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= T (EXIT-CROSSING TR))
+    (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))))
+  (IS-TRAIN TR))
+ (IN
+  (+
+   (-
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    1)
+   1)
+  (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (IN
+  (ORD
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N T)
+                (= X
+                 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN T (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN T (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     T)))
+  (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (IN
+  (ORD
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Which simplifies
+ when rewriting with NAT!IN-NAT, SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, EXIT-CROSSING-IS-NAT to ...
+(IMPLIES
+ (AND (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (SOME (TR$0) (AND (IS-TRAIN TR$0) (IN T (CROSSING-INTERVAL TR$0))))
+  (IS-TRAIN TR) (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (AND
+  (>=
+   (ORD
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1)
+     (IN
+      (ORD
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+      (CROSSING-INTERVAL TR$1)))))))
+Instantiating (= TR2 TR$0) gives ...
+(IMPLIES
+ (AND (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (IN T (CROSSING-INTERVAL TR$0)) (IS-TRAIN TR)
+    (NOT
+     (OR (IN T (CROSSING-INTERVAL TR$0))
+      (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))))))
+ (AND
+  (>=
+   (ORD
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1)
+     (IN
+      (ORD
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+      (CROSSING-INTERVAL TR$1)))))))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, EXIT-CROSSING-IS-NAT to ...
+(TRUE)
+OCCUPANCY-LEMMA-1
+Beginning proof of OCCUPANCY-LEMMA-1 ...
+(IMPLIES (IS-TRAIN TR)
+ (AND (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))))
+Invoking INTERVAL-LOB gives ...
+(IMPLIES (IS-TRAIN TR)
+ (AND
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N (ENTER-CROSSING TR))
+                (= X
+                 (SET-OF-OCCUPIED-POINTS-BEFORE
+                  (ENTER-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (IN (ENTER-CROSSING TR)
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN (ENTER-CROSSING TR) (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (ENTER-CROSSING TR))))
+  (IS-TRAIN TR))
+ (AND
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+Which simplifies
+ when rewriting with NAT!IN-NAT, SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, ENTER-CROSSING-IS-NAT to ...
+(IF
+ (SOME (TR$0)
+  (AND (IS-TRAIN TR$0) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR$0))))
+ (IMPLIES
+  (AND
+   (NOT
+    (ALL (T2)
+     (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+      (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2)))))))
+   (IS-TRAIN TR))
+  (AND
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+ (IMPLIES (IS-TRAIN TR)
+  (AND
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))))
+Instantiating (= TR$0 TR) gives ...
+(IMPLIES
+ (IF
+  (OR (AND (IS-TRAIN TR) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR)))
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR$0)))))
+  (AND
+   (NOT
+    (ALL (T2)
+     (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+      (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2)))))))
+   (IS-TRAIN TR))
+  (IS-TRAIN TR))
+ (AND
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+Splitting on (IS-TRAIN TR) generates ...
+(IF (IS-TRAIN TR)
+ (IMPLIES
+  (IF
+   (OR (AND (IS-TRAIN TR) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR)))
+    (SOME (TR$0)
+     (AND (IS-TRAIN TR$0) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR$0)))))
+   (AND
+    (NOT
+     (ALL (T2)
+      (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+       (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2)))))))
+    (IS-TRAIN TR))
+   (IS-TRAIN TR))
+  (AND
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+ (IMPLIES
+  (IF
+   (OR (AND (IS-TRAIN TR) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR)))
+    (SOME (TR$1)
+     (AND (IS-TRAIN TR$1) (IN (ENTER-CROSSING TR) (CROSSING-INTERVAL TR$1)))))
+   (AND
+    (NOT
+     (ALL (T2$0)
+      (IMPLIES
+       (AND (>= T2$0 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2$0))
+       (SOME (TR2$0)
+        (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0)))))))
+    (IS-TRAIN TR))
+   (IS-TRAIN TR))
+  (AND
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiation (= TR2 TR) to ...
+(TRUE)
+OCCUPANCY-LEMMA-2
+Beginning proof of OCCUPANCY-LEMMA-2 ...
+(IMPLIES (IS-TRAIN TR) (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+Invoking INTERVAL-HIB gives ...
+(IMPLIES (IS-TRAIN TR)
+ (>=
+  (- (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+   1)
+  (EXIT-CROSSING TR)))
+Assuming LIVENESS-ASSUMPTION with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (SOME (T)
+    (AND (>= T (EXIT-CROSSING TR))
+     (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))))
+  (IS-TRAIN TR))
+ (>=
+  (- (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+   1)
+  (EXIT-CROSSING TR)))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= T (EXIT-CROSSING TR))
+    (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))))
+  (IS-TRAIN TR))
+ (>=
+  (- (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+   1)
+  (EXIT-CROSSING TR)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (>=
+  (+ -1
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (EXIT-CROSSING TR)))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N T)
+                (= X
+                 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN T (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN T (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     T)))
+  (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (>=
+  (+ -1
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (EXIT-CROSSING TR)))
+Which simplifies
+ when rewriting with NAT!IN-NAT, SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, EXIT-CROSSING-IS-NAT to ...
+(IMPLIES (AND (IN T (INT)) (>= T (EXIT-CROSSING TR)))
+ (IF (SOME (TR$0) (AND (IS-TRAIN TR$0) (IN T (CROSSING-INTERVAL TR$0))))
+  (IMPLIES
+   (AND (IS-TRAIN TR) (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1)
+       (IN
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (CROSSING-INTERVAL TR$1)))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (IS-TRAIN TR) (NOT (SOME (TR2$0) (IN T (CROSSING-INTERVAL TR2$0)))))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))))
+Instantiating (= TR$0 TR) gives ...
+(IMPLIES
+ (AND (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (IF
+   (OR (AND (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR)))
+    (SOME (TR$0) (AND (IS-TRAIN TR$0) (IN T (CROSSING-INTERVAL TR$0)))))
+   (AND (IS-TRAIN TR) (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1)
+       (IN
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (CROSSING-INTERVAL TR$1)))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (IS-TRAIN TR) (NOT (SOME (TR2$0) (IN T (CROSSING-INTERVAL TR2$0)))))))
+ (>=
+  (+ -1
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (EXIT-CROSSING TR)))
+Splitting on (IS-TRAIN TR) generates ...
+(IF (IS-TRAIN TR)
+ (IMPLIES
+  (AND (IN T (INT)) (>= T (EXIT-CROSSING TR))
+   (IF
+    (OR (AND (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR)))
+     (SOME (TR$0) (AND (IS-TRAIN TR$0) (IN T (CROSSING-INTERVAL TR$0)))))
+    (AND (IS-TRAIN TR) (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+    (AND
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (INT))
+     (>=
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (EXIT-CROSSING TR))
+     (NOT
+      (SOME (TR$1)
+       (AND (IS-TRAIN TR$1)
+        (IN
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+         (CROSSING-INTERVAL TR$1)))))
+     (>= T
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (IS-TRAIN TR) (NOT (SOME (TR2$0) (IN T (CROSSING-INTERVAL TR2$0)))))))
+  (>=
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR)))
+ (IMPLIES
+  (AND (IN T (INT)) (>= T (EXIT-CROSSING TR))
+   (IF
+    (OR (AND (IS-TRAIN TR) (IN T (CROSSING-INTERVAL TR)))
+     (SOME (TR$2) (AND (IS-TRAIN TR$2) (IN T (CROSSING-INTERVAL TR$2)))))
+    (AND (IS-TRAIN TR) (NOT (SOME (TR2$1) (IN T (CROSSING-INTERVAL TR2$1)))))
+    (AND
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (INT))
+     (>=
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (EXIT-CROSSING TR))
+     (NOT
+      (SOME (TR$3)
+       (AND (IS-TRAIN TR$3)
+        (IN
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+         (CROSSING-INTERVAL TR$3)))))
+     (>= T
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (IS-TRAIN TR) (NOT (SOME (TR2$2) (IN T (CROSSING-INTERVAL TR2$2)))))))
+  (>=
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiation (= TR2 TR) to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (NOT (>= (EXIT-CROSSING TR) T)))
+ (IF
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (OR
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR$1))
+       (>= (EXIT-CROSSING TR$1)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T)))))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))))
+Assuming TRAIN-CROSSING-BOUNDS with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= (ENTER-CROSSING TR) (+ (ENTER-SENSOR TR) 300))
+    (>= (+ (ENTER-SENSOR TR) 1000) (ENTER-CROSSING TR))
+    (>= (EXIT-CROSSING TR) (ENTER-CROSSING TR))))
+  (IS-TRAIN TR) (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (NOT (>= (EXIT-CROSSING TR) T)))
+ (IF
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (OR
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR$1))
+       (>= (EXIT-CROSSING TR$1)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T)))))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-SENSOR-IS-NAT,
+ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (ENTER-CROSSING TR) (+ 300 (ENTER-SENSOR TR)))
+  (>= (+ 1000 (ENTER-SENSOR TR)) (ENTER-CROSSING TR))
+  (>= (EXIT-CROSSING TR) (ENTER-CROSSING TR)) (IN T (INT))
+  (>= T (EXIT-CROSSING TR)) (NOT (>= (EXIT-CROSSING TR) T)))
+ (IF
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (OR
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR$1))
+       (>= (EXIT-CROSSING TR$1)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T)))))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))))
+Instantiating (= TR$1 TR) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (ENTER-CROSSING TR) (+ 300 (ENTER-SENSOR TR)))
+  (>= (+ 1000 (ENTER-SENSOR TR)) (ENTER-CROSSING TR))
+  (>= (EXIT-CROSSING TR) (ENTER-CROSSING TR)) (IN T (INT))
+  (>= T (EXIT-CROSSING TR)) (NOT (>= (EXIT-CROSSING TR) T)))
+ (IF
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (OR
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (OR
+      (AND (IS-TRAIN TR)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR))
+       (>= (EXIT-CROSSING TR)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))
+      (SOME (TR$1)
+       (AND (IS-TRAIN TR$1)
+        (>=
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+         (ENTER-CROSSING TR$1))
+        (>= (EXIT-CROSSING TR$1)
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T)))))
+   (>=
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (EXIT-CROSSING TR)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-SENSOR-IS-NAT,
+ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (NOT (>= (EXIT-CROSSING TR) T))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (NOT
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))))
+ (>=
+  (+ -1
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (EXIT-CROSSING TR)))
+Instantiating (= TR2 TR$0) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (NOT (>= (EXIT-CROSSING TR) T))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)
+    (NOT
+     (OR (AND (>= T (ENTER-CROSSING TR$0)) (>= (EXIT-CROSSING TR$0) T))
+      (SOME (TR2)
+       (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T))))))))
+ (>=
+  (+ -1
+   (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (EXIT-CROSSING TR)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+OCCUPANCY-LEMMA-3
+Beginning proof of OCCUPANCY-LEMMA-3 ...
+(IMPLIES (IS-TRAIN TR)
+ (NOT
+  (IN (- (INTERVAL-LOB TR) 1)
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+Invoking INTERVAL-LOB gives ...
+(IMPLIES (IS-TRAIN TR)
+ (NOT
+  (IN
+   (-
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    1)
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N (ENTER-CROSSING TR))
+                (= X
+                 (SET-OF-OCCUPIED-POINTS-BEFORE
+                  (ENTER-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (IN (ENTER-CROSSING TR)
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN (ENTER-CROSSING TR) (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (ENTER-CROSSING TR))))
+  (IS-TRAIN TR))
+ (NOT
+  (IN
+   (-
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    1)
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+Which simplifies
+ when rewriting with NAT!IN-NAT
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, ENTER-CROSSING-IS-NAT to ...
+(IF
+ (IN (ENTER-CROSSING TR) (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+ (IMPLIES
+  (AND
+   (IN
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   (>=
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    0)
+   (>= (ENTER-CROSSING TR)
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (IS-TRAIN TR))
+  (NOT
+   (IN
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+ (IMPLIES (IS-TRAIN TR)
+  (NOT
+   (IN
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+Splitting on (IS-TRAIN TR) generates ...
+(IF (IS-TRAIN TR)
+ (IF
+  (IN (ENTER-CROSSING TR) (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     0)
+    (>= (ENTER-CROSSING TR)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (IS-TRAIN TR))
+   (NOT
+    (IN
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+  (IMPLIES (IS-TRAIN TR)
+   (NOT
+    (IN
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+ (IF
+  (IN (ENTER-CROSSING TR) (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     0)
+    (>= (ENTER-CROSSING TR)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (IS-TRAIN TR))
+   (NOT
+    (IN
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+  (IMPLIES (IS-TRAIN TR)
+   (NOT
+    (IN
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL to ...
+(IMPLIES (IS-TRAIN TR)
+ (IF
+  (IN (ENTER-CROSSING TR) (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     0)
+    (>= (ENTER-CROSSING TR)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+   (NOT
+    (IN
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+  (NOT
+   (IN
+    (+ -1
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION, SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+ENTER-CROSSING-IS-NAT to ...
+(IMPLIES
+ (AND (IS-TRAIN TR)
+  (IN
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+ (NOT
+  (IN
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N
+                 (-
+                  (NAT!SMALLEST-NAT-MEMBER
+                   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+                  1))
+                (= X
+                 (SET-OF-OCCUPIED-POINTS-BEFORE
+                  (ENTER-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (IN
+     (-
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      1)
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN
+     (-
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      1)
+     (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (-
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+      1))))
+  (IS-TRAIN TR)
+  (IN
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+ (NOT
+  (IN
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+Which simplifies
+ when rewriting with NAT!IN-NAT, SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, ENTER-CROSSING-IS-NAT to ...
+(TRUE)
+OCCUPANCY-LEMMA-4
+Beginning proof of OCCUPANCY-LEMMA-4 ...
+(IMPLIES (IS-TRAIN TR)
+ (IN (+ (INTERVAL-HIB TR) 1) (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION, SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES (IS-TRAIN TR)
+ (AND (>= (+ 1 (INTERVAL-HIB TR)) (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= (+ 1 (INTERVAL-HIB TR)) (ENTER-CROSSING TR$0))
+     (>= (EXIT-CROSSING TR$0) (+ 1 (INTERVAL-HIB TR))))))))
+Invoking INTERVAL-HIB gives ...
+(IMPLIES (IS-TRAIN TR)
+ (AND
+  (>=
+   (+ 1
+    (-
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     1))
+   (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0)
+     (>=
+      (+ 1
+       (-
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        1))
+      (ENTER-CROSSING TR$0))
+     (>= (EXIT-CROSSING TR$0)
+      (+ 1
+       (-
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        1))))))))
+Assuming LIVENESS-ASSUMPTION with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (SOME (T)
+    (AND (>= T (EXIT-CROSSING TR))
+     (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))))
+  (IS-TRAIN TR))
+ (AND
+  (>=
+   (+ 1
+    (-
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     1))
+   (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0)
+     (>=
+      (+ 1
+       (-
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        1))
+      (ENTER-CROSSING TR$0))
+     (>= (EXIT-CROSSING TR$0)
+      (+ 1
+       (-
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        1))))))))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= T (EXIT-CROSSING TR))
+    (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))))
+  (IS-TRAIN TR))
+ (AND
+  (>=
+   (+ 1
+    (-
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     1))
+   (EXIT-CROSSING TR))
+  (NOT
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (+ 1
+      (-
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+       1))
+     (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0)
+     (+ 1
+      (-
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+       1)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (AND
+  (>=
+   (ORD
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))
+  (IMPLIES
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (ENTER-CROSSING TR$0)))
+   (NOT
+    (>= (EXIT-CROSSING TR$0)
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N T)
+                (= X
+                 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN T (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN T (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     T)))
+  (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))
+ (AND
+  (>=
+   (ORD
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))
+  (IMPLIES
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (ENTER-CROSSING TR$0)))
+   (NOT
+    (>= (EXIT-CROSSING TR$0)
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with NAT!IN-NAT, RANGE.DEFINITION,
+SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+EXIT-CROSSING-IS-NAT to ...
+(IMPLIES
+ (AND (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (SOME (TR$1)
+   (AND (IS-TRAIN TR$1) (>= T (ENTER-CROSSING TR$1))
+    (>= (EXIT-CROSSING TR$1) T)))
+  (IS-TRAIN TR)
+  (NOT
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))))
+ (AND
+  (>=
+   (ORD
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))
+  (IMPLIES
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (ENTER-CROSSING TR$0)))
+   (NOT
+    (>= (EXIT-CROSSING TR$0)
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN T (INT)) (>= T (EXIT-CROSSING TR)) (IS-TRAIN TR$1)
+  (>= T (ENTER-CROSSING TR$1)) (>= (EXIT-CROSSING TR$1) T) (IS-TRAIN TR)
+  (NOT
+   (SOME (TR2) (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T)))))
+ (AND
+  (>=
+   (ORD
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   (EXIT-CROSSING TR))
+  (IMPLIES
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (ENTER-CROSSING TR$0)))
+   (NOT
+    (>= (EXIT-CROSSING TR$0)
+     (ORD
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))))
+Which simplifies
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+EXIT-CROSSING-IS-NAT
+ with the instantiation (= TR2 TR$1) to ...
+(TRUE)
+OCCUPANCY-LEMMA-5
+Beginning proof of OCCUPANCY-LEMMA-5 ...
+(IMPLIES (IS-TRAIN TR)
+ (ALL (T3)
+  (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+   (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+ (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+Splitting on (>= T3 (ENTER-CROSSING TR)) generates ...
+(IF (>= T3 (ENTER-CROSSING TR))
+ (IMPLIES
+  (AND (IS-TRAIN TR) (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+  (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+ (IMPLIES
+  (AND (IS-TRAIN TR) (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+  (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (>= T3 (ENTER-CROSSING TR)) (IS-TRAIN TR)
+  (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+ (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+Splitting on (>= (EXIT-CROSSING TR) T3) generates ...
+(IF (>= (EXIT-CROSSING TR) T3)
+ (IMPLIES
+  (AND (>= T3 (ENTER-CROSSING TR)) (IS-TRAIN TR)
+   (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+  (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+ (IMPLIES
+  (AND (>= T3 (ENTER-CROSSING TR)) (IS-TRAIN TR)
+   (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+  (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0))))))
+Starting case 2.2 ...
+(IMPLIES
+ (AND (>= (EXIT-CROSSING TR) T3) (>= T3 (ENTER-CROSSING TR)) (IS-TRAIN TR)
+  (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+ (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+Instantiating (= TR3 TR) gives ...
+(IMPLIES
+ (AND (>= (EXIT-CROSSING TR) T3) (>= T3 (ENTER-CROSSING TR)) (IS-TRAIN TR)
+  (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+  (NOT (AND (IS-TRAIN TR) (IN T3 (CROSSING-INTERVAL TR)))))
+ (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions IS-TRAIN-BOOL, ENTER-CROSSING-IS-NAT,
+EXIT-CROSSING-IS-NAT to ...
+(TRUE)
+Starting case 2.1 ...
+(IMPLIES
+ (AND (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+  (IS-TRAIN TR) (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+ (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0)))))
+Splitting on (IS-TRAIN TR) generates ...
+(IF (IS-TRAIN TR)
+ (IMPLIES
+  (AND (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+   (IS-TRAIN TR) (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+  (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+ (IMPLIES
+  (AND (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+   (IS-TRAIN TR) (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+  (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (NOT (>= (EXIT-CROSSING TR) T3))
+  (>= T3 (ENTER-CROSSING TR))
+  (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+ (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (NOT (>= (EXIT-CROSSING TR) T3))
+  (>= T3 (ENTER-CROSSING TR)) (>= T3 (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Invoking INTERVAL-HIB gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (NOT (>= (EXIT-CROSSING TR) T3))
+  (>= T3 (ENTER-CROSSING TR)) (>= T3 (INTERVAL-LOB TR))
+  (>=
+   (-
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    1)
+   T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Assuming LIVENESS-ASSUMPTION with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (SOME (T)
+    (AND (>= T (EXIT-CROSSING TR))
+     (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2)))))))
+  (IS-TRAIN TR) (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+  (>= T3 (INTERVAL-LOB TR))
+  (>=
+   (-
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    1)
+   T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= T (EXIT-CROSSING TR))
+    (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))))
+  (IS-TRAIN TR) (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+  (>= T3 (INTERVAL-LOB TR))
+  (>=
+   (-
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    1)
+   T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))
+  (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+  (>= T3 (INTERVAL-LOB TR))
+  (>=
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N T)
+                (= X
+                 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN T (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN T (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     T)))
+  (IS-TRAIN TR) (>= T (EXIT-CROSSING TR))
+  (NOT (SOME (TR2) (IN T (CROSSING-INTERVAL TR2))))
+  (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+  (>= T3 (INTERVAL-LOB TR))
+  (>=
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with NAT!IN-NAT, RANGE.DEFINITION,
+SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+EXIT-CROSSING-IS-NAT to ...
+(IMPLIES (AND (IN T (INT)) (>= T (EXIT-CROSSING TR)))
+ (IF
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) T)))
+  (IMPLIES
+   (AND (IS-TRAIN TR)
+    (NOT
+     (SOME (TR2)
+      (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T))))
+    (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+    (>= T3 (INTERVAL-LOB TR))
+    (>=
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     T3))
+   (SOME (TR3)
+    (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+     (>= (EXIT-CROSSING TR3) T3))))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$1)
+      (AND (IS-TRAIN TR$1)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR$1))
+       (>= (EXIT-CROSSING TR$1)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (IS-TRAIN TR)
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T))))
+    (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+    (>= T3 (INTERVAL-LOB TR))
+    (>=
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     T3))
+   (SOME (TR3$0)
+    (AND (IS-TRAIN TR3$0) (>= T3 (ENTER-CROSSING TR3$0))
+     (>= (EXIT-CROSSING TR3$0) T3))))))
+Splitting on (IN T3 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))) generates
+...
+(IF (IN T3 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+ (IMPLIES (AND (IN T (INT)) (>= T (EXIT-CROSSING TR)))
+  (IF
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= T (ENTER-CROSSING TR$0))
+     (>= (EXIT-CROSSING TR$0) T)))
+   (IMPLIES
+    (AND (IS-TRAIN TR)
+     (NOT
+      (SOME (TR2)
+       (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T))))
+     (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+     (>= T3 (INTERVAL-LOB TR))
+     (>=
+      (+ -1
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+      T3))
+    (SOME (TR3)
+     (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+      (>= (EXIT-CROSSING TR3) T3))))
+   (IMPLIES
+    (AND
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (INT))
+     (>=
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (EXIT-CROSSING TR))
+     (NOT
+      (SOME (TR$1)
+       (AND (IS-TRAIN TR$1)
+        (>=
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+         (ENTER-CROSSING TR$1))
+        (>= (EXIT-CROSSING TR$1)
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+     (>= T
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (IS-TRAIN TR)
+     (NOT
+      (SOME (TR2$0)
+       (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T))))
+     (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+     (>= T3 (INTERVAL-LOB TR))
+     (>=
+      (+ -1
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+      T3))
+    (SOME (TR3$0)
+     (AND (IS-TRAIN TR3$0) (>= T3 (ENTER-CROSSING TR3$0))
+      (>= (EXIT-CROSSING TR3$0) T3))))))
+ (IMPLIES (AND (IN T (INT)) (>= T (EXIT-CROSSING TR)))
+  (IF
+   (SOME (TR$2)
+    (AND (IS-TRAIN TR$2) (>= T (ENTER-CROSSING TR$2))
+     (>= (EXIT-CROSSING TR$2) T)))
+   (IMPLIES
+    (AND (IS-TRAIN TR)
+     (NOT
+      (SOME (TR2$1)
+       (AND (>= T (ENTER-CROSSING TR2$1)) (>= (EXIT-CROSSING TR2$1) T))))
+     (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+     (>= T3 (INTERVAL-LOB TR))
+     (>=
+      (+ -1
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+      T3))
+    (SOME (TR3$1)
+     (AND (IS-TRAIN TR3$1) (>= T3 (ENTER-CROSSING TR3$1))
+      (>= (EXIT-CROSSING TR3$1) T3))))
+   (IMPLIES
+    (AND
+     (IN
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (INT))
+     (>=
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+      (EXIT-CROSSING TR))
+     (NOT
+      (SOME (TR$3)
+       (AND (IS-TRAIN TR$3)
+        (>=
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+         (ENTER-CROSSING TR$3))
+        (>= (EXIT-CROSSING TR$3)
+         (NAT!SMALLEST-NAT-MEMBER
+          (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+     (>= T
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     (IS-TRAIN TR)
+     (NOT
+      (SOME (TR2$2)
+       (AND (>= T (ENTER-CROSSING TR2$2)) (>= (EXIT-CROSSING TR2$2) T))))
+     (NOT (>= (EXIT-CROSSING TR) T3)) (>= T3 (ENTER-CROSSING TR))
+     (>= T3 (INTERVAL-LOB TR))
+     (>=
+      (+ -1
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+      T3))
+    (SOME (TR3$2)
+     (AND (IS-TRAIN TR3$2) (>= T3 (ENTER-CROSSING TR3$2))
+      (>= (EXIT-CROSSING TR3$2) T3)))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION, SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+EXIT-CROSSING-IS-NAT to ...
+(IMPLIES
+ (AND (IN T3 (INT)) (>= T3 (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= T3 (ENTER-CROSSING TR$0))
+     (>= (EXIT-CROSSING TR$0) T3))))
+  (IN T (INT)) (>= T (EXIT-CROSSING TR)))
+ (IF
+  (SOME (TR$1)
+   (AND (IS-TRAIN TR$1) (>= T (ENTER-CROSSING TR$1))
+    (>= (EXIT-CROSSING TR$1) T)))
+  (IMPLIES
+   (AND (IS-TRAIN TR)
+    (NOT
+     (SOME (TR2)
+      (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T))))
+    (>= T3 (INTERVAL-LOB TR)))
+   (NOT
+    (>=
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     T3)))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$2)
+      (AND (IS-TRAIN TR$2)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR$2))
+       (>= (EXIT-CROSSING TR$2)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (IS-TRAIN TR)
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T))))
+    (>= T3 (INTERVAL-LOB TR)))
+   (NOT
+    (>=
+     (+ -1
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+     T3)))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N T3)
+                (= X
+                 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN T3 (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN T3 (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     T3)))
+  (IN T3 (INT)) (>= T3 (EXIT-CROSSING TR))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0) (>= T3 (ENTER-CROSSING TR$0))
+     (>= (EXIT-CROSSING TR$0) T3))))
+  (IN T (INT)) (>= T (EXIT-CROSSING TR))
+  (IF
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1) (>= T (ENTER-CROSSING TR$1))
+     (>= (EXIT-CROSSING TR$1) T)))
+   (AND (IS-TRAIN TR)
+    (NOT
+     (SOME (TR2)
+      (AND (>= T (ENTER-CROSSING TR2)) (>= (EXIT-CROSSING TR2) T))))
+    (>= T3 (INTERVAL-LOB TR)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+     (EXIT-CROSSING TR))
+    (NOT
+     (SOME (TR$2)
+      (AND (IS-TRAIN TR$2)
+       (>=
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))
+        (ENTER-CROSSING TR$2))
+       (>= (EXIT-CROSSING TR$2)
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR)))))))
+    (>= T
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+    (IS-TRAIN TR)
+    (NOT
+     (SOME (TR2$0)
+      (AND (>= T (ENTER-CROSSING TR2$0)) (>= (EXIT-CROSSING TR2$0) T))))
+    (>= T3 (INTERVAL-LOB TR)))))
+ (NOT
+  (>=
+   (+ -1
+    (NAT!SMALLEST-NAT-MEMBER (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+   T3)))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with NAT!IN-NAT, RANGE.DEFINITION,
+SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions ENTER-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+EXIT-CROSSING-IS-NAT to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+  (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))
+ (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3 (CROSSING-INTERVAL TR3$0)))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+ENTER-CROSSING-IS-NAT to ...
+(IMPLIES
+ (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+  (>= T3 (INTERVAL-LOB TR)) (>= (INTERVAL-HIB TR) T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Invoking INTERVAL-LOB gives ...
+(IMPLIES
+ (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+  (>= T3
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (>= (INTERVAL-HIB TR) T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N (ENTER-CROSSING TR))
+                (= X
+                 (SET-OF-OCCUPIED-POINTS-BEFORE
+                  (ENTER-CROSSING TR))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (IN (ENTER-CROSSING TR)
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN (ENTER-CROSSING TR) (NAT!NAT)))
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (NAT!NAT))
+    (<=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (ENTER-CROSSING TR))))
+  (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+  (>= T3
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (>= (INTERVAL-HIB TR) T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with NAT!IN-NAT, RANGE.DEFINITION,
+SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using TRAIN-CROSSING-BOUNDS, >=.SAME.TYPE
+ with the assumptions EXIT-CROSSING-IS-NAT, IS-TRAIN-BOOL,
+ENTER-CROSSING-IS-NAT to ...
+(IF
+ (SOME (TR$0)
+  (AND (IS-TRAIN TR$0) (>= (ENTER-CROSSING TR) (ENTER-CROSSING TR$0))
+   (>= (EXIT-CROSSING TR$0) (ENTER-CROSSING TR))))
+ (IF
+  (ALL (T2)
+   (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+    (SOME (TR2)
+     (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+      (>= (EXIT-CROSSING TR2) T2)))))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     0)
+    (>= (ENTER-CROSSING TR)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (SOME (TR$1)
+     (AND (IS-TRAIN TR$1)
+      (>=
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+       (ENTER-CROSSING TR$1))
+      (>= (EXIT-CROSSING TR$1)
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+    (ALL (T2$0)
+     (IMPLIES
+      (AND
+       (>= T2$0
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+       (>= (ENTER-CROSSING TR) T2$0))
+      (SOME (TR2$0)
+       (AND (IS-TRAIN TR2$0) (>= T2$0 (ENTER-CROSSING TR2$0))
+        (>= (EXIT-CROSSING TR2$0) T2$0)))))
+    (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+    (>= T3
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (>= (INTERVAL-HIB TR) T3))
+   (SOME (TR3)
+    (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+     (>= (EXIT-CROSSING TR3) T3))))
+  (IMPLIES
+   (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+    (>= T3
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (>= (INTERVAL-HIB TR) T3))
+   (SOME (TR3$0)
+    (AND (IS-TRAIN TR3$0) (>= T3 (ENTER-CROSSING TR3$0))
+     (>= (EXIT-CROSSING TR3$0) T3)))))
+ (IMPLIES
+  (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+   (>= T3
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (>= (INTERVAL-HIB TR) T3))
+  (SOME (TR3$1)
+   (AND (IS-TRAIN TR3$1) (>= T3 (ENTER-CROSSING TR3$1))
+    (>= (EXIT-CROSSING TR3$1) T3)))))
+Instantiating (= TR$0 TR) gives ...
+(IF
+ (OR
+  (AND (IS-TRAIN TR) (>= (ENTER-CROSSING TR) (ENTER-CROSSING TR))
+   (>= (EXIT-CROSSING TR) (ENTER-CROSSING TR)))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= (ENTER-CROSSING TR) (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) (ENTER-CROSSING TR)))))
+ (IF
+  (ALL (T2)
+   (IMPLIES (AND (>= T2 (ENTER-CROSSING TR)) (>= (ENTER-CROSSING TR) T2))
+    (SOME (TR2)
+     (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+      (>= (EXIT-CROSSING TR2) T2)))))
+  (IMPLIES
+   (AND
+    (IN
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (INT))
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     0)
+    (>= (ENTER-CROSSING TR)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (SOME (TR$1)
+     (AND (IS-TRAIN TR$1)
+      (>=
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+       (ENTER-CROSSING TR$1))
+      (>= (EXIT-CROSSING TR$1)
+       (NAT!SMALLEST-NAT-MEMBER
+        (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+    (ALL (T2$0)
+     (IMPLIES
+      (AND
+       (>= T2$0
+        (NAT!SMALLEST-NAT-MEMBER
+         (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+       (>= (ENTER-CROSSING TR) T2$0))
+      (SOME (TR2$0)
+       (AND (IS-TRAIN TR2$0) (>= T2$0 (ENTER-CROSSING TR2$0))
+        (>= (EXIT-CROSSING TR2$0) T2$0)))))
+    (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+    (>= T3
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (>= (INTERVAL-HIB TR) T3))
+   (SOME (TR3)
+    (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+     (>= (EXIT-CROSSING TR3) T3))))
+  (IMPLIES
+   (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+    (>= T3
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (>= (INTERVAL-HIB TR) T3))
+   (SOME (TR3$0)
+    (AND (IS-TRAIN TR3$0) (>= T3 (ENTER-CROSSING TR3$0))
+     (>= (EXIT-CROSSING TR3$0) T3)))))
+ (IMPLIES
+  (AND (NOT (>= T3 (ENTER-CROSSING TR))) (IS-TRAIN TR)
+   (>= T3
+    (NAT!SMALLEST-NAT-MEMBER
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+   (>= (INTERVAL-HIB TR) T3))
+  (SOME (TR3$1)
+   (AND (IS-TRAIN TR3$1) (>= T3 (ENTER-CROSSING TR3$1))
+    (>= (EXIT-CROSSING TR3$1) T3)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiation (= TR2 TR) to ...
+(IMPLIES
+ (AND (IS-TRAIN TR)
+  (IN
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   (INT))
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+  (ALL (T2)
+   (IMPLIES
+    (AND
+     (>= T2
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (>= (ENTER-CROSSING TR) T2))
+    (SOME (TR2)
+     (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+      (>= (EXIT-CROSSING TR2) T2)))))
+  (NOT (>= T3 (ENTER-CROSSING TR)))
+  (>= T3
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (>= (INTERVAL-HIB TR) T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Instantiating (= T2 T3) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR)
+  (IN
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   (INT))
+  (>=
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+   0)
+  (>= (ENTER-CROSSING TR)
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0)
+    (>=
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))
+     (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0)
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))))
+  (IMPLIES
+   (AND
+    (>= T3
+     (NAT!SMALLEST-NAT-MEMBER
+      (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+    (>= (ENTER-CROSSING TR) T3))
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2) (>= T3 (ENTER-CROSSING TR2))
+     (>= (EXIT-CROSSING TR2) T3))))
+  (ALL (T2)
+   (IMPLIES
+    (AND
+     (>= T2
+      (NAT!SMALLEST-NAT-MEMBER
+       (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+     (>= (ENTER-CROSSING TR) T2))
+    (SOME (TR2$0)
+     (AND (IS-TRAIN TR2$0) (>= T2 (ENTER-CROSSING TR2$0))
+      (>= (EXIT-CROSSING TR2$0) T2)))))
+  (NOT (>= T3 (ENTER-CROSSING TR)))
+  (>= T3
+   (NAT!SMALLEST-NAT-MEMBER
+    (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (>= (INTERVAL-HIB TR) T3))
+ (SOME (TR3)
+  (AND (IS-TRAIN TR3) (>= T3 (ENTER-CROSSING TR3))
+   (>= (EXIT-CROSSING TR3) T3))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+OCCUPANCY-LEMMA
+Beginning proof of OCCUPANCY-LEMMA ...
+(IMPLIES (IS-TRAIN TR)
+ (AND (>= (INTERVAL-LOB TR) 0) (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (- (INTERVAL-LOB TR) 1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ (INTERVAL-HIB TR) 1) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))))
+Assuming OCCUPANCY-LEMMA-2 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-TRAIN TR) (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+  (IS-TRAIN TR))
+ (AND (>= (INTERVAL-LOB TR) 0) (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (- (INTERVAL-LOB TR) 1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ (INTERVAL-HIB TR) 1) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))))
+Assuming OCCUPANCY-LEMMA-1 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))))
+  (IMPLIES (IS-TRAIN TR) (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+  (IS-TRAIN TR))
+ (AND (>= (INTERVAL-LOB TR) 0) (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (- (INTERVAL-LOB TR) 1) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ (INTERVAL-HIB TR) 1) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (AND
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))))
+Starting case 3 ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (NOT
+  (SOME (TR1)
+   (AND (IS-TRAIN TR1)
+    (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1))))))
+Assuming OCCUPANCY-LEMMA-3 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (NOT
+    (IN (- (INTERVAL-LOB TR) 1)
+     (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR)))))
+  (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (NOT
+  (SOME (TR1)
+   (AND (IS-TRAIN TR1)
+    (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION, SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (+ -1 (INTERVAL-LOB TR)) 0)
+  (>= (ENTER-CROSSING TR) (+ -1 (INTERVAL-LOB TR)))
+  (SOME (TR$0)
+   (AND (IS-TRAIN TR$0) (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+    (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))))
+  (NOT
+   (ALL (T2)
+    (IMPLIES
+     (AND (>= T2 (+ -1 (INTERVAL-LOB TR))) (>= (ENTER-CROSSING TR) T2))
+     (SOME (TR2)
+      (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+       (>= (EXIT-CROSSING TR2) T2))))))
+  (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR)))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (+ -1 (INTERVAL-LOB TR)) 0)
+  (>= (ENTER-CROSSING TR) (+ -1 (INTERVAL-LOB TR))) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (NOT
+   (IMPLIES (AND (>= T2 (+ -1 (INTERVAL-LOB TR))) (>= (ENTER-CROSSING TR) T2))
+    (SOME (TR2)
+     (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+      (>= (EXIT-CROSSING TR2) T2)))))
+  (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR)))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (+ -1 (INTERVAL-LOB TR)) 0)
+  (>= (ENTER-CROSSING TR) (+ -1 (INTERVAL-LOB TR))) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (>= T2 (+ -1 (INTERVAL-LOB TR))) (>= (ENTER-CROSSING TR) T2)
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+     (>= (EXIT-CROSSING TR2) T2))))
+  (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR)))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Assuming INTERVAL-LOB-LEMMA with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (IN (INTERVAL-LOB TR) (SET-OF-OCCUPIED-POINTS-BEFORE (ENTER-CROSSING TR))))
+  (IS-TRAIN TR) (>= (+ -1 (INTERVAL-LOB TR)) 0)
+  (>= (ENTER-CROSSING TR) (+ -1 (INTERVAL-LOB TR))) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (>= T2 (+ -1 (INTERVAL-LOB TR))) (>= (ENTER-CROSSING TR) T2)
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+     (>= (EXIT-CROSSING TR2) T2))))
+  (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR)))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Which simplifies
+ when rewriting with SET-OF-OCCUPIED-POINTS-BEFORE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN (INTERVAL-LOB TR) (INT)) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (SOME (TR$1)
+   (AND (IS-TRAIN TR$1) (IN (INTERVAL-LOB TR) (CROSSING-INTERVAL TR$1))))
+  (ALL (T2$0)
+   (IMPLIES (AND (>= T2$0 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2$0))
+    (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2$0 (CROSSING-INTERVAL TR2))))))
+  (>= (+ -1 (INTERVAL-LOB TR)) 0) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (>= T2 (+ -1 (INTERVAL-LOB TR))) (>= (ENTER-CROSSING TR) T2)
+  (NOT
+   (SOME (TR2$0)
+    (AND (IS-TRAIN TR2$0) (>= T2 (ENTER-CROSSING TR2$0))
+     (>= (EXIT-CROSSING TR2$0) T2)))))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Instantiating (= T2$0 T2) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN (INTERVAL-LOB TR) (INT)) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (SOME (TR$1)
+   (AND (IS-TRAIN TR$1) (IN (INTERVAL-LOB TR) (CROSSING-INTERVAL TR$1))))
+  (IMPLIES (AND (>= T2 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2))
+   (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2)))))
+  (ALL (T2$0)
+   (IMPLIES (AND (>= T2$0 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2$0))
+    (SOME (TR2$0)
+     (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0))))))
+  (>= (+ -1 (INTERVAL-LOB TR)) 0) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (>= T2 (+ -1 (INTERVAL-LOB TR))) (>= (ENTER-CROSSING TR) T2)
+  (NOT
+   (SOME (TR2$1)
+    (AND (IS-TRAIN TR2$1) (>= T2 (ENTER-CROSSING TR2$1))
+     (>= (EXIT-CROSSING TR2$1) T2)))))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiation (= TR2$1 TR$0) to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN (INTERVAL-LOB TR) (INT)) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (SOME (TR$1)
+   (AND (IS-TRAIN TR$1) (IN (INTERVAL-LOB TR) (CROSSING-INTERVAL TR$1))))
+  (>= T2 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2)
+  (SOME (TR2) (AND (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2))))
+  (ALL (T2$0)
+   (IMPLIES (AND (>= T2$0 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2$0))
+    (SOME (TR2$0)
+     (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0))))))
+  (>= (+ -1 (INTERVAL-LOB TR)) 0) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (NOT
+   (SOME (TR2$1)
+    (AND (IS-TRAIN TR2$1) (>= T2 (ENTER-CROSSING TR2$1))
+     (>= (EXIT-CROSSING TR2$1) T2)))))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN (INTERVAL-LOB TR) (INT)) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR)) (IS-TRAIN TR$1)
+  (IN (INTERVAL-LOB TR) (CROSSING-INTERVAL TR$1)) (>= T2 (INTERVAL-LOB TR))
+  (>= (ENTER-CROSSING TR) T2) (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2))
+  (ALL (T2$0)
+   (IMPLIES (AND (>= T2$0 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2$0))
+    (SOME (TR2$0)
+     (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0))))))
+  (>= (+ -1 (INTERVAL-LOB TR)) 0) (IS-TRAIN TR$0)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$0))
+  (>= (EXIT-CROSSING TR$0) (+ -1 (INTERVAL-LOB TR)))
+  (NOT
+   (SOME (TR2$1)
+    (AND (IS-TRAIN TR2$1) (>= T2 (ENTER-CROSSING TR2$1))
+     (>= (EXIT-CROSSING TR2$1) T2)))))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Instantiating (= TR2$1 TR2) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IN (INTERVAL-LOB TR) (INT)) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR)) (IS-TRAIN TR$0)
+  (IN (INTERVAL-LOB TR) (CROSSING-INTERVAL TR$0)) (>= T2 (INTERVAL-LOB TR))
+  (>= (ENTER-CROSSING TR) T2) (IS-TRAIN TR2) (IN T2 (CROSSING-INTERVAL TR2))
+  (ALL (T2$0)
+   (IMPLIES (AND (>= T2$0 (INTERVAL-LOB TR)) (>= (ENTER-CROSSING TR) T2$0))
+    (SOME (TR2$0)
+     (AND (IS-TRAIN TR2$0) (IN T2$0 (CROSSING-INTERVAL TR2$0))))))
+  (>= (+ -1 (INTERVAL-LOB TR)) 0) (IS-TRAIN TR$1)
+  (>= (+ -1 (INTERVAL-LOB TR)) (ENTER-CROSSING TR$1))
+  (>= (EXIT-CROSSING TR$1) (+ -1 (INTERVAL-LOB TR)))
+  (NOT
+   (OR
+    (AND (IS-TRAIN TR2) (>= T2 (ENTER-CROSSING TR2))
+     (>= (EXIT-CROSSING TR2) T2))
+    (SOME (TR2$1)
+     (AND (IS-TRAIN TR2$1) (>= T2 (ENTER-CROSSING TR2$1))
+      (>= (EXIT-CROSSING TR2$1) T2))))))
+ (NOT (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+Starting case 2 ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (NOT
+  (SOME (TR2)
+   (AND (IS-TRAIN TR2) (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2))))))
+Assuming OCCUPANCY-LEMMA-4 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (IN (+ (INTERVAL-HIB TR) 1)
+    (SET-OF-VACANT-POINTS-AFTER (EXIT-CROSSING TR))))
+  (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (NOT
+  (SOME (TR2)
+   (AND (IS-TRAIN TR2) (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2))))))
+Which simplifies
+ with invocation of CROSSING-INTERVAL
+ when rewriting with RANGE.DEFINITION, SET-OF-VACANT-POINTS-AFTER.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions ENTER-CROSSING-IS-NAT, EXIT-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (ALL (T3)
+  (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+   (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+Assuming OCCUPANCY-LEMMA-5 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (ALL (T3)
+    (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+     (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+  (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+ (ALL (T3$0)
+  (IMPLIES (IN T3$0 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+   (SOME (TR3$0) (AND (IS-TRAIN TR3$0) (IN T3$0 (CROSSING-INTERVAL TR3$0)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IN-OCCUPANCY-INTERVAL
+Beginning proof of IN-OCCUPANCY-INTERVAL ...
+(IMPLIES (IS-TRAIN TR)
+ (SOME (T1 T2)
+  (AND (IS-OCCUPANCY-INTERVAL T1 T2) (IN (ENTER-CROSSING TR) (RANGE T1 T2))
+   (IN (EXIT-CROSSING TR) (RANGE T1 T2)))))
+Assuming OCCUPANCY-LEMMA with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= (INTERVAL-LOB TR) 0) (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+    (NOT
+     (SOME (TR1)
+      (AND (IS-TRAIN TR1)
+       (IN (- (INTERVAL-LOB TR) 1) (CROSSING-INTERVAL TR1)))))
+    (NOT
+     (SOME (TR2)
+      (AND (IS-TRAIN TR2)
+       (IN (+ (INTERVAL-HIB TR) 1) (CROSSING-INTERVAL TR2)))))
+    (ALL (T3)
+     (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+      (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))))
+  (IS-TRAIN TR))
+ (SOME (T1 T2)
+  (AND (IS-OCCUPANCY-INTERVAL T1 T2) (IN (ENTER-CROSSING TR) (RANGE T1 T2))
+   (IN (EXIT-CROSSING TR) (RANGE T1 T2)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+ (SOME (T1 T2)
+  (AND (IS-OCCUPANCY-INTERVAL T1 T2) (IN (ENTER-CROSSING TR) (RANGE T1 T2))
+   (IN (EXIT-CROSSING TR) (RANGE T1 T2)))))
+Invoking IS-OCCUPANCY-INTERVAL gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+ (SOME (T1 T2)
+  (AND (>= T1 0) (>= T2 T1)
+   (NOT
+    (SOME (TR1$0)
+     (AND (IS-TRAIN TR1$0) (IN (- T1 1) (CROSSING-INTERVAL TR1$0)))))
+   (NOT
+    (SOME (TR2$0)
+     (AND (IS-TRAIN TR2$0) (IN (+ T2 1) (CROSSING-INTERVAL TR2$0)))))
+   (ALL (T3$0)
+    (IMPLIES (IN T3$0 (RANGE T1 T2))
+     (SOME (TR3$0)
+      (AND (IS-TRAIN TR3$0) (IN T3$0 (CROSSING-INTERVAL TR3$0))))))
+   (IN (ENTER-CROSSING TR) (RANGE T1 T2))
+   (IN (EXIT-CROSSING TR) (RANGE T1 T2)))))
+Instantiating (= T1 (INTERVAL-LOB TR)) (= T2 (INTERVAL-HIB TR)) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (IN T3 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3))))))
+  (NOT
+   (AND (>= (INTERVAL-LOB TR) 0) (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+    (NOT
+     (SOME (TR1$0)
+      (AND (IS-TRAIN TR1$0)
+       (IN (- (INTERVAL-LOB TR) 1) (CROSSING-INTERVAL TR1$0)))))
+    (NOT
+     (SOME (TR2$0)
+      (AND (IS-TRAIN TR2$0)
+       (IN (+ (INTERVAL-HIB TR) 1) (CROSSING-INTERVAL TR2$0)))))
+    (ALL (T3$0)
+     (IMPLIES (IN T3$0 (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+      (SOME (TR3$0)
+       (AND (IS-TRAIN TR3$0) (IN T3$0 (CROSSING-INTERVAL TR3$0))))))
+    (IN (ENTER-CROSSING TR) (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR)))
+    (IN (EXIT-CROSSING TR) (RANGE (INTERVAL-LOB TR) (INTERVAL-HIB TR))))))
+ (SOME (T1 T2)
+  (AND (>= T1 0) (>= T2 T1)
+   (NOT
+    (SOME (TR1$1)
+     (AND (IS-TRAIN TR1$1) (IN (- T1 1) (CROSSING-INTERVAL TR1$1)))))
+   (NOT
+    (SOME (TR2$1)
+     (AND (IS-TRAIN TR2$1) (IN (+ T2 1) (CROSSING-INTERVAL TR2$1)))))
+   (ALL (T3$1)
+    (IMPLIES (IN T3$1 (RANGE T1 T2))
+     (SOME (TR3$1)
+      (AND (IS-TRAIN TR3$1) (IN T3$1 (CROSSING-INTERVAL TR3$1))))))
+   (IN (ENTER-CROSSING TR) (RANGE T1 T2))
+   (IN (EXIT-CROSSING TR) (RANGE T1 T2)))))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiations (= TR1 TR1$0) (= TR2 TR2$0) to ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 (INTERVAL-LOB TR)) (>= (INTERVAL-HIB TR) T3))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+ (IF (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (IF (>= (INTERVAL-HIB TR) (ENTER-CROSSING TR))
+   (OR (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))
+    (SOME (T1)
+     (AND (>= T1 0)
+      (SOME (T2)
+       (AND (>= T2 T1)
+        (NOT
+         (SOME (TR1$0)
+          (AND (IS-TRAIN TR1$0) (IN (+ -1 T1) (CROSSING-INTERVAL TR1$0)))))
+        (NOT
+         (SOME (TR2$0)
+          (AND (IS-TRAIN TR2$0) (IN (+ 1 T2) (CROSSING-INTERVAL TR2$0)))))
+        (ALL (T3$0)
+         (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0))
+          (SOME (TR3$0)
+           (AND (IS-TRAIN TR3$0) (IN T3$0 (CROSSING-INTERVAL TR3$0))))))
+        (>= (ENTER-CROSSING TR) T1) (>= T2 (ENTER-CROSSING TR))
+        (>= T2 (EXIT-CROSSING TR)))))))
+   (SOME (T1$0)
+    (AND (>= T1$0 0)
+     (SOME (T2$0)
+      (AND (>= T2$0 T1$0)
+       (NOT
+        (SOME (TR1$1)
+         (AND (IS-TRAIN TR1$1) (IN (+ -1 T1$0) (CROSSING-INTERVAL TR1$1)))))
+       (NOT
+        (SOME (TR2$1)
+         (AND (IS-TRAIN TR2$1) (IN (+ 1 T2$0) (CROSSING-INTERVAL TR2$1)))))
+       (ALL (T3$1)
+        (IMPLIES (AND (>= T3$1 T1$0) (>= T2$0 T3$1))
+         (SOME (TR3$1)
+          (AND (IS-TRAIN TR3$1) (IN T3$1 (CROSSING-INTERVAL TR3$1))))))
+       (>= (ENTER-CROSSING TR) T1$0) (>= T2$0 (ENTER-CROSSING TR))
+       (>= T2$0 (EXIT-CROSSING TR)))))))
+  (SOME (T1$1)
+   (AND (>= T1$1 0)
+    (SOME (T2$1)
+     (AND (>= T2$1 T1$1)
+      (NOT
+       (SOME (TR1$2)
+        (AND (IS-TRAIN TR1$2) (IN (+ -1 T1$1) (CROSSING-INTERVAL TR1$2)))))
+      (NOT
+       (SOME (TR2$2)
+        (AND (IS-TRAIN TR2$2) (IN (+ 1 T2$1) (CROSSING-INTERVAL TR2$2)))))
+      (ALL (T3$2)
+       (IMPLIES (AND (>= T3$2 T1$1) (>= T2$1 T3$2))
+        (SOME (TR3$2)
+         (AND (IS-TRAIN TR3$2) (IN T3$2 (CROSSING-INTERVAL TR3$2))))))
+      (>= (ENTER-CROSSING TR) T1$1) (>= T2$1 (ENTER-CROSSING TR))
+      (>= T2$1 (EXIT-CROSSING TR))))))))
+Assuming OCCUPANCY-LEMMA-2 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-TRAIN TR) (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+  (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 (INTERVAL-LOB TR)) (>= (INTERVAL-HIB TR) T3))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+ (IF (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (IF (>= (INTERVAL-HIB TR) (ENTER-CROSSING TR))
+   (OR (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))
+    (SOME (T1)
+     (AND (>= T1 0)
+      (SOME (T2)
+       (AND (>= T2 T1)
+        (NOT
+         (SOME (TR1$0)
+          (AND (IS-TRAIN TR1$0) (IN (+ -1 T1) (CROSSING-INTERVAL TR1$0)))))
+        (NOT
+         (SOME (TR2$0)
+          (AND (IS-TRAIN TR2$0) (IN (+ 1 T2) (CROSSING-INTERVAL TR2$0)))))
+        (ALL (T3$0)
+         (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0))
+          (SOME (TR3$0)
+           (AND (IS-TRAIN TR3$0) (IN T3$0 (CROSSING-INTERVAL TR3$0))))))
+        (>= (ENTER-CROSSING TR) T1) (>= T2 (ENTER-CROSSING TR))
+        (>= T2 (EXIT-CROSSING TR)))))))
+   (SOME (T1$0)
+    (AND (>= T1$0 0)
+     (SOME (T2$0)
+      (AND (>= T2$0 T1$0)
+       (NOT
+        (SOME (TR1$1)
+         (AND (IS-TRAIN TR1$1) (IN (+ -1 T1$0) (CROSSING-INTERVAL TR1$1)))))
+       (NOT
+        (SOME (TR2$1)
+         (AND (IS-TRAIN TR2$1) (IN (+ 1 T2$0) (CROSSING-INTERVAL TR2$1)))))
+       (ALL (T3$1)
+        (IMPLIES (AND (>= T3$1 T1$0) (>= T2$0 T3$1))
+         (SOME (TR3$1)
+          (AND (IS-TRAIN TR3$1) (IN T3$1 (CROSSING-INTERVAL TR3$1))))))
+       (>= (ENTER-CROSSING TR) T1$0) (>= T2$0 (ENTER-CROSSING TR))
+       (>= T2$0 (EXIT-CROSSING TR)))))))
+  (SOME (T1$1)
+   (AND (>= T1$1 0)
+    (SOME (T2$1)
+     (AND (>= T2$1 T1$1)
+      (NOT
+       (SOME (TR1$2)
+        (AND (IS-TRAIN TR1$2) (IN (+ -1 T1$1) (CROSSING-INTERVAL TR1$2)))))
+      (NOT
+       (SOME (TR2$2)
+        (AND (IS-TRAIN TR2$2) (IN (+ 1 T2$1) (CROSSING-INTERVAL TR2$2)))))
+      (ALL (T3$2)
+       (IMPLIES (AND (>= T3$2 T1$1) (>= T2$1 T3$2))
+        (SOME (TR3$2)
+         (AND (IS-TRAIN TR3$2) (IN T3$2 (CROSSING-INTERVAL TR3$2))))))
+      (>= (ENTER-CROSSING TR) T1$1) (>= T2$1 (ENTER-CROSSING TR))
+      (>= T2$1 (EXIT-CROSSING TR))))))))
+Assuming OCCUPANCY-LEMMA-1 with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (AND (>= (INTERVAL-LOB TR) 0) (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))))
+  (IMPLIES (IS-TRAIN TR) (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR)))
+  (IS-TRAIN TR) (>= (INTERVAL-LOB TR) 0)
+  (>= (INTERVAL-HIB TR) (INTERVAL-LOB TR))
+  (NOT
+   (SOME (TR1)
+    (AND (IS-TRAIN TR1)
+     (IN (+ -1 (INTERVAL-LOB TR)) (CROSSING-INTERVAL TR1)))))
+  (NOT
+   (SOME (TR2)
+    (AND (IS-TRAIN TR2)
+     (IN (+ 1 (INTERVAL-HIB TR)) (CROSSING-INTERVAL TR2)))))
+  (ALL (T3)
+   (IMPLIES (AND (>= T3 (INTERVAL-LOB TR)) (>= (INTERVAL-HIB TR) T3))
+    (SOME (TR3) (AND (IS-TRAIN TR3) (IN T3 (CROSSING-INTERVAL TR3)))))))
+ (IF (>= (ENTER-CROSSING TR) (INTERVAL-LOB TR))
+  (IF (>= (INTERVAL-HIB TR) (ENTER-CROSSING TR))
+   (OR (>= (INTERVAL-HIB TR) (EXIT-CROSSING TR))
+    (SOME (T1)
+     (AND (>= T1 0)
+      (SOME (T2)
+       (AND (>= T2 T1)
+        (NOT
+         (SOME (TR1$0)
+          (AND (IS-TRAIN TR1$0) (IN (+ -1 T1) (CROSSING-INTERVAL TR1$0)))))
+        (NOT
+         (SOME (TR2$0)
+          (AND (IS-TRAIN TR2$0) (IN (+ 1 T2) (CROSSING-INTERVAL TR2$0)))))
+        (ALL (T3$0)
+         (IMPLIES (AND (>= T3$0 T1) (>= T2 T3$0))
+          (SOME (TR3$0)
+           (AND (IS-TRAIN TR3$0) (IN T3$0 (CROSSING-INTERVAL TR3$0))))))
+        (>= (ENTER-CROSSING TR) T1) (>= T2 (ENTER-CROSSING TR))
+        (>= T2 (EXIT-CROSSING TR)))))))
+   (SOME (T1$0)
+    (AND (>= T1$0 0)
+     (SOME (T2$0)
+      (AND (>= T2$0 T1$0)
+       (NOT
+        (SOME (TR1$1)
+         (AND (IS-TRAIN TR1$1) (IN (+ -1 T1$0) (CROSSING-INTERVAL TR1$1)))))
+       (NOT
+        (SOME (TR2$1)
+         (AND (IS-TRAIN TR2$1) (IN (+ 1 T2$0) (CROSSING-INTERVAL TR2$1)))))
+       (ALL (T3$1)
+        (IMPLIES (AND (>= T3$1 T1$0) (>= T2$0 T3$1))
+         (SOME (TR3$1)
+          (AND (IS-TRAIN TR3$1) (IN T3$1 (CROSSING-INTERVAL TR3$1))))))
+       (>= (ENTER-CROSSING TR) T1$0) (>= T2$0 (ENTER-CROSSING TR))
+       (>= T2$0 (EXIT-CROSSING TR)))))))
+  (SOME (T1$1)
+   (AND (>= T1$1 0)
+    (SOME (T2$1)
+     (AND (>= T2$1 T1$1)
+      (NOT
+       (SOME (TR1$2)
+        (AND (IS-TRAIN TR1$2) (IN (+ -1 T1$1) (CROSSING-INTERVAL TR1$2)))))
+      (NOT
+       (SOME (TR2$2)
+        (AND (IS-TRAIN TR2$2) (IN (+ 1 T2$1) (CROSSING-INTERVAL TR2$2)))))
+      (ALL (T3$2)
+       (IMPLIES (AND (>= T3$2 T1$1) (>= T2$1 T3$2))
+        (SOME (TR3$2)
+         (AND (IS-TRAIN TR3$2) (IN T3$2 (CROSSING-INTERVAL TR3$2))))))
+      (>= (ENTER-CROSSING TR) T1$1) (>= T2$1 (ENTER-CROSSING TR))
+      (>= T2$1 (EXIT-CROSSING TR))))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+UTILITY-THM-2-LEMMA
+Beginning proof of UTILITY-THM-2-LEMMA ...
+(IMPLIES
+ (ALL (T1 T2)
+  (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+   (NOT (IN T (RANGE (- T1 1000) (+ T2 89))))))
+ (NOT
+  (SOME (TR)
+   (AND (IS-TRAIN TR)
+    (IN T (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89)))))))
+Prenexing produces ...
+(IMPLIES
+ (ALL (T1 T2)
+  (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+   (NOT (IN T (RANGE (- T1 1000) (+ T2 89))))))
+ (NOT
+  (AND (IS-TRAIN TR)
+   (IN T (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89))))))
+Assuming IN-OCCUPANCY-INTERVAL with the instantiations: (= TR TR) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-TRAIN TR)
+   (SOME (T1 T2)
+    (AND (IS-OCCUPANCY-INTERVAL T1 T2) (IN (ENTER-CROSSING TR) (RANGE T1 T2))
+     (IN (EXIT-CROSSING TR) (RANGE T1 T2)))))
+  (ALL (T1$0 T2$0)
+   (IMPLIES (IS-OCCUPANCY-INTERVAL T1$0 T2$0)
+    (NOT (IN T (RANGE (- T1$0 1000) (+ T2$0 89)))))))
+ (NOT
+  (AND (IS-TRAIN TR)
+   (IN T (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89))))))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(IMPLIES
+ (AND (IS-TRAIN TR)
+  (SOME (T1 T2)
+   (AND (IS-OCCUPANCY-INTERVAL T1 T2) (>= (ENTER-CROSSING TR) T1)
+    (>= T2 (ENTER-CROSSING TR)) (>= T2 (EXIT-CROSSING TR))))
+  (ALL (T1$0 T2$0)
+   (IMPLIES (AND (IS-OCCUPANCY-INTERVAL T1$0 T2$0) (>= T (+ -1000 T1$0)))
+    (NOT (>= (+ 89 T2$0) T))))
+  (>= T (+ -1000 (ENTER-CROSSING TR))))
+ (NOT (>= (+ 89 (EXIT-CROSSING TR)) T)))
+Instantiating (= T1$0 T1) (= T2$0 T2) gives ...
+(IMPLIES
+ (AND (IS-TRAIN TR)
+  (SOME (T1 T2)
+   (AND (IS-OCCUPANCY-INTERVAL T1 T2) (>= (ENTER-CROSSING TR) T1)
+    (>= T2 (ENTER-CROSSING TR)) (>= T2 (EXIT-CROSSING TR))
+    (IMPLIES (AND (IS-OCCUPANCY-INTERVAL T1 T2) (>= T (+ -1000 T1)))
+     (NOT (>= (+ 89 T2) T)))
+    (ALL (T1$0 T2$0)
+     (IMPLIES (AND (IS-OCCUPANCY-INTERVAL T1$0 T2$0) (>= T (+ -1000 T1$0)))
+      (NOT (>= (+ 89 T2$0) T))))
+    (>= T (+ -1000 (ENTER-CROSSING TR))))))
+ (NOT (>= (+ 89 (EXIT-CROSSING TR)) T)))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-TRAIN TR) (IS-OCCUPANCY-INTERVAL T1 T2) (>= (ENTER-CROSSING TR) T1)
+  (>= T2 (ENTER-CROSSING TR)) (>= T2 (EXIT-CROSSING TR))
+  (IMPLIES (AND (IS-OCCUPANCY-INTERVAL T1 T2) (>= T (+ -1000 T1)))
+   (NOT (>= (+ 89 T2) T)))
+  (ALL (T1$0 T2$0)
+   (IMPLIES (AND (IS-OCCUPANCY-INTERVAL T1$0 T2$0) (>= T (+ -1000 T1$0)))
+    (NOT (>= (+ 89 T2$0) T))))
+  (>= T (+ -1000 (ENTER-CROSSING TR))))
+ (NOT (>= (+ 89 (EXIT-CROSSING TR)) T)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL to ...
+(TRUE)
+UTILITY-THM-2
+Beginning proof of UTILITY-THM-2 ...
+(IMPLIES
+ (ALL (T1 T2)
+  (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+   (NOT (IN T (RANGE (- T1 1000) (+ T2 89))))))
+ (GATE-UP T))
+Assuming UTILITY-THM-2-LEMMA with the instantiations: (= T T) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (ALL (T1 T2)
+    (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+     (NOT (IN T (RANGE (- T1 1000) (+ T2 89))))))
+   (NOT
+    (SOME (TR)
+     (AND (IS-TRAIN TR)
+      (IN T
+       (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89)))))))
+  (ALL (T1$0 T2$0)
+   (IMPLIES (IS-OCCUPANCY-INTERVAL T1$0 T2$0)
+    (NOT (IN T (RANGE (- T1$0 1000) (+ T2$0 89)))))))
+ (GATE-UP T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiations (= T1 T1$0) (= T2 T2$0) to ...
+(IMPLIES
+ (AND
+  (ALL (T1 T2)
+   (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+    (NOT (IN T (RANGE (+ -1000 T1) (+ 89 T2))))))
+  (NOT
+   (SOME (TR)
+    (AND (IS-TRAIN TR)
+     (IN T
+      (RANGE (+ -1000 (ENTER-CROSSING TR)) (+ 89 (EXIT-CROSSING TR))))))))
+ (GATE-UP T))
+Assuming UTILITY-THM-1 generates ...
+(IMPLIES
+ (AND
+  (ALL (T$0)
+   (IMPLIES
+    (NOT
+     (SOME (TR)
+      (AND (IS-TRAIN TR)
+       (IN T$0
+        (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89))))))
+    (GATE-UP T$0)))
+  (ALL (T1 T2)
+   (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+    (NOT (IN T (RANGE (+ -1000 T1) (+ 89 T2))))))
+  (NOT
+   (SOME (TR$0)
+    (AND (IS-TRAIN TR$0)
+     (IN T
+      (RANGE (+ -1000 (ENTER-CROSSING TR$0)) (+ 89 (EXIT-CROSSING TR$0))))))))
+ (GATE-UP T))
+Instantiating (= T$0 T) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (NOT
+    (SOME (TR)
+     (AND (IS-TRAIN TR)
+      (IN T (RANGE (- (ENTER-CROSSING TR) 1000) (+ (EXIT-CROSSING TR) 89))))))
+   (GATE-UP T))
+  (ALL (T$0)
+   (IMPLIES
+    (NOT
+     (SOME (TR$0)
+      (AND (IS-TRAIN TR$0)
+       (IN T$0
+        (RANGE (- (ENTER-CROSSING TR$0) 1000) (+ (EXIT-CROSSING TR$0) 89))))))
+    (GATE-UP T$0)))
+  (ALL (T1 T2)
+   (IMPLIES (IS-OCCUPANCY-INTERVAL T1 T2)
+    (NOT (IN T (RANGE (+ -1000 T1) (+ 89 T2))))))
+  (NOT
+   (SOME (TR$1)
+    (AND (IS-TRAIN TR$1)
+     (IN T
+      (RANGE (+ -1000 (ENTER-CROSSING TR$1)) (+ 89 (EXIT-CROSSING TR$1))))))))
+ (GATE-UP T))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, TRAIN-CROSSING-BOUNDS
+ with the assumptions EXIT-CROSSING-IS-NAT, ENTER-CROSSING-IS-NAT,
+IS-TRAIN-BOOL
+ with the instantiation (= TR TR$1) to ...
+(TRUE)
+Done.

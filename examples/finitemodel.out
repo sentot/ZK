@@ -1,0 +1,3158 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/finitemodel.ver"
+Warning RULE-LOOPS for FN!FUNCTION-EXTENSIONALITY:
+ The rule FN!FUNCTION-EXTENSIONALITY loops upon itself.
+Warning RULE-CONDITION-LOOPS for ELEM!>=-TRANSITIVE:
+ The rule ELEM!>=-TRANSITIVE applies to its own condition.
+Warning RULE-LOOPS for ELEM!>=-PRED-DEVELOPMENT:
+ The rule ELEM!>=-PRED-DEVELOPMENT loops upon itself.
+Warning RULE-CONDITION-LOOPS for ELEM!ASSYMETRY:
+ The rule ELEM!ASSYMETRY applies to its own condition.
+Warning RULE-LOOPS for ELEM!RANGE-BOTTOM-EXPANSION:
+ The rule ELEM!RANGE-BOTTOM-EXPANSION loops upon itself.
+Warning RULE-LOOPS for ELEM!RANGE-TOP-EXPANSION:
+ The rule ELEM!RANGE-TOP-EXPANSION loops upon itself.
+IS-FINITE
+TYPE-OF-IS-FINITE
+Beginning proof of TYPE-OF-IS-FINITE ...
+(= (TYPE-OF (IS-FINITE X)) (BOOL))
+Which simplifies
+ with invocation of IS-FINITE
+ when rewriting with NAT!IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+POSSIBLE-COUNTS
+CARD
+NAT-ZEROP
+Beginning proof of NAT-ZEROP ...
+(= (NAT!ZEROP N) (IMPLIES (IN N (INT)) (<= N 0)))
+Invoking NAT!ZEROP gives ...
+(= (NOT (>= N 1)) (IMPLIES (IN N (INT)) (<= N 0)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+LEMMA-0
+Beginning proof of LEMMA-0 ...
+(IMPLIES (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND (IS-FINITE X) (IN (CARD X) (NAT!NAT)) (<= (CARD X) N)))
+Invoking IS-FINITE gives ...
+(IMPLIES (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND
+  (SOME (N$0 F$0) (AND (IN N$0 (NAT!NAT)) (IN F$0 (FN!SURJ (RANGE 1 N$0) X))))
+  (IN (CARD X) (NAT!NAT)) (>= N (CARD X))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND
+  (SOME (N$0)
+   (AND (IN N$0 (NAT!NAT)) (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 N$0) X)))))
+  (IN (CARD X) (NAT!NAT)) (>= N (CARD X))))
+Invoking CARD gives ...
+(IMPLIES (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND
+  (SOME (N$0)
+   (AND (IN N$0 (NAT!NAT)) (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 N$0) X)))))
+  (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+  (>= N (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N N) (= X (POSSIBLE-COUNTS X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN N (POSSIBLE-COUNTS X)) (IN N (NAT!NAT)))
+   (AND (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (POSSIBLE-COUNTS X))
+    (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+    (<= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) N)))
+  (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND
+  (SOME (N$0)
+   (AND (IN N$0 (NAT!NAT)) (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 N$0) X)))))
+  (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+  (>= N (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X))
+  (IMPLIES (AND (IN N (POSSIBLE-COUNTS X)) (IN N (NAT!NAT)))
+   (AND (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (POSSIBLE-COUNTS X))
+    (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+    (<= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) N))))
+ (AND (>= N (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)))
+  (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+  (SOME (N$0)
+   (AND (IN N$0 (NAT!NAT)) (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 N$0) X)))))))
+Which simplifies
+ when rewriting with POSSIBLE-COUNTS.DEFINITION, NAT!IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (>= N 0) (IN F (FN!SURJ (RANGE 1 N) X))
+  (>= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) 0)
+  (SOME (F$0)
+   (IN F$0
+    (FN!SURJ (RANGE 1 (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))) X)))
+  (>= N (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))))
+ (SOME (N$0) (AND (>= N$0 0) (SOME (F$1) (IN F$1 (FN!SURJ (RANGE 1 N$0) X))))))
+Instantiating (= N$0 N) gives ...
+(IMPLIES
+ (AND (>= N 0) (IN F (FN!SURJ (RANGE 1 N) X))
+  (>= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) 0)
+  (SOME (F$0)
+   (IN F$0
+    (FN!SURJ (RANGE 1 (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))) X)))
+  (>= N (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)))
+  (NOT (AND (>= N 0) (SOME (F$1) (IN F$1 (FN!SURJ (RANGE 1 N) X))))))
+ (SOME (N$0) (AND (>= N$0 0) (SOME (F$2) (IN F$2 (FN!SURJ (RANGE 1 N$0) X))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the instantiation (= F$1 F) to ...
+(TRUE)
+LEMMA-0-VERSION-2
+Beginning proof of LEMMA-0-VERSION-2 ...
+(IMPLIES (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 N)))
+ (AND (IS-FINITE (REL!RAN F)) (IN (CARD (REL!RAN F)) (NAT!NAT))
+  (<= (CARD (REL!RAN F)) N)))
+Assuming LEMMA-0 with the
+instantiations: (= F F) (= N N) (= X (REL!RAN F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) (REL!RAN F))))
+   (AND (IS-FINITE (REL!RAN F)) (IN (CARD (REL!RAN F)) (NAT!NAT))
+    (<= (CARD (REL!RAN F)) N)))
+  (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 N)))
+ (AND (IS-FINITE (REL!RAN F)) (IN (CARD (REL!RAN F)) (NAT!NAT))
+  (>= N (CARD (REL!RAN F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (REL!DOM F) (RANGE 1 N)) (IN N (NAT!NAT)) (FN!IS-FUNCTION F)
+  (IMPLIES (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) (REL!RAN F))))
+   (AND (IS-FINITE (REL!RAN F)) (IN (CARD (REL!RAN F)) (NAT!NAT))
+    (<= (CARD (REL!RAN F)) N))))
+ (AND (>= N (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))
+  (IN (CARD (REL!RAN F)) (NAT!NAT))))
+Which simplifies
+ when rewriting with FN!IN-SURJ, NAT!IN-NAT
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE
+ with the assumptions FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+LEMMA-1
+Beginning proof of LEMMA-1 ...
+(IMPLIES (IS-FINITE X)
+ (AND (IN (CARD X) (NAT!NAT))
+  (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD X)) X)))))
+Which simplifies
+ with invocation of CARD, IS-FINITE
+ when rewriting with NAT!IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(IMPLIES (SOME (N) (AND (>= N 0) (SOME (F) (IN F (FN!SURJ (RANGE 1 N) X)))))
+ (AND (>= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) 0)
+  (SOME (F$0)
+   (IN F$0
+    (FN!SURJ (RANGE 1 (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))) X)))))
+Prenexing produces ...
+(IMPLIES (AND (>= N 0) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND (>= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) 0)
+  (SOME (F$0)
+   (IN F$0
+    (FN!SURJ (RANGE 1 (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))) X)))))
+Assuming NAT!SMALLEST-IS-SMALLEST-2 with the
+instantiations: (= N N) (= X (POSSIBLE-COUNTS X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN N (POSSIBLE-COUNTS X)) (IN N (NAT!NAT)))
+   (AND (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (POSSIBLE-COUNTS X))
+    (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+    (<= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) N)))
+  (>= N 0) (IN F (FN!SURJ (RANGE 1 N) X)))
+ (AND (>= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) 0)
+  (SOME (F$0)
+   (IN F$0
+    (FN!SURJ (RANGE 1 (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))) X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= N 0) (IN F (FN!SURJ (RANGE 1 N) X))
+  (IMPLIES (AND (IN N (POSSIBLE-COUNTS X)) (IN N (NAT!NAT)))
+   (AND (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (POSSIBLE-COUNTS X))
+    (IN (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) (NAT!NAT))
+    (<= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) N))))
+ (AND (>= (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X)) 0)
+  (SOME (F$0)
+   (IN F$0
+    (FN!SURJ (RANGE 1 (NAT!SMALLEST-NAT-MEMBER (POSSIBLE-COUNTS X))) X)))))
+Which simplifies
+ when rewriting with NAT!IN-NAT, POSSIBLE-COUNTS.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+COUNT
+Beginning proof of COUNT ...
+(IF (>= N 1) (M< (+ -1 N) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+ENUMERATE
+Beginning proof of ENUMERATE ...
+(IF (>= N 1) (M< (+ -1 N) N) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+COUNT-RANGE-1
+Beginning proof of COUNT-RANGE-1 ...
+(<= 0 (COUNT X N))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (IN N X) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (AND (>= N 1) (NOT (IN N X)) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (NOT (>= N 1)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES (AND (>= N 1) (IN N X) (<= 0 (COUNT X (+ -1 N))))
+  (<= 0 (COUNT X N)))
+ (IMPLIES (AND (>= N 1) (NOT (IN N X)) (<= 0 (COUNT X (+ -1 N))))
+  (<= 0 (COUNT X N)))
+ (IMPLIES (NOT (>= N 1)) (<= 0 (COUNT X N))))
+Which simplifies
+ with invocation of COUNT
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+COUNT-RANGE-2
+Beginning proof of COUNT-RANGE-2 ...
+(IMPLIES (>= N 0) (<= (COUNT X N) N))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (IN N X) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (AND (>= N 1) (NOT (IN N X)) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (NOT (>= N 1)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= N 1) (IN N X)
+   (IMPLIES (>= (+ -1 N) 0) (<= (COUNT X (+ -1 N)) (+ -1 N))))
+  (IMPLIES (>= N 0) (<= (COUNT X N) N)))
+ (IMPLIES
+  (AND (>= N 1) (NOT (IN N X))
+   (IMPLIES (>= (+ -1 N) 0) (<= (COUNT X (+ -1 N)) (+ -1 N))))
+  (IMPLIES (>= N 0) (<= (COUNT X N) N)))
+ (IMPLIES (NOT (>= N 1)) (IMPLIES (>= N 0) (<= (COUNT X N) N))))
+Which simplifies
+ with invocation of COUNT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions COUNT-RANGE-1 to ...
+(TRUE)
+IN-INT
+Beginning proof of IN-INT ...
+(= (IN X (INT)) (= (TYPE-OF X) (INT)))
+Splitting on (= (TYPE-OF X) (INT)) generates ...
+(IF (= (TYPE-OF X) (INT)) (= (IN X (INT)) (= (TYPE-OF X) (INT)))
+ (= (IN X (INT)) (= (TYPE-OF X) (INT))))
+Which simplifies to ...
+(TRUE)
+COUNT-MAXIMUM
+Beginning proof of COUNT-MAXIMUM ...
+(IMPLIES (= (COUNT X N) N) (SUBSET (RANGE 1 N) X))
+Inducting using the following scheme ...
+ (AND (IMPLIES (NAT!ZEROP N) (*P* N X))
+  (IMPLIES (AND (NOT (NAT!ZEROP N)) (*P* (- N 1) X)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES (NAT!ZEROP N) (IMPLIES (= (COUNT X N) N) (SUBSET (RANGE 1 N) X)))
+ (IMPLIES
+  (AND (NOT (NAT!ZEROP N))
+   (IMPLIES (= (COUNT X (- N 1)) (- N 1)) (SUBSET (RANGE 1 (- N 1)) X)))
+  (IMPLIES (= (COUNT X N) N) (SUBSET (RANGE 1 N) X))))
+Which simplifies
+ with invocation of SUBSET, COUNT
+ when rewriting with RANGE.DEFINITION, SUBSET.NULLSET.LEFT, ELEM!NULL-RANGE,
+IN-INT, NAT-ZEROP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions COUNT-RANGE-2, COUNT-RANGE-1 to ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (= (COUNT X (+ -1 N)) (+ -1 N))
+  (ALL (E) (IMPLIES (AND (>= E 1) (>= (+ -1 N) E)) (IN E X))) (IN N X))
+ (ALL (E$0) (IMPLIES (AND (>= E$0 1) (>= N E$0)) (IN E$0 X))))
+Splitting on (= E$0 N) generates ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (= (COUNT X (+ -1 N)) (+ -1 N))
+  (ALL (E) (IMPLIES (AND (>= E 1) (>= (+ -1 N) E)) (IN E X))) (IN N X))
+ (ALL (E$0)
+  (IF (= E$0 N) (IMPLIES (AND (>= E$0 1) (>= N E$0)) (IN E$0 X))
+   (IMPLIES (AND (>= E$0 1) (>= N E$0)) (IN E$0 X)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions COUNT-RANGE-1, COUNT-RANGE-2
+ with the instantiation (= E E$0) to ...
+(TRUE)
+DOM-ENUMERATE
+Beginning proof of DOM-ENUMERATE ...
+(= (REL!DOM (ENUMERATE X N)) (RANGE 1 (COUNT X N)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (IN N X) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (AND (>= N 1) (NOT (IN N X)) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (NOT (>= N 1)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= N 1) (IN N X)
+   (= (REL!DOM (ENUMERATE X (+ -1 N))) (RANGE 1 (COUNT X (+ -1 N)))))
+  (= (REL!DOM (ENUMERATE X N)) (RANGE 1 (COUNT X N))))
+ (IMPLIES
+  (AND (>= N 1) (NOT (IN N X))
+   (= (REL!DOM (ENUMERATE X (+ -1 N))) (RANGE 1 (COUNT X (+ -1 N)))))
+  (= (REL!DOM (ENUMERATE X N)) (RANGE 1 (COUNT X N))))
+ (IMPLIES (NOT (>= N 1)) (= (REL!DOM (ENUMERATE X N)) (RANGE 1 (COUNT X N)))))
+Which simplifies
+ with invocation of ENUMERATE, COUNT
+ when rewriting with ELEM!NULL-RANGE, REL!DOM-NULLSET, REL!DOM-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, COUNT-RANGE-1, COUNT-RANGE-2 to ...
+(IMPLIES
+ (AND (>= N 1) (IN N X)
+  (= (REL!DOM (ENUMERATE X (+ -1 N))) (RANGE 1 (COUNT X (+ -1 N)))))
+ (= (SETADD (+ 1 (COUNT X (+ -1 N))) (REL!DOM (ENUMERATE X (+ -1 N))))
+  (RANGE 1 (+ 1 (COUNT X (+ -1 N))))))
+Assuming ELEM!RANGE-TOP-EXPANSION with the
+instantiations: (= X 1) (= Y (+ (COUNT X (+ -1 N)) 1)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 (+ (COUNT X (+ -1 N)) 1)))
+   (= (RANGE 1 (+ (COUNT X (+ -1 N)) 1))
+    (SETADD (+ (COUNT X (+ -1 N)) 1)
+     (RANGE 1 (PRED (+ (COUNT X (+ -1 N)) 1))))))
+  (>= N 1) (IN N X)
+  (= (REL!DOM (ENUMERATE X (+ -1 N))) (RANGE 1 (COUNT X (+ -1 N)))))
+ (= (SETADD (+ 1 (COUNT X (+ -1 N))) (REL!DOM (ENUMERATE X (+ -1 N))))
+  (RANGE 1 (+ 1 (COUNT X (+ -1 N))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= N 1)
+  (= (REL!DOM (ENUMERATE X (+ -1 N))) (RANGE 1 (COUNT X (+ -1 N)))) (IN N X)
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 (+ (COUNT X (+ -1 N)) 1)))
+   (= (RANGE 1 (+ (COUNT X (+ -1 N)) 1))
+    (SETADD (+ (COUNT X (+ -1 N)) 1)
+     (RANGE 1 (PRED (+ (COUNT X (+ -1 N)) 1)))))))
+ (= (SETADD (+ 1 (COUNT X (+ -1 N))) (REL!DOM (ENUMERATE X (+ -1 N))))
+  (RANGE 1 (+ 1 (COUNT X (+ -1 N))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions PRED.INT, COUNT-RANGE-1, COUNT-RANGE-2 to ...
+(TRUE)
+RAN-ENUMERATE
+Beginning proof of RAN-ENUMERATE ...
+(= (REL!RAN (ENUMERATE X N)) (INTER X (RANGE 1 N)))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (IN N X) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (AND (>= N 1) (NOT (IN N X)) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (NOT (>= N 1)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= N 1) (IN N X)
+   (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N)))))
+  (= (REL!RAN (ENUMERATE X N)) (INTER X (RANGE 1 N))))
+ (IMPLIES
+  (AND (>= N 1) (NOT (IN N X))
+   (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N)))))
+  (= (REL!RAN (ENUMERATE X N)) (INTER X (RANGE 1 N))))
+ (IMPLIES (NOT (>= N 1)) (= (REL!RAN (ENUMERATE X N)) (INTER X (RANGE 1 N)))))
+Which simplifies
+ with invocation of ENUMERATE, COUNT
+ when rewriting with SETRULES!INTER-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+ELEM!NULL-RANGE, REL!RAN-NULLSET, REL!RAN-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, COUNT-RANGE-1, COUNT-RANGE-2,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IMPLIES (>= N 1)
+ (IF (IN N X)
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (SETADD N (REL!RAN (ENUMERATE X (+ -1 N)))) (INTER X (RANGE 1 N))))
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 N))))))
+Assuming ELEM!RANGE-TOP-EXPANSION with the
+instantiations: (= X 1) (= Y N) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 N))
+   (= (RANGE 1 N) (SETADD N (RANGE 1 (PRED N)))))
+  (>= N 1))
+ (IF (IN N X)
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (SETADD N (REL!RAN (ENUMERATE X (+ -1 N)))) (INTER X (RANGE 1 N))))
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 N))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= N 1)
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 N))
+   (= (RANGE 1 N) (SETADD N (RANGE 1 (PRED N))))))
+ (IF (IN N X)
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (SETADD N (REL!RAN (ENUMERATE X (+ -1 N)))) (INTER X (RANGE 1 N))))
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 N))))))
+Which simplifies
+ when rewriting with PRED.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PRED.INT to ...
+(IMPLIES (AND (>= N 1) (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))))
+ (IF (IN N X)
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (SETADD N (REL!RAN (ENUMERATE X (+ -1 N)))) (INTER X (RANGE 1 N))))
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 N))))))
+Substituting (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N))))
+             (= (REL!RAN (ENUMERATE X (+ -1 N)))
+              (INTER X (RANGE 1 (+ -1 N)))) produces
+...
+(IMPLIES (AND (>= N 1) (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))))
+ (IF (IN N X)
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (SETADD N (INTER X (RANGE 1 (+ -1 N))))
+    (INTER X (SETADD N (RANGE 1 (+ -1 N))))))
+  (IMPLIES (= (REL!RAN (ENUMERATE X (+ -1 N))) (INTER X (RANGE 1 (+ -1 N))))
+   (= (INTER X (RANGE 1 (+ -1 N))) (INTER X (SETADD N (RANGE 1 (+ -1 N))))))))
+Which simplifies
+ when rewriting with SETRULES!SETADD-INTER-RIGHT-NONMEMBER,
+SETRULES!SETADD-INTER-RIGHT-MEMBER
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+IS-FUNCTION-ENUMERATE
+Beginning proof of IS-FUNCTION-ENUMERATE ...
+(= (FN!IS-FUNCTION (ENUMERATE X N)) (TRUE))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (IN N X) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (AND (>= N 1) (NOT (IN N X)) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (NOT (>= N 1)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= N 1) (IN N X) (= (FN!IS-FUNCTION (ENUMERATE X (+ -1 N))) (TRUE)))
+  (= (FN!IS-FUNCTION (ENUMERATE X N)) (TRUE)))
+ (IMPLIES
+  (AND (>= N 1) (NOT (IN N X))
+   (= (FN!IS-FUNCTION (ENUMERATE X (+ -1 N))) (TRUE)))
+  (= (FN!IS-FUNCTION (ENUMERATE X N)) (TRUE)))
+ (IMPLIES (NOT (>= N 1)) (= (FN!IS-FUNCTION (ENUMERATE X N)) (TRUE))))
+Which simplifies
+ with invocation of ENUMERATE, COUNT
+ when rewriting with FN!IS-FUNCTION-NULLSET, RANGE.DEFINITION, DOM-ENUMERATE,
+FN!IS-FUNCTION-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION,
+>=.SAME.TYPE
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, COUNT-RANGE-1, COUNT-RANGE-2, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+IS-FUNCTION-INVERSE-ENUMERATE
+Beginning proof of IS-FUNCTION-INVERSE-ENUMERATE ...
+(= (FN!IS-FUNCTION (REL!INVERSE (ENUMERATE X N))) (TRUE))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= N 1) (IN N X) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (AND (>= N 1) (NOT (IN N X)) (*P* (+ -1 N) X)) (*P* N X))
+  (IMPLIES (NOT (>= N 1)) (*P* N X)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= N 1) (IN N X)
+   (= (FN!IS-FUNCTION (REL!INVERSE (ENUMERATE X (+ -1 N)))) (TRUE)))
+  (= (FN!IS-FUNCTION (REL!INVERSE (ENUMERATE X N))) (TRUE)))
+ (IMPLIES
+  (AND (>= N 1) (NOT (IN N X))
+   (= (FN!IS-FUNCTION (REL!INVERSE (ENUMERATE X (+ -1 N)))) (TRUE)))
+  (= (FN!IS-FUNCTION (REL!INVERSE (ENUMERATE X N))) (TRUE)))
+ (IMPLIES (NOT (>= N 1))
+  (= (FN!IS-FUNCTION (REL!INVERSE (ENUMERATE X N))) (TRUE))))
+Which simplifies
+ with invocation of ENUMERATE, COUNT
+ when rewriting with FN!IS-FUNCTION-NULLSET, REL!INVERSE-NULLSET,
+RANGE.DEFINITION, INTER.DEFINITION, RAN-ENUMERATE, REL!DOM-INVERSE,
+FN!IS-FUNCTION-SETADD, REL!FLIP-PAIR-PAIR, REL!INVERSE-SETADD
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION,
+>=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, PAIR!IS-PAIR-BOOL,
+REL!FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+COUNT-RANGE-1, COUNT-RANGE-2, FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to ...
+(TRUE)
+LEMMA-2
+Beginning proof of LEMMA-2 ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N)))
+ (AND (IS-FINITE (REL!RAN F)) (<= (CARD (REL!RAN F)) (COUNT (REL!DOM F) N))))
+Assuming LEMMA-0-VERSION-2 with the
+instantiations: (= N (COUNT (REL!DOM F) N))
+                (= F (REL!COMP (ENUMERATE (REL!DOM F) N) F)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (COUNT (REL!DOM F) N) (NAT!NAT))
+    (FN!IS-FUNCTION (REL!COMP (ENUMERATE (REL!DOM F) N) F))
+    (= (REL!DOM (REL!COMP (ENUMERATE (REL!DOM F) N) F))
+     (RANGE 1 (COUNT (REL!DOM F) N))))
+   (AND (IS-FINITE (REL!RAN (REL!COMP (ENUMERATE (REL!DOM F) N) F)))
+    (IN (CARD (REL!RAN (REL!COMP (ENUMERATE (REL!DOM F) N) F))) (NAT!NAT))
+    (<= (CARD (REL!RAN (REL!COMP (ENUMERATE (REL!DOM F) N) F)))
+     (COUNT (REL!DOM F) N))))
+  (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N)))
+ (AND (IS-FINITE (REL!RAN F)) (>= (COUNT (REL!DOM F) N) (CARD (REL!RAN F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N))
+  (IMPLIES
+   (AND
+    (= (REL!DOM (REL!COMP (ENUMERATE (REL!DOM F) N) F))
+     (RANGE 1 (COUNT (REL!DOM F) N)))
+    (IN (COUNT (REL!DOM F) N) (NAT!NAT))
+    (FN!IS-FUNCTION (REL!COMP (ENUMERATE (REL!DOM F) N) F)))
+   (AND (IS-FINITE (REL!RAN (REL!COMP (ENUMERATE (REL!DOM F) N) F)))
+    (IN (CARD (REL!RAN (REL!COMP (ENUMERATE (REL!DOM F) N) F))) (NAT!NAT))
+    (<= (CARD (REL!RAN (REL!COMP (ENUMERATE (REL!DOM F) N) F)))
+     (COUNT (REL!DOM F) N)))))
+ (AND (>= (COUNT (REL!DOM F) N) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+Which simplifies
+ when rewriting with REL!RAN-COMP, FN!IS-FUNCTION-COMP-FUNCTIONS,
+IS-FUNCTION-ENUMERATE, DOM-ENUMERATE, REL!RAN-INVERSE,
+REL!IMAGE-OF-SUPERSET-OF-DOM, REL!DOM-SUBSET, SUBSET.SELF,
+SETRULES!INTER-SUBSET-RIGHT, RAN-ENUMERATE, REL!DOM-INVERSE, REL!DOM-COMP,
+NAT!IN-NAT
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE
+ with the assumptions COUNT-RANGE-1, COUNT-RANGE-2,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2,
+REL!INVERSE-INVERSE, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+LEMMA-2-WEAK
+Beginning proof of LEMMA-2-WEAK ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N)))
+ (AND (IS-FINITE (REL!RAN F)) (<= (CARD (REL!RAN F)) N)))
+Assuming LEMMA-2 with the instantiations: (= N N) (= F F) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N)))
+   (AND (IS-FINITE (REL!RAN F))
+    (<= (CARD (REL!RAN F)) (COUNT (REL!DOM F) N))))
+  (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N)))
+ (AND (IS-FINITE (REL!RAN F)) (>= N (CARD (REL!RAN F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N))
+  (IMPLIES
+   (AND (IN N (NAT!NAT)) (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (RANGE 1 N)))
+   (AND (IS-FINITE (REL!RAN F))
+    (<= (CARD (REL!RAN F)) (COUNT (REL!DOM F) N)))))
+ (AND (>= N (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+Which simplifies
+ when rewriting with NAT!IN-NAT
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE
+ with the assumptions COUNT-RANGE-1, COUNT-RANGE-2, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+FINITE-CARD-NAT
+Beginning proof of FINITE-CARD-NAT ...
+(IMPLIES (IS-FINITE X) (>= (CARD X) 0))
+Assuming LEMMA-1 with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE X)
+   (AND (IN (CARD X) (NAT!NAT))
+    (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD X)) X)))))
+  (IS-FINITE X))
+ (>= (CARD X) 0))
+Which simplifies
+ when rewriting with NAT!IN-NAT
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+FINITE-HAS-ENUMERATION
+Beginning proof of FINITE-HAS-ENUMERATION ...
+(IMPLIES (IS-FINITE X) (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD X)) X))))
+Assuming LEMMA-1 with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE X)
+   (AND (IN (CARD X) (NAT!NAT))
+    (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD X)) X)))))
+  (IS-FINITE X))
+ (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 (CARD X)) X))))
+Which simplifies
+ when rewriting with NAT!IN-NAT
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(TRUE)
+IS-FINITE-NULLSET
+Beginning proof of IS-FINITE-NULLSET ...
+(= (IS-FINITE (NULLSET)) (TRUE))
+Assuming LEMMA-0-VERSION-2 with the
+instantiations: (= N 0) (= F (NULLSET)) generates ...
+(IMPLIES
+ (IMPLIES
+  (AND (IN 0 (NAT!NAT)) (FN!IS-FUNCTION (NULLSET))
+   (= (REL!DOM (NULLSET)) (RANGE 1 0)))
+  (AND (IS-FINITE (REL!RAN (NULLSET)))
+   (IN (CARD (REL!RAN (NULLSET))) (NAT!NAT))
+   (<= (CARD (REL!RAN (NULLSET))) 0)))
+ (IS-FINITE (NULLSET)))
+Which simplifies
+ when rewriting with REL!RAN-NULLSET, ELEM!NULL-RANGE, REL!DOM-NULLSET,
+FN!IS-FUNCTION-NULLSET, NAT!IN-NAT
+ forward chaining using FINITE-CARD-NAT, FN!FUNCTION-IS-RELATION, >=.SAME.TYPE
+ with the assumptions FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+CARD-NULLSET
+Beginning proof of CARD-NULLSET ...
+(= (CARD (NULLSET)) 0)
+Assuming LEMMA-0 with the
+instantiations: (= N 0) (= F (NULLSET)) (= X (NULLSET)) generates ...
+(IMPLIES
+ (IMPLIES
+  (AND (IN 0 (NAT!NAT)) (IN (NULLSET) (FN!SURJ (RANGE 1 0) (NULLSET))))
+  (AND (IS-FINITE (NULLSET)) (IN (CARD (NULLSET)) (NAT!NAT))
+   (<= (CARD (NULLSET)) 0)))
+ (= (CARD (NULLSET)) 0))
+Which simplifies
+ when rewriting with IS-FINITE-NULLSET, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD, FN!SURJ-NULLSET-RIGHT, ELEM!NULL-RANGE, NAT!IN-NAT
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(TRUE)
+POSSIBLE-0-IMPLIES-NULLSET
+Beginning proof of POSSIBLE-0-IMPLIES-NULLSET ...
+(IMPLIES (IN 0 (POSSIBLE-COUNTS X)) (= X (NULLSET)))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD, FN!SURJ-NULLSET-LEFT, ELEM!NULL-RANGE, NAT!IN-NAT,
+POSSIBLE-COUNTS.DEFINITION
+ forward chaining using >=.SAME.TYPE to ...
+(TRUE)
+FINITE-IMPLIES-CARD-POSSIBLE
+Beginning proof of FINITE-IMPLIES-CARD-POSSIBLE ...
+(IMPLIES (IS-FINITE X) (IN (CARD X) (POSSIBLE-COUNTS X)))
+Assuming LEMMA-1 with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE X)
+   (AND (IN (CARD X) (NAT!NAT))
+    (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD X)) X)))))
+  (IS-FINITE X))
+ (IN (CARD X) (POSSIBLE-COUNTS X)))
+Which simplifies
+ when rewriting with POSSIBLE-COUNTS.DEFINITION, NAT!IN-NAT
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(TRUE)
+CARD-0-IFF-NULLSET
+Beginning proof of CARD-0-IFF-NULLSET ...
+(IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET))))
+Splitting on (= X (NULLSET)) generates ...
+(IF (= X (NULLSET)) (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET))))
+ (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET)))))
+Which simplifies
+ when rewriting with CARD-NULLSET, IS-FINITE-NULLSET
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES (AND (NOT (= X (NULLSET))) (IS-FINITE X)) (= (= (CARD X) 0) (FALSE)))
+Assuming FINITE-IMPLIES-CARD-POSSIBLE with the
+instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-FINITE X) (IN (CARD X) (POSSIBLE-COUNTS X)))
+  (NOT (= X (NULLSET))) (IS-FINITE X))
+ (NOT (= (CARD X) 0)))
+Assuming POSSIBLE-0-IMPLIES-NULLSET with the instantiations: (= X X) generates
+...
+(IMPLIES
+ (AND (IMPLIES (IN 0 (POSSIBLE-COUNTS X)) (= X (NULLSET)))
+  (IMPLIES (IS-FINITE X) (IN (CARD X) (POSSIBLE-COUNTS X)))
+  (NOT (= X (NULLSET))) (IS-FINITE X))
+ (NOT (= (CARD X) 0)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(TRUE)
+IS-FINITE-UNIT
+Beginning proof of IS-FINITE-UNIT ...
+(= (IS-FINITE (UNIT X)) (TRUE))
+Assuming LEMMA-0-VERSION-2 with the
+instantiations: (= N 1) (= F (UNIT (PAIR!PAIR 1 X))) generates ...
+(IMPLIES
+ (IMPLIES
+  (AND (IN 1 (NAT!NAT)) (FN!IS-FUNCTION (UNIT (PAIR!PAIR 1 X)))
+   (= (REL!DOM (UNIT (PAIR!PAIR 1 X))) (RANGE 1 1)))
+  (AND (IS-FINITE (REL!RAN (UNIT (PAIR!PAIR 1 X))))
+   (IN (CARD (REL!RAN (UNIT (PAIR!PAIR 1 X)))) (NAT!NAT))
+   (<= (CARD (REL!RAN (UNIT (PAIR!PAIR 1 X)))) 1)))
+ (IS-FINITE (UNIT X)))
+Which simplifies
+ when rewriting with REL!RAN-NULLSET, REL!RAN-SETADD, ELEM!SINGLETON-RANGE,
+REL!DOM-SETADD, NULLSET.DEFINITION, REL!DOM-NULLSET, FN!IS-FUNCTION-NULLSET,
+FN!IS-FUNCTION-SETADD, SETRULES!UNIT-TO-SETADD, NAT!IN-NAT
+ forward chaining using FINITE-CARD-NAT, FN!FUNCTION-IS-RELATION,
+PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(TRUE)
+CARD-UNIT
+Beginning proof of CARD-UNIT ...
+(= (CARD (UNIT X)) 1)
+Assuming LEMMA-0-VERSION-2 with the
+instantiations: (= N 1) (= F (UNIT (PAIR!PAIR 1 X))) generates ...
+(IMPLIES
+ (IMPLIES
+  (AND (IN 1 (NAT!NAT)) (FN!IS-FUNCTION (UNIT (PAIR!PAIR 1 X)))
+   (= (REL!DOM (UNIT (PAIR!PAIR 1 X))) (RANGE 1 1)))
+  (AND (IS-FINITE (REL!RAN (UNIT (PAIR!PAIR 1 X))))
+   (IN (CARD (REL!RAN (UNIT (PAIR!PAIR 1 X)))) (NAT!NAT))
+   (<= (CARD (REL!RAN (UNIT (PAIR!PAIR 1 X)))) 1)))
+ (= (CARD (UNIT X)) 1))
+Which simplifies
+ when rewriting with REL!RAN-NULLSET, REL!RAN-SETADD, ELEM!SINGLETON-RANGE,
+REL!DOM-SETADD, NULLSET.DEFINITION, REL!DOM-NULLSET, FN!IS-FUNCTION-NULLSET,
+FN!IS-FUNCTION-SETADD, SETRULES!UNIT-TO-SETADD, NAT!IN-NAT
+ forward chaining using FINITE-CARD-NAT, FN!FUNCTION-IS-RELATION,
+PAIR!PAIR-COMPOSITION, >=.SAME.TYPE
+ with the assumptions PAIR!IS-PAIR-BOOL, FN!IS-FUNCTION-BOOL, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR to ...
+(IMPLIES
+ (AND (IS-FINITE (SETADD X (NULLSET))) (<= (CARD (SETADD X (NULLSET))) 1))
+ (= (CARD (SETADD X (NULLSET))) 1))
+Assuming CARD-0-IFF-NULLSET with the instantiations: (= X (UNIT X)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE (UNIT X))
+   (= (= (CARD (UNIT X)) 0) (= (UNIT X) (NULLSET))))
+  (IS-FINITE (SETADD X (NULLSET))) (<= (CARD (SETADD X (NULLSET))) 1))
+ (= (CARD (SETADD X (NULLSET))) 1))
+Which simplifies
+ when rewriting with SETRULES!SETADD-LEFT-EQUALITY-TEST, NULLSET.DEFINITION,
+SETRULES!UNIT-TO-SETADD
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(TRUE)
+IS-FINITE-MONOTONIC
+Beginning proof of IS-FINITE-MONOTONIC ...
+(IMPLIES (AND (IS-FINITE Y) (SUBSET X Y))
+ (AND (IS-FINITE X) (<= (CARD X) (CARD Y))))
+Assuming LEMMA-1 with the instantiations: (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE Y)
+   (AND (IN (CARD Y) (NAT!NAT))
+    (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)))))
+  (IS-FINITE Y) (SUBSET X Y))
+ (AND (IS-FINITE X) (>= (CARD Y) (CARD X))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))) (SUBSET X Y))
+ (AND (IS-FINITE X) (>= (CARD Y) (CARD X))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (SUBSET X Y))
+ (AND (IS-FINITE X) (>= (CARD Y) (CARD X))))
+Assuming LEMMA-2 with the
+instantiations: (= F (REL!RAN-RESTRICT F X)) (= N (CARD Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (<= (CARD (REL!RAN (REL!RAN-RESTRICT F X)))
+     (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y)))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y))
+ (AND (IS-FINITE X) (>= (CARD Y) (CARD X))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (SUBSET X Y)
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (<= (CARD (REL!RAN (REL!RAN-RESTRICT F X)))
+     (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y))))))
+ (AND (>= (CARD Y) (CARD X)) (IS-FINITE X)))
+Which simplifies
+ when rewriting with INTER.COMMUTATIVE, REL!RAN-RAN-RESTRICT,
+REL!DOM-RAN-RESTRICT, NAT!IN-NAT
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions COUNT-RANGE-1, COUNT-RANGE-2,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2,
+REL!INVERSE-INVERSE, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (SUBSET X Y))
+ (IF (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+  (IF (SUBSET (REL!IMAGE (REL!INVERSE F) X) (RANGE 1 (CARD Y)))
+   (IMPLIES
+    (AND (IS-FINITE (INTER X (REL!RAN F)))
+     (>= (COUNT (REL!IMAGE (REL!INVERSE F) X) (CARD Y))
+      (CARD (INTER X (REL!RAN F)))))
+    (AND (>= (CARD Y) (CARD X)) (IS-FINITE X)))
+   (AND (>= (CARD Y) (CARD X)) (IS-FINITE X)))
+  (AND (>= (CARD Y) (CARD X)) (IS-FINITE X))))
+Assuming REL!IMAGE-SUBSET-RAN with the
+instantiations: (= R (REL!INVERSE F)) (= X X) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!IMAGE (REL!INVERSE F) X) (REL!RAN (REL!INVERSE F)))
+  (IS-FINITE Y) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (SUBSET X Y))
+ (IF (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+  (IF (SUBSET (REL!IMAGE (REL!INVERSE F) X) (RANGE 1 (CARD Y)))
+   (IMPLIES
+    (AND (IS-FINITE (INTER X (REL!RAN F)))
+     (>= (COUNT (REL!IMAGE (REL!INVERSE F) X) (CARD Y))
+      (CARD (INTER X (REL!RAN F)))))
+    (AND (>= (CARD Y) (CARD X)) (IS-FINITE X)))
+   (AND (>= (CARD Y) (CARD X)) (IS-FINITE X)))
+  (AND (>= (CARD Y) (CARD X)) (IS-FINITE X))))
+Which simplifies
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, FN!IS-FUNCTION-RAN-RESTRICT,
+FN!IN-SURJ, REL!RAN-INVERSE
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions COUNT-RANGE-1, COUNT-RANGE-2,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2,
+FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to ...
+(TRUE)
+IS-FINITE-UNION-LEMMA
+Beginning proof of IS-FINITE-UNION-LEMMA ...
+(IMPLIES (AND (IS-FINITE X) (IS-FINITE Y)) (IS-FINITE (UNION X Y)))
+Invoking (IS-FINITE X) gives ...
+(IMPLIES
+ (AND (SOME (N F) (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X))))
+  (IS-FINITE Y))
+ (IS-FINITE (UNION X Y)))
+Invoking (IS-FINITE Y) gives ...
+(IMPLIES
+ (AND (SOME (N F) (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X))))
+  (SOME (N$0 F$0)
+   (AND (IN N$0 (NAT!NAT)) (IN F$0 (FN!SURJ (RANGE 1 N$0) Y)))))
+ (IS-FINITE (UNION X Y)))
+Prenexing produces ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)) (IN N$0 (NAT!NAT))
+  (IN F$0 (FN!SURJ (RANGE 1 N$0) Y)))
+ (IS-FINITE (UNION X Y)))
+Assuming LEMMA-0 with the
+instantiations: (= N (+ N N$0)) (= X (UNION X Y))
+                (= F
+                 (UNION F (REL!COMP (INTFN!ADD (NEGATE N)) F$0))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (+ N N$0) (NAT!NAT))
+    (IN (UNION F (REL!COMP (INTFN!ADD (NEGATE N)) F$0))
+     (FN!SURJ (RANGE 1 (+ N N$0)) (UNION X Y))))
+   (AND (IS-FINITE (UNION X Y)) (IN (CARD (UNION X Y)) (NAT!NAT))
+    (<= (CARD (UNION X Y)) (+ N N$0))))
+  (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)) (IN N$0 (NAT!NAT))
+  (IN F$0 (FN!SURJ (RANGE 1 N$0) Y)))
+ (IS-FINITE (UNION X Y)))
+Rearranging gives ...
+(IMPLIES
+ (AND (IN N (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 N) X)) (IN N$0 (NAT!NAT))
+  (IN F$0 (FN!SURJ (RANGE 1 N$0) Y))
+  (IMPLIES
+   (AND (IN (+ N N$0) (NAT!NAT))
+    (IN (UNION F (REL!COMP (INTFN!ADD (NEGATE N)) F$0))
+     (FN!SURJ (RANGE 1 (+ N N$0)) (UNION X Y))))
+   (AND (IS-FINITE (UNION X Y)) (IN (CARD (UNION X Y)) (NAT!NAT))
+    (<= (CARD (UNION X Y)) (+ N N$0)))))
+ (IS-FINITE (UNION X Y)))
+Which simplifies
+ when rewriting with INTFN!RAN-ADD, REL!RAN-COMP, REL!RAN-UNION,
+REL!DOM-UNION, INTER.DEFINITION, INTFN!INVERSE-ADD, REL!DOM-COMP,
+FN!IS-FUNCTION-COMP-FUNCTIONS, INTFN!IS-FUNCTION-ADD, FN!IS-FUNCTION-UNION,
+FN!IN-SURJ, NAT!IN-NAT
+ forward chaining using FINITE-CARD-NAT, FN!FUNCTION-IS-RELATION, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, REL!INVERSE-INVERSE,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2,
+FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (>= N 0) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 N))
+  (= (REL!RAN F) X) (>= N$0 0) (FN!IS-FUNCTION F$0)
+  (= (REL!DOM F$0) (RANGE 1 N$0)) (= (REL!RAN F$0) Y))
+ (IF
+  (ALL (X$0)
+   (IMPLIES
+    (AND (IN X$0 (REL!DOM F))
+     (IN X$0 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+    (= (FN!APPLY F X$0) (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$0))))
+  (IF
+   (= (UNION (REL!DOM F) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+    (RANGE 1 (+ N N$0)))
+   (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+    (IS-FINITE (UNION X Y)))
+   (IS-FINITE (UNION X Y)))
+  (IS-FINITE (UNION X Y))))
+Assuming INTFN!IMAGE-ADD-RANGE with the
+instantiations: (= I N) (= J 1) (= K N$0) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN N (INT)) (IN 1 (INT)) (IN N$0 (INT)))
+   (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0))))
+  (>= N 0) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 N)) (= (REL!RAN F) X)
+  (>= N$0 0) (FN!IS-FUNCTION F$0) (= (REL!DOM F$0) (RANGE 1 N$0))
+  (= (REL!RAN F$0) Y))
+ (IF
+  (ALL (X$0)
+   (IMPLIES
+    (AND (IN X$0 (REL!DOM F))
+     (IN X$0 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+    (= (FN!APPLY F X$0) (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$0))))
+  (IF
+   (= (UNION (REL!DOM F) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+    (RANGE 1 (+ N N$0)))
+   (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+    (IS-FINITE (UNION X Y)))
+   (IS-FINITE (UNION X Y)))
+  (IS-FINITE (UNION X Y))))
+Assuming REL!IMAGE-OF-SUPERSET-OF-DOM with the
+instantiations: (= R F$0) (= X (INT)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (SUBSET (REL!DOM F$0) (INT))
+   (= (REL!IMAGE F$0 (INT)) (REL!RAN F$0)))
+  (IMPLIES (AND (IN N (INT)) (IN 1 (INT)) (IN N$0 (INT)))
+   (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0))))
+  (>= N 0) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 N)) (= (REL!RAN F) X)
+  (>= N$0 0) (FN!IS-FUNCTION F$0) (= (REL!DOM F$0) (RANGE 1 N$0))
+  (= (REL!RAN F$0) Y))
+ (IF
+  (ALL (X$0)
+   (IMPLIES
+    (AND (IN X$0 (REL!DOM F))
+     (IN X$0 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+    (= (FN!APPLY F X$0) (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$0))))
+  (IF
+   (= (UNION (REL!DOM F) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+    (RANGE 1 (+ N N$0)))
+   (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+    (IS-FINITE (UNION X Y)))
+   (IS-FINITE (UNION X Y)))
+  (IS-FINITE (UNION X Y))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= N 0) (>= N$0 0) (= (REL!DOM F) (RANGE 1 N)) (= (REL!RAN F) X)
+  (= (REL!DOM F$0) (RANGE 1 N$0)) (= (REL!RAN F$0) Y) (FN!IS-FUNCTION F)
+  (FN!IS-FUNCTION F$0)
+  (IMPLIES (SUBSET (REL!DOM F$0) (INT))
+   (= (REL!IMAGE F$0 (INT)) (REL!RAN F$0)))
+  (IMPLIES (AND (IN N (INT)) (IN 1 (INT)) (IN N$0 (INT)))
+   (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0)))))
+ (IF
+  (ALL (X$0)
+   (IMPLIES
+    (AND (IN X$0 (REL!DOM F))
+     (IN X$0 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+    (= (FN!APPLY F X$0) (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$0))))
+  (IF
+   (= (UNION (REL!DOM F) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+    (RANGE 1 (+ N N$0)))
+   (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+    (IS-FINITE (UNION X Y)))
+   (IS-FINITE (UNION X Y)))
+  (IS-FINITE (UNION X Y))))
+Substituting (= (REL!DOM F) (RANGE 1 N)) produces ...
+(IMPLIES
+ (AND (>= N 0) (>= N$0 0) (= (REL!DOM F) (RANGE 1 N)) (= (REL!RAN F) X)
+  (= (REL!DOM F$0) (RANGE 1 N$0)) (= (REL!RAN F$0) Y) (FN!IS-FUNCTION F)
+  (FN!IS-FUNCTION F$0))
+ (IF (SUBSET (REL!DOM F$0) (INT))
+  (IMPLIES (= (REL!IMAGE F$0 (INT)) (REL!RAN F$0))
+   (IF (IN N (INT))
+    (IF (IN 1 (INT))
+     (IF (IN N$0 (INT))
+      (IMPLIES
+       (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0)))
+       (IF
+        (ALL (X$0)
+         (IMPLIES
+          (AND (IN X$0 (RANGE 1 N))
+           (IN X$0 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+          (= (FN!APPLY F X$0)
+           (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$0))))
+        (IF
+         (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+          (RANGE 1 (+ N N$0)))
+         (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+          (IS-FINITE (UNION X Y)))
+         (IS-FINITE (UNION X Y)))
+        (IS-FINITE (UNION X Y))))
+      (IF
+       (ALL (X$1)
+        (IMPLIES
+         (AND (IN X$1 (RANGE 1 N))
+          (IN X$1 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+         (= (FN!APPLY F X$1)
+          (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$1))))
+       (IF
+        (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+         (RANGE 1 (+ N N$0)))
+        (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+         (IS-FINITE (UNION X Y)))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y))))
+     (IF
+      (ALL (X$2)
+       (IMPLIES
+        (AND (IN X$2 (RANGE 1 N))
+         (IN X$2 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+        (= (FN!APPLY F X$2)
+         (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$2))))
+      (IF
+       (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+        (RANGE 1 (+ N N$0)))
+       (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y))))
+    (IF
+     (ALL (X$3)
+      (IMPLIES
+       (AND (IN X$3 (RANGE 1 N))
+        (IN X$3 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+       (= (FN!APPLY F X$3)
+        (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$3))))
+     (IF
+      (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+       (RANGE 1 (+ N N$0)))
+      (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y)))
+     (IS-FINITE (UNION X Y)))))
+  (IF (IN N (INT))
+   (IF (IN 1 (INT))
+    (IF (IN N$0 (INT))
+     (IMPLIES
+      (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0)))
+      (IF
+       (ALL (X$4)
+        (IMPLIES
+         (AND (IN X$4 (RANGE 1 N))
+          (IN X$4 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+         (= (FN!APPLY F X$4)
+          (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$4))))
+       (IF
+        (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+         (RANGE 1 (+ N N$0)))
+        (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+         (IS-FINITE (UNION X Y)))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y))))
+     (IF
+      (ALL (X$5)
+       (IMPLIES
+        (AND (IN X$5 (RANGE 1 N))
+         (IN X$5 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+        (= (FN!APPLY F X$5)
+         (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$5))))
+      (IF
+       (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+        (RANGE 1 (+ N N$0)))
+       (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y))))
+    (IF
+     (ALL (X$6)
+      (IMPLIES
+       (AND (IN X$6 (RANGE 1 N))
+        (IN X$6 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+       (= (FN!APPLY F X$6)
+        (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$6))))
+     (IF
+      (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+       (RANGE 1 (+ N N$0)))
+      (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y)))
+     (IS-FINITE (UNION X Y))))
+   (IF
+    (ALL (X$7)
+     (IMPLIES
+      (AND (IN X$7 (RANGE 1 N))
+       (IN X$7 (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0))))
+      (= (FN!APPLY F X$7)
+       (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$7))))
+    (IF
+     (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (REL!DOM F$0)))
+      (RANGE 1 (+ N N$0)))
+     (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+      (IS-FINITE (UNION X Y)))
+     (IS-FINITE (UNION X Y)))
+    (IS-FINITE (UNION X Y))))))
+Substituting (= (REL!DOM F$0) (RANGE 1 N$0)) produces ...
+(IMPLIES
+ (AND (>= N 0) (>= N$0 0) (= (REL!DOM F) (RANGE 1 N)) (= (REL!RAN F) X)
+  (= (REL!DOM F$0) (RANGE 1 N$0)) (= (REL!RAN F$0) Y) (FN!IS-FUNCTION F)
+  (FN!IS-FUNCTION F$0))
+ (IF (SUBSET (RANGE 1 N$0) (INT))
+  (IMPLIES (= (REL!IMAGE F$0 (INT)) (REL!RAN F$0))
+   (IF (IN N (INT))
+    (IF (IN 1 (INT))
+     (IF (IN N$0 (INT))
+      (IMPLIES
+       (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0)))
+       (IF
+        (ALL (X$0)
+         (IMPLIES
+          (AND (IN X$0 (RANGE 1 N))
+           (IN X$0 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+          (= (FN!APPLY F X$0)
+           (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$0))))
+        (IF
+         (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+          (RANGE 1 (+ N N$0)))
+         (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+          (IS-FINITE (UNION X Y)))
+         (IS-FINITE (UNION X Y)))
+        (IS-FINITE (UNION X Y))))
+      (IF
+       (ALL (X$1)
+        (IMPLIES
+         (AND (IN X$1 (RANGE 1 N))
+          (IN X$1 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+         (= (FN!APPLY F X$1)
+          (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$1))))
+       (IF
+        (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+         (RANGE 1 (+ N N$0)))
+        (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+         (IS-FINITE (UNION X Y)))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y))))
+     (IF
+      (ALL (X$2)
+       (IMPLIES
+        (AND (IN X$2 (RANGE 1 N))
+         (IN X$2 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+        (= (FN!APPLY F X$2)
+         (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$2))))
+      (IF
+       (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+        (RANGE 1 (+ N N$0)))
+       (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y))))
+    (IF
+     (ALL (X$3)
+      (IMPLIES
+       (AND (IN X$3 (RANGE 1 N))
+        (IN X$3 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+       (= (FN!APPLY F X$3)
+        (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$3))))
+     (IF
+      (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+       (RANGE 1 (+ N N$0)))
+      (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y)))
+     (IS-FINITE (UNION X Y)))))
+  (IF (IN N (INT))
+   (IF (IN 1 (INT))
+    (IF (IN N$0 (INT))
+     (IMPLIES
+      (= (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)) (RANGE (+ N 1) (+ N N$0)))
+      (IF
+       (ALL (X$4)
+        (IMPLIES
+         (AND (IN X$4 (RANGE 1 N))
+          (IN X$4 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+         (= (FN!APPLY F X$4)
+          (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$4))))
+       (IF
+        (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+         (RANGE 1 (+ N N$0)))
+        (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+         (IS-FINITE (UNION X Y)))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y))))
+     (IF
+      (ALL (X$5)
+       (IMPLIES
+        (AND (IN X$5 (RANGE 1 N))
+         (IN X$5 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+        (= (FN!APPLY F X$5)
+         (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$5))))
+      (IF
+       (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+        (RANGE 1 (+ N N$0)))
+       (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+        (IS-FINITE (UNION X Y)))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y))))
+    (IF
+     (ALL (X$6)
+      (IMPLIES
+       (AND (IN X$6 (RANGE 1 N))
+        (IN X$6 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+       (= (FN!APPLY F X$6)
+        (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$6))))
+     (IF
+      (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+       (RANGE 1 (+ N N$0)))
+      (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+       (IS-FINITE (UNION X Y)))
+      (IS-FINITE (UNION X Y)))
+     (IS-FINITE (UNION X Y))))
+   (IF
+    (ALL (X$7)
+     (IMPLIES
+      (AND (IN X$7 (RANGE 1 N))
+       (IN X$7 (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0))))
+      (= (FN!APPLY F X$7)
+       (FN!APPLY (REL!COMP (INTFN!ADD (* -1 N)) F$0) X$7))))
+    (IF
+     (= (UNION (RANGE 1 N) (REL!IMAGE (INTFN!ADD N) (RANGE 1 N$0)))
+      (RANGE 1 (+ N N$0)))
+     (OR (= (UNION (REL!RAN F) (REL!IMAGE F$0 (INT))) (UNION X Y))
+      (IS-FINITE (UNION X Y)))
+     (IS-FINITE (UNION X Y)))
+    (IS-FINITE (UNION X Y))))))
+Which simplifies
+ with invocation of MAX, MIN, SUBSET
+ when rewriting with ELEM!UNION-RANGE-RANGE, SUCC.INT.RULE,
+INTFN!IMAGE-ADD-RANGE, RANGE.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE
+ with the assumptions ELEM!MAX-TYPE, SUCC.INT, ELEM!MIN-TYPE,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2,
+FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+IS-FINITE-UNION
+Beginning proof of IS-FINITE-UNION ...
+(= (IS-FINITE (UNION X Y)) (AND (IS-FINITE X) (IS-FINITE Y)))
+Assuming IS-FINITE-UNION-LEMMA with the
+instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y)) (IS-FINITE (UNION X Y)))
+ (= (IS-FINITE (UNION X Y)) (AND (IS-FINITE X) (IS-FINITE Y))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= X X) (= Y (UNION X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE (UNION X Y)) (SUBSET X (UNION X Y)))
+   (AND (IS-FINITE X) (<= (CARD X) (CARD (UNION X Y)))))
+  (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y)) (IS-FINITE (UNION X Y))))
+ (= (IS-FINITE (UNION X Y)) (AND (IS-FINITE X) (IS-FINITE Y))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= X Y) (= Y (UNION X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE (UNION X Y)) (SUBSET Y (UNION X Y)))
+   (AND (IS-FINITE Y) (<= (CARD Y) (CARD (UNION X Y)))))
+  (IMPLIES (AND (IS-FINITE (UNION X Y)) (SUBSET X (UNION X Y)))
+   (AND (IS-FINITE X) (>= (CARD (UNION X Y)) (CARD X))))
+  (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y)) (IS-FINITE (UNION X Y))))
+ (= (IS-FINITE (UNION X Y)) (AND (IS-FINITE X) (IS-FINITE Y))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions IS-FINITE-UNION-LEMMA, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+IS-FINITE-SETADD
+Beginning proof of IS-FINITE-SETADD ...
+(= (IS-FINITE (SETADD X Y)) (IS-FINITE Y))
+Assuming IS-FINITE-UNIT with the instantiations: (= X X) generates ...
+(IMPLIES (= (IS-FINITE (UNIT X)) (TRUE))
+ (= (IS-FINITE (SETADD X Y)) (IS-FINITE Y)))
+Assuming IS-FINITE-UNION with the
+instantiations: (= X (UNIT X)) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (= (IS-FINITE (UNION (UNIT X) Y)) (AND (IS-FINITE (UNIT X)) (IS-FINITE Y)))
+  (IS-FINITE (UNIT X)))
+ (= (IS-FINITE (SETADD X Y)) (IS-FINITE Y)))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE (UNIT X))
+  (= (IS-FINITE (UNION (UNIT X) Y)) (AND (IS-FINITE (UNIT X)) (IS-FINITE Y))))
+ (= (IS-FINITE (SETADD X Y)) (IS-FINITE Y)))
+Which simplifies
+ when rewriting with SETRULES!UNION-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETRULES!SETADD-UNION-LEFT, SETRULES!UNIT-TO-SETADD
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+CARD-SETADD-LEMMA
+Beginning proof of CARD-SETADD-LEMMA ...
+(IMPLIES (IS-FINITE Y) (<= (CARD (SETADD X Y)) (+ 1 (CARD Y))))
+Assuming SETRULES!SETADD-MEMBER with the
+instantiations: (= A X) (= X Y) generates ...
+(IMPLIES (AND (IMPLIES (IN X Y) (= (SETADD X Y) Y)) (IS-FINITE Y))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES (AND (NOT (IN X Y)) (IS-FINITE Y))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Assuming LEMMA-1 with the instantiations: (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE Y)
+   (AND (IN (CARD Y) (NAT!NAT))
+    (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)))))
+  (NOT (IN X Y)) (IS-FINITE Y))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))) (NOT (IN X Y)))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (NOT (IN X Y)))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Assuming LEMMA-0 with the
+instantiations: (= N (+ 1 (CARD Y)))
+                (= F (SETADD (PAIR!PAIR (+ 1 (CARD Y)) X) F))
+                (= X (SETADD X Y)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (+ 1 (CARD Y)) (NAT!NAT))
+    (IN (SETADD (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+     (FN!SURJ (RANGE 1 (+ 1 (CARD Y))) (SETADD X Y))))
+   (AND (IS-FINITE (SETADD X Y)) (IN (CARD (SETADD X Y)) (NAT!NAT))
+    (<= (CARD (SETADD X Y)) (+ 1 (CARD Y)))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (NOT (IN X Y)))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (NOT (IN X Y))
+  (IMPLIES
+   (AND (IN (+ 1 (CARD Y)) (NAT!NAT))
+    (IN (SETADD (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+     (FN!SURJ (RANGE 1 (+ 1 (CARD Y))) (SETADD X Y))))
+   (AND (IS-FINITE (SETADD X Y)) (IN (CARD (SETADD X Y)) (NAT!NAT))
+    (<= (CARD (SETADD X Y)) (+ 1 (CARD Y))))))
+ (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+Which simplifies
+ when rewriting with IS-FINITE-SETADD, REL!RAN-SETADD, REL!DOM-SETADD,
+FN!IS-FUNCTION-SETADD, FN!IN-SURJ, NAT!IN-NAT
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION,
+>=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions PAIR!IS-PAIR-BOOL, PAIR!FST-PAIR, PAIR!SND-PAIR,
+PAIR!PAIR-IS-PAIR, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (IS-FINITE Y) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 (CARD Y)))
+  (= (REL!RAN F) Y) (NOT (IN X Y)))
+ (IF (IN (+ 1 (CARD Y)) (REL!DOM F))
+  (IF (IN (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+   (OR (= (SETADD (+ 1 (CARD Y)) (REL!DOM F)) (RANGE 1 (+ 1 (CARD Y))))
+    (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+   (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+  (OR (= (SETADD (+ 1 (CARD Y)) (REL!DOM F)) (RANGE 1 (+ 1 (CARD Y))))
+   (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))))
+Assuming ELEM!RANGE-TOP-EXPANSION with the
+instantiations: (= X 1) (= Y (+ (CARD Y) 1)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 (+ (CARD Y) 1)))
+   (= (RANGE 1 (+ (CARD Y) 1))
+    (SETADD (+ (CARD Y) 1) (RANGE 1 (PRED (+ (CARD Y) 1))))))
+  (IS-FINITE Y) (FN!IS-FUNCTION F) (= (REL!DOM F) (RANGE 1 (CARD Y)))
+  (= (REL!RAN F) Y) (NOT (IN X Y)))
+ (IF (IN (+ 1 (CARD Y)) (REL!DOM F))
+  (IF (IN (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+   (OR (= (SETADD (+ 1 (CARD Y)) (REL!DOM F)) (RANGE 1 (+ 1 (CARD Y))))
+    (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+   (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+  (OR (= (SETADD (+ 1 (CARD Y)) (REL!DOM F)) (RANGE 1 (+ 1 (CARD Y))))
+   (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (REL!DOM F) (RANGE 1 (CARD Y))) (= (REL!RAN F) Y) (IS-FINITE Y)
+  (FN!IS-FUNCTION F) (NOT (IN X Y))
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 (+ (CARD Y) 1)))
+   (= (RANGE 1 (+ (CARD Y) 1))
+    (SETADD (+ (CARD Y) 1) (RANGE 1 (PRED (+ (CARD Y) 1)))))))
+ (IF (IN (+ 1 (CARD Y)) (REL!DOM F))
+  (IF (IN (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+   (OR (= (SETADD (+ 1 (CARD Y)) (REL!DOM F)) (RANGE 1 (+ 1 (CARD Y))))
+    (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+   (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+  (OR (= (SETADD (+ 1 (CARD Y)) (REL!DOM F)) (RANGE 1 (+ 1 (CARD Y))))
+   (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))))
+Substituting (= (REL!DOM F) (RANGE 1 (CARD Y))) produces ...
+(IMPLIES
+ (AND (= (REL!DOM F) (RANGE 1 (CARD Y))) (= (REL!RAN F) Y) (IS-FINITE Y)
+  (FN!IS-FUNCTION F) (NOT (IN X Y)))
+ (IF (= (TYPE-OF 1) (INT))
+  (IF (>= (+ (CARD Y) 1) 1)
+   (IMPLIES
+    (= (RANGE 1 (+ (CARD Y) 1))
+     (SETADD (+ (CARD Y) 1) (RANGE 1 (PRED (+ (CARD Y) 1)))))
+    (IF (IN (+ 1 (CARD Y)) (RANGE 1 (CARD Y)))
+     (IF (IN (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+      (OR
+       (= (SETADD (+ 1 (CARD Y)) (RANGE 1 (CARD Y))) (RANGE 1 (+ 1 (CARD Y))))
+       (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+      (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+     (OR
+      (= (SETADD (+ 1 (CARD Y)) (RANGE 1 (CARD Y))) (RANGE 1 (+ 1 (CARD Y))))
+      (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))))
+   (IF (IN (+ 1 (CARD Y)) (RANGE 1 (CARD Y)))
+    (IF (IN (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+     (OR
+      (= (SETADD (+ 1 (CARD Y)) (RANGE 1 (CARD Y))) (RANGE 1 (+ 1 (CARD Y))))
+      (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+     (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+    (OR
+     (= (SETADD (+ 1 (CARD Y)) (RANGE 1 (CARD Y))) (RANGE 1 (+ 1 (CARD Y))))
+     (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))))
+  (IF (IN (+ 1 (CARD Y)) (RANGE 1 (CARD Y)))
+   (IF (IN (PAIR!PAIR (+ 1 (CARD Y)) X) F)
+    (OR
+     (= (SETADD (+ 1 (CARD Y)) (RANGE 1 (CARD Y))) (RANGE 1 (+ 1 (CARD Y))))
+     (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+    (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+   (OR (= (SETADD (+ 1 (CARD Y)) (RANGE 1 (CARD Y))) (RANGE 1 (+ 1 (CARD Y))))
+    (>= (+ 1 (CARD Y)) (CARD (SETADD X Y)))))))
+Which simplifies
+ when rewriting with RANGE.DEFINITION
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions PRED.INT, FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+CARD-SETADD-LEMMA-2
+Beginning proof of CARD-SETADD-LEMMA-2 ...
+(IMPLIES (AND (FN!IS-FUNCTION F) (IN X (REL!RAN F)))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= (FN!APPLY F Y) X))))
+Applying REL!IN-RAN gives ...
+(IMPLIES (AND (FN!IS-FUNCTION F) (SOME (A) (IN (PAIR!PAIR A X) F)))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= (FN!APPLY F Y) X))))
+Instantiating (= Y A) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F) (IN (PAIR!PAIR A X) F)
+  (NOT (AND (IN A (REL!DOM F)) (= (FN!APPLY F A) X))))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= (FN!APPLY F Y) X))))
+Assuming FN!APPLY-UNIQUE with the
+instantiations: (= F F) (= X A) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION F) (IN (PAIR!PAIR A X) F))
+   (= X (FN!APPLY F A)))
+  (FN!IS-FUNCTION F) (IN (PAIR!PAIR A X) F)
+  (NOT (AND (IN A (REL!DOM F)) (= (FN!APPLY F A) X))))
+ (SOME (Y) (AND (IN Y (REL!DOM F)) (= (FN!APPLY F Y) X))))
+Which simplifies
+ when rewriting with REL!IN-DOM-1
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+IMAGE-LEMMA
+Beginning proof of IMAGE-LEMMA ...
+(IMPLIES (AND (FN!IS-FUNCTION F) (SUBSET X (REL!IMAGE (REL!INVERSE F) Y)))
+ (SUBSET (REL!IMAGE F X) Y))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with REL!IN-IMAGE, FN!IN-PRE-IMAGE-OF-FUNCTION
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+REL!INVERSE-INVERSE, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F)
+  (ALL (E) (IMPLIES (IN E X) (AND (IN E (REL!DOM F)) (IN (FN!APPLY F E) Y)))))
+ (ALL (E$0 Z) (IMPLIES (AND (IN Z X) (IN (PAIR!PAIR Z E$0) F)) (IN E$0 Y))))
+Prenexing produces ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F)
+  (ALL (E$0)
+   (IMPLIES (IN E$0 X) (AND (IN E$0 (REL!DOM F)) (IN (FN!APPLY F E$0) Y))))
+  (IN Z X) (IN (PAIR!PAIR Z E) F))
+ (IN E Y))
+Instantiating (= E$0 Z) gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F)
+  (IMPLIES (IN Z X) (AND (IN Z (REL!DOM F)) (IN (FN!APPLY F Z) Y)))
+  (ALL (E$0)
+   (IMPLIES (IN E$0 X) (AND (IN E$0 (REL!DOM F)) (IN (FN!APPLY F E$0) Y))))
+  (IN Z X) (IN (PAIR!PAIR Z E) F))
+ (IN E Y))
+Assuming FN!APPLY-UNIQUE with the
+instantiations: (= F F) (= X Z) (= Y E) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (FN!IS-FUNCTION F) (IN (PAIR!PAIR Z E) F))
+   (= E (FN!APPLY F Z)))
+  (FN!IS-FUNCTION F)
+  (IMPLIES (IN Z X) (AND (IN Z (REL!DOM F)) (IN (FN!APPLY F Z) Y)))
+  (ALL (E$0)
+   (IMPLIES (IN E$0 X) (AND (IN E$0 (REL!DOM F)) (IN (FN!APPLY F E$0) Y))))
+  (IN Z X) (IN (PAIR!PAIR Z E) F))
+ (IN E Y))
+Rearranging gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION F) (IN Z X) (IN (PAIR!PAIR Z E) F)
+  (IMPLIES (AND (FN!IS-FUNCTION F) (IN (PAIR!PAIR Z E) F))
+   (= E (FN!APPLY F Z)))
+  (IMPLIES (IN Z X) (AND (IN Z (REL!DOM F)) (IN (FN!APPLY F Z) Y)))
+  (ALL (E$0)
+   (IMPLIES (IN E$0 X) (AND (IN E$0 (REL!DOM F)) (IN (FN!APPLY F E$0) Y)))))
+ (IN E Y))
+Which simplifies
+ when rewriting with REL!IN-DOM-1
+ forward chaining using PAIR!PAIR-COMPOSITION, FN!FUNCTION-IS-RELATION
+ with the assumptions PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR,
+FN!IS-FUNCTION-BOOL to ...
+(TRUE)
+CARD-STRICTLY-MONOTONIC
+Beginning proof of CARD-STRICTLY-MONOTONIC ...
+(IMPLIES (AND (IS-FINITE Y) (SUBSET X Y) (= (CARD X) (CARD Y))) (= X Y))
+Assuming LEMMA-1 with the instantiations: (= X Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE Y)
+   (AND (IN (CARD Y) (NAT!NAT))
+    (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)))))
+  (IS-FINITE Y) (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (SOME (F) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))) (SUBSET X Y)
+  (= (CARD X) (CARD Y)))
+ (= X Y))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FINITE Y) (IN (CARD Y) (NAT!NAT))
+  (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y)) (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Assuming LEMMA-2 with the
+instantiations: (= N (CARD Y)) (= F (REL!RAN-RESTRICT F X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (<= (CARD (REL!RAN (REL!RAN-RESTRICT F X)))
+     (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y)))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Assuming REL!IMAGE-SUBSET-RAN with the
+instantiations: (= R (REL!INVERSE F)) (= X X) generates ...
+(IMPLIES
+ (AND (SUBSET (REL!IMAGE (REL!INVERSE F) X) (REL!RAN (REL!INVERSE F)))
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (>= (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y))
+     (CARD (REL!RAN (REL!RAN-RESTRICT F X))))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Assuming COUNT-MAXIMUM with the
+instantiations: (= X (REL!IMAGE (REL!INVERSE F) X)) (= N (CARD Y)) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES (= (COUNT (REL!IMAGE (REL!INVERSE F) X) (CARD Y)) (CARD Y))
+   (SUBSET (RANGE 1 (CARD Y)) (REL!IMAGE (REL!INVERSE F) X)))
+  (SUBSET (REL!IMAGE (REL!INVERSE F) X) (REL!RAN (REL!INVERSE F)))
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (>= (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y))
+     (CARD (REL!RAN (REL!RAN-RESTRICT F X))))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Assuming IMAGE-LEMMA with the
+instantiations: (= F F) (= X (REL!DOM F)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (REL!IMAGE (REL!INVERSE F) X)))
+   (SUBSET (REL!IMAGE F (REL!DOM F)) X))
+  (IMPLIES (= (COUNT (REL!IMAGE (REL!INVERSE F) X) (CARD Y)) (CARD Y))
+   (SUBSET (RANGE 1 (CARD Y)) (REL!IMAGE (REL!INVERSE F) X)))
+  (SUBSET (REL!IMAGE (REL!INVERSE F) X) (REL!RAN (REL!INVERSE F)))
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (>= (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y))
+     (CARD (REL!RAN (REL!RAN-RESTRICT F X))))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Assuming =.EXTENSIONAL.SUBSET with the
+instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND (= (= X Y) (AND (SUBSET X Y) (SUBSET Y X)))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (REL!IMAGE (REL!INVERSE F) X)))
+   (SUBSET (REL!IMAGE F (REL!DOM F)) X))
+  (IMPLIES (= (COUNT (REL!IMAGE (REL!INVERSE F) X) (CARD Y)) (CARD Y))
+   (SUBSET (RANGE 1 (CARD Y)) (REL!IMAGE (REL!INVERSE F) X)))
+  (SUBSET (REL!IMAGE (REL!INVERSE F) X) (REL!RAN (REL!INVERSE F)))
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X)))
+    (>= (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y))
+     (CARD (REL!RAN (REL!RAN-RESTRICT F X))))))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y) (= (CARD X) (CARD Y)))
+ (= X Y))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (CARD X) (CARD Y))
+  (SUBSET (REL!IMAGE (REL!INVERSE F) X) (REL!RAN (REL!INVERSE F)))
+  (IS-FINITE Y) (IN (CARD Y) (NAT!NAT)) (IN F (FN!SURJ (RANGE 1 (CARD Y)) Y))
+  (SUBSET X Y) (= (= X Y) (AND (SUBSET X Y) (SUBSET Y X)))
+  (IMPLIES (= (COUNT (REL!IMAGE (REL!INVERSE F) X) (CARD Y)) (CARD Y))
+   (SUBSET (RANGE 1 (CARD Y)) (REL!IMAGE (REL!INVERSE F) X)))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION F) (SUBSET (REL!DOM F) (REL!IMAGE (REL!INVERSE F) X)))
+   (SUBSET (REL!IMAGE F (REL!DOM F)) X))
+  (IMPLIES
+   (AND (IN (CARD Y) (NAT!NAT)) (FN!IS-FUNCTION (REL!RAN-RESTRICT F X))
+    (SUBSET (REL!DOM (REL!RAN-RESTRICT F X)) (RANGE 1 (CARD Y))))
+   (AND
+    (>= (COUNT (REL!DOM (REL!RAN-RESTRICT F X)) (CARD Y))
+     (CARD (REL!RAN (REL!RAN-RESTRICT F X))))
+    (IS-FINITE (REL!RAN (REL!RAN-RESTRICT F X))))))
+ (= X Y))
+Which simplifies
+ when rewriting with SETRULES!INTER-SUBSET-LEFT, REL!RAN-RAN-RESTRICT,
+REL!DOM-RAN-RESTRICT, FN!IS-FUNCTION-RAN-RESTRICT, REL!DOM-SUBSET,
+SUBSET.SELF, REL!RAN-RESTRICT-BY-SUPERSET-RAN, REL!IMAGE-OF-SUPERSET-OF-DOM,
+REL!DOM-INVERSE, FN!IN-SURJ, NAT!IN-NAT, REL!RAN-INVERSE
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, COUNT-RANGE-1, COUNT-RANGE-2,
+FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to ...
+(TRUE)
+CARD-SETADD
+Beginning proof of CARD-SETADD ...
+(IMPLIES (IS-FINITE Y)
+ (= (CARD (SETADD X Y)) (IF (IN X Y) (CARD Y) (+ 1 (CARD Y)))))
+Assuming SETRULES!SETADD-MEMBER with the
+instantiations: (= A X) (= X Y) generates ...
+(IMPLIES (AND (IMPLIES (IN X Y) (= (SETADD X Y) Y)) (IS-FINITE Y))
+ (= (CARD (SETADD X Y)) (IF (IN X Y) (CARD Y) (+ 1 (CARD Y)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES (AND (NOT (IN X Y)) (IS-FINITE Y))
+ (= (CARD (SETADD X Y)) (+ 1 (CARD Y))))
+Assuming CARD-SETADD-LEMMA with the instantiations: (= X X) (= Y Y) generates
+...
+(IMPLIES
+ (AND (IMPLIES (IS-FINITE Y) (<= (CARD (SETADD X Y)) (+ 1 (CARD Y))))
+  (NOT (IN X Y)) (IS-FINITE Y))
+ (= (CARD (SETADD X Y)) (+ 1 (CARD Y))))
+Assuming CARD-STRICTLY-MONOTONIC with the
+instantiations: (= X Y) (= Y (SETADD X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FINITE (SETADD X Y)) (SUBSET Y (SETADD X Y))
+    (= (CARD Y) (CARD (SETADD X Y))))
+   (= Y (SETADD X Y)))
+  (IMPLIES (IS-FINITE Y) (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+  (NOT (IN X Y)) (IS-FINITE Y))
+ (= (CARD (SETADD X Y)) (+ 1 (CARD Y))))
+Rearranging gives ...
+(IMPLIES
+ (AND (NOT (IN X Y)) (IS-FINITE Y)
+  (IMPLIES (IS-FINITE Y) (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+  (IMPLIES
+   (AND (= (CARD Y) (CARD (SETADD X Y))) (IS-FINITE (SETADD X Y))
+    (SUBSET Y (SETADD X Y)))
+   (= Y (SETADD X Y))))
+ (= (CARD (SETADD X Y)) (+ 1 (CARD Y))))
+Which simplifies
+ when rewriting with SETRULES!SETADD-RIGHT-EQUALITY-TEST, IS-FINITE-SETADD
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES
+ (AND (NOT (IN X Y)) (IS-FINITE Y) (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+ (IF (= (CARD Y) (CARD (SETADD X Y))) (SUBSET Y (SETADD X Y))
+  (= (CARD (SETADD X Y)) (+ 1 (CARD Y)))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= X Y) (= Y (SETADD X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE (SETADD X Y)) (SUBSET Y (SETADD X Y)))
+   (AND (IS-FINITE Y) (<= (CARD Y) (CARD (SETADD X Y)))))
+  (NOT (IN X Y)) (IS-FINITE Y) (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))))
+ (IF (= (CARD Y) (CARD (SETADD X Y))) (SUBSET Y (SETADD X Y))
+  (= (CARD (SETADD X Y)) (+ 1 (CARD Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))) (NOT (IN X Y)) (IS-FINITE Y)
+  (IMPLIES (AND (IS-FINITE (SETADD X Y)) (SUBSET Y (SETADD X Y)))
+   (AND (IS-FINITE Y) (<= (CARD Y) (CARD (SETADD X Y))))))
+ (IF (= (CARD Y) (CARD (SETADD X Y))) (SUBSET Y (SETADD X Y))
+  (= (CARD (SETADD X Y)) (+ 1 (CARD Y)))))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (>= (+ 1 (CARD Y)) (CARD (SETADD X Y))) (NOT (IN X Y)) (IS-FINITE Y)
+  (IMPLIES
+   (AND (IS-FINITE (SETADD X Y))
+    (ALL (E) (IMPLIES (IN E Y) (IN E (SETADD X Y)))))
+   (AND (IS-FINITE Y) (>= (CARD (SETADD X Y)) (CARD Y)))))
+ (IF (= (CARD Y) (CARD (SETADD X Y)))
+  (ALL (E$0) (IMPLIES (IN E$0 Y) (IN E$0 (SETADD X Y))))
+  (= (CARD (SETADD X Y)) (+ 1 (CARD Y)))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION, IS-FINITE-SETADD
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(TRUE)
+CARD-UNION-LEMMA
+Beginning proof of CARD-UNION-LEMMA ...
+(AND
+ (ALL (X)
+  (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+   (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y))))))
+ (TRUE))
+Inducting using the following scheme ...
+ (AND (IMPLIES (NAT!ZEROP N) (*P* N Y))
+  (IMPLIES (AND (NOT (NAT!ZEROP N)) (*P* (- N 1) Y)) (*P* N Y)))
+ produces ...
+(AND
+ (IMPLIES (NAT!ZEROP N)
+  (ALL (X)
+   (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+    (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))))
+ (IMPLIES
+  (AND (NOT (NAT!ZEROP N))
+   (ALL (X)
+    (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y) (= (CARD X) (- N 1)))
+     (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))))
+  (ALL (X)
+   (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+    (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y))))))))
+Prenexing produces ...
+(AND
+ (ALL (X)
+  (IMPLIES (AND (NAT!ZEROP N) (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+   (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y))))))
+ (IMPLIES
+  (AND (NOT (NAT!ZEROP N))
+   (ALL (X$0)
+    (IMPLIES (AND (IS-FINITE X$0) (IS-FINITE Y) (= (CARD X$0) (- N 1)))
+     (= (+ (CARD X$0) (CARD Y))
+      (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y)))))))
+  (ALL (X$1)
+   (IMPLIES (AND (IS-FINITE X$1) (IS-FINITE Y) (= (CARD X$1) N))
+    (= (+ (CARD X$1) (CARD Y))
+     (+ (CARD (UNION X$1 Y)) (CARD (INTER X$1 Y))))))))
+Starting case 2 ...
+(IMPLIES (AND (NAT!ZEROP N) (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Assuming CARD-0-IFF-NULLSET with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET)))) (NAT!ZEROP N)
+  (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (CARD X) N) (NAT!ZEROP N) (IS-FINITE X) (IS-FINITE Y)
+  (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET)))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Which simplifies
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, SETRULES!UNION-SUBSET-RIGHT,
+SUBSET.NULLSET.LEFT, IN-INT, NAT-ZEROP
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (NAT!ZEROP N))
+  (ALL (X$0)
+   (IMPLIES (AND (IS-FINITE X$0) (IS-FINITE Y) (= (CARD X$0) (- N 1)))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y)))))))
+ (ALL (X$1)
+  (IMPLIES (AND (IS-FINITE X$1) (IS-FINITE Y) (= (CARD X$1) N))
+   (= (+ (CARD X$1) (CARD Y)) (+ (CARD (UNION X$1 Y)) (CARD (INTER X$1 Y)))))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (NAT!ZEROP N))
+  (ALL (X$0)
+   (IMPLIES (AND (IS-FINITE X$0) (IS-FINITE Y) (= (CARD X$0) (- N 1)))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y))))))
+  (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Assuming CARD-0-IFF-NULLSET with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET))))
+  (NOT (NAT!ZEROP N))
+  (ALL (X$0)
+   (IMPLIES (AND (IS-FINITE X$0) (IS-FINITE Y) (= (CARD X$0) (- N 1)))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y))))))
+  (IS-FINITE X) (IS-FINITE Y) (= (CARD X) N))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (CARD X) N) (NOT (NAT!ZEROP N)) (IS-FINITE X) (IS-FINITE Y)
+  (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET))))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (- N 1)) (IS-FINITE X$0) (IS-FINITE Y))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Which simplifies
+ when rewriting with IN-INT, NAT-ZEROP
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA to ...
+(IMPLIES
+ (AND (= (CARD X) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE X)
+  (IS-FINITE Y) (= (FALSE) (= X (NULLSET)))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (INTER X Y)) (CARD (UNION X Y)))))
+Assuming SETRULES!SET-DECOMPOSITION with the instantiations: (= X X) generates
+...
+(IMPLIES
+ (AND
+  (OR (= X (NULLSET))
+   (SOME (A B) (AND (IN A X) (NOT (IN A B)) (= X (SETADD A B)))))
+  (= (CARD X) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE X)
+  (IS-FINITE Y) (NOT (= X (NULLSET)))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (INTER X Y)) (CARD (UNION X Y)))))
+Which simplifies
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET)))
+  (SOME (A) (AND (IN A X) (SOME (B) (AND (NOT (IN A B)) (= X (SETADD A B))))))
+  (= (CARD X) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE X)
+  (IS-FINITE Y)
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (INTER X Y)) (CARD (UNION X Y)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B)) (= X (SETADD A B))
+  (= (CARD X) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE X)
+  (IS-FINITE Y)
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (INTER X Y)) (CARD (UNION X Y)))))
+Instantiating (= X$0 B) gives ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B)) (= X (SETADD A B))
+  (= (CARD X) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE X)
+  (IS-FINITE Y)
+  (IMPLIES (AND (= (CARD B) (+ -1 N)) (IS-FINITE B))
+   (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y)))))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (INTER X Y)) (CARD (UNION X Y)))))
+Substituting (= X (SETADD A B)) produces ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B)) (= X (SETADD A B))
+  (= (CARD (SETADD A B)) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0))
+  (IS-FINITE (SETADD A B)) (IS-FINITE Y))
+ (IF (= (CARD B) (+ -1 N))
+  (IF (IS-FINITE B)
+   (IMPLIES
+    (AND (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y))))
+     (ALL (X$0)
+      (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+       (= (+ (CARD X$0) (CARD Y))
+        (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y)))))))
+    (= (+ (CARD (SETADD A B)) (CARD Y))
+     (+ (CARD (INTER (SETADD A B) Y)) (CARD (UNION (SETADD A B) Y)))))
+   (IMPLIES
+    (ALL (X$1)
+     (IMPLIES (AND (= (CARD X$1) (+ -1 N)) (IS-FINITE X$1))
+      (= (+ (CARD X$1) (CARD Y))
+       (+ (CARD (INTER X$1 Y)) (CARD (UNION X$1 Y))))))
+    (= (+ (CARD (SETADD A B)) (CARD Y))
+     (+ (CARD (INTER (SETADD A B) Y)) (CARD (UNION (SETADD A B) Y))))))
+  (IMPLIES
+   (ALL (X$2)
+    (IMPLIES (AND (= (CARD X$2) (+ -1 N)) (IS-FINITE X$2))
+     (= (+ (CARD X$2) (CARD Y))
+      (+ (CARD (INTER X$2 Y)) (CARD (UNION X$2 Y))))))
+   (= (+ (CARD (SETADD A B)) (CARD Y))
+    (+ (CARD (INTER (SETADD A B) Y)) (CARD (UNION (SETADD A B) Y)))))))
+Which simplifies
+ when rewriting with SETRULES!SETADD-INTER-RIGHT-NONMEMBER,
+SETRULES!SETADD-INTER-RIGHT-MEMBER, UNION.DEFINITION,
+SETRULES!SETADD-UNION-LEFT, INTER.COMMUTATIVE, CARD-SETADD, IS-FINITE-SETADD
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IMPLIES
+ (AND (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B)) (= X (SETADD A B))
+  (= (CARD (SETADD A B)) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE B)
+  (IS-FINITE Y))
+ (IF (= (CARD B) (+ -1 N))
+  (IMPLIES
+   (AND (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y))))
+    (ALL (X$0)
+     (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+      (= (+ (CARD X$0) (CARD Y))
+       (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y))))))
+    (IN A Y))
+   (= (+ 1 (CARD B) (CARD Y))
+    (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y)))))
+  (IMPLIES
+   (ALL (X$1)
+    (IMPLIES (AND (= (CARD X$1) (+ -1 N)) (IS-FINITE X$1))
+     (= (+ (CARD X$1) (CARD Y))
+      (+ (CARD (INTER X$1 Y)) (CARD (UNION X$1 Y))))))
+   (IF (IN A Y)
+    (= (+ 1 (CARD B) (CARD Y))
+     (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y))))
+    (= (+ 1 (CARD B) (CARD Y)) (+ 1 (CARD (INTER B Y)) (CARD (UNION B Y))))))))
+Splitting on (IS-FINITE B) generates ...
+(IF (IS-FINITE B)
+ (IMPLIES
+  (AND (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B)) (= X (SETADD A B))
+   (= (CARD (SETADD A B)) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0))
+   (IS-FINITE B) (IS-FINITE Y))
+  (IF (= (CARD B) (+ -1 N))
+   (IMPLIES
+    (AND (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y))))
+     (ALL (X$0)
+      (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+       (= (+ (CARD X$0) (CARD Y))
+        (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y))))))
+     (IN A Y))
+    (= (+ 1 (CARD B) (CARD Y))
+     (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y)))))
+   (IMPLIES
+    (ALL (X$1)
+     (IMPLIES (AND (= (CARD X$1) (+ -1 N)) (IS-FINITE X$1))
+      (= (+ (CARD X$1) (CARD Y))
+       (+ (CARD (INTER X$1 Y)) (CARD (UNION X$1 Y))))))
+    (IF (IN A Y)
+     (= (+ 1 (CARD B) (CARD Y))
+      (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y))))
+     (= (+ 1 (CARD B) (CARD Y))
+      (+ 1 (CARD (INTER B Y)) (CARD (UNION B Y))))))))
+ (IMPLIES
+  (AND (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B)) (= X (SETADD A B))
+   (= (CARD (SETADD A B)) N) (= (TYPE-OF N) (INT)) (NOT (<= N 0))
+   (IS-FINITE B) (IS-FINITE Y))
+  (IF (= (CARD B) (+ -1 N))
+   (IMPLIES
+    (AND (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y))))
+     (ALL (X$2)
+      (IMPLIES (AND (= (CARD X$2) (+ -1 N)) (IS-FINITE X$2))
+       (= (+ (CARD X$2) (CARD Y))
+        (+ (CARD (INTER X$2 Y)) (CARD (UNION X$2 Y))))))
+     (IN A Y))
+    (= (+ 1 (CARD B) (CARD Y))
+     (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y)))))
+   (IMPLIES
+    (ALL (X$3)
+     (IMPLIES (AND (= (CARD X$3) (+ -1 N)) (IS-FINITE X$3))
+      (= (+ (CARD X$3) (CARD Y))
+       (+ (CARD (INTER X$3 Y)) (CARD (UNION X$3 Y))))))
+    (IF (IN A Y)
+     (= (+ 1 (CARD B) (CARD Y))
+      (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y))))
+     (= (+ 1 (CARD B) (CARD Y))
+      (+ 1 (CARD (INTER B Y)) (CARD (UNION B Y)))))))))
+Which simplifies
+ when rewriting with CARD-SETADD
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IMPLIES
+ (AND (IS-FINITE B) (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B))
+  (= X (SETADD A B)) (= (+ 1 (CARD B)) N) (IS-FINITE Y)
+  (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y))))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y))))))
+  (IN A Y))
+ (= (+ 1 (CARD B) (CARD Y))
+  (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y)))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= X (INTER B Y)) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE Y) (SUBSET (INTER B Y) Y))
+   (AND (IS-FINITE (INTER B Y)) (<= (CARD (INTER B Y)) (CARD Y))))
+  (IS-FINITE B) (NOT (= X (NULLSET))) (IN A X) (NOT (IN A B))
+  (= X (SETADD A B)) (= (+ 1 (CARD B)) N) (IS-FINITE Y)
+  (= (+ (CARD B) (CARD Y)) (+ (CARD (INTER B Y)) (CARD (UNION B Y))))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (+ -1 N)) (IS-FINITE X$0))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (INTER X$0 Y)) (CARD (UNION X$0 Y))))))
+  (IN A Y))
+ (= (+ 1 (CARD B) (CARD Y))
+  (+ (CARD (SETADD A (INTER B Y))) (CARD (UNION B Y)))))
+Which simplifies
+ when rewriting with INTER.DEFINITION, CARD-SETADD
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+CARD-UNION
+Beginning proof of CARD-UNION ...
+(IMPLIES (AND (IS-FINITE X) (IS-FINITE Y))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Assuming CARD-UNION-LEMMA with the
+instantiations: (= N (CARD X)) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (ALL (X$0)
+   (IMPLIES (AND (IS-FINITE X$0) (IS-FINITE Y) (= (CARD X$0) (CARD X)))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y))))))
+  (IS-FINITE X) (IS-FINITE Y))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Instantiating (= X$0 X) gives ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE X) (IS-FINITE Y) (= (CARD X) (CARD X)))
+   (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+  (ALL (X$0)
+   (IMPLIES (AND (IS-FINITE X$0) (IS-FINITE Y) (= (CARD X$0) (CARD X)))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y))))))
+  (IS-FINITE X) (IS-FINITE Y))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE X) (IS-FINITE Y)
+  (IMPLIES (AND (= (CARD X) (CARD X)) (IS-FINITE X) (IS-FINITE Y))
+   (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+  (ALL (X$0)
+   (IMPLIES (AND (= (CARD X$0) (CARD X)) (IS-FINITE X$0) (IS-FINITE Y))
+    (= (+ (CARD X$0) (CARD Y))
+     (+ (CARD (UNION X$0 Y)) (CARD (INTER X$0 Y)))))))
+ (= (+ (CARD X) (CARD Y)) (+ (CARD (UNION X Y)) (CARD (INTER X Y)))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, IS-FINITE-UNION-LEMMA to ...
+(TRUE)
+IS-FINITE-DIFF
+Beginning proof of IS-FINITE-DIFF ...
+(IMPLIES (IS-FINITE X) (= (IS-FINITE (DIFF X Y)) (TRUE)))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= X (DIFF X Y)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE X) (SUBSET (DIFF X Y) X))
+   (AND (IS-FINITE (DIFF X Y)) (<= (CARD (DIFF X Y)) (CARD X))))
+  (IS-FINITE X))
+ (IS-FINITE (DIFF X Y)))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+CARD-DIFF
+Beginning proof of CARD-DIFF ...
+(IMPLIES (IS-FINITE X) (= (CARD (DIFF X Y)) (- (CARD X) (CARD (INTER X Y)))))
+Assuming CARD-UNION with the
+instantiations: (= X (DIFF X Y)) (= Y (INTER X Y)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE (DIFF X Y)) (IS-FINITE (INTER X Y)))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+    (+ (CARD (UNION (DIFF X Y) (INTER X Y)))
+     (CARD (INTER (DIFF X Y) (INTER X Y))))))
+  (IS-FINITE X))
+ (= (CARD (DIFF X Y)) (- (CARD X) (CARD (INTER X Y)))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= X (INTER X Y)) (= Y X) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE X) (SUBSET (INTER X Y) X))
+   (AND (IS-FINITE (INTER X Y)) (<= (CARD (INTER X Y)) (CARD X))))
+  (IMPLIES (AND (IS-FINITE (DIFF X Y)) (IS-FINITE (INTER X Y)))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+    (+ (CARD (UNION (DIFF X Y) (INTER X Y)))
+     (CARD (INTER (DIFF X Y) (INTER X Y))))))
+  (IS-FINITE X))
+ (= (CARD (DIFF X Y)) (- (CARD X) (CARD (INTER X Y)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE X)
+  (IMPLIES (AND (IS-FINITE (DIFF X Y)) (IS-FINITE (INTER X Y)))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+    (+ (CARD (UNION (DIFF X Y) (INTER X Y)))
+     (CARD (INTER (DIFF X Y) (INTER X Y))))))
+  (IMPLIES (AND (IS-FINITE X) (SUBSET (INTER X Y) X))
+   (AND (IS-FINITE (INTER X Y)) (<= (CARD (INTER X Y)) (CARD X)))))
+ (= (CARD (DIFF X Y)) (- (CARD X) (CARD (INTER X Y)))))
+Which simplifies
+ when rewriting with CARD-NULLSET, SETRULES!DIFF-SUPERSET,
+SETRULES!INTER-SUBSET-LEFT, SETRULES!INTER-DIFF-LEFT, UNION.COMMUTATIVE,
+IS-FINITE-DIFF
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IS-FINITE X) (IS-FINITE (INTER X Y))
+  (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+   (ORD (CARD (UNION (INTER X Y) (DIFF X Y)))))
+  (>= (CARD X) (CARD (INTER X Y))))
+ (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y))))))
+Splitting on (= X (UNION (INTER X Y) (DIFF X Y))) generates ...
+(IF (= X (UNION (INTER X Y) (DIFF X Y)))
+ (IMPLIES
+  (AND (IS-FINITE X) (IS-FINITE (INTER X Y))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+    (ORD (CARD (UNION (INTER X Y) (DIFF X Y)))))
+   (>= (CARD X) (CARD (INTER X Y))))
+  (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y))))))
+ (IMPLIES
+  (AND (IS-FINITE X) (IS-FINITE (INTER X Y))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+    (ORD (CARD (UNION (INTER X Y) (DIFF X Y)))))
+   (>= (CARD X) (CARD (INTER X Y))))
+  (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y)))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IF (= X (UNION (INTER X Y) (DIFF X Y)))
+ (IMPLIES
+  (AND (IS-FINITE X) (IS-FINITE (INTER X Y))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y))) (CARD X))
+   (>= (CARD X) (CARD (INTER X Y))))
+  (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y))))))
+ (IMPLIES
+  (AND (IS-FINITE X) (IS-FINITE (INTER X Y))
+   (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y)))
+    (ORD (CARD (UNION (INTER X Y) (DIFF X Y)))))
+   (>= (CARD X) (CARD (INTER X Y))))
+  (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y)))))))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION,
+INTER.DEFINITION, UNION.DEFINITION
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2 to ...
+(IMPLIES
+ (AND (IS-FINITE X) (IS-FINITE (INTER X Y))
+  (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y))) (CARD X))
+  (>= (CARD X) (CARD (INTER X Y))))
+ (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y))))))
+Assuming IS-FINITE-DIFF with the instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-FINITE X) (= (IS-FINITE (DIFF X Y)) (TRUE))) (IS-FINITE X)
+  (IS-FINITE (INTER X Y))
+  (= (+ (CARD (DIFF X Y)) (CARD (INTER X Y))) (CARD X))
+  (>= (CARD X) (CARD (INTER X Y))))
+ (= (CARD (DIFF X Y)) (+ (CARD X) (* -1 (CARD (INTER X Y))))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+IS-FINITE-SIMPLE-RANGE
+Beginning proof of IS-FINITE-SIMPLE-RANGE ...
+(= (IS-FINITE (RANGE 1 N)) (TRUE))
+Inducting using the following scheme ...
+ (AND (IMPLIES (NAT!ZEROP N) (*P* N))
+  (IMPLIES (AND (NOT (NAT!ZEROP N)) (*P* (- N 1))) (*P* N)))
+ produces ...
+(AND (IMPLIES (NAT!ZEROP N) (= (IS-FINITE (RANGE 1 N)) (TRUE)))
+ (IMPLIES (AND (NOT (NAT!ZEROP N)) (= (IS-FINITE (RANGE 1 (- N 1))) (TRUE)))
+  (= (IS-FINITE (RANGE 1 N)) (TRUE))))
+Which simplifies
+ when rewriting with IS-FINITE-NULLSET, ELEM!NULL-RANGE, IN-INT, NAT-ZEROP
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE (RANGE 1 (+ -1 N))))
+ (IS-FINITE (RANGE 1 N)))
+Assuming ELEM!RANGE-TOP-EXPANSION with the
+instantiations: (= X 1) (= Y N) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 N))
+   (= (RANGE 1 N) (SETADD N (RANGE 1 (PRED N)))))
+  (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE (RANGE 1 (+ -1 N))))
+ (IS-FINITE (RANGE 1 N)))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE (RANGE 1 (+ -1 N)))
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 N))
+   (= (RANGE 1 N) (SETADD N (RANGE 1 (PRED N))))))
+ (IS-FINITE (RANGE 1 N)))
+Which simplifies
+ when rewriting with PRED.INT.RULE
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE
+ with the assumptions PRED.INT to ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE (RANGE 1 (+ -1 N)))
+  (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))))
+ (IS-FINITE (RANGE 1 N)))
+Substituting (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))) produces ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (IS-FINITE (RANGE 1 (+ -1 N)))
+  (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))))
+ (IS-FINITE (SETADD N (RANGE 1 (+ -1 N)))))
+Which simplifies
+ when rewriting with IS-FINITE-SETADD
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(TRUE)
+CARD-SIMPLE-RANGE
+Beginning proof of CARD-SIMPLE-RANGE ...
+(= (CARD (RANGE 1 N)) (IF (NAT!ZEROP N) 0 N))
+Inducting using the following scheme ...
+ (AND (IMPLIES (NAT!ZEROP N) (*P* N))
+  (IMPLIES (AND (NOT (NAT!ZEROP N)) (*P* (- N 1))) (*P* N)))
+ produces ...
+(AND (IMPLIES (NAT!ZEROP N) (= (CARD (RANGE 1 N)) (IF (NAT!ZEROP N) 0 N)))
+ (IMPLIES
+  (AND (NOT (NAT!ZEROP N))
+   (= (CARD (RANGE 1 (- N 1))) (IF (NAT!ZEROP (- N 1)) 0 (- N 1))))
+  (= (CARD (RANGE 1 N)) (IF (NAT!ZEROP N) 0 N))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, CARD-SETADD, IS-FINITE-NULLSET,
+SETRULES!UNIT-TO-SETADD, ELEM!SINGLETON-RANGE, CARD-NULLSET, ELEM!NULL-RANGE,
+IN-INT, NAT-ZEROP
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (NOT (<= (+ -1 N) 0))
+  (= (CARD (RANGE 1 (+ -1 N))) (+ -1 N)))
+ (= (CARD (RANGE 1 N)) N))
+Assuming ELEM!RANGE-TOP-EXPANSION with the
+instantiations: (= X 1) (= Y N) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 N))
+   (= (RANGE 1 N) (SETADD N (RANGE 1 (PRED N)))))
+  (= (TYPE-OF N) (INT)) (NOT (<= N 0)) (NOT (<= (+ -1 N) 0))
+  (= (CARD (RANGE 1 (+ -1 N))) (+ -1 N)))
+ (= (CARD (RANGE 1 N)) N))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (= (CARD (RANGE 1 (+ -1 N))) (+ -1 N))
+  (NOT (<= N 0)) (NOT (<= (+ -1 N) 0))
+  (IMPLIES (AND (= (TYPE-OF 1) (INT)) (<= 1 N))
+   (= (RANGE 1 N) (SETADD N (RANGE 1 (PRED N))))))
+ (= (CARD (RANGE 1 N)) N))
+Which simplifies
+ when rewriting with PRED.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions PRED.INT to ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (= (CARD (RANGE 1 (+ -1 N))) (+ -1 N))
+  (NOT (<= N 0)) (NOT (<= (+ -1 N) 0))
+  (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))))
+ (= (CARD (RANGE 1 N)) N))
+Substituting (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))) produces ...
+(IMPLIES
+ (AND (= (TYPE-OF N) (INT)) (= (CARD (RANGE 1 (+ -1 N))) (+ -1 N))
+  (NOT (<= N 0)) (NOT (<= (+ -1 N) 0))
+  (= (RANGE 1 N) (SETADD N (RANGE 1 (+ -1 N)))))
+ (= (CARD (SETADD N (RANGE 1 (+ -1 N)))) N))
+Which simplifies
+ when rewriting with RANGE.DEFINITION, CARD-SETADD, IS-FINITE-SIMPLE-RANGE
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(TRUE)
+IS-FINITE-RANGE-LEMMA
+Beginning proof of IS-FINITE-RANGE-LEMMA ...
+(IMPLIES (AND (IN N (INT)) (IN K (INT)))
+ (AND (IS-FINITE (RANGE N (+ N K)))
+  (= (CARD (RANGE N (+ N K))) (MAX 0 (+ 1 K)))))
+Splitting on (< K 0) generates ...
+(IF (< K 0)
+ (IMPLIES (AND (IN N (INT)) (IN K (INT)))
+  (AND (IS-FINITE (RANGE N (+ N K)))
+   (= (CARD (RANGE N (+ N K))) (MAX 0 (+ 1 K)))))
+ (IMPLIES (AND (IN N (INT)) (IN K (INT)))
+  (AND (IS-FINITE (RANGE N (+ N K)))
+   (= (CARD (RANGE N (+ N K))) (MAX 0 (+ 1 K))))))
+Invoking MAX gives ...
+(IMPLIES (AND (IF (<= (SUCC K) 0) (IN N (INT)) (IN N (INT))) (IN K (INT)))
+ (AND (IS-FINITE (RANGE N (+ N K)))
+  (= (CARD (RANGE N (+ N K))) (IF (>= (+ 1 K) 0) (+ 1 K) 0))))
+Which simplifies
+ when rewriting with CARD-NULLSET, ELEM!NULL-RANGE, IN-INT
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(IMPLIES (AND (= (TYPE-OF N) (INT)) (= (TYPE-OF K) (INT)))
+ (AND (IS-FINITE (RANGE N (+ K N)))
+  (IMPLIES (>= (+ 1 K) 0) (= (CARD (RANGE N (+ K N))) (+ 1 K)))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (NAT!ZEROP K) (*P* K N))
+  (IMPLIES (AND (NOT (NAT!ZEROP K)) (*P* (- K 1) N)) (*P* K N)))
+ produces ...
+(AND
+ (IMPLIES (NAT!ZEROP K)
+  (IMPLIES (AND (= (TYPE-OF N) (INT)) (= (TYPE-OF K) (INT)))
+   (AND (IS-FINITE (RANGE N (+ K N)))
+    (IMPLIES (>= (+ 1 K) 0) (= (CARD (RANGE N (+ K N))) (+ 1 K))))))
+ (IMPLIES
+  (AND (NOT (NAT!ZEROP K))
+   (IMPLIES (AND (= (TYPE-OF N) (INT)) (= (TYPE-OF (- K 1)) (INT)))
+    (AND (IS-FINITE (RANGE N (+ (- K 1) N)))
+     (IMPLIES (>= (+ 1 (- K 1)) 0)
+      (= (CARD (RANGE N (+ (- K 1) N))) (+ 1 (- K 1)))))))
+  (IMPLIES (AND (= (TYPE-OF N) (INT)) (= (TYPE-OF K) (INT)))
+   (AND (IS-FINITE (RANGE N (+ K N)))
+    (IMPLIES (>= (+ 1 K) 0) (= (CARD (RANGE N (+ K N))) (+ 1 K)))))))
+Which simplifies
+ when rewriting with IN-INT, NAT-ZEROP
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(IMPLIES (= (TYPE-OF K) (INT))
+ (IF (<= K 0)
+  (IMPLIES (= (TYPE-OF N) (INT))
+   (AND (IS-FINITE (RANGE N (+ K N)))
+    (IMPLIES (>= (+ 1 K) 0) (= (CARD (RANGE N (+ K N))) (+ 1 K)))))
+  (IMPLIES
+   (AND (= (TYPE-OF N) (INT)) (IS-FINITE (RANGE N (+ -1 K N)))
+    (= (CARD (RANGE N (+ -1 K N))) K))
+   (AND (IS-FINITE (RANGE N (+ K N))) (= (CARD (RANGE N (+ K N))) (+ 1 K))))))
+Assuming ELEM!RANGE-TOP-EXPANSION with the
+instantiations: (= X N) (= Y (+ K N)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (= (TYPE-OF N) (INT)) (<= N (+ K N)))
+   (= (RANGE N (+ K N)) (SETADD (+ K N) (RANGE N (PRED (+ K N))))))
+  (= (TYPE-OF K) (INT)))
+ (IF (<= K 0)
+  (IMPLIES (= (TYPE-OF N) (INT))
+   (AND (IS-FINITE (RANGE N (+ K N)))
+    (IMPLIES (>= (+ 1 K) 0) (= (CARD (RANGE N (+ K N))) (+ 1 K)))))
+  (IMPLIES
+   (AND (= (TYPE-OF N) (INT)) (IS-FINITE (RANGE N (+ -1 K N)))
+    (= (CARD (RANGE N (+ -1 K N))) K))
+   (AND (IS-FINITE (RANGE N (+ K N))) (= (CARD (RANGE N (+ K N))) (+ 1 K))))))
+Rearranging gives ...
+(IMPLIES
+ (AND (= (TYPE-OF K) (INT))
+  (IMPLIES (AND (= (TYPE-OF N) (INT)) (<= N (+ K N)))
+   (= (RANGE N (+ K N)) (SETADD (+ K N) (RANGE N (PRED (+ K N)))))))
+ (IF (<= K 0)
+  (IMPLIES (= (TYPE-OF N) (INT))
+   (AND (IS-FINITE (RANGE N (+ K N)))
+    (IMPLIES (>= (+ 1 K) 0) (= (CARD (RANGE N (+ K N))) (+ 1 K)))))
+  (IMPLIES
+   (AND (= (TYPE-OF N) (INT)) (= (CARD (RANGE N (+ -1 K N))) K)
+    (IS-FINITE (RANGE N (+ -1 K N))))
+   (AND (= (CARD (RANGE N (+ K N))) (+ 1 K)) (IS-FINITE (RANGE N (+ K N)))))))
+Which simplifies
+ when rewriting with ELEM!NULL-RANGE, CARD-NULLSET, NULLSET.DEFINITION,
+CARD-SETADD, IS-FINITE-NULLSET, IS-FINITE-SETADD, SETRULES!UNIT-TO-SETADD,
+ELEM!SINGLETON-RANGE, PRED.INT.RULE
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE
+ with the assumptions PRED.INT to ...
+(IMPLIES
+ (AND (= (TYPE-OF K) (INT)) (= (TYPE-OF N) (INT)) (>= (+ K N) N)
+  (= (RANGE N (+ K N)) (SETADD (+ K N) (RANGE N (+ -1 K N)))) (NOT (<= K 0))
+  (= (CARD (RANGE N (+ -1 K N))) K) (IS-FINITE (RANGE N (+ -1 K N))))
+ (AND (= (CARD (RANGE N (+ K N))) (+ 1 K)) (IS-FINITE (RANGE N (+ K N)))))
+Substituting (= (RANGE N (+ K N))
+              (SETADD (+ K N) (RANGE N (+ -1 (+ K N))))) produces
+...
+(IMPLIES
+ (AND (= (TYPE-OF K) (INT)) (= (TYPE-OF N) (INT)) (>= (+ K N) N)
+  (= (RANGE N (+ K N)) (SETADD (+ K N) (RANGE N (+ -1 K N)))) (NOT (<= K 0))
+  (= (CARD (RANGE N (+ -1 K N))) K) (IS-FINITE (RANGE N (+ -1 K N))))
+ (AND (= (CARD (SETADD (+ K N) (RANGE N (+ -1 K N)))) (+ 1 K))
+  (IS-FINITE (SETADD (+ K N) (RANGE N (+ -1 K N))))))
+Which simplifies
+ when rewriting with IS-FINITE-SETADD, RANGE.DEFINITION, CARD-SETADD
+ forward chaining using FINITE-CARD-NAT, >=.SAME.TYPE to ...
+(TRUE)
+FINITE-FUNCTION-DOM-RAN
+Beginning proof of FINITE-FUNCTION-DOM-RAN ...
+(IMPLIES (AND (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F)))
+ (AND (IS-FINITE (REL!RAN F)) (<= (CARD (REL!RAN F)) (CARD (REL!DOM F)))))
+Assuming LEMMA-1 with the instantiations: (= X (REL!DOM F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (IS-FINITE (REL!DOM F))
+   (AND (IN (CARD (REL!DOM F)) (NAT!NAT))
+    (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 (CARD (REL!DOM F))) (REL!DOM F))))))
+  (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F)))
+ (AND (IS-FINITE (REL!RAN F)) (>= (CARD (REL!DOM F)) (CARD (REL!RAN F)))))
+Which simplifies
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (IS-FINITE (REL!DOM F)) (IN (CARD (REL!DOM F)) (NAT!NAT))
+  (SOME (F$0) (IN F$0 (FN!SURJ (RANGE 1 (CARD (REL!DOM F))) (REL!DOM F))))
+  (FN!IS-FUNCTION F))
+ (AND (IS-FINITE (REL!RAN F)) (>= (CARD (REL!DOM F)) (CARD (REL!RAN F)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (IS-FINITE (REL!DOM F)) (IN (CARD (REL!DOM F)) (NAT!NAT))
+  (IN F$0 (FN!SURJ (RANGE 1 (CARD (REL!DOM F))) (REL!DOM F)))
+  (FN!IS-FUNCTION F))
+ (AND (IS-FINITE (REL!RAN F)) (>= (CARD (REL!DOM F)) (CARD (REL!RAN F)))))
+Assuming LEMMA-0-VERSION-2 with the
+instantiations: (= N (CARD (REL!DOM F))) (= F (REL!COMP F$0 F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (CARD (REL!DOM F)) (NAT!NAT)) (FN!IS-FUNCTION (REL!COMP F$0 F))
+    (= (REL!DOM (REL!COMP F$0 F)) (RANGE 1 (CARD (REL!DOM F)))))
+   (AND (IS-FINITE (REL!RAN (REL!COMP F$0 F)))
+    (IN (CARD (REL!RAN (REL!COMP F$0 F))) (NAT!NAT))
+    (<= (CARD (REL!RAN (REL!COMP F$0 F))) (CARD (REL!DOM F)))))
+  (IS-FINITE (REL!DOM F)) (IN (CARD (REL!DOM F)) (NAT!NAT))
+  (IN F$0 (FN!SURJ (RANGE 1 (CARD (REL!DOM F))) (REL!DOM F)))
+  (FN!IS-FUNCTION F))
+ (AND (IS-FINITE (REL!RAN F)) (>= (CARD (REL!DOM F)) (CARD (REL!RAN F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE (REL!DOM F)) (IN (CARD (REL!DOM F)) (NAT!NAT))
+  (IN F$0 (FN!SURJ (RANGE 1 (CARD (REL!DOM F))) (REL!DOM F)))
+  (FN!IS-FUNCTION F)
+  (IMPLIES
+   (AND (= (REL!DOM (REL!COMP F$0 F)) (RANGE 1 (CARD (REL!DOM F))))
+    (IN (CARD (REL!DOM F)) (NAT!NAT)) (FN!IS-FUNCTION (REL!COMP F$0 F)))
+   (AND (IS-FINITE (REL!RAN (REL!COMP F$0 F)))
+    (IN (CARD (REL!RAN (REL!COMP F$0 F))) (NAT!NAT))
+    (<= (CARD (REL!RAN (REL!COMP F$0 F))) (CARD (REL!DOM F))))))
+ (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+Which simplifies
+ when rewriting with REL!RAN-COMP, FN!IS-FUNCTION-COMP-FUNCTIONS,
+REL!DOM-COMP, FN!IN-SURJ, NAT!IN-NAT
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions REL!INVERSE-INVERSE, FN!IS-FUNCTION-BOOL to ...
+(IMPLIES
+ (AND (IS-FINITE (REL!DOM F)) (FN!IS-FUNCTION F$0)
+  (= (REL!DOM F$0) (RANGE 1 (CARD (REL!DOM F)))) (= (REL!RAN F$0) (REL!DOM F))
+  (FN!IS-FUNCTION F))
+ (IF
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM F)) (RANGE 1 (CARD (REL!DOM F))))
+  (IMPLIES
+   (AND (IS-FINITE (REL!IMAGE F (REL!RAN F$0)))
+    (>= (CARD (REL!DOM F)) (CARD (REL!IMAGE F (REL!RAN F$0)))))
+   (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+  (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F)))))
+Assuming REL!IMAGE-DOM with the
+instantiations: (= R (REL!INVERSE F$0)) generates ...
+(IMPLIES
+ (AND
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM (REL!INVERSE F$0)))
+   (REL!RAN (REL!INVERSE F$0)))
+  (IS-FINITE (REL!DOM F)) (FN!IS-FUNCTION F$0)
+  (= (REL!DOM F$0) (RANGE 1 (CARD (REL!DOM F)))) (= (REL!RAN F$0) (REL!DOM F))
+  (FN!IS-FUNCTION F))
+ (IF
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM F)) (RANGE 1 (CARD (REL!DOM F))))
+  (IMPLIES
+   (AND (IS-FINITE (REL!IMAGE F (REL!RAN F$0)))
+    (>= (CARD (REL!DOM F)) (CARD (REL!IMAGE F (REL!RAN F$0)))))
+   (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+  (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM (REL!INVERSE F$0)))
+   (REL!RAN (REL!INVERSE F$0)))
+  (= (REL!DOM F$0) (RANGE 1 (CARD (REL!DOM F)))) (= (REL!RAN F$0) (REL!DOM F))
+  (IS-FINITE (REL!DOM F)) (FN!IS-FUNCTION F$0) (FN!IS-FUNCTION F))
+ (IF
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM F)) (RANGE 1 (CARD (REL!DOM F))))
+  (IMPLIES
+   (AND (>= (CARD (REL!DOM F)) (CARD (REL!IMAGE F (REL!RAN F$0))))
+    (IS-FINITE (REL!IMAGE F (REL!RAN F$0))))
+   (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+  (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F)))))
+Substituting (= (REL!RAN F$0) (REL!DOM F)) produces ...
+(IMPLIES
+ (AND
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM (REL!INVERSE F$0)))
+   (REL!RAN (REL!INVERSE F$0)))
+  (= (REL!DOM F$0) (RANGE 1 (CARD (REL!DOM F)))) (= (REL!RAN F$0) (REL!DOM F))
+  (IS-FINITE (REL!DOM F)) (FN!IS-FUNCTION F$0) (FN!IS-FUNCTION F))
+ (IF
+  (= (REL!IMAGE (REL!INVERSE F$0) (REL!DOM F)) (RANGE 1 (CARD (REL!DOM F))))
+  (IMPLIES
+   (AND (>= (CARD (REL!DOM F)) (CARD (REL!IMAGE F (REL!DOM F))))
+    (IS-FINITE (REL!IMAGE F (REL!DOM F))))
+   (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F))))
+  (AND (>= (CARD (REL!DOM F)) (CARD (REL!RAN F))) (IS-FINITE (REL!RAN F)))))
+Which simplifies
+ when rewriting with REL!IMAGE-DOM, REL!RAN-INVERSE, REL!DOM-INVERSE
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to ...
+(TRUE)
+FINITE-FUNCTION-DOM-LEMMA
+Beginning proof of FINITE-FUNCTION-DOM-LEMMA ...
+(FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+Invoking FN!IS-FUNCTION gives ...
+(AND (REL!IS-RELATION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+ (ALL (A B C)
+  (IMPLIES
+   (AND
+    (IN (PAIR!PAIR A B) (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (IN (PAIR!PAIR A C) (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+   (= B C))))
+Which simplifies
+ when rewriting with REL!IN-ID, PAIRFN!IN-JOIN, REL!FLIP-PAIR-PAIR,
+REL!IN-INVERSE, PAIRFN!IS-RELATION-JOIN, REL!IS-RELATION-INVERSE
+ forward chaining using PAIR!PAIR-COMPOSITION
+ with the assumptions PAIR!IS-PAIR-BOOL, REL!FLIP-PAIR-IS-INVOLUTION,
+PAIR!FST-PAIR, PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, REL!IS-RELATION-BOOL,
+REL!INVERSE-INVERSE to ...
+(TRUE)
+FINITE-FUNCTION-DOM
+Beginning proof of FINITE-FUNCTION-DOM ...
+(IMPLIES (AND (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F)))
+ (AND (IS-FINITE F) (= (CARD F) (CARD (REL!DOM F)))))
+Assuming FINITE-FUNCTION-DOM-RAN with the
+instantiations: (= F
+                 (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (IS-FINITE (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))
+   (AND
+    (IS-FINITE (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+    (<= (CARD (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+     (CARD (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))))
+  (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F)))
+ (AND (IS-FINITE F) (= (CARD F) (CARD (REL!DOM F)))))
+Assuming FINITE-FUNCTION-DOM-RAN with the
+instantiations: (= F (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))
+    (IS-FINITE (REL!DOM (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+   (AND (IS-FINITE (REL!RAN (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (<= (CARD (REL!RAN (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+     (CARD (REL!DOM (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (IS-FINITE (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))
+   (AND
+    (IS-FINITE (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+    (>= (CARD (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+     (CARD (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))))
+  (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F)))
+ (AND (IS-FINITE F) (= (CARD F) (CARD (REL!DOM F)))))
+Assuming FINITE-FUNCTION-DOM-LEMMA with the instantiations: (= F F) generates
+...
+(IMPLIES
+ (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))
+    (IS-FINITE (REL!DOM (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+   (AND (IS-FINITE (REL!RAN (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (>= (CARD (REL!DOM (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+     (CARD (REL!RAN (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (IS-FINITE (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))
+   (AND
+    (IS-FINITE (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+    (>= (CARD (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+     (CARD (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))))
+  (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F)))
+ (AND (IS-FINITE F) (= (CARD F) (CARD (REL!DOM F)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+  (FN!IS-FUNCTION F) (IS-FINITE (REL!DOM F))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))
+    (IS-FINITE (REL!DOM (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+   (AND
+    (>= (CARD (REL!DOM (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+     (CARD (REL!RAN (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+    (IS-FINITE (REL!RAN (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))
+    (IS-FINITE (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))
+   (AND
+    (>= (CARD (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F))))
+     (CARD (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))
+    (IS-FINITE
+     (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM F)) F)))))))
+ (AND (= (CARD F) (CARD (REL!DOM F))) (IS-FINITE F)))
+Which simplifies
+ when rewriting with REL!RAN-INVERSE, REL!DOM-INVERSE,
+REL!DOM-RESTRICT-BY-SUPERSET-DOM, REL!COMP-ID-LEFT, REL!INVERSE-ID,
+PAIRFN!RAN-JOIN, SETRULES!INTER-SUBSET-RIGHT, REL!DOM-SUBSET, SUBSET.SELF,
+REL!DOM-ID, PAIRFN!DOM-JOIN, PAIRFN!IS-FUNCTION-JOIN, FN!IS-FUNCTION-ID
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT, FN!FUNCTION-IS-RELATION
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to
+...
+(TRUE)
+FINITE-IMPLIES-DOM-FINITE
+Beginning proof of FINITE-IMPLIES-DOM-FINITE ...
+(IMPLIES (IS-FINITE X)
+ (AND (IS-FINITE (REL!DOM X)) (<= (CARD (REL!DOM X)) (CARD X))))
+Assuming FINITE-FUNCTION-DOM-RAN with the
+instantiations: (= F
+                 (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+    (IS-FINITE (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))))
+   (AND
+    (IS-FINITE (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))))
+    (<= (CARD (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))))
+     (CARD (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))))))
+  (IS-FINITE X))
+ (AND (IS-FINITE (REL!DOM X)) (>= (CARD X) (CARD (REL!DOM X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE X)
+  (IMPLIES
+   (AND (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+    (IS-FINITE (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))))
+   (AND
+    (IS-FINITE (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))))
+    (<= (CARD (REL!RAN (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))))
+     (CARD (REL!DOM (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))))))))
+ (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X))))
+Which simplifies
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, REL!DOM-SUBSET, SUBSET.SELF,
+REL!DOM-ID, PAIRFN!DOM-JOIN, REL!RAN-INVERSE, REL!COMP-ID-LEFT,
+REL!INVERSE-ID, PAIRFN!RAN-JOIN, REL!DOM-INVERSE
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to
+...
+(IMPLIES (IS-FINITE X)
+ (IF (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+  (IF (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+   (IMPLIES
+    (AND (IS-FINITE (REL!DOM X))
+     (>= (CARD (REL!DOM-RESTRICT (REL!DOM X) X)) (CARD (REL!DOM X))))
+    (>= (CARD X) (CARD (REL!DOM X))))
+   (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X))))
+  (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X)))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= Y X) (= X (REL!DOM-RESTRICT (REL!DOM X) X)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE X) (SUBSET (REL!DOM-RESTRICT (REL!DOM X) X) X))
+   (AND (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+    (<= (CARD (REL!DOM-RESTRICT (REL!DOM X) X)) (CARD X))))
+  (IS-FINITE X))
+ (IF (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+  (IF (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+   (IMPLIES
+    (AND (IS-FINITE (REL!DOM X))
+     (>= (CARD (REL!DOM-RESTRICT (REL!DOM X) X)) (CARD (REL!DOM X))))
+    (>= (CARD X) (CARD (REL!DOM X))))
+   (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X))))
+  (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X)))))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FINITE X)
+    (ALL (E) (IMPLIES (IN E (REL!DOM-RESTRICT (REL!DOM X) X)) (IN E X))))
+   (AND (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+    (>= (CARD X) (CARD (REL!DOM-RESTRICT (REL!DOM X) X)))))
+  (IS-FINITE X))
+ (IF (FN!IS-FUNCTION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+  (IF (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+   (IMPLIES
+    (AND (IS-FINITE (REL!DOM X))
+     (>= (CARD (REL!DOM-RESTRICT (REL!DOM X) X)) (CARD (REL!DOM X))))
+    (>= (CARD X) (CARD (REL!DOM X))))
+   (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X))))
+  (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X)))))
+Invoking FN!IS-FUNCTION gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FINITE X)
+    (ALL (E) (IMPLIES (IN E (REL!DOM-RESTRICT (REL!DOM X) X)) (IN E X))))
+   (AND (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+    (>= (CARD X) (CARD (REL!DOM-RESTRICT (REL!DOM X) X)))))
+  (IS-FINITE X))
+ (IF
+  (AND (REL!IS-RELATION (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+   (ALL (A B C)
+    (IMPLIES
+     (AND
+      (IN (PAIR!PAIR A B) (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X)))
+      (IN (PAIR!PAIR A C) (REL!INVERSE (PAIRFN!JOIN (REL!ID (REL!DOM X)) X))))
+     (= B C))))
+  (IF (IS-FINITE (REL!DOM-RESTRICT (REL!DOM X) X))
+   (IMPLIES
+    (AND (IS-FINITE (REL!DOM X))
+     (>= (CARD (REL!DOM-RESTRICT (REL!DOM X) X)) (CARD (REL!DOM X))))
+    (>= (CARD X) (CARD (REL!DOM X))))
+   (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X))))
+  (AND (>= (CARD X) (CARD (REL!DOM X))) (IS-FINITE (REL!DOM X)))))
+Which simplifies
+ when rewriting with REL!IN-ID, PAIRFN!IN-JOIN, REL!FLIP-PAIR-PAIR,
+REL!IN-INVERSE, PAIRFN!IS-RELATION-JOIN, REL!IS-RELATION-INVERSE,
+REL!IN-DOM-RESTRICT
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions REL!FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, REL!IS-RELATION-BOOL, REL!INVERSE-INVERSE,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+FINITE-IMPLIES-RAN-FINITE
+Beginning proof of FINITE-IMPLIES-RAN-FINITE ...
+(IMPLIES (IS-FINITE X)
+ (AND (IS-FINITE (REL!RAN X)) (<= (CARD (REL!RAN X)) (CARD X))))
+Assuming FINITE-FUNCTION-DOM-RAN with the
+instantiations: (= F
+                 (REL!INVERSE
+                  (PAIRFN!JOIN (REL!INVERSE X)
+                   (REL!ID (REL!RAN X))))) generates
+...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND
+    (FN!IS-FUNCTION
+     (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+    (IS-FINITE
+     (REL!DOM
+      (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))))
+   (AND
+    (IS-FINITE
+     (REL!RAN
+      (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X))))))
+    (<=
+     (CARD
+      (REL!RAN
+       (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X))))))
+     (CARD
+      (REL!DOM
+       (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))))))
+  (IS-FINITE X))
+ (AND (IS-FINITE (REL!RAN X)) (>= (CARD X) (CARD (REL!RAN X)))))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE X)
+  (IMPLIES
+   (AND
+    (FN!IS-FUNCTION
+     (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+    (IS-FINITE
+     (REL!DOM
+      (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))))
+   (AND
+    (IS-FINITE
+     (REL!RAN
+      (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X))))))
+    (<=
+     (CARD
+      (REL!RAN
+       (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X))))))
+     (CARD
+      (REL!DOM
+       (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X))))))))))
+ (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X))))
+Which simplifies
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, REL!RAN-SUBSET, SUBSET.SELF,
+REL!DOM-ID, PAIRFN!DOM-JOIN, REL!RAN-INVERSE, REL!COMP-ID-RIGHT,
+PAIRFN!RAN-JOIN, REL!DOM-INVERSE
+ forward chaining using FN!FUNCTION-IS-RELATION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, FN!IS-FUNCTION-BOOL, REL!INVERSE-INVERSE to
+...
+(IMPLIES (IS-FINITE X)
+ (IF
+  (FN!IS-FUNCTION
+   (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+  (IF (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+   (IMPLIES
+    (AND (IS-FINITE (REL!RAN X))
+     (>= (CARD (REL!RAN-RESTRICT X (REL!RAN X))) (CARD (REL!RAN X))))
+    (>= (CARD X) (CARD (REL!RAN X))))
+   (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X))))
+  (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X)))))
+Assuming IS-FINITE-MONOTONIC with the
+instantiations: (= Y X) (= X (REL!RAN-RESTRICT X (REL!RAN X))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IS-FINITE X) (SUBSET (REL!RAN-RESTRICT X (REL!RAN X)) X))
+   (AND (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+    (<= (CARD (REL!RAN-RESTRICT X (REL!RAN X))) (CARD X))))
+  (IS-FINITE X))
+ (IF
+  (FN!IS-FUNCTION
+   (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+  (IF (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+   (IMPLIES
+    (AND (IS-FINITE (REL!RAN X))
+     (>= (CARD (REL!RAN-RESTRICT X (REL!RAN X))) (CARD (REL!RAN X))))
+    (>= (CARD X) (CARD (REL!RAN X))))
+   (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X))))
+  (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X)))))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FINITE X)
+    (ALL (E) (IMPLIES (IN E (REL!RAN-RESTRICT X (REL!RAN X))) (IN E X))))
+   (AND (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+    (>= (CARD X) (CARD (REL!RAN-RESTRICT X (REL!RAN X))))))
+  (IS-FINITE X))
+ (IF
+  (FN!IS-FUNCTION
+   (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+  (IF (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+   (IMPLIES
+    (AND (IS-FINITE (REL!RAN X))
+     (>= (CARD (REL!RAN-RESTRICT X (REL!RAN X))) (CARD (REL!RAN X))))
+    (>= (CARD X) (CARD (REL!RAN X))))
+   (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X))))
+  (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X)))))
+Invoking FN!IS-FUNCTION gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IS-FINITE X)
+    (ALL (E) (IMPLIES (IN E (REL!RAN-RESTRICT X (REL!RAN X))) (IN E X))))
+   (AND (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+    (>= (CARD X) (CARD (REL!RAN-RESTRICT X (REL!RAN X))))))
+  (IS-FINITE X))
+ (IF
+  (AND
+   (REL!IS-RELATION
+    (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+   (ALL (A B C)
+    (IMPLIES
+     (AND
+      (IN (PAIR!PAIR A B)
+       (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X)))))
+      (IN (PAIR!PAIR A C)
+       (REL!INVERSE (PAIRFN!JOIN (REL!INVERSE X) (REL!ID (REL!RAN X))))))
+     (= B C))))
+  (IF (IS-FINITE (REL!RAN-RESTRICT X (REL!RAN X)))
+   (IMPLIES
+    (AND (IS-FINITE (REL!RAN X))
+     (>= (CARD (REL!RAN-RESTRICT X (REL!RAN X))) (CARD (REL!RAN X))))
+    (>= (CARD X) (CARD (REL!RAN X))))
+   (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X))))
+  (AND (>= (CARD X) (CARD (REL!RAN X))) (IS-FINITE (REL!RAN X)))))
+Which simplifies
+ when rewriting with REL!IN-RAN-1, REL!IN-ID, PAIRFN!IN-JOIN,
+REL!FLIP-PAIR-PAIR, REL!IN-INVERSE, PAIRFN!IS-RELATION-JOIN,
+REL!IS-RELATION-INVERSE, REL!IN-RAN-RESTRICT
+ forward chaining using PAIR!PAIR-COMPOSITION, >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions REL!FLIP-PAIR-IS-INVOLUTION, PAIR!FST-PAIR,
+PAIR!SND-PAIR, PAIR!PAIR-IS-PAIR, REL!IS-RELATION-BOOL, REL!INVERSE-INVERSE,
+PAIR!IS-PAIR-BOOL to ...
+(TRUE)
+FINITE-SUBSETS
+FINITE-SUBSETS-OF-FINITE-SET
+Beginning proof of FINITE-SUBSETS-OF-FINITE-SET ...
+(IMPLIES (IS-FINITE X) (= (FINITE-SUBSETS X) (POWERSET X)))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IS-FINITE X)
+ (ALL (E)
+  (IF (IN E (FINITE-SUBSETS X)) (IN E (POWERSET X))
+   (NOT (IN E (POWERSET X))))))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, FINITE-SUBSETS.DEFINITION
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT to ...
+(IMPLIES (IS-FINITE X) (ALL (E) (IMPLIES (SUBSET E X) (IS-FINITE E))))
+Assuming IS-FINITE-MONOTONIC with the instantiations: (= Y X) generates ...
+(IMPLIES
+ (AND
+  (ALL (X$0)
+   (IMPLIES (AND (IS-FINITE X) (SUBSET X$0 X))
+    (AND (IS-FINITE X$0) (<= (CARD X$0) (CARD X)))))
+  (IS-FINITE X))
+ (ALL (E) (IMPLIES (SUBSET E X) (IS-FINITE E))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the instantiation (= X$0 E) to ...
+(TRUE)
+FINITE-SET-INDUCTION
+Beginning proof of FINITE-SET-INDUCTION ...
+(IF (IS-FINITE X)
+ (IF (= X (NULLSET)) (TRUE)
+  (ALL (E) (IF (IN E X) (M< (CARD (DIFF X (UNIT E))) (CARD X)) (TRUE))))
+ (TRUE))
+Assuming CARD-0-IFF-NULLSET with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-FINITE X) (= (= (CARD X) 0) (= X (NULLSET)))) (IS-FINITE X)
+  (NOT (= X (NULLSET))))
+ (ALL (E) (IMPLIES (IN E X) (M< (CARD (DIFF X (UNIT E))) (CARD X)))))
+Which simplifies
+ when rewriting with M<.NAT, CARD-NULLSET, NULLSET.DEFINITION, CARD-SETADD,
+IS-FINITE-NULLSET, SETRULES!INTER-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETRULES!SUBSET-SETADD, CARD-DIFF, SETRULES!UNIT-TO-SETADD
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SUCC.INT, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+ADD-REMOVE-MEMBER
+Beginning proof of ADD-REMOVE-MEMBER ...
+(IMPLIES (IN X Y) (= (SETADD X (DIFF Y (SETADD X (NULLSET)))) Y))
+Applying SETRULES!EXTENSIONALITY gives ...
+(IMPLIES (IN X Y)
+ (ALL (E)
+  (IF (IN E (SETADD X (DIFF Y (SETADD X (NULLSET))))) (IN E Y)
+   (NOT (IN E Y)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, DIFF.DEFINITION, SETADD.DEFINITION
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+ABSORBS
+FINITE-SUBSETS-INDUCTION-LEMMA
+Beginning proof of FINITE-SUBSETS-INDUCTION-LEMMA ...
+(IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y)) (SUBSET (FINITE-SUBSETS X) Y))
+Invoking SUBSET gives ...
+(IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y))
+ (ALL (E) (IMPLIES (IN E (FINITE-SUBSETS X)) (IN E Y))))
+Prenexing produces ...
+(IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y) (IN E (FINITE-SUBSETS X)))
+ (IN E Y))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (IS-FINITE E) (= E (NULLSET))) (*P* E X Y))
+  (IMPLIES
+   (AND (IS-FINITE E) (NOT (= E (NULLSET)))
+    (ALL (E$0) (IF (IN E$0 E) (*P* (DIFF E (UNIT E$0)) X Y) (TRUE))))
+   (*P* E X Y))
+  (IMPLIES (NOT (IS-FINITE E)) (*P* E X Y)))
+ produces ...
+(AND
+ (IMPLIES (AND (IS-FINITE E) (= E (NULLSET)))
+  (IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y) (IN E (FINITE-SUBSETS X)))
+   (IN E Y)))
+ (IMPLIES
+  (AND (IS-FINITE E) (NOT (= E (NULLSET)))
+   (ALL (E$0)
+    (IF (IN E$0 E)
+     (IMPLIES
+      (AND (IN (NULLSET) Y) (ABSORBS X Y)
+       (IN (DIFF E (UNIT E$0)) (FINITE-SUBSETS X)))
+      (IN (DIFF E (UNIT E$0)) Y))
+     (TRUE))))
+  (IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y) (IN E (FINITE-SUBSETS X)))
+   (IN E Y)))
+ (IMPLIES (NOT (IS-FINITE E))
+  (IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y) (IN E (FINITE-SUBSETS X)))
+   (IN E Y))))
+Which simplifies
+ when rewriting with IS-FINITE-DIFF, SETRULES!UNION-SUBSET-RIGHT,
+SETRULES!SETADD-UNION-LEFT, SETRULES!SUBSET-DIFF-LEFT,
+SETRULES!UNIT-TO-SETADD, SUBSET.NULLSET.LEFT, POWERSET.DEFINITION,
+FINITE-SUBSETS.DEFINITION
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IS-FINITE E) (NOT (= E (NULLSET)))
+  (ALL (E$0)
+   (IMPLIES
+    (AND (IN E$0 E) (IN (NULLSET) Y) (ABSORBS X Y) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y)))
+  (IN (NULLSET) Y) (ABSORBS X Y) (SUBSET E X))
+ (IN E Y))
+Rearranging gives ...
+(IMPLIES
+ (AND (IS-FINITE E) (NOT (= E (NULLSET))) (IN (NULLSET) Y) (ABSORBS X Y)
+  (SUBSET E X)
+  (ALL (E$0)
+   (IMPLIES
+    (AND (IN E$0 E) (IN (NULLSET) Y) (ABSORBS X Y) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y))))
+ (IN E Y))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (IS-FINITE E) (NOT (= E (NULLSET))) (IN (NULLSET) Y) (ABSORBS X Y)
+  (SUBSET E X)
+  (ALL (E$0)
+   (IMPLIES (AND (IN E$0 E) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y))))
+ (IN E Y))
+Assuming SETRULES!SET-DECOMPOSITION with the instantiations: (= X E) generates
+...
+(IMPLIES
+ (AND
+  (OR (= E (NULLSET))
+   (SOME (A B) (AND (IN A E) (NOT (IN A B)) (= E (SETADD A B)))))
+  (IS-FINITE E) (NOT (= E (NULLSET))) (IN (NULLSET) Y) (ABSORBS X Y)
+  (SUBSET E X)
+  (ALL (E$0)
+   (IMPLIES (AND (IN E$0 E) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y))))
+ (IN E Y))
+Which simplifies
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION to ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET)))
+  (SOME (A) (AND (IN A E) (SOME (B) (AND (NOT (IN A B)) (= E (SETADD A B))))))
+  (IS-FINITE E) (IN (NULLSET) Y) (ABSORBS X Y) (SUBSET E X)
+  (ALL (E$0)
+   (IMPLIES (AND (IN E$0 E) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y))))
+ (IN E Y))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B)) (= E (SETADD A B))
+  (IS-FINITE E) (IN (NULLSET) Y) (ABSORBS X Y) (SUBSET E X)
+  (ALL (E$0)
+   (IMPLIES (AND (IN E$0 E) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y))))
+ (IN E Y))
+Instantiating (= E$0 A) gives ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B)) (= E (SETADD A B))
+  (IS-FINITE E) (IN (NULLSET) Y) (ABSORBS X Y) (SUBSET E X)
+  (IMPLIES (AND (IN A E) (SUBSET E (SETADD A X)))
+   (IN (DIFF E (SETADD A (NULLSET))) Y))
+  (ALL (E$0)
+   (IMPLIES (AND (IN E$0 E) (SUBSET E (SETADD E$0 X)))
+    (IN (DIFF E (SETADD E$0 (NULLSET))) Y))))
+ (IN E Y))
+Invoking SUBSET gives ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B)) (= E (SETADD A B))
+  (IS-FINITE E) (IN (NULLSET) Y) (ABSORBS X Y)
+  (ALL (E$0) (IMPLIES (IN E$0 E) (IN E$0 X)))
+  (IMPLIES
+   (AND (IN A E) (ALL (E$1) (IMPLIES (IN E$1 E) (IN E$1 (SETADD A X)))))
+   (IN (DIFF E (SETADD A (NULLSET))) Y))
+  (ALL (E$2)
+   (IMPLIES
+    (AND (IN E$2 E) (ALL (E$3) (IMPLIES (IN E$3 E) (IN E$3 (SETADD E$2 X)))))
+    (IN (DIFF E (SETADD E$2 (NULLSET))) Y))))
+ (IN E Y))
+Which simplifies
+ when rewriting with SETADD.DEFINITION
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION
+ with the instantiations (= E$0 E$1) (= E$0 E$3) to ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B)) (= E (SETADD A B))
+  (IS-FINITE E) (IN (NULLSET) Y) (ABSORBS X Y)
+  (ALL (E$0) (IMPLIES (IN E$0 E) (IN E$0 X)))
+  (IN (DIFF E (SETADD A (NULLSET))) Y)
+  (ALL (E$1) (IMPLIES (IN E$1 E) (IN (DIFF E (SETADD E$1 (NULLSET))) Y))))
+ (IN E Y))
+Invoking ABSORBS gives ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B)) (= E (SETADD A B))
+  (IS-FINITE E) (IN (NULLSET) Y)
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (IN A$0 X) (IN B$0 Y)) (IN (SETADD A$0 B$0) Y)))
+  (ALL (E$0) (IMPLIES (IN E$0 E) (IN E$0 X)))
+  (IN (DIFF E (SETADD A (NULLSET))) Y)
+  (ALL (E$1) (IMPLIES (IN E$1 E) (IN (DIFF E (SETADD E$1 (NULLSET))) Y))))
+ (IN E Y))
+Instantiating (= A$0 A) (= B$0 (DIFF E (SETADD A (NULLSET)))) gives ...
+(IMPLIES
+ (AND (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B)) (= E (SETADD A B))
+  (IS-FINITE E) (IN (NULLSET) Y)
+  (IMPLIES (AND (IN A X) (IN (DIFF E (SETADD A (NULLSET))) Y))
+   (IN (SETADD A (DIFF E (SETADD A (NULLSET)))) Y))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (IN A$0 X) (IN B$0 Y)) (IN (SETADD A$0 B$0) Y)))
+  (ALL (E$0) (IMPLIES (IN E$0 E) (IN E$0 X)))
+  (IN (DIFF E (SETADD A (NULLSET))) Y)
+  (ALL (E$1) (IMPLIES (IN E$1 E) (IN (DIFF E (SETADD E$1 (NULLSET))) Y))))
+ (IN E Y))
+Rearranging gives ...
+(IMPLIES
+ (AND (= E (SETADD A B)) (NOT (= E (NULLSET))) (IN A E) (NOT (IN A B))
+  (IS-FINITE E) (IN (NULLSET) Y) (IN (DIFF E (SETADD A (NULLSET))) Y)
+  (IMPLIES (AND (IN A X) (IN (DIFF E (SETADD A (NULLSET))) Y))
+   (IN (SETADD A (DIFF E (SETADD A (NULLSET)))) Y))
+  (ALL (E$0) (IMPLIES (IN E$0 E) (IN E$0 X)))
+  (ALL (E$1) (IMPLIES (IN E$1 E) (IN (DIFF E (SETADD E$1 (NULLSET))) Y)))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (IN A$0 X) (IN B$0 Y)) (IN (SETADD A$0 B$0) Y))))
+ (IN E Y))
+Which simplifies
+ when rewriting with ADD-REMOVE-MEMBER
+ forward chaining using >=.SAME.TYPE, FINITE-CARD-NAT
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION
+ with the instantiation (= E$0 A) to ...
+(TRUE)
+FINITE-SUBSETS-INDUCTION
+Beginning proof of FINITE-SUBSETS-INDUCTION ...
+(IMPLIES
+ (AND (IN (NULLSET) Y)
+  (ALL (A B) (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y))))
+ (SUBSET (FINITE-SUBSETS X) Y))
+Assuming FINITE-SUBSETS-INDUCTION-LEMMA with the
+instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN (NULLSET) Y) (ABSORBS X Y)) (SUBSET (FINITE-SUBSETS X) Y))
+  (IN (NULLSET) Y)
+  (ALL (A B) (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y))))
+ (SUBSET (FINITE-SUBSETS X) Y))
+Invoking ABSORBS gives ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NULLSET) Y)
+    (ALL (A B) (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y))))
+   (SUBSET (FINITE-SUBSETS X) Y))
+  (IN (NULLSET) Y)
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (IN A$0 X) (IN B$0 Y)) (IN (SETADD A$0 B$0) Y))))
+ (SUBSET (FINITE-SUBSETS X) Y))
+Instantiating (= A$0 A) (= B$0 B) gives ...
+(IMPLIES
+ (SOME (A B)
+  (AND
+   (IMPLIES
+    (AND (IN (NULLSET) Y)
+     (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y)))
+    (SUBSET (FINITE-SUBSETS X) Y))
+   (IN (NULLSET) Y) (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y))
+   (ALL (A$0 B$0)
+    (IMPLIES (AND (IN A$0 X) (IN B$0 Y)) (IN (SETADD A$0 B$0) Y)))))
+ (SUBSET (FINITE-SUBSETS X) Y))
+Prenexing produces ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (AND (IN (NULLSET) Y)
+    (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y)))
+   (SUBSET (FINITE-SUBSETS X) Y))
+  (IN (NULLSET) Y) (IMPLIES (AND (IN A X) (IN B Y)) (IN (SETADD A B) Y))
+  (ALL (A$0 B$0)
+   (IMPLIES (AND (IN A$0 X) (IN B$0 Y)) (IN (SETADD A$0 B$0) Y))))
+ (SUBSET (FINITE-SUBSETS X) Y))
+Which simplifies to ...
+(TRUE)
+Done.

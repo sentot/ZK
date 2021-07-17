@@ -1,0 +1,443 @@
+
+;;; Additional facts about the basic set functions
+;;; Perhaps this should be part of the initial theory
+;;;
+
+;;; versions of extensionality that can be used for rewriting
+
+(disabled
+  (rule extensionality (x y)
+    (= (= x y)
+       (all (e) (if (in e x) (in e y) (not (in e y)))))))
+(USE =.EXTENSIONAL (X X) (Y Y))
+(SPLIT (= X Y))
+(SIMPLIFY)
+(INSTANTIATE (E$0 E))
+(SIMPLIFY)
+
+(disabled
+  (rule extensionality-subgoal (x y)
+    (implies (all (e) (if (in e x) (in e y) (not (in e y))))
+	     (= (= x y) (true)))))
+(WITH-ENABLED (EXTENSIONALITY) (REWRITE))
+
+;;; two simple "case analysis" axioms
+
+(axiom set-cases (x)
+  (or (= x (nullset))
+      (some (e) (in e x))))
+(WITH-ENABLED (EXTENSIONALITY) (REWRITE))
+
+(axiom set-decomposition (x)
+  (or (= x (nullset))
+      (some (a b)
+	(and (in a x)
+	     (not (in a b))
+	     (= x (setadd a b))))))
+(USE =.EXTENSIONAL (X X) (Y (NULLSET)))
+(REWRITE)
+(SPLIT (= X (NULLSET)))
+(SIMPLIFY)
+(INSTANTIATE (A E) (B (DIFF X (UNIT E))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL)
+ (REWRITE))
+
+
+;;; setadd
+
+(rule setadd-commutes (a b x)
+  (= (setadd a (setadd b x))
+     (setadd b (setadd a x))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule setadd-idempotent (a x)
+  (= (setadd a (setadd a x))
+     (setadd a x)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule setadd-non-null (a x)
+  (= (= (setadd a x) (nullset))
+     (false)))
+(use =.extensional (x (setadd a x)) (y (nullset)))
+(reduce)
+
+(rule setadd-cancellation (a x y)
+  (implies (and (not (in a x))
+		(not (in a y)))
+	   (= (= (setadd a x) (setadd a y))
+	      (= x y))))
+(SPLIT (= X Y))
+(SIMPLIFY)
+(APPLY EXTENSIONALITY)
+(INSTANTIATE (E$0 E))
+(REWRITE)
+
+(rule setadd-left-equality-test (a x y)
+  (implies (not (in a y))
+	   (= (= (setadd a x) y)
+	      (false))))
+(USE =.EXTENSIONAL (X (SETADD A X)) (Y Y))
+(REARRANGE)
+(REWRITE)
+
+(rule setadd-right-equality-test (a x y)
+  (implies (not (in a x))
+	   (= (= x (setadd a y))
+	      (false))))
+(USE SETADD-LEFT-EQUALITY-TEST (A A) (X Y) (Y X))
+(SIMPLIFY)
+
+(axiom setadd-member (a x)
+  (implies (in a x)
+	   (= (setadd a x) x)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule subset-setadd (a b c)
+  (= (subset (setadd a b) c)
+     (and (in a c)
+	  (subset b c))))
+(SPLIT (SUBSET (SETADD A B) C))
+(SIMPLIFY)
+(REDUCE)
+(INSTANTIATE (E A))
+(SIMPLIFY)
+(CASES)
+(INSTANTIATE (E E$0))
+(SIMPLIFY)
+(NEXT)
+(PRENEX)
+(SIMPLIFY)
+(NEXT)
+
+;;; union
+
+(rule setadd-union-left (a x y)
+  (= (union (setadd a x) y)
+     (setadd a (union x y))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule setadd-union-right (a x y)
+  (= (union x (setadd a y))
+     (setadd a (union x y))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule subset-union-left (s t u)
+  (= (subset (union s t) u)
+     (and (subset s u)
+	  (subset t u))))
+(SPLIT (AND (SUBSET S U)
+	    (SUBSET T U)))
+(SIMPLIFY)
+(REDUCE)
+(CASES)
+(INSTANTIATE (E E$0))
+(INSTANTIATE (E$1 E))
+(SIMPLIFY)
+(NEXT)
+(INSTANTIATE (E$2 E))
+(SIMPLIFY)
+(NEXT)
+
+(rule union-self-associated (s t)
+  (= (union s (union s t))
+     (union s t)))
+(USE UNION.ASSOCIATIVE (X S)(Y S)(Z T))
+(REWRITE)
+
+(rule subset-union-right (s t u)
+  (implies (or (subset s t)
+	       (subset s u))
+	   (= (subset s (union t u))
+	      (true))))
+(REDUCE)
+
+(grule subset-union-relation-1 (s t)
+  (subset s (union s t)))
+(REDUCE)
+
+(grule subset-union-relation-2 (s t)
+  (subset t (union s t)))
+(REDUCE)
+
+(rule union-subset-left (s t)
+  (implies (subset t s)
+	   (= (union s t) s)))
+(APPLY EXTENSIONALITY-SUBGOAL)
+(REDUCE)
+(INSTANTIATE (E E$0))
+(SIMPLIFY)
+
+(rule union-subset-right (s t)
+  (implies (subset s t)
+	   (= (union s t) t)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REDUCE))
+
+;;; intersection
+
+(rule setadd-inter-left (a x y)
+  (= (inter (setadd a x) y)
+     (if (in a y)
+	 (setadd a (inter x y))
+	 (inter x y))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule setadd-inter-right (a x y)
+  (= (inter x (setadd a y))
+     (if (in a x)
+	 (setadd a (inter x y))
+	 (inter x y))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(axiom setadd-inter-left-member (a x y)
+  (implies (in a y)
+	   (= (inter (setadd a x) y)
+	      (setadd a (inter x y)))))
+(REWRITE)
+
+(axiom setadd-inter-left-nonmember (a x y)
+  (implies (not (in a y))
+	   (= (inter (setadd a x) y)
+	      (inter x y))))
+(REWRITE)
+
+(rule setadd-inter-right-member (a x y)
+  (implies (in a x)
+	   (= (inter x (setadd a y))
+	      (setadd a (inter x y)))))
+(USE INTER.COMMUTATIVE (X X) (Y (SETADD A Y)))
+(REWRITE)
+
+(rule setadd-inter-right-nonmember (a x y)
+  (implies (not (in a x))
+	   (= (inter x (setadd a y))
+	      (inter x y))))
+(USE INTER.COMMUTATIVE (X X) (Y (SETADD A Y)))
+(REWRITE)
+
+(rule inter-self-associated (s t)
+  (= (inter s (inter s t))
+     (inter s t)))
+(USE INTER.ASSOCIATIVE (X S)(Y S)(Z T))
+(REWRITE)
+
+(rule subset-inter-left (s t u)
+  (implies (or (subset s u)
+	       (subset t u))
+	   (= (subset (inter s t) u)
+	      (true))))
+(REDUCE)
+
+(rule subset-inter-right (s t u)
+  (= (subset s (inter t u))
+     (and (subset s t)
+	  (subset s u))))
+(SPLIT (AND (SUBSET S T)
+	    (SUBSET S U)))
+(SIMPLIFY)
+(REDUCE)
+(INSTANTIATE (E$0 E))
+(SIMPLIFY)
+
+(grule subset-inter-relation-1 (s t)
+  (subset (inter s t) s))
+(REDUCE)
+
+(grule subset-inter-relation-2 (s t)
+  (subset (inter s t) t))
+(REDUCE)
+
+(rule inter-subset-left (s t)
+  (implies (subset t s)
+	   (= (inter s t) t)))
+(APPLY EXTENSIONALITY-SUBGOAL)
+(REDUCE)
+(INSTANTIATE (E E$0))
+(SIMPLIFY)
+
+(rule inter-subset-right (s t)
+  (implies (subset s t)
+	   (= (inter s t) s)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REDUCE))
+
+(rule inter-nullset (s t)
+  (= (= (inter s t) (nullset))
+     (all (e) (not (and (in e s) (in e t))))))
+(WITH-ENABLED (EXTENSIONALITY) (REWRITE))
+(INSTANTIATE (E$1 E))
+(SIMPLIFY)
+
+(rule inter-union-distribution (s t u)
+  (= (inter s (union t u))
+     (union (inter s t)
+	    (inter s u))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule inter-diff-left (s t u)
+  (= (inter (diff s t) u)
+     (diff (inter s u) t)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule inter-diff-right (s t u)
+  (= (inter s (diff t u))
+     (diff (inter s t) u)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+
+;;; diff
+
+(rule setadd-diff (a x y)
+  (= (diff (setadd a x) y)
+     (if (in a y)
+	 (diff x y)
+	 (setadd a (diff x y)))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(axiom setadd-diff-left-member (a x y)
+  (implies (in a y)
+	   (= (diff (setadd a x) y)
+	      (diff x y))))
+(REWRITE)
+
+(axiom setadd-diff-left-nonmember (a x y)
+  (implies (not (in a y))
+	   (= (diff (setadd a x) y)
+	      (setadd a (diff x y)))))
+(REWRITE)
+
+(grule subset-diff-relation (s t)
+  (subset (diff s t) s))
+(REDUCE)
+
+(rule subset-diff-left (s t u)
+  (= (subset (diff s t) u)
+     (subset s (union t u))))
+(SPLIT (SUBSET (DIFF S T) U))
+(SIMPLIFY)
+(REDUCE)
+
+(rule subset-diff-right (s t u)
+  (= (subset s (diff t u))
+     (and (subset s t)
+	  (= (inter s u) (nullset)))))
+(SPLIT (AND (= (INTER S U) (NULLSET))
+	    (SUBSET S T)))
+(SIMPLIFY)
+(REDUCE)
+(INSTANTIATE (E$0 E))
+(SIMPLIFY)
+
+(rule diff-self (s)
+  (= (diff s s)
+     (nullset)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule diff-nullset-right (s)
+  (= (diff s (nullset))
+     s))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule diff-nullset-left (s)
+  (= (diff (nullset) s)
+     (nullset)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule diff-diff (s t u)
+  (= (diff (diff s t) u)
+     (diff s (union t u))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule diff-inter (s t u)
+  (= (diff s (inter t u))
+     (union (diff s t) (diff s u))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule diff-=-nullset (s t)
+  (= (= (diff s t) (nullset))
+     (subset s t)))
+(SPLIT (SUBSET S T))
+(SIMPLIFY)
+(WITH-ENABLED (EXTENSIONALITY) (REDUCE))
+
+(rule diff-superset (s t)
+  (implies (subset s t)
+	   (= (diff s t) (nullset))))
+(WITH-ENABLED (EXTENSIONALITY) (REDUCE))
+
+
+;;; delta
+
+(rule delta-expansion (x y)
+  (= (delta x y)
+     (union (diff x y)
+	    (diff y x))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+
+;;; unit sets
+
+(rule unit-to-setadd (x)
+  (= (unit x)
+     (setadd x (nullset))))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+
+;;; Special cases of regularity
+
+(rule in-self (s)
+  (= (in s s)
+     (false)))
+(USE AXIOM.OF.REGULAR.CHOICE (X (MAKE-SET S)))
+(REDUCE)
+
+(axiom no-2-cycle (s t)
+  (not (and (in s t)
+	    (in t s))))
+(USE AXIOM.OF.REGULAR.CHOICE (X (MAKE-SET S T)))
+(REDUCE)
+
+;;; Cup
+
+(rule cup-nullset ()
+  (= (cup (nullset))
+     (nullset)))
+(WITH-ENABLED (EXTENSIONALITY-SUBGOAL) (REWRITE))
+
+(rule cup-union (x y)
+  (= (cup (union x y))
+     (union (cup x) (cup y))))
+(WITH-ENABLED (EXTENSIONALITY) (REWRITE))
+(SPLIT (SOME (YY)
+	     (AND (IN E YY)
+		  (IN YY Y))))
+(SIMPLIFY)
+
+(rule cup-unit (x)
+  (= (cup (unit x))
+     x))
+(APPLY EXTENSIONALITY)
+(REWRITE)
+(INSTANTIATE (Y X))
+(SIMPLIFY)
+
+(rule cup-setadd (x y)
+  (= (cup (setadd x y))
+     (union x (cup y))))
+(USE CUP-UNION (X (UNIT X)) (Y Y))
+(USE CUP-UNIT (X X))
+(REWRITE)
+
+(rule member-subset-cup (x y)
+  (implies (in x y)
+	   (= (subset x (cup y)) (true))))
+(REDUCE)
+
+(axiom cup-subset (x y)
+  (= (subset (cup x) y)
+     (all (z) (implies (in z x)
+		       (subset z y)))))
+(SPLIT (SUBSET (CUP X) Y))
+(SIMPLIFY)
+(REDUCE)
+(SIMPLIFY)
+(INSTANTIATE (Z Y$0) (E$0 E))
+(SIMPLIFY)

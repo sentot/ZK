@@ -1,0 +1,280 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/unitmodel.ver"
+IS-UNIT-SET
+DEFINITION-1
+Beginning proof of DEFINITION-1 ...
+(= (IS-UNIT-SET X) (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))))
+Splitting on (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))) generates ...
+(IF (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y))))
+ (= (IS-UNIT-SET X) (SOME (Y$0) (ALL (Z$0) (= (IN Z$0 X) (= Z$0 Y$0)))))
+ (= (IS-UNIT-SET X) (SOME (Y$1) (ALL (Z$1) (= (IN Z$1 X) (= Z$1 Y$1))))))
+Which simplifies to ...
+(IF (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))) (= (IS-UNIT-SET X) (TRUE))
+ (= (IS-UNIT-SET X) (FALSE)))
+Starting case 2 ...
+(IMPLIES (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))) (= (IS-UNIT-SET X) (TRUE)))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!UNIT-TO-SETADD to ...
+(IMPLIES (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y))))
+ (SOME (Y$0) (= X (SETADD Y$0 (NULLSET)))))
+Instantiating (= Y$0 Y) gives ...
+(IMPLIES (AND (ALL (Z) (= (IN Z X) (= Z Y))) (NOT (= X (SETADD Y (NULLSET)))))
+ (SOME (Y$0) (= X (SETADD Y$0 (NULLSET)))))
+Assuming =.EXTENSIONAL with the
+instantiations: (= X X) (= Y (UNIT Y)) generates ...
+(IMPLIES
+ (AND (= (= X (UNIT Y)) (ALL (E) (= (IN E X) (IN E (UNIT Y)))))
+  (ALL (Z) (= (IN Z X) (= Z Y))) (NOT (= X (SETADD Y (NULLSET)))))
+ (SOME (Y$0) (= X (SETADD Y$0 (NULLSET)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION,
+SETRULES!UNIT-TO-SETADD to ...
+(IMPLIES
+ (AND
+  (= (= X (SETADD Y (NULLSET)))
+   (ALL (E) (IF (= E Y) (= (IN E X) (TRUE)) (= (IN E X) (FALSE)))))
+  (ALL (Z) (= (IN Z X) (= Z Y))) (NOT (= X (SETADD Y (NULLSET)))))
+ (SOME (Y$0) (= X (SETADD Y$0 (NULLSET)))))
+Substituting (= (= X (SETADD Y (NULLSET)))
+              (ALL (E)
+               (IF (= E Y) (IN E X) (IF (IN E X) (FALSE) (TRUE))))) produces
+...
+(IMPLIES
+ (AND
+  (= (= X (SETADD Y (NULLSET)))
+   (ALL (E) (IF (= E Y) (IN E X) (NOT (IN E X)))))
+  (ALL (Z) (= (IN Z X) (= Z Y)))
+  (NOT (ALL (E$0) (IF (= E$0 Y) (IN E$0 X) (NOT (IN E$0 X))))))
+ (SOME (Y$0) (= X (SETADD Y$0 (NULLSET)))))
+Instantiating (= Z E$0) gives ...
+(IMPLIES
+ (AND
+  (= (= X (SETADD Y (NULLSET)))
+   (ALL (E) (IF (= E Y) (IN E X) (NOT (IN E X)))))
+  (SOME (E$0)
+   (AND (= (IN E$0 X) (= E$0 Y)) (ALL (Z) (= (IN Z X) (= Z Y)))
+    (NOT (IF (= E$0 Y) (IN E$0 X) (NOT (IN E$0 X)))))))
+ (SOME (Y$0) (= X (SETADD Y$0 (NULLSET)))))
+Which simplifies to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (NOT (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))))
+ (= (IS-UNIT-SET X) (FALSE)))
+Splitting on (IS-UNIT-SET X) generates ...
+(IF (IS-UNIT-SET X)
+ (IMPLIES (NOT (SOME (Y) (ALL (Z) (= (IN Z X) (= Z Y)))))
+  (= (IS-UNIT-SET X) (FALSE)))
+ (IMPLIES (NOT (SOME (Y$0) (ALL (Z$0) (= (IN Z$0 X) (= Z$0 Y$0)))))
+  (= (IS-UNIT-SET X) (FALSE))))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!UNIT-TO-SETADD to ...
+(IMPLIES (SOME (Y) (= X (SETADD Y (NULLSET))))
+ (SOME (Y$0) (ALL (Z) (= (IN Z X) (= Z Y$0)))))
+Instantiating (= Y$0 Y) gives ...
+(IMPLIES (AND (= X (SETADD Y (NULLSET))) (NOT (ALL (Z) (= (IN Z X) (= Z Y)))))
+ (SOME (Y$0) (ALL (Z$0) (= (IN Z$0 X) (= Z$0 Y$0)))))
+Substituting (= X (SETADD Y (NULLSET))) produces ...
+(IMPLIES
+ (AND (= X (SETADD Y (NULLSET)))
+  (NOT (ALL (Z) (= (IN Z (SETADD Y (NULLSET))) (= Z Y)))))
+ (SOME (Y$0) (ALL (Z$0) (= (IN Z$0 (SETADD Y (NULLSET))) (= Z$0 Y$0)))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+DEFINTION-2
+Beginning proof of DEFINTION-2 ...
+(= (IS-UNIT-SET X)
+ (AND (SOME (Y) (IN Y X))
+  (ALL (Y Z) (IMPLIES (AND (IN Y X) (IN Z X)) (= Y Z)))))
+Splitting on (IS-UNIT-SET X) generates ...
+(IF (IS-UNIT-SET X)
+ (= (IS-UNIT-SET X)
+  (AND (SOME (Y) (IN Y X))
+   (ALL (Y$0 Z) (IMPLIES (AND (IN Y$0 X) (IN Z X)) (= Y$0 Z)))))
+ (= (IS-UNIT-SET X)
+  (AND (SOME (Y$1) (IN Y$1 X))
+   (ALL (Y$2 Z$0) (IMPLIES (AND (IN Y$2 X) (IN Z$0 X)) (= Y$2 Z$0))))))
+Which simplifies to ...
+(IF (IS-UNIT-SET X)
+ (AND (SOME (Y) (IN Y X))
+  (ALL (Y$0 Z) (IMPLIES (AND (IN Y$0 X) (IN Z X)) (= Y$0 Z))))
+ (IMPLIES (SOME (Y$1) (IN Y$1 X))
+  (NOT (ALL (Y$2 Z$0) (IMPLIES (AND (IN Y$2 X) (IN Z$0 X)) (= Y$2 Z$0))))))
+Starting case 2 ...
+(IMPLIES (IS-UNIT-SET X)
+ (AND (SOME (Y) (IN Y X))
+  (ALL (Y$0 Z) (IMPLIES (AND (IN Y$0 X) (IN Z X)) (= Y$0 Z)))))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!UNIT-TO-SETADD to ...
+(IMPLIES (SOME (Y) (= X (SETADD Y (NULLSET))))
+ (AND (SOME (Y$0) (IN Y$0 X))
+  (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Prenexing produces ...
+(IMPLIES (= X (SETADD Y (NULLSET)))
+ (AND (SOME (Y$1) (IN Y$1 X)) (IMPLIES (AND (IN Y$0 X) (IN Z X)) (= Y$0 Z))))
+Substituting (= X (SETADD Y (NULLSET))) produces ...
+(IMPLIES (= X (SETADD Y (NULLSET)))
+ (AND (SOME (Y$1) (IN Y$1 (SETADD Y (NULLSET))))
+  (IMPLIES (AND (IN Y$0 (SETADD Y (NULLSET))) (IN Z (SETADD Y (NULLSET))))
+   (= Y$0 Z))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, SETADD.DEFINITION
+ with the instantiation (= Y$1 Y) to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES (AND (NOT (IS-UNIT-SET X)) (SOME (Y$1) (IN Y$1 X)))
+ (NOT (ALL (Y$2 Z$0) (IMPLIES (AND (IN Y$2 X) (IN Z$0 X)) (= Y$2 Z$0)))))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!UNIT-TO-SETADD to ...
+(IMPLIES
+ (AND (NOT (SOME (Y) (= X (SETADD Y (NULLSET))))) (SOME (Y$0) (IN Y$0 X)))
+ (NOT (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Instantiating (= Y Y$0) gives ...
+(IMPLIES
+ (SOME (Y)
+  (AND
+   (NOT
+    (OR (= X (SETADD Y (NULLSET))) (SOME (Y$0) (= X (SETADD Y$0 (NULLSET))))))
+   (IN Y X)))
+ (NOT (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Which simplifies to ...
+(IMPLIES
+ (SOME (Y)
+  (AND (NOT (= X (SETADD Y (NULLSET))))
+   (NOT (SOME (Y$0) (= X (SETADD Y$0 (NULLSET))))) (IN Y X)))
+ (NOT (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Prenexing produces ...
+(IMPLIES
+ (AND (NOT (= X (SETADD Y (NULLSET))))
+  (NOT (SOME (Y$0) (= X (SETADD Y$0 (NULLSET))))) (IN Y X))
+ (NOT (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Applying =.EXTENSIONAL.SUBSET to
+ (= X (SETADD Y (NULLSET))) gives ...
+(IMPLIES
+ (AND
+  (NOT (AND (SUBSET X (SETADD Y (NULLSET))) (SUBSET (SETADD Y (NULLSET)) X)))
+  (NOT (SOME (Y$0) (= X (SETADD Y$0 (NULLSET))))) (IN Y X))
+ (NOT (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SUBSET.NULLSET.LEFT, SETRULES!SUBSET-SETADD,
+NULLSET.DEFINITION, SETADD.DEFINITION to ...
+(IMPLIES
+ (AND (NOT (ALL (E) (IMPLIES (IN E X) (= E Y))))
+  (NOT (SOME (Y$0) (= X (SETADD Y$0 (NULLSET))))) (IN Y X))
+ (NOT (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z)))))
+Instantiating (= Y$1 Y) (= Z E) gives ...
+(IMPLIES
+ (AND (NOT (IMPLIES (IN E X) (= E Y)))
+  (NOT (SOME (Y$0) (= X (SETADD Y$0 (NULLSET))))) (IN Y X))
+ (NOT
+  (AND (IMPLIES (AND (IN Y X) (IN E X)) (= Y E))
+   (ALL (Y$1 Z) (IMPLIES (AND (IN Y$1 X) (IN Z X)) (= Y$1 Z))))))
+Which simplifies to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+IS-UNIT-SET-NULLSET
+Beginning proof of IS-UNIT-SET-NULLSET ...
+(= (IS-UNIT-SET (NULLSET)) (FALSE))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!SETADD-RIGHT-EQUALITY-TEST, NULLSET.DEFINITION,
+SETRULES!UNIT-TO-SETADD to ...
+(TRUE)
+IS-UNIT-SET-UNIT
+Beginning proof of IS-UNIT-SET-UNIT ...
+(= (IS-UNIT-SET (UNIT X)) (TRUE))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!UNIT-TO-SETADD to ...
+(TRUE)
+IS-UNIT-SET-SETADD
+Beginning proof of IS-UNIT-SET-SETADD ...
+(= (IS-UNIT-SET (SETADD X S)) (ALL (Y) (IMPLIES (IN Y S) (= Y X))))
+Splitting on (IS-UNIT-SET (SETADD X S)) generates ...
+(IF (IS-UNIT-SET (SETADD X S))
+ (= (IS-UNIT-SET (SETADD X S)) (ALL (Y) (IMPLIES (IN Y S) (= Y X))))
+ (= (IS-UNIT-SET (SETADD X S)) (ALL (Y$0) (IMPLIES (IN Y$0 S) (= Y$0 X)))))
+Which simplifies
+ with invocation of IS-UNIT-SET
+ when rewriting with SETRULES!UNIT-TO-SETADD to ...
+(IF (SOME (Y) (= (SETADD X S) (SETADD Y (NULLSET))))
+ (= (TRUE) (ALL (Y$0) (IMPLIES (IN Y$0 S) (= Y$0 X))))
+ (= (FALSE) (ALL (Y$1) (IMPLIES (IN Y$1 S) (= Y$1 X)))))
+Applying =.EXTENSIONAL.SUBSET to
+ (= (SETADD X S) (SETADD Y (NULLSET))) gives ...
+(IF
+ (SOME (Y)
+  (AND (SUBSET (SETADD X S) (SETADD Y (NULLSET)))
+   (SUBSET (SETADD Y (NULLSET)) (SETADD X S))))
+ (ALL (Y$0) (IMPLIES (IN Y$0 S) (= Y$0 X)))
+ (NOT (ALL (Y$1) (IMPLIES (IN Y$1 S) (= Y$1 X)))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with SUBSET.NULLSET.LEFT, NULLSET.DEFINITION,
+SETADD.DEFINITION, SETRULES!SUBSET-SETADD
+ with the instantiation (= Y X) to ...
+(TRUE)
+THE-ELEMENT
+THE-ELEMENT-UNIT
+Beginning proof of THE-ELEMENT-UNIT ...
+(= (THE-ELEMENT (UNIT X)) X)
+Which simplifies
+ with invocation of THE-ELEMENT
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETRULES!CUP-NULLSET, SETRULES!CUP-SETADD, SETRULES!UNIT-TO-SETADD
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+THE-ELEMENT-UNIT-2
+Beginning proof of THE-ELEMENT-UNIT-2 ...
+(= (THE-ELEMENT (SETADD X (NULLSET))) X)
+Which simplifies
+ with invocation of THE-ELEMENT
+ when rewriting with SETRULES!UNION-SUBSET-LEFT, SUBSET.NULLSET.LEFT,
+SETRULES!CUP-NULLSET, SETRULES!CUP-SETADD
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+THE-ELEMENT-OF-UNIT-SET
+Beginning proof of THE-ELEMENT-OF-UNIT-SET ...
+(IMPLIES (IS-UNIT-SET X) (= X (UNIT (THE-ELEMENT X))))
+Invoking IS-UNIT-SET gives ...
+(IMPLIES (SOME (Y) (= X (UNIT Y))) (= X (UNIT (THE-ELEMENT X))))
+Prenexing produces ...
+(IMPLIES (= X (UNIT Y)) (= X (UNIT (THE-ELEMENT X))))
+Substituting (= X (UNIT Y)) produces ...
+(IMPLIES (= X (UNIT Y)) (= (UNIT Y) (UNIT (THE-ELEMENT (UNIT Y)))))
+Which simplifies
+ when rewriting with THE-ELEMENT-UNIT-2, SETRULES!UNIT-TO-SETADD to ...
+(TRUE)
+THE-ELEMENT-IS-IN
+Beginning proof of THE-ELEMENT-IS-IN ...
+(IMPLIES (IS-UNIT-SET X) (IN (THE-ELEMENT X) X))
+Assuming THE-ELEMENT-OF-UNIT-SET with the instantiations: (= X X) generates ...
+(IMPLIES
+ (AND (IMPLIES (IS-UNIT-SET X) (= X (UNIT (THE-ELEMENT X)))) (IS-UNIT-SET X))
+ (IN (THE-ELEMENT X) X))
+Splitting on (IN (THE-ELEMENT X) (UNIT (THE-ELEMENT X))) generates ...
+(IF (IN (THE-ELEMENT X) (UNIT (THE-ELEMENT X)))
+ (IMPLIES
+  (AND (IMPLIES (IS-UNIT-SET X) (= X (UNIT (THE-ELEMENT X)))) (IS-UNIT-SET X))
+  (IN (THE-ELEMENT X) X))
+ (IMPLIES
+  (AND (IMPLIES (IS-UNIT-SET X) (= X (UNIT (THE-ELEMENT X)))) (IS-UNIT-SET X))
+  (IN (THE-ELEMENT X) X)))
+Which simplifies to ...
+(IMPLIES
+ (AND (NOT (IN (THE-ELEMENT X) (UNIT (THE-ELEMENT X)))) (IS-UNIT-SET X))
+ (NOT (= X (UNIT (THE-ELEMENT X)))))
+Which simplifies
+ when rewriting with SETADD.DEFINITION, SETRULES!UNIT-TO-SETADD to ...
+(TRUE)
+Done.

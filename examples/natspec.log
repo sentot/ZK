@@ -1,0 +1,58 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/natspec.ver"
+NAT
+IN-NAT
+Beginning proof of IN-NAT ...
+(= (IN X (NAT)) (>= X 0))
+ZEROP
+WEAK-INDUCTION
+Beginning proof of WEAK-INDUCTION ...
+(IF (ZEROP N) (TRUE) (M< (- N 1) N))
+Which simplifies
+ with invocation of ZEROP
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+WEAKLY-INDUCTIVE
+WEAK-INDUCTION-1
+Beginning proof of WEAK-INDUCTION-1 ...
+(IMPLIES (AND (WEAKLY-INDUCTIVE X) (IN N (NAT))) (IN N X))
+WEAK-INDUCTION-2
+Beginning proof of WEAK-INDUCTION-2 ...
+(IMPLIES (WEAKLY-INDUCTIVE X) (SUBSET (NAT) X))
+STRONG-INDUCTION
+Beginning proof of STRONG-INDUCTION ...
+(IF (ZEROP N) (TRUE) (ALL (K) (IF (AND (<= 0 K) (< K N)) (M< K N) (TRUE))))
+Which simplifies
+ with invocation of ZEROP
+ when rewriting with M<.NAT, SUCC.INT.RULE
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+STRONGLY-INDUCTIVE
+STRONG-INDUCTION-1
+Beginning proof of STRONG-INDUCTION-1 ...
+(IMPLIES (AND (STRONGLY-INDUCTIVE X) (IN N (NAT))) (IN N X))
+STRONG-INDUCTION-2
+Beginning proof of STRONG-INDUCTION-2 ...
+(IMPLIES (STRONGLY-INDUCTIVE X) (SUBSET (NAT) X))
+IS-SMALLEST-NAT-MEMBER
+SMALLEST-IS-UNIQUE
+Beginning proof of SMALLEST-IS-UNIQUE ...
+(IMPLIES (AND (IS-SMALLEST-NAT-MEMBER K X) (IS-SMALLEST-NAT-MEMBER N X))
+ (= N K))
+SMALLEST-NAT-MEMBER
+SMALLEST-IS-SMALLEST
+Beginning proof of SMALLEST-IS-SMALLEST ...
+(IMPLIES (AND (IN N X) (IN N (NAT)))
+ (IS-SMALLEST-NAT-MEMBER (SMALLEST-NAT-MEMBER X) X))
+SMALLEST-IS-SMALLEST-2
+Beginning proof of SMALLEST-IS-SMALLEST-2 ...
+(IMPLIES (AND (IN N X) (IN N (NAT)))
+ (AND (IN (SMALLEST-NAT-MEMBER X) X) (IN (SMALLEST-NAT-MEMBER X) (NAT))
+  (<= (SMALLEST-NAT-MEMBER X) N)))
+SMALLEST-OF-NULLSET
+Beginning proof of SMALLEST-OF-NULLSET ...
+(IMPLIES (= (INTER X (NAT)) (NULLSET)) (= (SMALLEST-NAT-MEMBER X) -1))
+Done.

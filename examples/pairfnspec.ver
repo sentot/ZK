@@ -1,0 +1,226 @@
+;;;
+;;; functions operating on pairs
+
+(load fn)
+
+;;; relational join
+
+(function-stub join (r s))
+
+(rule in-join (x r s)
+  (= (in x (join r s))
+     (and (pair!is-pair x)
+	  (pair!is-pair (pair!snd x))
+	  (in (pair!pair (pair!fst x) (pair!fst (pair!snd x))) r)
+	  (in (pair!pair (pair!fst x) (pair!snd (pair!snd x))) s))))
+
+(rule dom-join (r s)
+  (= (rel!dom (join r s))
+     (inter (rel!dom r) (rel!dom s))))
+
+(rule is-relation-join (f g)
+  (= (rel!is-relation (join f g))
+     (true)))
+
+(rule is-function-join (f g)
+  (implies (and (fn!is-function f)
+		(fn!is-function g))
+	   (= (fn!is-function (join f g)) (true))))
+
+(rule apply-join-functions (f g x)
+  (implies (and (fn!is-function f)
+		(fn!is-function g)
+		(in x (rel!dom (join f g))))
+	   (= (fn!apply (join f g) x)
+	      (pair!pair (fn!apply f x)
+			 (fn!apply g x)))))
+
+(rule ran-join (r s)
+  (= (rel!ran (join r s))
+     (rel!comp (rel!inverse r) s)))
+
+(rule comp-join (r s t)
+  (implies (fn!is-function r)
+	   (= (rel!comp r (join s t))
+	      (join (rel!comp r s) (rel!comp r t)))))
+
+
+;;; projection functions
+
+;;; (fst-fn A B): (A * B) -> A = lambda <x, y> . x
+;;;
+
+(disabled
+ (function fst-fn (a b) ()
+   (rel!inverse (join (rel!id a) (pair!cross a b)))))
+
+(rule is-relation-fst-fn (a b)
+  (= (rel!is-relation (fst-fn a b)) (true)))
+
+(rule is-function-fst-fn (a b)
+  (= (fn!is-function (fst-fn a b)) (true)))
+
+(rule dom-fst-fn (a b)
+  (= (rel!dom (fst-fn a b))
+     (pair!cross a b)))
+
+(rule ran-fst-fn (a b)
+  (= (rel!ran (fst-fn a b))
+     (if (= b (nullset))
+	 (nullset)
+	 a)))
+
+(rule apply-fst-fn (a b x)
+  (implies (in x (pair!cross a b))
+	   (= (fn!apply (fst-fn a b) x)
+	      (pair!fst x))))
+
+(rule pre-image-fst-fn (a b x)
+  (= (rel!image (rel!inverse (fst-fn a b)) x)
+     (pair!cross (inter a x) b)))
+
+;;; (snd-fn A B): (A * B) ->  = lambda <x, y> . y
+;;;
+
+(disabled
+ (function snd-fn (a b) ()
+   (rel!inverse (join (pair!cross b a) (rel!id b)))))
+
+(rule is-relation-snd-fn (a b)
+  (= (rel!is-relation (snd-fn a b)) (true)))
+
+(rule is-function-snd-fn (a b)
+  (= (fn!is-function (snd-fn a b)) (true)))
+
+(rule dom-snd-fn (a b)
+  (= (rel!dom (snd-fn a b))
+     (pair!cross a b)))
+
+(rule ran-snd-fn (a b)
+  (= (rel!ran (snd-fn a b))
+     (if (= a (nullset))
+	 (nullset)
+	 b)))
+
+(rule apply-snd-fn (a b x)
+  (implies (in x (pair!cross a b))
+	   (= (fn!apply (snd-fn a b) x)
+	      (pair!snd x))))
+
+(rule pre-image-snd-fn (a b x)
+  (= (rel!image (rel!inverse (snd-fn a b)) x)
+     (pair!cross a (inter b x))))
+
+
+(rule join-fst-snd (a b)
+  (= (join (fst-fn a b) (snd-fn a b))
+     (rel!id (pair!cross a b))))
+
+
+;;; Swapping
+;;; (swap-fn A B): (A * B) -> (B * A)
+;;;              = lambda <x, y> . <y, x>
+;;;
+
+(disabled
+ (function swap-fn (a b) ()
+   (join (snd-fn a b) (fst-fn a b))))
+
+(rule is-relation-swap-fn (a b)
+  (= (rel!is-relation (swap-fn a b)) (true)))
+
+(rule is-function-swap-fn (a b)
+  (= (fn!is-function (swap-fn a b)) (true)))
+
+(rule dom-swap-fn (a b)
+  (= (rel!dom (swap-fn a b))
+     (pair!cross a b)))
+
+(rule ran-swap-fn (a b)
+  (= (rel!ran (swap-fn a b))
+     (pair!cross b a)))
+
+(rule apply-swap-fn (a b x)
+  (implies (in x (pair!cross a b))
+	   (= (fn!apply (swap-fn a b) x)
+	      (rel!flip-pair x))))
+
+(rule inverse-swap-fn (a b)
+  (= (rel!inverse (swap-fn a b))
+     (swap-fn b a)))
+
+(rule comp-swap-swap (a b c d)
+  (= (rel!comp (swap-fn a b) (swap-fn c d))
+     (rel!id (pair!cross (inter a d) (inter b c)))))
+
+(rule comp-swap-fst (a b c d)
+  (= (rel!comp (swap-fn a b) (fst-fn c d))
+     (snd-fn (inter a d) (inter b c))))
+
+(rule comp-swap-snd (a b c d)
+  (= (rel!comp (swap-fn a b) (snd-fn c d))
+     (fst-fn (inter a d) (inter b c))))
+
+(rule image-swap (a b x)
+  (= (rel!image (swap-fn a b) x)
+     (inter (pair!cross b a) (rel!inverse x))))
+
+
+;;; Twisting
+;;;
+;;; (Twist A B C): ((A * B) * C) -> (A * (B * C))
+;;;              = lambda <<x, y>, z> . <x, <y, z>>
+;;;
+
+(function twist (x) ()
+  (pair!pair (pair!fst (pair!fst x))
+	   (pair!pair (pair!snd (pair!fst x))
+		    (pair!snd x))))
+
+(function untwist (x) ()
+  (pair!pair (pair!pair (pair!fst x)
+		    (pair!fst (pair!snd x)))
+	   (pair!snd (pair!snd x))))
+
+(rule untwist-twist (x)
+  (implies (and (pair!is-pair x)
+		(pair!is-pair (pair!fst x)))
+	   (= (untwist (twist x)) x)))
+
+(rule twist-untwist (x)
+  (implies (and (pair!is-pair x)
+		(pair!is-pair (pair!snd x)))
+	   (= (twist (untwist x)) x)))
+
+(disabled
+ (function twist-fn (a b c) ()
+   (join (rel!comp (fst-fn (pair!cross a b) c) (fst-fn a b))
+	 (join (rel!comp (fst-fn (pair!cross a b) c) (snd-fn a b))
+	       (snd-fn (pair!cross a b) c)))))
+
+(rule is-relation-twist-fn (a b c)
+  (= (rel!is-relation (twist-fn a b c)) (true)))
+
+(rule is-function-twist-fn (a b c)
+  (= (fn!is-function (twist-fn a b c)) (true)))
+
+(rule dom-twist-fn (a b c)
+  (= (rel!dom (twist-fn a b c))
+     (pair!cross (pair!cross a b) c)))
+
+(rule ran-twist-fn (a b c)
+  (= (rel!ran (twist-fn a b c))
+     (pair!cross a (pair!cross b c))))
+
+(rule apply-twist-fn (x a b c)
+  (implies (in x (pair!cross (pair!cross a b) c))
+	   (= (fn!apply (twist-fn a b c) x)
+	      (twist x))))
+
+(rule is-function-inverse-twist-fn (a b c)
+  (= (fn!is-function (rel!inverse (twist-fn a b c))) (true)))
+
+(rule apply-inverse-twist-fn (x a b c)
+  (implies (in x (pair!cross a (pair!cross b c)))
+	   (= (fn!apply (rel!inverse (twist-fn a b c)) x)
+	      (untwist x))))

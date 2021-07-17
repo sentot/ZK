@@ -1,0 +1,447 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/q0.ver"
+IND
+PROP
+FUN
+COLON
+COLON-PROP
+Beginning proof of COLON-PROP ...
+(= (COLON X (PROP)) (= (TYPE-OF X) (BOOL)))
+AP
+AP-TYPE
+Beginning proof of AP-TYPE ...
+(IMPLIES (AND (COLON F (FUN T U)) (COLON X T)) (COLON (AP F X) U))
+AP-TYPE-1
+Beginning proof of AP-TYPE-1 ...
+(IMPLIES (AND (COLON F (FUN (PROP) (PROP))) (= (TYPE-OF X) (BOOL)))
+ (= (TYPE-OF (AP F X)) (BOOL)))
+Assuming AP-TYPE with the
+instantiations: (= F F) (= X X) (= T (PROP)) (= U (PROP)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (COLON F (FUN (PROP) (PROP))) (COLON X (PROP)))
+   (COLON (AP F X) (PROP)))
+  (COLON F (FUN (PROP) (PROP))) (= (TYPE-OF X) (BOOL)))
+ (= (TYPE-OF (AP F X)) (BOOL)))
+Which simplifies
+ when rewriting with COLON-PROP to ...
+(TRUE)
+AP-TYPE-2
+Beginning proof of AP-TYPE-2 ...
+(IMPLIES (AND (COLON F (FUN T (PROP))) (COLON X T))
+ (= (TYPE-OF (AP F X)) (BOOL)))
+Assuming AP-TYPE with the
+instantiations: (= F F) (= X X) (= T T) (= U (PROP)) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (COLON F (FUN T (PROP))) (COLON X T)) (COLON (AP F X) (PROP)))
+  (COLON F (FUN T (PROP))) (COLON X T))
+ (= (TYPE-OF (AP F X)) (BOOL)))
+Which simplifies
+ when rewriting with COLON-PROP to ...
+(TRUE)
+AP-TYPE-3
+Beginning proof of AP-TYPE-3 ...
+(IMPLIES (AND (COLON F (FUN (PROP) U)) (= (TYPE-OF X) (BOOL)))
+ (COLON (AP F X) U))
+Assuming AP-TYPE with the
+instantiations: (= F F) (= X X) (= T (PROP)) (= U U) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (COLON F (FUN (PROP) U)) (COLON X (PROP))) (COLON (AP F X) U))
+  (COLON F (FUN (PROP) U)) (= (TYPE-OF X) (BOOL)))
+ (COLON (AP F X) U))
+Which simplifies
+ when rewriting with COLON-PROP to ...
+(TRUE)
+K
+K-TYPE
+Beginning proof of K-TYPE ...
+(COLON (K T U) (FUN T (FUN U T)))
+AP-K
+Beginning proof of AP-K ...
+(IMPLIES (AND (COLON X T) (COLON Y U)) (= (AP (AP (K T U) X) Y) X))
+S
+S-TYPE
+Beginning proof of S-TYPE ...
+(COLON (S T U V) (FUN (FUN T (FUN U V)) (FUN (FUN T U) (FUN T V))))
+AP-S
+Beginning proof of AP-S ...
+(IMPLIES (AND (COLON X (FUN T (FUN U V))) (COLON Y (FUN T U)) (COLON Z T))
+ (= (AP (AP (AP (S T U V) X) Y) Z) (AP (AP X Z) (AP Y Z))))
+I
+I-TYPE
+Beginning proof of I-TYPE ...
+(COLON (I T) (FUN T T))
+Which simplifies
+ with invocation of I
+ with the assumptions AP-TYPE, K-TYPE, S-TYPE to ...
+(TRUE)
+AP-I
+Beginning proof of AP-I ...
+(IMPLIES (COLON X T) (= (AP (I T) X) X))
+Which simplifies
+ with invocation of I
+ when rewriting with AP-K, AP-S
+ with the assumptions AP-TYPE, K-TYPE, S-TYPE, I-TYPE to ...
+(TRUE)
+B
+B-TYPE
+Beginning proof of B-TYPE ...
+(COLON (B T U V) (FUN (FUN U V) (FUN (FUN T U) (FUN T V))))
+Which simplifies
+ with invocation of B
+ with the assumptions AP-TYPE, K-TYPE, S-TYPE to ...
+(TRUE)
+AP-B
+Beginning proof of AP-B ...
+(IMPLIES (AND (COLON F (FUN U V)) (COLON G (FUN T U)) (COLON X T))
+ (= (AP (AP (AP (B T U V) F) G) X) (AP F (AP G X))))
+Which simplifies
+ with invocation of B
+ when rewriting with AP-K, AP-S
+ with the assumptions AP-TYPE, K-TYPE, S-TYPE, B-TYPE to ...
+(TRUE)
+C
+C-TYPE
+Beginning proof of C-TYPE ...
+(COLON (C T U V) (FUN (FUN T (FUN U V)) (FUN U (FUN T V))))
+Which simplifies
+ with invocation of C
+ with the assumptions K-TYPE, AP-TYPE, B-TYPE, S-TYPE to ...
+(TRUE)
+AP-C
+Beginning proof of AP-C ...
+(IMPLIES (AND (COLON X (FUN T (FUN U V))) (COLON Y U) (COLON Z T))
+ (= (AP (AP (AP (C T U V) X) Y) Z) (AP (AP X Z) Y)))
+Which simplifies
+ with invocation of C
+ when rewriting with AP-K, AP-B, AP-S
+ with the assumptions K-TYPE, AP-TYPE, B-TYPE, S-TYPE, C-TYPE to ...
+(TRUE)
+Q
+Q-TYPE
+Beginning proof of Q-TYPE ...
+(COLON (Q T) (FUN T (FUN T (PROP))))
+IOTA
+IOTA-TYPE
+Beginning proof of IOTA-TYPE ...
+(COLON (IOTA) (FUN (FUN (IND) (PROP)) (IND)))
+AP-Q
+Beginning proof of AP-Q ...
+(IMPLIES (AND (COLON X T) (COLON Y T)) (= (AP (AP (Q T) X) Y) (= X Y)))
+Warning RULE-LOOPS for EXTENSIONALITY:
+ The rule EXTENSIONALITY loops upon itself.
+EXTENSIONALITY
+Beginning proof of EXTENSIONALITY ...
+(IMPLIES (AND (COLON F (FUN T U)) (COLON G (FUN T U)))
+ (= (= F G) (ALL (X) (IMPLIES (COLON X T) (= (AP F X) (AP G X))))))
+IOTA-Q
+Beginning proof of IOTA-Q ...
+(IMPLIES (COLON X (IND)) (= (AP (IOTA) (AP (Q (IND)) X)) X))
+Warning VARIABLES-UNUSED for DISABLED:
+ The following function formals were not used: X
+QNOT
+QNOT-TYPE
+Beginning proof of QNOT-TYPE ...
+(COLON (QNOT X) (FUN (PROP) (PROP)))
+Which simplifies
+ with invocation of QNOT
+ with the assumptions AP-TYPE-3, Q-TYPE to ...
+(TRUE)
+AP-QNOT
+Beginning proof of AP-QNOT ...
+(IMPLIES (COLON P (PROP)) (= (AP (QNOT X) P) (NOT P)))
+Which simplifies
+ with invocation of QNOT
+ when rewriting with AP-Q, COLON-PROP
+ with the assumptions AP-TYPE-1, AP-TYPE-3, Q-TYPE, QNOT-TYPE to ...
+(TRUE)
+Warning VARIABLES-UNUSED for DISABLED:
+ The following function formals were not used: X
+QAND
+QAND-TYPE
+Beginning proof of QAND-TYPE ...
+(COLON (QAND X) (FUN (PROP) (FUN (PROP) (PROP))))
+Which simplifies
+ with invocation of QAND
+ with the assumptions AP-TYPE-3, AP-TYPE, I-TYPE, C-TYPE, Q-TYPE, B-TYPE to ...
+(TRUE)
+AP-QAND
+Beginning proof of AP-QAND ...
+(IMPLIES (AND (COLON X (PROP)) (COLON Y (PROP)))
+ (= (AP (AP (QAND A) X) Y) (AND X Y)))
+Which simplifies
+ with invocation of QAND
+ when rewriting with AP-I, AP-C, EXTENSIONALITY, AP-Q, AP-B, COLON-PROP
+ with the assumptions AP-TYPE-2, AP-TYPE-1, AP-TYPE-3, AP-TYPE, I-TYPE,
+C-TYPE, Q-TYPE, B-TYPE, QAND-TYPE to ...
+(IMPLIES (AND (= (TYPE-OF X) (BOOL)) (= (TYPE-OF Y) (BOOL)))
+ (IF X
+  (OR Y
+   (=
+    (ALL (X$0)
+     (IMPLIES (COLON X$0 (FUN (PROP) (FUN (PROP) (PROP))))
+      (= (AP (AP X$0 (TRUE)) (TRUE)) (AP (AP X$0 (TRUE)) (FALSE)))))
+    (FALSE)))
+  (=
+   (ALL (X$1)
+    (IMPLIES (COLON X$1 (FUN (PROP) (FUN (PROP) (PROP))))
+     (= (AP (AP X$1 (TRUE)) (TRUE)) (AP (AP X$1 (FALSE)) Y))))
+   (FALSE))))
+Instantiating (= X$0 (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP)))) gives ...
+(IMPLIES (AND (= (TYPE-OF X) (BOOL)) (= (TYPE-OF Y) (BOOL)))
+ (IF X
+  (OR Y
+   (NOT
+    (AND
+     (IMPLIES
+      (COLON (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP)))
+       (FUN (PROP) (FUN (PROP) (PROP))))
+      (=
+       (AP (AP (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP))) (TRUE)) (TRUE))
+       (AP (AP (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP))) (TRUE))
+        (FALSE))))
+     (ALL (X$0)
+      (IMPLIES (COLON X$0 (FUN (PROP) (FUN (PROP) (PROP))))
+       (= (AP (AP X$0 (TRUE)) (TRUE)) (AP (AP X$0 (TRUE)) (FALSE))))))))
+  (NOT
+   (ALL (X$1)
+    (IMPLIES (COLON X$1 (FUN (PROP) (FUN (PROP) (PROP))))
+     (= (AP (AP X$1 (TRUE)) (TRUE)) (AP (AP X$1 (FALSE)) Y)))))))
+Instantiating (= X$1 (K (PROP) (PROP))) gives ...
+(IMPLIES (AND (= (TYPE-OF X) (BOOL)) (= (TYPE-OF Y) (BOOL)))
+ (IF X
+  (OR Y
+   (NOT
+    (AND
+     (IMPLIES
+      (COLON (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP)))
+       (FUN (PROP) (FUN (PROP) (PROP))))
+      (=
+       (AP (AP (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP))) (TRUE)) (TRUE))
+       (AP (AP (AP (K (FUN (PROP) (PROP)) (PROP)) (I (PROP))) (TRUE))
+        (FALSE))))
+     (ALL (X$0)
+      (IMPLIES (COLON X$0 (FUN (PROP) (FUN (PROP) (PROP))))
+       (= (AP (AP X$0 (TRUE)) (TRUE)) (AP (AP X$0 (TRUE)) (FALSE))))))))
+  (NOT
+   (AND
+    (IMPLIES (COLON (K (PROP) (PROP)) (FUN (PROP) (FUN (PROP) (PROP))))
+     (= (AP (AP (K (PROP) (PROP)) (TRUE)) (TRUE))
+      (AP (AP (K (PROP) (PROP)) (FALSE)) Y)))
+    (ALL (X$1)
+     (IMPLIES (COLON X$1 (FUN (PROP) (FUN (PROP) (PROP))))
+      (= (AP (AP X$1 (TRUE)) (TRUE)) (AP (AP X$1 (FALSE)) Y))))))))
+Which simplifies
+ when rewriting with AP-I, AP-K, COLON-PROP
+ with the assumptions AP-TYPE-1, AP-TYPE-3, AP-TYPE, I-TYPE, K-TYPE to ...
+(TRUE)
+QIMP
+QIMP-TYPE
+Beginning proof of QIMP-TYPE ...
+(COLON (QIMP X) (FUN (PROP) (FUN (PROP) (PROP))))
+Which simplifies
+ with invocation of QIMP
+ with the assumptions I-TYPE, QAND-TYPE, Q-TYPE, AP-TYPE, C-TYPE, B-TYPE,
+S-TYPE to ...
+(TRUE)
+AP-QIMP
+Beginning proof of AP-QIMP ...
+(IMPLIES (AND (COLON X (PROP)) (COLON Y (PROP)))
+ (= (AP (AP (QIMP A) X) Y) (IMPLIES X Y)))
+Which simplifies
+ with invocation of QIMP
+ when rewriting with AP-Q, AP-QAND, AP-C, AP-I, AP-B, AP-S, COLON-PROP
+ with the assumptions AP-TYPE-1, AP-TYPE-3, I-TYPE, QAND-TYPE, Q-TYPE,
+AP-TYPE, C-TYPE, B-TYPE, S-TYPE, QIMP-TYPE to ...
+(TRUE)
+QOR
+QOR-TYPE
+Beginning proof of QOR-TYPE ...
+(COLON (QOR X) (FUN (PROP) (FUN (PROP) (PROP))))
+Which simplifies
+ with invocation of QOR
+ with the assumptions QAND-TYPE, C-TYPE, AP-TYPE, QNOT-TYPE, B-TYPE to ...
+(TRUE)
+AP-QOR
+Beginning proof of AP-QOR ...
+(IMPLIES (AND (COLON X (PROP)) (COLON Y (PROP)))
+ (= (AP (AP (QOR A) X) Y) (OR X Y)))
+Which simplifies
+ with invocation of QOR
+ when rewriting with AP-QAND, AP-QNOT, AP-C, AP-B, COLON-PROP
+ with the assumptions AP-TYPE-1, AP-TYPE-3, QAND-TYPE, C-TYPE, AP-TYPE,
+QNOT-TYPE, B-TYPE, QOR-TYPE to ...
+(TRUE)
+FORALL
+FORALL-TYPE
+Beginning proof of FORALL-TYPE ...
+(COLON (FORALL T) (FUN (FUN T (PROP)) (PROP)))
+Which simplifies
+ with invocation of FORALL
+ with the assumptions AP-TYPE, AP-TYPE-3, K-TYPE, Q-TYPE to ...
+(TRUE)
+AP-FORALL
+Beginning proof of AP-FORALL ...
+(IMPLIES (COLON P (FUN T (PROP)))
+ (= (AP (FORALL T) P) (ALL (X) (IMPLIES (COLON X T) (AP P X)))))
+Which simplifies
+ with invocation of FORALL
+ when rewriting with AP-Q
+ with the assumptions AP-TYPE-2, AP-TYPE, AP-TYPE-3, K-TYPE, Q-TYPE,
+FORALL-TYPE to ...
+(IMPLIES (COLON P (FUN T (PROP)))
+ (= (= (AP (K (PROP) T) (TRUE)) P) (ALL (X) (IMPLIES (COLON X T) (AP P X)))))
+Splitting on (ALL (X) (IMPLIES (COLON X T) (AP P X))) generates ...
+(IF (ALL (X) (IMPLIES (COLON X T) (AP P X)))
+ (IMPLIES (COLON P (FUN T (PROP)))
+  (= (= (AP (K (PROP) T) (TRUE)) P)
+   (ALL (X$0) (IMPLIES (COLON X$0 T) (AP P X$0)))))
+ (IMPLIES (COLON P (FUN T (PROP)))
+  (= (= (AP (K (PROP) T) (TRUE)) P)
+   (ALL (X$1) (IMPLIES (COLON X$1 T) (AP P X$1))))))
+Which simplifies
+ with the assumptions AP-TYPE, AP-TYPE-2, AP-TYPE-3, K-TYPE
+ with the instantiation (= X X$0) to ...
+(IF (ALL (X) (IMPLIES (COLON X T) (AP P X)))
+ (IMPLIES (COLON P (FUN T (PROP))) (= (= (AP (K (PROP) T) (TRUE)) P) (TRUE)))
+ (IMPLIES (COLON P (FUN T (PROP))) (= (= (AP (K (PROP) T) (TRUE)) P) (FALSE))))
+Which simplifies
+ when rewriting with AP-K, COLON-PROP, EXTENSIONALITY
+ with the assumptions AP-TYPE, AP-TYPE-2, AP-TYPE-3, K-TYPE to ...
+(IMPLIES
+ (AND (NOT (ALL (X) (IMPLIES (COLON X T) (AP P X)))) (COLON P (FUN T (PROP))))
+ (NOT (ALL (X$0) (IMPLIES (COLON X$0 T) (= (TRUE) (AP P X$0))))))
+Instantiating (= X$0 X) gives ...
+(IMPLIES (AND (NOT (IMPLIES (COLON X T) (AP P X))) (COLON P (FUN T (PROP))))
+ (NOT
+  (AND (IMPLIES (COLON X T) (AP P X))
+   (ALL (X$0) (IMPLIES (COLON X$0 T) (AP P X$0))))))
+Which simplifies
+ with the assumptions AP-TYPE, AP-TYPE-2 to ...
+(TRUE)
+FORSOME
+FORSOME-TYPE
+Beginning proof of FORSOME-TYPE ...
+(COLON (FORSOME T) (FUN (FUN T (PROP)) (PROP)))
+Which simplifies
+ with invocation of FORSOME
+ with the assumptions FORALL-TYPE, AP-TYPE, QNOT-TYPE, B-TYPE to ...
+(TRUE)
+AP-FORSOME
+Beginning proof of AP-FORSOME ...
+(IMPLIES (COLON P (FUN T (PROP)))
+ (= (AP (FORSOME T) P) (SOME (X) (AND (COLON X T) (AP P X)))))
+Which simplifies
+ with invocation of FORSOME
+ when rewriting with COLON-PROP, AP-QNOT, AP-FORALL, AP-B
+ with the assumptions AP-TYPE-1, AP-TYPE-3, AP-TYPE-2, FORALL-TYPE, AP-TYPE,
+QNOT-TYPE, B-TYPE, FORSOME-TYPE to ...
+(IMPLIES
+ (AND (COLON P (FUN T (PROP)))
+  (NOT (ALL (X) (IMPLIES (COLON X T) (NOT (AP P X))))))
+ (= (TRUE) (SOME (X$0) (AND (COLON X$0 T) (AP P X$0)))))
+Instantiating (= X$0 X) gives ...
+(IMPLIES
+ (AND (COLON P (FUN T (PROP))) (NOT (IMPLIES (COLON X T) (NOT (AP P X))))
+  (NOT (AND (COLON X T) (AP P X))))
+ (SOME (X$0) (AND (COLON X$0 T) (AP P X$0))))
+Which simplifies
+ with the assumptions AP-TYPE, AP-TYPE-2 to ...
+(TRUE)
+FOR1
+FOR1-TYPE
+Beginning proof of FOR1-TYPE ...
+(COLON (FOR1 T) (FUN (FUN T (PROP)) (PROP)))
+Which simplifies
+ with invocation of FOR1
+ with the assumptions Q-TYPE, C-TYPE, AP-TYPE, FORSOME-TYPE, B-TYPE to ...
+(TRUE)
+PROP5305
+Beginning proof of PROP5305 ...
+(IMPLIES (COLON P (FUN T (PROP)))
+ (AP (AP (Q (PROP)) (AP (FOR1 T) P))
+  (AP (FORSOME T)
+   (AP (AP (B T (FUN T (PROP)) (PROP)) (FORALL T))
+    (AP
+     (AP (B T (FUN T (PROP)) (FUN T (PROP)))
+      (AP (S T (PROP) (PROP))
+       (AP (AP (B T (PROP) (FUN (PROP) (PROP))) (Q (PROP))) P)))
+     (Q T))))))
+Which simplifies
+ with invocation of FOR1
+ when rewriting with COLON-PROP, AP-S, AP-FORALL, AP-Q, AP-FORSOME, AP-C, AP-B
+ with the assumptions AP-TYPE-1, S-TYPE, FORALL-TYPE, AP-TYPE-3, AP-TYPE-2,
+C-TYPE, AP-TYPE, FORSOME-TYPE, B-TYPE, FOR1-TYPE, Q-TYPE to ...
+(IMPLIES (COLON P (FUN T (PROP)))
+ (= (SOME (X) (AND (COLON X T) (= P (AP (Q T) X))))
+  (SOME (X$0)
+   (AND (COLON X$0 T)
+    (ALL (X$1) (IMPLIES (COLON X$1 T) (= (AP P X$1) (= X$0 X$1))))))))
+Splitting
+on (AND (COLON P (FUN T (PROP)))
+    (SOME (X) (AND (COLON X T) (= P (AP (Q T) X))))) generates
+...
+(IF
+ (AND (COLON P (FUN T (PROP)))
+  (SOME (X) (AND (COLON X T) (= P (AP (Q T) X)))))
+ (IMPLIES (COLON P (FUN T (PROP)))
+  (= (SOME (X$0) (AND (COLON X$0 T) (= P (AP (Q T) X$0))))
+   (SOME (X$1)
+    (AND (COLON X$1 T)
+     (ALL (X$2) (IMPLIES (COLON X$2 T) (= (AP P X$2) (= X$1 X$2))))))))
+ (IMPLIES (COLON P (FUN T (PROP)))
+  (= (SOME (X$3) (AND (COLON X$3 T) (= P (AP (Q T) X$3))))
+   (SOME (X$4)
+    (AND (COLON X$4 T)
+     (ALL (X$5) (IMPLIES (COLON X$5 T) (= (AP P X$5) (= X$4 X$5)))))))))
+Which simplifies
+ when rewriting with AP-Q, EXTENSIONALITY
+ with the assumptions AP-TYPE-2, AP-TYPE, Q-TYPE to ...
+(TRUE)
+QSUB
+QSUB-TYPE
+Beginning proof of QSUB-TYPE ...
+(COLON (QSUB T) (FUN (FUN T (PROP)) (FUN (FUN T (PROP)) (PROP))))
+Which simplifies
+ with invocation of QSUB
+ with the assumptions QIMP-TYPE, S-TYPE, AP-TYPE, FORALL-TYPE, B-TYPE to ...
+(TRUE)
+QSUB-SELF
+Beginning proof of QSUB-SELF ...
+(IMPLIES (COLON X (FUN T (PROP))) (= (AP (AP (QSUB T) X) X) (TRUE)))
+Which simplifies
+ with invocation of QSUB
+ when rewriting with AP-QIMP, AP-S, AP-FORALL, AP-B
+ with the assumptions AP-TYPE-1, AP-TYPE-3, AP-TYPE-2, QIMP-TYPE, S-TYPE,
+AP-TYPE, FORALL-TYPE, B-TYPE, QSUB-TYPE to ...
+(TRUE)
+QUNION
+QUNION-TYPE
+Beginning proof of QUNION-TYPE ...
+(COLON (QUNION T) (FUN (FUN T (PROP)) (FUN (FUN T (PROP)) (FUN T (PROP)))))
+Which simplifies
+ with invocation of QUNION
+ with the assumptions QOR-TYPE, AP-TYPE, S-TYPE, B-TYPE to ...
+(TRUE)
+QUNION-SELF
+Beginning proof of QUNION-SELF ...
+(IMPLIES (COLON X (FUN T (PROP))) (= (AP (AP (QUNION T) X) X) X))
+Which simplifies
+ with invocation of QUNION
+ when rewriting with AP-QOR, AP-S, EXTENSIONALITY, AP-B
+ with the assumptions AP-TYPE-1, AP-TYPE-3, AP-TYPE-2, QOR-TYPE, AP-TYPE,
+S-TYPE, B-TYPE, QUNION-TYPE to ...
+(TRUE)
+QSUB-QUNION
+Beginning proof of QSUB-QUNION ...
+(IMPLIES (AND (COLON X (FUN T (PROP))) (COLON Y (FUN T (PROP))))
+ (= (AP (AP (QSUB T) X) (AP (AP (QUNION T) X) Y)) (TRUE)))
+Which simplifies
+ with invocation of QUNION, QSUB
+ when rewriting with AP-QIMP, AP-QOR, AP-S, AP-FORALL, AP-B
+ with the assumptions AP-TYPE-1, AP-TYPE-3, AP-TYPE-2, QOR-TYPE, QUNION-TYPE,
+QIMP-TYPE, S-TYPE, AP-TYPE, FORALL-TYPE, B-TYPE, QSUB-TYPE to ...
+(TRUE)
+Done.

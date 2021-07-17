@@ -1,0 +1,194 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/exp.ver"
+EXP
+Beginning proof of EXP ...
+(IF (>= E 1) (M< (+ -1 E) E) (TRUE))
+Which simplifies
+ when rewriting with M<.NAT
+ forward chaining using >=.SAME.TYPE
+ with the assumptions SUCC.INT to ...
+(TRUE)
+EXP-TYPE
+Beginning proof of EXP-TYPE ...
+(IMPLIES (= (TYPE-OF B) (INT)) (= (TYPE-OF (EXP B E)) (INT)))
+Which simplifies to ...
+(TRUE)
+EXP-BY-1
+Beginning proof of EXP-BY-1 ...
+(IMPLIES (IN B (INT)) (= (EXP B 1) B))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-0
+Beginning proof of EXP-0 ...
+(= (EXP 0 E) (IF (>= E 1) 0 1))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-1
+Beginning proof of EXP-1 ...
+(= (EXP 1 E) 1)
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= E 1) (*P* (+ -1 E))) (*P* E))
+  (IMPLIES (NOT (>= E 1)) (*P* E)))
+ produces ...
+(AND (IMPLIES (AND (>= E 1) (= (EXP 1 (+ -1 E)) 1)) (= (EXP 1 E) 1))
+ (IMPLIES (NOT (>= E 1)) (= (EXP 1 E) 1)))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-PLUS
+Beginning proof of EXP-PLUS ...
+(IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+ (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(IMPLIES (AND (>= E1 0) (>= E2 0) (IN BASE (INT)))
+ (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))
+
+ Returning to :
+Beginning proof of EXP-PLUS ...
+(IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+ (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= E1 1) (*P* BASE (+ -1 E1) E2)) (*P* BASE E1 E2))
+  (IMPLIES (NOT (>= E1 1)) (*P* BASE E1 E2)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= E1 1)
+   (IMPLIES (AND (<= 0 (+ -1 E1)) (<= 0 E2) (IN BASE (INT)))
+    (= (EXP BASE (+ -1 E1 E2)) (* (EXP BASE (+ -1 E1)) (EXP BASE E2)))))
+  (IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+   (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2)))))
+ (IMPLIES (NOT (>= E1 1))
+  (IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+   (= (EXP BASE (+ E1 E2)) (* (EXP BASE E1) (EXP BASE E2))))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-EXP
+Beginning proof of EXP-EXP ...
+(IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+ (= (EXP (EXP BASE E1) E2) (EXP BASE (* E1 E2))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(IMPLIES (AND (>= E1 0) (>= E2 0) (IN BASE (INT)))
+ (= (EXP (EXP BASE E1) E2) (EXP BASE (* E1 E2))))
+
+ Returning to :
+Beginning proof of EXP-EXP ...
+(IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+ (= (EXP (EXP BASE E1) E2) (EXP BASE (* E1 E2))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= E2 1) (*P* BASE E1 (+ -1 E2))) (*P* BASE E1 E2))
+  (IMPLIES (NOT (>= E2 1)) (*P* BASE E1 E2)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= E2 1)
+   (IMPLIES (AND (<= 0 E1) (<= 0 (+ -1 E2)) (IN BASE (INT)))
+    (= (EXP (EXP BASE E1) (+ -1 E2)) (EXP BASE (* E1 (+ -1 E2))))))
+  (IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+   (= (EXP (EXP BASE E1) E2) (EXP BASE (* E1 E2)))))
+ (IMPLIES (NOT (>= E2 1))
+  (IMPLIES (AND (<= 0 E1) (<= 0 E2) (IN BASE (INT)))
+   (= (EXP (EXP BASE E1) E2) (EXP BASE (* E1 E2))))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(IMPLIES
+ (AND (>= E2 1) (>= E1 0) (IN BASE (INT))
+  (= (EXP (EXP BASE E1) (+ -1 E2)) (EXP BASE (* E1 (+ -1 E2)))))
+ (= (* (EXP BASE E1) (EXP (EXP BASE E1) (+ -1 E2))) (EXP BASE (* E1 E2))))
+Assuming EXP-PLUS with the
+instantiations: (= BASE BASE) (= E1 E1) (= E2 (* E1 (+ -1 E2))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (<= 0 E1) (<= 0 (* E1 (+ -1 E2))) (IN BASE (INT)))
+   (= (EXP BASE (+ E1 (* E1 (+ -1 E2))))
+    (* (EXP BASE E1) (EXP BASE (* E1 (+ -1 E2))))))
+  (>= E2 1) (>= E1 0) (IN BASE (INT))
+  (= (EXP (EXP BASE E1) (+ -1 E2)) (EXP BASE (* E1 (+ -1 E2)))))
+ (= (* (EXP BASE E1) (EXP (EXP BASE E1) (+ -1 E2))) (EXP BASE (* E1 E2))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-TIMES
+Beginning proof of EXP-TIMES ...
+(IMPLIES (AND (<= 0 E) (IN B1 (INT)) (IN B2 (INT)))
+ (= (EXP (* B1 B2) E) (* (EXP B1 E) (EXP B2 E))))
+Which simplifies
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(IMPLIES (AND (>= E 0) (IN B1 (INT)) (IN B2 (INT)))
+ (= (EXP (* B1 B2) E) (* (EXP B1 E) (EXP B2 E))))
+
+ Returning to :
+Beginning proof of EXP-TIMES ...
+(IMPLIES (AND (<= 0 E) (IN B1 (INT)) (IN B2 (INT)))
+ (= (EXP (* B1 B2) E) (* (EXP B1 E) (EXP B2 E))))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= E 1) (*P* B1 B2 (+ -1 E))) (*P* B1 B2 E))
+  (IMPLIES (NOT (>= E 1)) (*P* B1 B2 E)))
+ produces ...
+(AND
+ (IMPLIES
+  (AND (>= E 1)
+   (IMPLIES (AND (<= 0 (+ -1 E)) (IN B1 (INT)) (IN B2 (INT)))
+    (= (EXP (* B1 B2) (+ -1 E)) (* (EXP B1 (+ -1 E)) (EXP B2 (+ -1 E))))))
+  (IMPLIES (AND (<= 0 E) (IN B1 (INT)) (IN B2 (INT)))
+   (= (EXP (* B1 B2) E) (* (EXP B1 E) (EXP B2 E)))))
+ (IMPLIES (NOT (>= E 1))
+  (IMPLIES (AND (<= 0 E) (IN B1 (INT)) (IN B2 (INT)))
+   (= (EXP (* B1 B2) E) (* (EXP B1 E) (EXP B2 E))))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-NONNEGATIVE
+Beginning proof of EXP-NONNEGATIVE ...
+(IMPLIES (>= B 0) (>= (EXP B E) 0))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= E 1) (*P* B (+ -1 E))) (*P* B E))
+  (IMPLIES (NOT (>= E 1)) (*P* B E)))
+ produces ...
+(AND
+ (IMPLIES (AND (>= E 1) (IMPLIES (>= B 0) (>= (EXP B (+ -1 E)) 0)))
+  (IMPLIES (>= B 0) (>= (EXP B E) 0)))
+ (IMPLIES (NOT (>= E 1)) (IMPLIES (>= B 0) (>= (EXP B E) 0))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE to ...
+(TRUE)
+EXP-POSITIVE
+Beginning proof of EXP-POSITIVE ...
+(IMPLIES (>= B 1) (>= (EXP B E) 1))
+Inducting using the following scheme ...
+ (AND (IMPLIES (AND (>= E 1) (*P* B (+ -1 E))) (*P* B E))
+  (IMPLIES (NOT (>= E 1)) (*P* B E)))
+ produces ...
+(AND
+ (IMPLIES (AND (>= E 1) (IMPLIES (>= B 1) (>= (EXP B (+ -1 E)) 1)))
+  (IMPLIES (>= B 1) (>= (EXP B E) 1)))
+ (IMPLIES (NOT (>= E 1)) (IMPLIES (>= B 1) (>= (EXP B E) 1))))
+Which simplifies
+ with invocation of EXP
+ forward chaining using >=.SAME.TYPE
+ with the assumptions EXP-TYPE, EXP-NONNEGATIVE to ...
+(TRUE)
+Done.

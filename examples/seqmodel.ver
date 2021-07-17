@@ -1,0 +1,596 @@
+;;; model for sequence theory
+;;;
+
+(load pair)
+(load setrules)
+
+(disabled
+  (function size (s) ()
+    (if (and (pair!is-pair s)
+	     (>= (pair!fst s) 0))
+	(pair!fst s)
+	0)))
+
+(disabled
+ (function empty () ()
+   (pair!pair 0 0)))
+
+(disabled
+ (function tack (x s) ()
+   (pair!pair (+ 1 (size s)) (pair!pair x s))))
+
+(disabled
+ (function is-tack (s) () 
+   (some (x y) (= s (tack x y)))))
+
+(disabled
+ (function head (s) ()
+   (pair!fst (pair!snd s))))
+
+(disabled
+ (function tail (s) ()
+   (pair!snd (pair!snd s))))
+
+;;; lemmas
+
+(frule size-tack (p)
+  (implies (is-tack p)
+	   (= (size p) (+ 1 (size (tail p))))))
+(WITH-ENABLED (SIZE TACK IS-TACK TAIL) (REDUCE))
+(PRENEX)
+(SIMPLIFY)
+
+(grule size-nonnegative (x)
+  (>= (size x) 0))
+(WITH-ENABLED (SIZE) (REDUCE))
+
+;;; the axioms of the theory
+
+(function length (s)
+    ((measure (size s)))
+  (if (is-tack s)
+      (+ 1 (length (tail s)))
+      0))
+(REDUCE)
+
+(grule length-non-negative (s)
+  (>= (length s) 0))
+(PROVE-BY-INDUCTION)
+
+;;; recogniser axioms
+
+(grule type-of-is-tack (s)
+  (= (type-of (is-tack s))
+     (bool)))
+(WITH-ENABLED (IS-TACK) (REDUCE))
+
+(function is-sequence (s)
+    ((measure (length s)))
+  (if (is-tack s)
+      (is-sequence (tail s))
+      (= s (empty))))
+(REDUCE)
+
+
+(frule tack-head-tail (s)
+  (implies (is-tack s)
+	   (= s (tack (head s) (tail s)))))
+(WITH-ENABLED (IS-TACK TACK HEAD TAIL) (REDUCE))
+(PRENEX)
+(SIMPLIFY)
+
+;;; constructor axioms
+
+(grule emptyp-empty ()
+  (= (is-tack (empty))
+     (false)))
+(WITH-ENABLED (EMPTY IS-TACK TACK) (REDUCE))
+
+(grule is-tack-tack (x s)
+  (is-tack (tack x s)))
+(WITH-ENABLED (IS-TACK) (REDUCE))
+
+(grule head-tack (x s)
+  (= (head (tack x s)) x))
+(WITH-ENABLED (HEAD TACK) (REDUCE))
+
+(grule tail-tack (x s)
+  (= (tail (tack x s)) s))
+(WITH-ENABLED (TAIL TACK) (REDUCE))
+
+(rule tack-is-injective (x1 s1 x2 s2)
+  (= (= (tack x1 s1) (tack x2 s2))
+     (and (= x1 x2) (= s1 s2))))
+(SPLIT (AND (= X1 X2) (= S1 S2)))
+(SIMPLIFY)
+
+;; compatibility with the old version
+
+(function seqp (s) () (is-sequence s))
+
+(rule seqp-definition (s)
+  (= (seqp s) (is-sequence s)))
+(REDUCE)
+
+(function emptyp (s) ()
+  (implies (is-tack s)
+	   (not (is-sequence s))))
+
+(rule emptyp-definition (s)
+  (= (emptyp s)
+     (implies (is-tack s)
+	      (not (is-sequence s)))))
+(REDUCE)
+
+;;; constructing short sequences
+
+(function seq1 (x) ()
+  (tack x (empty)))
+
+(function seq2 (x1 x2) ()
+  (tack x1 (seq1 x2)))
+
+(function seq3 (x1 x2 x3) ()
+  (tack x1 (seq2 x2 x3)))
+
+(function seq4 (x1 x2 x3 x4) ()
+  (tack x1 (seq3 x2 x3 x4)))
+
+;;; development of the theory
+
+(grule is-sequence-empty ()
+  (is-sequence (empty)))
+(REDUCE)
+
+(grule is-sequence-tack (x s)
+  (= (is-sequence (tack x s))
+     (is-sequence s)))
+(REDUCE)
+
+(rule length-empty ()
+  (= (length (empty))
+     0))
+(REDUCE)
+
+(rule length-tack (x s)
+  (= (length (tack x s))
+     (+ 1 (length s))))
+(REDUCE)
+
+(frule not-is-tack-facts (x)
+  (implies (not (is-tack x))
+	   (and (= (length x) 0)
+		(= (is-sequence x) (= x (empty))))))
+(REDUCE)
+
+;;; join (appending two sequences)
+
+(function join (s1 s2) ((measure (length s1)))
+  (if (is-tack s1)
+      (tack (head s1) (join (tail s1) s2))
+      s2))
+(REDUCE)
+
+(rule join-tack (x s t)
+  (= (join (tack x s) t)
+     (tack x (join s t))))
+(REDUCE)
+
+(rule is-tack-join (s1 s2)
+  (= (is-tack (join s1 s2))
+     (or (is-tack s1) (is-tack s2))))
+(PROVE-BY-INDUCTION)
+
+(rule is-sequence-join (s1 s2)
+  (= (is-sequence (join s1 s2))
+     (is-sequence s2)))
+(INDUCT (join s1 s2))
+(REDUCE)
+
+(rule join-associative (s1 s2 s3)
+  (= (join (join s1 s2) s3)
+     (join s1 (join s2 s3))))
+(INDUCT)
+(REDUCE)
+(INVOKE (JOIN S1 (JOIN S2 S3)))
+(REDUCE)
+
+(rule join-empty-left (s)
+  (= (join (empty) s) s))
+(REDUCE)
+
+(rule join-empty-right (s)
+  (implies (is-sequence s)
+	   (= (join s (empty)) s)))
+(PROVE-BY-INDUCTION)
+
+(rule length-join (s1 s2)
+  (= (length (join s1 s2))
+     (+ (length s1) (length s2))))
+(PROVE-BY-INDUCTION)
+
+;;; reverse
+
+(function reverse (s) ((measure (length s)))
+  (if (is-tack s)
+      (join (reverse (tail s)) (tack (head s) (empty)))
+      (empty)))
+(REDUCE)
+
+(rule reverse-non-tack (x)
+  (implies (not (is-tack x))
+	   (= (reverse x) (empty))))
+(REDUCE)
+
+(rule is-tack-reverse (s)
+  (= (is-tack (reverse s))
+     (is-tack s)))
+(INVOKE REVERSE)
+(REWRITE)
+
+(rule is-sequence-reverse (s)
+  (= (is-sequence (reverse s))
+     (true)))
+(PROVE-BY-INDUCTION)
+
+(rule length-reverse (s)
+  (= (length (reverse s))
+     (length s)))
+(PROVE-BY-INDUCTION)
+
+(rule reverse-join (s1 s2)
+  (= (reverse (join s1 s2))
+     (join (reverse s2) (reverse s1))))
+(INDUCT)
+(REDUCE)
+(EQUALITY-SUBSTITUTE)
+(REWRITE)
+
+(rule reverse-reverse (s)
+  (implies (is-sequence s)
+	   (= (reverse (reverse s))
+	      s)))
+(PROVE-BY-INDUCTION)
+
+;;; is-member 
+
+(function is-member (e s) ((measure (length s)))
+  (if (is-tack s)
+      (or (= e (head s))
+	  (is-member e (tail s)))
+      (false)))
+(REDUCE)
+
+(rule is-member-tack (e x s)
+  (= (is-member e (tack x s))
+     (or (= e x)
+	 (is-member e s))))
+(REDUCE)
+
+(rule is-member-join (e s1 s2)
+  (= (is-member e (join s1 s2))
+     (or (is-member e s1)
+	 (is-member e s2))))
+(PROVE-BY-INDUCTION)
+
+(rule is-member-reverse (e s)
+  (= (is-member e (reverse s))
+     (is-member e s)))
+(PROVE-BY-INDUCTION)
+
+;;; members
+
+(function members (s) ((measure (length s)))
+  (if (is-tack s)
+      (setadd (head s) (members (tail s)))
+      (nullset)))
+(REDUCE)
+
+(rule members-tack (x s)
+  (= (members (tack x s))
+     (setadd x (members s))))
+(REDUCE)
+
+(rule in-members (e s)
+  (= (in e (members s))
+     (is-member e s)))
+(PROVE-BY-INDUCTION)
+
+;(load setrules)
+
+(rule members-join (s1 s2)
+  (= (members (join s1 s2))
+     (union (members s1) (members s2))))
+(PROVE-BY-INDUCTION)
+
+(rule members-reverse (s)
+  (= (members (reverse s))
+     (members s)))
+(PROVE-BY-INDUCTION)
+
+;;; filtering (selection of members in a given set)
+
+(function filter (X s)
+    ((measure (length s)))
+  (if (is-tack s)
+      (if (in (head s) X)
+	  (tack (head s) (filter X (tail s)))
+	  (filter X (tail s)))
+      (empty)))
+(REDUCE)
+
+(rule filter-empty (X)
+  (= (filter X (empty))
+     (empty)))
+(REDUCE)
+
+(rule filter-tack (Y x s)
+  (= (filter Y (tack x s))
+     (if (in x Y)
+	 (tack x (filter Y s))
+	 (filter Y s))))
+(REDUCE)
+
+(rule is-sequence-filter (X s)
+  (= (is-sequence (filter X s))
+     (true)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-by-nullset (s)
+  (= (filter (nullset) s)
+     (empty)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-by-all-members (X s)
+  (implies (and (is-sequence s)
+		(subset (members s) X))
+	   (= (filter X s)
+	      s)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-join (X s t)
+  (= (filter X (join s t))
+     (join (filter X s) (filter X t))))
+(PROVE-BY-INDUCTION)
+
+(rule reverse-filter (X s)
+  (= (reverse (filter X s))
+     (filter X (reverse s))))
+(PROVE-BY-INDUCTION)
+
+(rule is-member-filter (e X s)
+  (= (is-member e (filter X s))
+     (and (in e X)
+	  (is-member e s))))
+(PROVE-BY-INDUCTION)
+
+(rule members-filter (X s)
+  (= (members (filter X s))
+     (inter X (members s))))
+(PROVE-BY-INDUCTION)
+
+(rule filter-filter (X Y s)
+  (= (filter X (filter Y s))
+     (filter (inter X Y) s)))
+(PROVE-BY-INDUCTION)
+
+;;; filtering by complement (selection of members not in a given set)
+
+(function filter-not (X s)
+    ((measure (length s)))
+  (if (is-tack s)
+      (if (in (head s) X)
+	  (filter-not X (tail s))
+	  (tack (head s) (filter-not X (tail s))))
+      (empty)))
+(REDUCE)
+
+
+(rule filter-not-empty (X)
+  (= (filter-not X (empty))
+     (empty)))
+(REDUCE)
+
+(rule filter-not-tack (Y x s)
+  (= (filter-not Y (tack x s))
+     (if (in x Y)
+	 (filter-not Y s)
+	 (tack x (filter-not Y s)))))
+(REDUCE)
+
+(rule is-sequence-filter-not (X s)
+  (= (is-sequence (filter-not X s))
+     (true)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-not-by-nullset (s)
+  (implies (is-sequence s)
+	   (= (filter-not (nullset) s)
+	      s)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-not-by-all-members (X s)
+  (implies (subset (members s) X)
+	   (= (filter-not X s)
+	      (empty))))
+(PROVE-BY-INDUCTION)
+
+(rule filter-not-join (X s t)
+  (= (filter-not X (join s t))
+     (join (filter-not X s) (filter-not X t))))
+(PROVE-BY-INDUCTION)
+
+(rule reverse-filter-not (X s)
+  (= (reverse (filter-not X s))
+     (filter-not X (reverse s))))
+(PROVE-BY-INDUCTION)
+
+(rule is-member-filter-not (e X s)
+  (= (is-member e (filter-not X s))
+     (and (not (in e X))
+	  (is-member e s))))
+(PROVE-BY-INDUCTION)
+
+(rule members-filter-not (X s)
+  (= (members (filter-not X s))
+     (diff (members s) X)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-not-filter-not (X Y s)
+  (= (filter-not X (filter-not Y s))
+     (filter-not (union X Y) s)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-not-filter (X Y s)
+  (= (filter-not X (filter Y s))
+     (filter (diff Y X) s)))
+(PROVE-BY-INDUCTION)
+
+(rule filter-filter-not (X Y s)
+  (= (filter X (filter-not Y s))
+     (filter (diff X Y) s)))
+(PROVE-BY-INDUCTION)
+
+;;; indexing
+
+(function nth (s n)
+    ((measure n))
+  (if (>= n 2)
+      (nth (tail s) (- n 1))
+      (head s)))
+(REDUCE)
+
+(function two-seq-induction (s t)
+    ((measure (length s)))
+  (if (and (is-tack s)
+	   (is-tack t))
+      (two-seq-induction (tail s) (tail t))
+      (true)))
+(REDUCE)
+
+(disabled
+ (rule extensionality (s t)
+   (implies (and (is-sequence s)
+		 (is-sequence t))
+	    (= (= s t)
+	       (and (= (length s) (length t))
+		    (all (i) (implies (and (<= 1 i)
+					   (<= i (length s)))
+				      (= (nth s i) (nth t i)))))))))
+(SPLIT (= S T))
+(SIMPLIFY)
+(INDUCT (TWO-SEQ-INDUCTION S T))
+(REDUCE)
+(CASES)
+(CASES)
+(CASES)
+(INSTANTIATE (I 1))
+(REDUCE)
+(NEXT)
+(INSTANTIATE (I$1 (+ 1 I$0)))
+(REDUCE)
+(NEXT)
+(INVOKE (LENGTH S))
+(REDUCE)
+(NEXT)
+(INVOKE (LENGTH T))
+(REDUCE)
+(NEXT)
+
+
+;;; sets of sequences
+
+(zf-function tackall (x s)
+  (map (tack a b) ((a) x) ((b) s)))
+
+(rule in-tackall (e x s)
+  (= (in e (tackall x s))
+     (and (is-tack e)
+	  (in (head e) x)
+	  (in (tail e) s))))
+(SPLIT (AND (IS-TACK E)
+            (IN (HEAD E) X)
+            (IN (TAIL E) S)))
+(WITH-ENABLED (TACKALL.DEFINITION) (REDUCE))
+
+(function n-sequence-of (n X)
+    ((measure n))
+  (if (>= n 1)
+      (tackall X (n-sequence-of (- n 1) X))
+      (unit (empty))))
+(REDUCE)
+
+(zf-function n-sequence-of-sets (X)
+  (map (n-sequence-of n X) ((n) (int))))
+
+(rule in-n-sequence-of-sets (s X)
+  (= (in s (n-sequence-of-sets X))
+     (some (n) (and (in n (int))
+		    (= s (n-sequence-of n X))))))
+(SPLIT (SOME (N)
+	 (AND (IN N (INT))
+	      (= S (N-SEQUENCE-OF N X)))))
+(WITH-ENABLED (N-SEQUENCE-OF-SETS.DEFINITION) (REWRITE))
+
+(function sequence-of (X) ()
+  (cup (n-sequence-of-sets X)))
+
+(function is-sequence-of (s X)
+    ((measure (length s)))
+  (if (is-tack s)
+      (and (in (head s) X)
+	   (is-sequence-of (tail s) X))
+      (= s (empty))))
+(REDUCE)
+
+(axiom fact-1 (s X)
+  (implies (is-sequence-of s X)
+	   (in s (n-sequence-of (length s) X))))
+(PROVE-BY-INDUCTION)
+
+(function induction-scheme-for-nat-and-seq (n s)
+    ((measure n))
+  (if (>= n 1)
+      (induction-scheme-for-nat-and-seq (- n 1) (tail s))
+      (true)))
+(REDUCE)
+
+(axiom fact-2 (s n X)
+  (implies (in s (n-sequence-of n X))
+	   (is-sequence-of s X)))
+(INDUCT (INDUCTION-SCHEME-FOR-NAT-AND-SEQ N S))
+(REDUCE)
+
+(rule fact-3 (s X)
+  (= (in s (sequence-of X))
+     (is-sequence-of s X)))
+(USE FACT-1 (X X) (S S))
+(REDUCE)
+(PRENEX)
+(USE FACT-2 (X X) (S S) (N N))
+(SIMPLIFY)
+(INSTANTIATE (N (LENGTH S)))
+(SIMPLIFY)
+
+(rule in-sequence-of (s X)
+  (= (in s (sequence-of X))
+     (and (is-sequence s)
+	  (subset (members s) X))))
+(SPLIT (IN S (SEQUENCE-OF X)))
+(REWRITE)
+(WITH-DISABLED (SUBSET) (PROVE-BY-INDUCTION))
+
+(rule sequence-of-monotonic (X Y)
+  (= (subset (sequence-of X) (sequence-of Y))
+     (subset X Y)))
+(SPLIT (SUBSET X Y))
+(SIMPLIFY)
+(CASES)
+(INVOKE (SUBSET (SEQUENCE-OF X) (SEQUENCE-OF Y)))
+(REWRITE)
+(NEXT)
+(WITH-DISABLED (SEQUENCE-OF) (REDUCE))
+(PRENEX)
+(INSTANTIATE (E$0 (TACK E (EMPTY))) (E$2 E))
+(REDUCE)
+(NEXT)

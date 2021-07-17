@@ -1,0 +1,380 @@
+;;; Specification for sequence theory.
+
+;;; recognisers
+
+(function-stub is-tack (s))		; s is a non-empty sequence
+
+;;; constructors
+
+(function-stub empty ())		; the empty sequence
+(function-stub tack (x s))		; the sequence with head x and tail s
+
+;;; accessors
+
+(function-stub head (s))
+(function-stub tail (s))
+
+;;; measure
+
+(function-stub size (s))
+
+(function length (s)
+    ((measure (size s)))
+  (if (is-tack s)
+      (+ 1 (length (tail s)))
+      0))
+
+(grule length-non-negative (s)
+  (>= (length s) 0))
+
+;;; recogniser axioms
+
+(grule type-of-is-tack (s)
+  (= (type-of (is-tack s))
+     (bool)))
+
+(function is-sequence (s)
+    ((measure (length s)))
+  (if (is-tack s)
+      (is-sequence (tail s))
+      (= s (empty))))
+
+(frule tack-head-tail (s)
+  (implies (is-tack s)
+	   (= s (tack (head s) (tail s)))))
+
+;;; constructor axioms
+
+(grule emptyp-empty ()
+  (= (is-tack (empty))
+     (false)))
+
+(grule is-tack-tack (x s)
+  (is-tack (tack x s)))
+
+(grule head-tack (x s)
+  (= (head (tack x s)) x))
+
+(grule tail-tack (x s)
+  (= (tail (tack x s)) s))
+
+(rule tack-is-injective (x1 s1 x2 s2)
+  (= (= (tack x1 s1) (tack x2 s2))
+     (and (= x1 x2) (= s1 s2))))
+
+;;; compatibility with the old version
+
+(function seqp (s) () (is-sequence s))
+
+(rule seqp-definition (s)
+  (= (seqp s) (is-sequence s)))
+
+(function emptyp (s) ()
+  (implies (is-tack s)
+	   (not (is-sequence s))))
+
+(rule emptyp-definition (s)
+  (= (emptyp s)
+     (implies (is-tack s)
+	      (not (is-sequence s)))))
+
+;;; constructing short sequences
+
+(function seq1 (x) ()
+  (tack x (empty)))
+
+(function seq2 (x1 x2) ()
+  (tack x1 (seq1 x2)))
+
+(function seq3 (x1 x2 x3) ()
+  (tack x1 (seq2 x2 x3)))
+
+(function seq4 (x1 x2 x3 x4) ()
+  (tack x1 (seq3 x2 x3 x4)))
+
+;;; development of the theory
+
+(grule is-sequence-empty ()
+  (is-sequence (empty)))
+
+(grule is-sequence-tack (x s)
+  (= (is-sequence (tack x s))
+     (is-sequence s)))
+
+(rule length-empty ()
+  (= (length (empty))
+     0))
+
+(rule length-tack (x s)
+  (= (length (tack x s))
+     (+ 1 (length s))))
+
+(frule not-is-tack-facts (x)
+  (implies (not (is-tack x))
+	   (and (= (length x) 0)
+		(= (is-sequence x) (= x (empty))))))
+
+;;; join (appending two sequences)
+
+(function join (s1 s2) ((measure (length s1)))
+  (if (is-tack s1)
+      (tack (head s1) (join (tail s1) s2))
+      s2))
+
+(rule join-tack (x s t)
+  (= (join (tack x s) t)
+     (tack x (join s t))))
+
+(rule is-tack-join (s1 s2)
+  (= (is-tack (join s1 s2))
+     (or (is-tack s1) (is-tack s2))))
+
+(rule is-sequence-join (s1 s2)
+  (= (is-sequence (join s1 s2))
+     (is-sequence s2)))
+
+(rule join-associative (s1 s2 s3)
+  (= (join (join s1 s2) s3)
+     (join s1 (join s2 s3))))
+
+(rule join-empty-left (s)
+  (= (join (empty) s) s))
+
+(rule join-empty-right (s)
+  (implies (is-sequence s)
+	   (= (join s (empty)) s)))
+
+(rule length-join (s1 s2)
+  (= (length (join s1 s2))
+     (+ (length s1) (length s2))))
+
+;;; reverse
+
+(function reverse (s) ((measure (length s)))
+  (if (is-tack s)
+      (join (reverse (tail s)) (tack (head s) (empty)))
+      (empty)))
+
+(rule reverse-non-tack (x)
+  (implies (not (is-tack x))
+	   (= (reverse x) (empty))))
+
+(rule is-tack-reverse (s)
+  (= (is-tack (reverse s))
+     (is-tack s)))
+
+(rule is-sequence-reverse (s)
+  (= (is-sequence (reverse s))
+     (true)))
+
+(rule length-reverse (s)
+  (= (length (reverse s))
+     (length s)))
+
+(rule reverse-join (s1 s2)
+  (= (reverse (join s1 s2))
+     (join (reverse s2) (reverse s1))))
+
+(rule reverse-reverse (s)
+  (implies (is-sequence s)
+	   (= (reverse (reverse s))
+	      s)))
+
+;;; is-member 
+
+(function is-member (e s) ((measure (length s)))
+  (if (is-tack s)
+      (or (= e (head s))
+	  (is-member e (tail s)))
+      (false)))
+
+(rule is-member-tack (e x s)
+  (= (is-member e (tack x s))
+     (or (= e x)
+	 (is-member e s))))
+
+(rule is-member-join (e s1 s2)
+  (= (is-member e (join s1 s2))
+     (or (is-member e s1)
+	 (is-member e s2))))
+
+(rule is-member-reverse (e s)
+  (= (is-member e (reverse s))
+     (is-member e s)))
+
+;;; members
+
+(function members (s) ((measure (length s)))
+  (if (is-tack s)
+      (setadd (head s) (members (tail s)))
+      (nullset)))
+
+(rule members-tack (x s)
+  (= (members (tack x s))
+     (setadd x (members s))))
+
+(rule in-members (e s)
+  (= (in e (members s))
+     (is-member e s)))
+
+(rule members-join (s1 s2)
+  (= (members (join s1 s2))
+     (union (members s1) (members s2))))
+
+(rule members-reverse (s)
+  (= (members (reverse s))
+     (members s)))
+
+;;; filtering (selection of members in a given set)
+
+(function filter (X s)
+    ((measure (length s)))
+  (if (is-tack s)
+      (if (in (head s) X)
+	  (tack (head s) (filter X (tail s)))
+	  (filter X (tail s)))
+      (empty)))
+
+(rule filter-empty (X)
+  (= (filter X (empty))
+     (empty)))
+
+(rule filter-tack (Y x s)
+  (= (filter Y (tack x s))
+     (if (in x Y)
+	 (tack x (filter Y s))
+	 (filter Y s))))
+
+(rule is-sequence-filter (X s)
+  (= (is-sequence (filter X s))
+     (true)))
+
+(rule filter-by-nullset (s)
+  (= (filter (nullset) s)
+     (empty)))
+
+(rule filter-by-all-members (X s)
+  (implies (and (is-sequence s)
+		(subset (members s) X))
+	   (= (filter X s)
+	      s)))
+
+(rule filter-join (X s t)
+  (= (filter X (join s t))
+     (join (filter X s) (filter X t))))
+
+(rule reverse-filter (X s)
+  (= (reverse (filter X s))
+     (filter X (reverse s))))
+
+(rule is-member-filter (e X s)
+  (= (is-member e (filter X s))
+     (and (in e X)
+	  (is-member e s))))
+
+(rule members-filter (X s)
+  (= (members (filter X s))
+     (inter X (members s))))
+
+(rule filter-filter (X Y s)
+  (= (filter X (filter Y s))
+     (filter (inter X Y) s)))
+
+;;; filtering by complement (selection of members not in a given set)
+
+(function filter-not (X s)
+    ((measure (length s)))
+  (if (is-tack s)
+      (if (in (head s) X)
+	  (filter-not X (tail s))
+	  (tack (head s) (filter-not X (tail s))))
+      (empty)))
+
+(rule filter-not-empty (X)
+  (= (filter-not X (empty))
+     (empty)))
+
+(rule filter-not-tack (Y x s)
+  (= (filter-not Y (tack x s))
+     (if (in x Y)
+	 (filter-not Y s)
+	 (tack x (filter-not Y s)))))
+
+(rule is-sequence-filter-not (X s)
+  (= (is-sequence (filter-not X s))
+     (true)))
+
+(rule filter-not-by-nullset (s)
+  (implies (is-sequence s)
+	   (= (filter-not (nullset) s)
+	      s)))
+
+(rule filter-not-by-all-members (X s)
+  (implies (subset (members s) X)
+	   (= (filter-not X s)
+	      (empty))))
+
+(rule filter-not-join (X s t)
+  (= (filter-not X (join s t))
+     (join (filter-not X s) (filter-not X t))))
+
+(rule reverse-filter-not (X s)
+  (= (reverse (filter-not X s))
+     (filter-not X (reverse s))))
+
+(rule is-member-filter-not (e X s)
+  (= (is-member e (filter-not X s))
+     (and (not (in e X))
+	  (is-member e s))))
+
+(rule members-filter-not (X s)
+  (= (members (filter-not X s))
+     (diff (members s) X)))
+
+(rule filter-not-filter-not (X Y s)
+  (= (filter-not X (filter-not Y s))
+     (filter-not (union X Y) s)))
+
+(rule filter-not-filter (X Y s)
+  (= (filter-not X (filter Y s))
+     (filter (diff Y X) s)))
+
+(rule filter-filter-not (X Y s)
+  (= (filter X (filter-not Y s))
+     (filter (diff X Y) s)))
+
+;;; selection of elements
+
+; nth (n, seq) gives the nth element, starting with index 1.
+
+(function nth (s n)
+    ((measure n))
+  (if (>= n 2)
+      (nth (tail s) (- n 1))
+      (head s)))
+
+(disabled
+ (rule extensionality (s t)
+   (implies (and (is-sequence s)
+		 (is-sequence t))
+	    (= (= s t)
+	       (and (= (length s) (length t))
+		    (all (i) (implies (and (<= 1 i)
+					   (<= i (length s)))
+				      (= (nth s i) (nth t i)))))))))
+
+;;; sets of sequences
+
+(function-stub sequence-of (X))
+
+(function-stub is-sequence-of (s X))
+
+(rule in-sequence-of (s X)
+  (= (in s (sequence-of X))
+     (and (is-sequence s)
+	  (subset (members s) X))))
+
+
+(rule sequence-of-monotonic (X Y)
+  (= (subset (sequence-of X) (sequence-of Y))
+     (subset X Y)))

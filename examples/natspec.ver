@@ -1,0 +1,108 @@
+;;;
+;;; Definitions for natural numbers
+;;;
+;;; Revision 1.3 91/06/25
+;;; Changed several definitions to take advantage of the stronger
+;;; axioms about >= in the initial theory.
+;;;
+;;; Revision 1.2  90/11/28
+;;; Changed "nat-induction" to "weak-induction".
+;;; Added "strong-induction", to generate the strong natural induction scheme.
+;;; Added an additional lemma about smallest-nat-member.  This avoids the
+;;; introduction of a quantifier, and turns out to be the most useful form
+;;; of the smallest-member property.
+;;; 
+;;; Revision 1.1  90/11/23
+;;; Initial revision
+;;; 
+
+(function-stub nat ())
+
+(rule in-nat (x)
+  (= (in x (nat))
+     (>= x 0)))
+
+(function zerop (n) ()
+  (not (>= n 1)))
+
+(function weak-induction (n)
+    ((measure n))
+  (if (zerop n)
+      (true)
+      (weak-induction (- n 1))))
+(reduce)
+
+(function weakly-inductive (x) ()
+  (and (in 0 x)
+       (all (n) (implies (in n (inter x (nat)))
+			 (in (+ 1 n) x)))))
+
+(axiom weak-induction-1 (n x)
+  (implies (and (weakly-inductive x)
+		(in n (nat)))
+	   (in n x)))
+
+(axiom weak-induction-2 (x)
+  (implies (weakly-inductive x)
+	   (subset (nat) x)))
+
+(function strong-induction (n)
+    ((measure n))
+  (if (zerop n)
+      (true)
+      (all (k) (if  (and (<= 0 k)
+			 (< k n))
+		    (strong-induction k)
+		    (true)))))
+(reduce)
+
+(function strongly-inductive (x) ()
+  (all (n)
+    (implies (and (in n (nat))
+		  (all (k) (implies (and (<= 0 k)
+					 (< k n))
+				    (in k x))))
+	     (in n x))))
+
+(axiom strong-induction-1 (n x)
+  (implies (and (strongly-inductive x)
+		(in n (nat)))
+	   (in n x)))
+
+(axiom strong-induction-2 (x)
+  (implies (strongly-inductive x)
+	   (subset (nat) x)))
+
+
+(function is-smallest-nat-member (n x) ()
+  (and (in n x)
+       (in n (nat))
+       (all (k)
+	 (implies (and (in k x)
+		       (in k (nat)))
+		  (<= n k)))))
+
+
+(axiom smallest-is-unique (n k x)
+  (implies (and (is-smallest-nat-member k x)
+		(is-smallest-nat-member n x))
+	   (= n k)))
+
+
+(function-stub smallest-nat-member (x))
+
+(axiom smallest-is-smallest (n x)
+  (implies (and (in n x)
+		(in n (nat)))
+	   (is-smallest-nat-member (smallest-nat-member x) x)))
+
+(axiom smallest-is-smallest-2 (n x)
+  (implies (and (in n x)
+		(in n (nat)))
+	   (and (in (smallest-nat-member x) x)
+		(in (smallest-nat-member x) (nat))
+		(<= (smallest-nat-member x) n))))
+
+(axiom smallest-of-nullset (x)
+  (implies (= (inter x (nat)) (nullset))
+	   (= (smallest-nat-member x) -1)))

@@ -1,0 +1,3076 @@
+
+Run-all-tests @ sentot-ThinkPad-W530
+9:44:32, 17 July, 2021
+
+Testing adder ...  created
+
+9 Reduce calls
+9 Effective
+0 Depth limits
+102 Cache hits
+790 Cache misses
+329 Assumes
+109 Denys
+3195 Database lookups
+226 Forwards
+155 Assumptions
+0 Unconditional rewrites
+5 Conditional rewrites
+234 Match successes
+375 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+3 Subgoal failures
+226 Invoke functions
+43 Suggestion failures
+874 Case analysis
+1097 Forced normalizations
+916 Apply failures 
+
+Dynamic space usage is:   88,537,040 bytes.
+Immobile space usage is:  15,832,336 bytes (27,136 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  37,079,488 bytes for 2,317,468 cons objects
+  20,414,896 bytes for    87,774 simple-vector objects
+  15,225,248 bytes for   211,630 instance objects
+  14,545,776 bytes for   268,210 other objects
+
+  87,265,408 bytes for 2,885,082 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,772,304 bytes for 20,446 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     738,400 bytes for 20,526 other objects
+
+  15,723,536 bytes for 66,226 immobile objects (space total)
+
+Time taken in seconds: 0.120642
+Testing btmodel ...  created
+
+9 Reduce calls
+9 Effective
+0 Depth limits
+10 Cache hits
+113 Cache misses
+6 Assumes
+2 Denys
+217 Database lookups
+63 Forwards
+78 Assumptions
+0 Unconditional rewrites
+2 Conditional rewrites
+65 Match successes
+191 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+25 Invoke functions
+0 Suggestion failures
+2 Case analysis
+8 Forced normalizations
+78 Apply failures 
+
+Dynamic space usage is:   45,177,472 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  15,758,272 bytes for  59,386 simple-vector objects
+   9,066,784 bytes for 138,493 instance objects
+   8,254,272 bytes for 515,892 cons objects
+  10,509,104 bytes for 181,162 other objects
+
+  43,588,432 bytes for 894,933 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,773,728 bytes for 20,448 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,726,528 bytes for 66,242 immobile objects (space total)
+
+Time taken in seconds: 0.027669
+Testing btspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+0 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   46,021,776 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  15,797,056 bytes for  59,963 simple-vector objects
+   9,114,720 bytes for 139,413 instance objects
+   8,658,480 bytes for 541,155 cons objects
+  10,854,704 bytes for 182,947 other objects
+
+  44,424,960 bytes for 923,478 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,773,728 bytes for 20,448 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,726,528 bytes for 66,242 immobile objects (space total)
+
+Time taken in seconds: 8.51e-4
+Testing capmodel ...  created
+
+17 Reduce calls
+17 Effective
+0 Depth limits
+46 Cache hits
+267 Cache misses
+102 Assumes
+57 Denys
+1324 Database lookups
+0 Forwards
+32 Assumptions
+47 Unconditional rewrites
+6 Conditional rewrites
+238 Match successes
+3743 Match failures
+19 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+39 Subgoal loops
+163 Subgoal failures
+12 Invoke functions
+0 Suggestion failures
+11 Case analysis
+169 Forced normalizations
+353 Apply failures 
+
+Dynamic space usage is:   54,674,128 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  16,335,744 bytes for    70,019 simple-vector objects
+  14,286,384 bytes for   892,899 cons objects
+  10,615,664 bytes for   155,681 instance objects
+  11,826,624 bytes for   198,689 other objects
+
+  53,064,416 bytes for 1,317,288 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,727,200 bytes for 66,243 immobile objects (space total)
+
+Time taken in seconds: 0.022374
+Testing capspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+159 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   55,510,240 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  16,376,080 bytes for    70,620 simple-vector objects
+  14,706,688 bytes for   919,168 cons objects
+  10,664,112 bytes for   156,673 instance objects
+  12,165,280 bytes for   200,534 other objects
+
+  53,912,160 bytes for 1,346,995 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,727,200 bytes for 66,243 immobile objects (space total)
+
+Time taken in seconds: 9.8e-4
+Testing demo ...  created
+
+3 Reduce calls
+2 Effective
+0 Depth limits
+3 Cache hits
+52 Cache misses
+5 Assumes
+3 Denys
+126 Database lookups
+18 Forwards
+1 Assumptions
+0 Unconditional rewrites
+1 Conditional rewrites
+20 Match successes
+21 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+1 Subgoal failures
+8 Invoke functions
+3 Suggestion failures
+0 Case analysis
+21 Forced normalizations
+41 Apply failures 
+
+Dynamic space usage is:   58,174,976 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  16,511,184 bytes for 1,031,949 cons objects
+  16,494,064 bytes for    73,218 simple-vector objects
+  11,065,776 bytes for   160,964 instance objects
+  12,499,392 bytes for   202,763 other objects
+
+  56,570,416 bytes for 1,468,894 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,727,200 bytes for 66,243 immobile objects (space total)
+
+Time taken in seconds: 0.004259
+Testing djumodel ...  created
+
+18 Reduce calls
+18 Effective
+0 Depth limits
+7 Cache hits
+107 Cache misses
+52 Assumes
+27 Denys
+467 Database lookups
+187 Forwards
+85 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+187 Match successes
+293 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+36 Invoke functions
+0 Suggestion failures
+14 Case analysis
+88 Forced normalizations
+137 Apply failures 
+
+Dynamic space usage is:   64,394,672 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  20,378,000 bytes for 1,273,625 cons objects
+  16,984,768 bytes for    83,473 simple-vector objects
+  12,179,904 bytes for   172,081 instance objects
+  13,259,264 bytes for   211,953 other objects
+
+  62,801,936 bytes for 1,741,132 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,727,200 bytes for 66,243 immobile objects (space total)
+
+Time taken in seconds: 0.009961
+Testing djuspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+42 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   65,391,712 bytes.
+Immobile space usage is:  15,834,640 bytes (25,568 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  20,870,720 bytes for 1,304,420 cons objects
+  17,039,984 bytes for    84,299 simple-vector objects
+  12,241,024 bytes for   173,364 instance objects
+  13,648,688 bytes for   214,308 other objects
+
+  63,800,416 bytes for 1,776,391 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     739,968 bytes for 20,540 other objects
+
+  15,727,200 bytes for 66,243 immobile objects (space total)
+
+Time taken in seconds: 0.001055
+Testing elemmodel ...  created
+
+47 Reduce calls
+47 Effective
+0 Depth limits
+254 Cache hits
+1369 Cache misses
+555 Assumes
+266 Denys
+5316 Database lookups
+1431 Forwards
+56 Assumptions
+48 Unconditional rewrites
+65 Conditional rewrites
+1771 Match successes
+3181 Match failures
+36 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+1 Subgoal loops
+191 Subgoal failures
+30 Invoke functions
+0 Suggestion failures
+166 Case analysis
+718 Forced normalizations
+1731 Apply failures 
+
+Dynamic space usage is:   66,118,432 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  27,600,752 bytes for 1,725,047 cons objects
+  16,290,208 bytes for    76,403 simple-vector objects
+  10,243,360 bytes for   166,317 instance objects
+  10,559,200 bytes for   185,583 other objects
+
+  64,693,520 bytes for 2,153,350 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.117642
+Testing elemspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+5 Match successes
+455 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   67,831,728 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  28,548,336 bytes for 1,784,271 cons objects
+  16,404,272 bytes for    78,132 simple-vector objects
+  10,369,856 bytes for   169,387 instance objects
+  11,085,680 bytes for   190,762 other objects
+
+  66,408,144 bytes for 2,222,552 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.002714
+Testing exp ...  created
+
+17 Reduce calls
+14 Effective
+0 Depth limits
+43 Cache hits
+327 Cache misses
+95 Assumes
+24 Denys
+1057 Database lookups
+333 Forwards
+99 Assumptions
+0 Unconditional rewrites
+1 Conditional rewrites
+378 Match successes
+615 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+44 Subgoal failures
+21 Invoke functions
+39 Suggestion failures
+3 Case analysis
+221 Forced normalizations
+360 Apply failures 
+
+Dynamic space usage is:   88,079,872 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  44,245,136 bytes for 2,765,321 cons objects
+  17,229,504 bytes for    97,071 simple-vector objects
+  13,290,720 bytes for   200,134 instance objects
+  11,896,784 bytes for   203,408 other objects
+
+  86,662,144 bytes for 3,265,934 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.042374
+Testing finitemodel ...  created
+
+99 Reduce calls
+95 Effective
+0 Depth limits
+716 Cache hits
+3923 Cache misses
+829 Assumes
+244 Denys
+12880 Database lookups
+2713 Forwards
+828 Assumptions
+641 Unconditional rewrites
+121 Conditional rewrites
+4777 Match successes
+49381 Match failures
+98 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+258 Subgoal loops
+1193 Subgoal failures
+105 Invoke functions
+59 Suggestion failures
+28 Case analysis
+2044 Forced normalizations
+3931 Apply failures 
+
+Dynamic space usage is:   77,885,856 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  33,610,928 bytes for 2,100,683 cons objects
+  17,855,168 bytes for   104,831 simple-vector objects
+  11,607,408 bytes for   182,667 instance objects
+  12,355,648 bytes for   230,983 other objects
+
+  75,429,152 bytes for 2,619,164 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.287477
+Testing finitespec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+3077 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   82,144,960 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  36,806,960 bytes for 2,300,435 cons objects
+  17,960,176 bytes for   106,274 simple-vector objects
+  11,768,320 bytes for   185,401 instance objects
+  13,176,368 bytes for   240,043 other objects
+
+  79,711,824 bytes for 2,832,153 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.019172
+Testing fixptmodel ...  created
+
+21 Reduce calls
+21 Effective
+0 Depth limits
+70 Cache hits
+410 Cache misses
+113 Assumes
+27 Denys
+1608 Database lookups
+13 Forwards
+19 Assumptions
+52 Unconditional rewrites
+23 Conditional rewrites
+274 Match successes
+8561 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+61 Subgoal loops
+183 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+2 Case analysis
+305 Forced normalizations
+458 Apply failures 
+
+Dynamic space usage is:   41,351,296 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  15,334,976 bytes for  56,108 simple-vector objects
+   6,974,960 bytes for 117,985 instance objects
+   6,894,144 bytes for 430,884 cons objects
+   2,010,688 bytes for  43,387 simple-base-string objects
+   8,009,104 bytes for 127,061 other objects
+
+  39,223,872 bytes for 775,425 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.038464
+Testing fixptspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+2965 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   44,684,016 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  15,372,656 bytes for  56,564 simple-vector objects
+   9,497,408 bytes for 593,588 cons objects
+   7,065,840 bytes for 118,973 instance objects
+  10,619,776 bytes for 176,718 other objects
+
+  42,555,680 bytes for 945,843 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.017656
+Testing fnmodel ...  created
+
+125 Reduce calls
+124 Effective
+0 Depth limits
+831 Cache hits
+4044 Cache misses
+1061 Assumes
+436 Denys
+16133 Database lookups
+409 Forwards
+1430 Assumptions
+830 Unconditional rewrites
+61 Conditional rewrites
+3004 Match successes
+56188 Match failures
+107 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+403 Subgoal loops
+1556 Subgoal failures
+89 Invoke functions
+0 Suggestion failures
+252 Case analysis
+2604 Forced normalizations
+4290 Apply failures 
+
+Dynamic space usage is:   81,575,312 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  35,405,904 bytes for 2,212,869 cons objects
+  18,279,472 bytes for   113,134 simple-vector objects
+  12,035,616 bytes for   181,545 instance objects
+  13,282,944 bytes for   238,824 other objects
+
+  79,003,936 bytes for 2,746,372 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.179391
+Testing fnspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+2965 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   86,814,736 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  38,882,592 bytes for 2,430,162 cons objects
+  18,564,576 bytes for   117,398 simple-vector objects
+  12,361,968 bytes for   189,110 instance objects
+  14,426,160 bytes for   253,960 other objects
+
+  84,235,296 bytes for 2,990,630 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.015391
+Testing group-example ...  created
+
+5 Reduce calls
+5 Effective
+0 Depth limits
+18 Cache hits
+72 Cache misses
+8 Assumes
+0 Denys
+166 Database lookups
+0 Forwards
+0 Assumptions
+14 Unconditional rewrites
+0 Conditional rewrites
+14 Match successes
+208 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+6 Forced normalizations
+64 Apply failures 
+
+Dynamic space usage is:   88,576,288 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  39,927,616 bytes for 2,495,476 cons objects
+  18,663,216 bytes for   119,143 simple-vector objects
+  12,568,736 bytes for   191,988 instance objects
+  14,858,112 bytes for   257,196 other objects
+
+  86,017,680 bytes for 3,063,803 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.002669
+Testing hol-example ...  created
+
+29 Reduce calls
+26 Effective
+0 Depth limits
+560 Cache hits
+801 Cache misses
+187 Assumes
+62 Denys
+3101 Database lookups
+861 Forwards
+210 Assumptions
+0 Unconditional rewrites
+23 Conditional rewrites
+904 Match successes
+344 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+20 Subgoal failures
+20 Invoke functions
+33 Suggestion failures
+0 Case analysis
+1362 Forced normalizations
+858 Apply failures 
+
+Dynamic space usage is:   54,008,288 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  15,878,368 bytes for    67,088 simple-vector objects
+  14,579,168 bytes for   911,198 cons objects
+   8,173,616 bytes for   132,641 instance objects
+  10,632,080 bytes for   182,161 other objects
+
+  49,263,232 bytes for 1,293,088 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.164967
+Testing intfnmodel ...  created
+
+47 Reduce calls
+47 Effective
+0 Depth limits
+289 Cache hits
+1338 Cache misses
+380 Assumes
+101 Denys
+4412 Database lookups
+545 Forwards
+275 Assumptions
+169 Unconditional rewrites
+38 Conditional rewrites
+921 Match successes
+15510 Match failures
+4 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+22 Subgoal loops
+150 Subgoal failures
+18 Invoke functions
+0 Suggestion failures
+16 Case analysis
+969 Forced normalizations
+1518 Apply failures 
+
+Dynamic space usage is:   62,635,776 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  21,127,856 bytes for 1,320,491 cons objects
+  16,280,336 bytes for    75,334 simple-vector objects
+   9,442,464 bytes for   149,095 instance objects
+  11,133,568 bytes for   194,353 other objects
+
+  57,984,224 bytes for 1,739,273 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.126956
+Testing intfnspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+3323 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   66,739,824 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  24,149,024 bytes for 1,509,314 cons objects
+  16,389,120 bytes for    76,868 simple-vector objects
+   9,608,992 bytes for   151,980 instance objects
+  11,933,792 bytes for   203,821 other objects
+
+  62,080,928 bytes for 1,941,983 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.018317
+Testing jacobson ...  created
+
+23 Reduce calls
+23 Effective
+0 Depth limits
+128 Cache hits
+386 Cache misses
+39 Assumes
+13 Denys
+1040 Database lookups
+0 Forwards
+0 Assumptions
+103 Unconditional rewrites
+0 Conditional rewrites
+135 Match successes
+2311 Match failures
+30 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+81 Forced normalizations
+322 Apply failures 
+
+Dynamic space usage is:   73,118,560 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  28,033,360 bytes for 1,752,085 cons objects
+  16,908,992 bytes for    86,091 simple-vector objects
+  10,515,664 bytes for   165,569 instance objects
+  13,008,160 bytes for   219,000 other objects
+
+  68,466,176 bytes for 2,222,745 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.01081
+Testing lambdamodel ...  created
+
+79 Reduce calls
+79 Effective
+0 Depth limits
+1317 Cache hits
+5396 Cache misses
+1070 Assumes
+684 Denys
+15328 Database lookups
+3272 Forwards
+1623 Assumptions
+272 Unconditional rewrites
+111 Conditional rewrites
+3916 Match successes
+24599 Match failures
+7 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+54 Subgoal loops
+242 Subgoal failures
+462 Invoke functions
+141 Suggestion failures
+120 Case analysis
+2322 Forced normalizations
+5692 Apply failures 
+
+Dynamic space usage is:   65,122,976 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  21,149,680 bytes for 1,321,855 cons objects
+  16,910,352 bytes for    86,606 simple-vector objects
+   9,706,912 bytes for   152,628 instance objects
+  11,586,944 bytes for   210,653 other objects
+
+  59,353,888 bytes for 1,771,742 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.310796
+Testing lambdaspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+3027 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   68,719,552 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  23,934,304 bytes for 1,495,894 cons objects
+  16,959,168 bytes for    87,233 simple-vector objects
+   9,808,400 bytes for   153,874 instance objects
+  12,224,144 bytes for   217,601 other objects
+
+  62,926,016 bytes for 1,954,602 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.017955
+Testing moore-csp ...  created
+
+240 Reduce calls
+240 Effective
+0 Depth limits
+1824 Cache hits
+8975 Cache misses
+2346 Assumes
+532 Denys
+31590 Database lookups
+6580 Forwards
+3890 Assumptions
+1352 Unconditional rewrites
+441 Conditional rewrites
+10278 Match successes
+102501 Match failures
+69 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+339 Subgoal loops
+1804 Subgoal failures
+248 Invoke functions
+13 Suggestion failures
+238 Case analysis
+4887 Forced normalizations
+9416 Apply failures 
+
+Dynamic space usage is:   52,788,064 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  17,290,816 bytes for    86,923 simple-vector objects
+  13,288,112 bytes for   830,507 cons objects
+   7,568,880 bytes for   147,614 instance objects
+   3,018,768 bytes for    73,243 simple-base-string objects
+   2,838,400 bytes for    49,111 simple-array-unsigned-byte-8 objects
+   6,236,272 bytes for   111,588 other objects
+
+  50,241,248 bytes for 1,298,986 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.601652
+Testing msmodel ...  created
+
+1610 Reduce calls
+1600 Effective
+0 Depth limits
+121327 Cache hits
+336464 Cache misses
+59520 Assumes
+30703 Denys
+1312625 Database lookups
+626111 Forwards
+55327 Assumptions
+18350 Unconditional rewrites
+2344 Conditional rewrites
+895390 Match successes
+9266973 Match failures
+3739 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+52593 Subgoal loops
+244320 Subgoal failures
+686 Invoke functions
+71 Suggestion failures
+2931 Case analysis
+175982 Forced normalizations
+387880 Apply failures 
+
+Dynamic space usage is:   74,625,840 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  31,696,832 bytes for 1,981,052 cons objects
+  16,415,312 bytes for    71,791 simple-vector objects
+   8,462,320 bytes for   128,012 instance objects
+  10,243,024 bytes for   174,865 other objects
+
+  66,817,488 bytes for 2,355,720 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 50.28067
+Testing msspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+4 Match successes
+3108 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   88,587,392 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  41,181,920 bytes for 2,573,870 cons objects
+  17,305,600 bytes for    85,289 simple-vector objects
+   9,361,872 bytes for   151,370 instance objects
+  12,933,200 bytes for   217,206 other objects
+
+  80,782,592 bytes for 3,027,735 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.020632
+Testing natmodel ...  created
+
+25 Reduce calls
+25 Effective
+0 Depth limits
+17 Cache hits
+217 Cache misses
+292 Assumes
+42 Denys
+1538 Database lookups
+567 Forwards
+4 Assumptions
+55 Unconditional rewrites
+7 Conditional rewrites
+644 Match successes
+812 Match failures
+10 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+1 Subgoal loops
+5 Subgoal failures
+23 Invoke functions
+0 Suggestion failures
+14 Case analysis
+513 Forced normalizations
+469 Apply failures 
+
+Dynamic space usage is:   112,418,768 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   59,366,736 bytes for 3,710,421 cons objects
+   18,417,936 bytes for   109,529 simple-vector objects
+   12,668,096 bytes for   187,904 instance objects
+   14,162,400 bytes for   238,726 other objects
+
+  104,615,168 bytes for 4,246,580 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.035068
+Testing natspec ...  created
+
+2 Reduce calls
+2 Effective
+0 Depth limits
+1 Cache hits
+19 Cache misses
+4 Assumes
+0 Denys
+50 Database lookups
+19 Forwards
+2 Assumptions
+0 Unconditional rewrites
+4 Conditional rewrites
+25 Match successes
+26 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+2 Subgoal failures
+2 Invoke functions
+0 Suggestion failures
+0 Case analysis
+4 Forced normalizations
+13 Apply failures 
+
+Dynamic space usage is:   114,170,624 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   60,438,848 bytes for 3,777,428 cons objects
+   18,516,272 bytes for   111,330 simple-vector objects
+   12,864,064 bytes for   190,543 instance objects
+   14,565,216 bytes for   241,832 other objects
+
+  106,384,400 bytes for 4,321,133 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.002357
+Testing optmodel ...  created
+
+17 Reduce calls
+17 Effective
+0 Depth limits
+13 Cache hits
+149 Cache misses
+95 Assumes
+35 Denys
+839 Database lookups
+0 Forwards
+17 Assumptions
+35 Unconditional rewrites
+0 Conditional rewrites
+63 Match successes
+1322 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+8 Subgoal loops
+24 Subgoal failures
+25 Invoke functions
+0 Suggestion failures
+21 Case analysis
+104 Forced normalizations
+227 Apply failures 
+
+Dynamic space usage is:   119,645,824 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   63,963,152 bytes for 3,997,697 cons objects
+   18,907,632 bytes for   119,082 simple-vector objects
+   13,704,896 bytes for   200,291 instance objects
+   15,262,304 bytes for   250,468 other objects
+
+  111,837,984 bytes for 4,567,538 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.009129
+Testing optspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+98 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   120,407,376 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   64,340,352 bytes for 4,021,272 cons objects
+   18,941,504 bytes for   119,585 simple-vector objects
+   13,746,208 bytes for   201,087 instance objects
+   15,586,688 bytes for   252,024 other objects
+
+  112,614,752 bytes for 4,593,968 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 7.79e-4
+Testing ordinal ...  created
+
+54 Reduce calls
+54 Effective
+0 Depth limits
+72 Cache hits
+579 Cache misses
+588 Assumes
+224 Denys
+4189 Database lookups
+0 Forwards
+18 Assumptions
+62 Unconditional rewrites
+6 Conditional rewrites
+312 Match successes
+7455 Match failures
+10 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+56 Subgoal loops
+230 Subgoal failures
+62 Invoke functions
+0 Suggestion failures
+41 Case analysis
+1244 Forced normalizations
+1265 Apply failures 
+
+Dynamic space usage is:   93,974,272 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  45,552,960 bytes for 2,847,060 cons objects
+  17,645,008 bytes for    95,609 simple-vector objects
+  10,927,264 bytes for   160,954 instance objects
+  11,888,640 bytes for   205,125 other objects
+
+  86,013,872 bytes for 3,308,748 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.058332
+Testing pairfnmodel ...  created
+
+52 Reduce calls
+51 Effective
+0 Depth limits
+1011 Cache hits
+2868 Cache misses
+430 Assumes
+156 Denys
+10111 Database lookups
+602 Forwards
+1250 Assumptions
+826 Unconditional rewrites
+135 Conditional rewrites
+2153 Match successes
+30924 Match failures
+15 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+89 Subgoal loops
+563 Subgoal failures
+43 Invoke functions
+0 Suggestion failures
+96 Case analysis
+1510 Forced normalizations
+2444 Apply failures 
+
+Dynamic space usage is:   95,200,496 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  47,167,488 bytes for 2,947,968 cons objects
+  17,511,456 bytes for    94,039 simple-vector objects
+  10,571,136 bytes for   151,204 instance objects
+  11,499,040 bytes for   198,522 other objects
+
+  86,749,120 bytes for 3,391,733 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.11302
+Testing pairfnspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+3386 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   99,954,864 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  50,605,408 bytes for 3,162,838 cons objects
+  17,675,728 bytes for    96,422 simple-vector objects
+  10,782,608 bytes for   155,370 instance objects
+  12,435,680 bytes for   210,180 other objects
+
+  91,499,424 bytes for 3,624,810 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.018395
+Testing pairmodel ...  created
+
+24 Reduce calls
+24 Effective
+0 Depth limits
+105 Cache hits
+632 Cache misses
+143 Assumes
+65 Denys
+2747 Database lookups
+0 Forwards
+103 Assumptions
+239 Unconditional rewrites
+27 Conditional rewrites
+511 Match successes
+6928 Match failures
+22 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+74 Subgoal loops
+220 Subgoal failures
+35 Invoke functions
+0 Suggestion failures
+22 Case analysis
+458 Forced normalizations
+565 Apply failures 
+
+Dynamic space usage is:   111,571,648 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   58,844,976 bytes for 3,677,811 cons objects
+   18,371,760 bytes for   110,838 simple-vector objects
+   12,364,432 bytes for   171,753 instance objects
+   13,535,280 bytes for   225,849 other objects
+
+  103,116,448 bytes for 4,186,251 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.024179
+Testing pairspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+189 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   112,699,328 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   59,432,608 bytes for 3,714,538 cons objects
+   18,437,920 bytes for   111,832 simple-vector objects
+   12,435,632 bytes for   173,345 instance objects
+   13,948,544 bytes for   228,820 other objects
+
+  104,254,704 bytes for 4,228,535 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.001341
+Testing pkmodel ...  created
+
+948 Reduce calls
+945 Effective
+0 Depth limits
+66423 Cache hits
+140136 Cache misses
+17226 Assumes
+5055 Denys
+496306 Database lookups
+127384 Forwards
+23732 Assumptions
+30165 Unconditional rewrites
+1821 Conditional rewrites
+250748 Match successes
+4297012 Match failures
+7081 Ordering failures
+0 Instantiate failures
+41 Subgoal limits
+17972 Subgoal loops
+82019 Subgoal failures
+368 Invoke functions
+121 Suggestion failures
+1737 Case analysis
+46309 Forced normalizations
+115544 Apply failures 
+
+Dynamic space usage is:   94,005,056 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  40,667,568 bytes for 2,541,723 cons objects
+  16,864,640 bytes for    78,864 simple-vector objects
+   9,035,440 bytes for   133,452 instance objects
+  10,760,368 bytes for   188,442 other objects
+
+  77,328,016 bytes for 2,942,481 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 16.185728
+Testing pkspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+7 Match successes
+10177 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   120,724,368 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   59,777,616 bytes for 3,736,101 cons objects
+   18,286,576 bytes for   100,398 simple-vector objects
+   10,527,712 bytes for   171,516 instance objects
+   15,461,296 bytes for   277,321 other objects
+
+  104,053,200 bytes for 4,285,336 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.07239
+Testing prmodel ...  created
+
+191 Reduce calls
+191 Effective
+0 Depth limits
+1033 Cache hits
+8355 Cache misses
+3800 Assumes
+907 Denys
+32729 Database lookups
+9625 Forwards
+5970 Assumptions
+672 Unconditional rewrites
+110 Conditional rewrites
+11409 Match successes
+89355 Match failures
+69 Ordering failures
+0 Instantiate failures
+10 Subgoal limits
+159 Subgoal loops
+897 Subgoal failures
+467 Invoke functions
+276 Suggestion failures
+93 Case analysis
+7306 Forced normalizations
+11885 Apply failures 
+
+Dynamic space usage is:   128,552,928 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   61,108,272 bytes for 3,819,267 cons objects
+   20,662,896 bytes for   144,257 simple-vector objects
+   12,374,656 bytes for   200,892 instance objects
+   14,604,720 bytes for   298,924 other objects
+
+  108,750,544 bytes for 4,463,340 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.643541
+Testing prspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+5 Match successes
+5055 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   137,095,072 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   67,387,728 bytes for 4,211,733 cons objects
+   20,986,496 bytes for   148,978 simple-vector objects
+   12,765,648 bytes for   209,173 instance objects
+   16,170,080 bytes for   320,857 other objects
+
+  117,309,952 bytes for 4,890,741 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.032531
+Testing q0 ...  created
+
+34 Reduce calls
+34 Effective
+0 Depth limits
+915 Cache hits
+1226 Cache misses
+104 Assumes
+39 Denys
+3112 Database lookups
+0 Forwards
+644 Assumptions
+45 Unconditional rewrites
+113 Conditional rewrites
+177 Match successes
+3359 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+18 Subgoal failures
+26 Invoke functions
+0 Suggestion failures
+35 Case analysis
+122 Forced normalizations
+996 Apply failures 
+
+Dynamic space usage is:   103,824,864 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  44,940,896 bytes for 2,808,806 cons objects
+  17,382,816 bytes for    89,176 simple-vector objects
+  10,088,528 bytes for   142,399 instance objects
+  11,311,216 bytes for   196,567 other objects
+
+  83,723,456 bytes for 3,236,948 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.127204
+Testing railrd2 ...  created
+
+99 Reduce calls
+100 Effective
+0 Depth limits
+341 Cache hits
+2545 Cache misses
+1381 Assumes
+347 Denys
+8989 Database lookups
+8786 Forwards
+805 Assumptions
+194 Unconditional rewrites
+2 Conditional rewrites
+8988 Match successes
+2704 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+6 Subgoal failures
+163 Invoke functions
+12 Suggestion failures
+27 Case analysis
+2833 Forced normalizations
+3894 Apply failures 
+
+Dynamic space usage is:   84,890,752 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  39,681,088 bytes for 2,480,068 cons objects
+  17,287,568 bytes for    82,292 simple-vector objects
+   8,215,824 bytes for   137,259 instance objects
+  11,439,360 bytes for   209,993 other objects
+
+  76,623,840 bytes for 2,909,612 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.635141
+Testing railroad ...  created
+
+65 Reduce calls
+66 Effective
+0 Depth limits
+273 Cache hits
+2086 Cache misses
+1129 Assumes
+199 Denys
+7255 Database lookups
+8850 Forwards
+880 Assumptions
+194 Unconditional rewrites
+1 Conditional rewrites
+9050 Match successes
+2662 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+5 Subgoal failures
+128 Invoke functions
+0 Suggestion failures
+0 Case analysis
+2326 Forced normalizations
+3181 Apply failures 
+
+Dynamic space usage is:   123,667,984 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   68,734,560 bytes for 4,295,910 cons objects
+   18,558,800 bytes for   111,238 simple-vector objects
+   12,808,656 bytes for   189,824 instance objects
+   12,454,432 bytes for   232,320 other objects
+
+  112,556,448 bytes for 4,829,292 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.668484
+Testing relmodel ...  created
+
+217 Reduce calls
+217 Effective
+0 Depth limits
+2301 Cache hits
+6033 Cache misses
+1410 Assumes
+559 Denys
+27569 Database lookups
+999 Forwards
+2740 Assumptions
+2221 Unconditional rewrites
+100 Conditional rewrites
+6160 Match successes
+79904 Match failures
+218 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+574 Subgoal loops
+2594 Subgoal failures
+337 Invoke functions
+0 Suggestion failures
+253 Case analysis
+2417 Forced normalizations
+5604 Apply failures 
+
+Dynamic space usage is:   97,177,488 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  45,426,192 bytes for 2,839,137 cons objects
+  18,506,512 bytes for   103,109 simple-vector objects
+   9,473,264 bytes for   157,606 instance objects
+  12,700,336 bytes for   236,381 other objects
+
+  86,106,304 bytes for 3,336,233 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.262422
+Testing relspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+1709 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   103,725,968 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  49,219,104 bytes for 3,076,194 cons objects
+  19,023,104 bytes for   110,902 simple-vector objects
+   9,985,904 bytes for   170,553 instance objects
+  14,399,200 bytes for   258,313 other objects
+
+  92,627,312 bytes for 3,615,962 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.009365
+Testing schroeder ...  created
+
+15 Reduce calls
+15 Effective
+0 Depth limits
+133 Cache hits
+1220 Cache misses
+251 Assumes
+10 Denys
+5044 Database lookups
+119 Forwards
+450 Assumptions
+137 Unconditional rewrites
+32 Conditional rewrites
+1137 Match successes
+28709 Match failures
+12 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+199 Subgoal loops
+825 Subgoal failures
+189 Invoke functions
+0 Suggestion failures
+2 Case analysis
+151 Forced normalizations
+1255 Apply failures 
+
+Dynamic space usage is:   137,289,552 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   76,538,112 bytes for 4,783,632 cons objects
+   20,308,528 bytes for   139,895 simple-vector objects
+   13,270,704 bytes for   199,244 instance objects
+   16,103,040 bytes for   287,275 other objects
+
+  126,220,384 bytes for 5,410,046 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.078216
+Testing seqmodel ...  created
+
+127 Reduce calls
+101 Effective
+0 Depth limits
+1325 Cache hits
+13265 Cache misses
+4506 Assumes
+2653 Denys
+53237 Database lookups
+17034 Forwards
+4078 Assumptions
+1701 Unconditional rewrites
+64 Conditional rewrites
+21478 Match successes
+90518 Match failures
+61 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+420 Subgoal loops
+2615 Subgoal failures
+1687 Invoke functions
+2067 Suggestion failures
+118 Case analysis
+2034 Forced normalizations
+18793 Apply failures 
+
+Dynamic space usage is:   134,697,936 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   68,650,240 bytes for 4,290,640 cons objects
+   19,505,392 bytes for   136,704 simple-vector objects
+   16,056,688 bytes for   206,569 instance objects
+   12,572,800 bytes for   232,158 other objects
+
+  116,785,120 bytes for 4,866,071 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 2.242022
+Testing seqspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+503 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   137,995,232 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   70,524,928 bytes for 4,407,808 cons objects
+   19,753,856 bytes for   140,467 simple-vector objects
+   16,302,544 bytes for   212,686 instance objects
+   13,482,704 bytes for   242,640 other objects
+
+  120,064,032 bytes for 5,003,601 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.004399
+Testing simptests ...  created
+
+375 Reduce calls
+375 Effective
+0 Depth limits
+80 Cache hits
+3069 Cache misses
+1480 Assumes
+0 Denys
+7570 Database lookups
+2096 Forwards
+398 Assumptions
+0 Unconditional rewrites
+208 Conditional rewrites
+2304 Match successes
+918 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+2250 Forced normalizations
+4084 Apply failures 
+
+Dynamic space usage is:   112,955,008 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   58,620,480 bytes for 3,663,780 cons objects
+   19,862,912 bytes for   128,590 simple-vector objects
+   12,239,216 bytes for   197,453 instance objects
+   13,835,328 bytes for   267,456 other objects
+
+  104,557,936 bytes for 4,257,279 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.259474
+Testing srmodel ...  created
+
+86 Reduce calls
+85 Effective
+0 Depth limits
+112 Cache hits
+873 Cache misses
+473 Assumes
+238 Denys
+6199 Database lookups
+0 Forwards
+120 Assumptions
+380 Unconditional rewrites
+45 Conditional rewrites
+920 Match successes
+12571 Match failures
+93 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+101 Subgoal loops
+395 Subgoal failures
+170 Invoke functions
+0 Suggestion failures
+33 Case analysis
+667 Forced normalizations
+1173 Apply failures 
+
+Dynamic space usage is:   88,111,136 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  42,027,920 bytes for 2,626,745 cons objects
+  17,198,384 bytes for    81,831 simple-vector objects
+   8,825,712 bytes for   136,909 instance objects
+  11,268,832 bytes for   199,686 other objects
+
+  79,320,848 bytes for 3,045,171 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.063415
+Testing srspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+2 Match successes
+652 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   90,937,840 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  43,588,448 bytes for 2,724,278 cons objects
+  17,416,064 bytes for    85,125 simple-vector objects
+   9,041,792 bytes for   142,332 instance objects
+  12,094,992 bytes for   209,259 other objects
+
+  82,141,296 bytes for 3,160,994 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.004191
+Testing trmodel ...  created
+
+102 Reduce calls
+97 Effective
+0 Depth limits
+476 Cache hits
+3282 Cache misses
+840 Assumes
+730 Denys
+10509 Database lookups
+5517 Forwards
+4587 Assumptions
+47 Unconditional rewrites
+62 Conditional rewrites
+5650 Match successes
+7206 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+17 Subgoal failures
+243 Invoke functions
+398 Suggestion failures
+74 Case analysis
+1933 Forced normalizations
+3996 Apply failures 
+
+Dynamic space usage is:   116,204,384 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   64,433,408 bytes for 4,027,088 cons objects
+   18,507,536 bytes for   111,872 simple-vector objects
+   12,120,656 bytes for   166,516 instance objects
+   11,936,784 bytes for   217,805 other objects
+
+  106,998,384 bytes for 4,523,281 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.293301
+Testing trspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+452 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   119,382,496 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   66,265,856 bytes for 4,141,616 cons objects
+   18,739,936 bytes for   115,396 simple-vector objects
+   12,357,856 bytes for   172,462 instance objects
+   12,785,344 bytes for   227,690 other objects
+
+  110,148,992 bytes for 4,657,164 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.004541
+Testing tuplemodel ...  created
+
+39 Reduce calls
+39 Effective
+0 Depth limits
+41 Cache hits
+737 Cache misses
+33 Assumes
+0 Denys
+1927 Database lookups
+419 Forwards
+1232 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+419 Match successes
+195 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+362 Invoke functions
+0 Suggestion failures
+0 Case analysis
+96 Forced normalizations
+378 Apply failures 
+
+Dynamic space usage is:   91,822,624 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  44,194,960 bytes for 2,762,185 cons objects
+  17,150,144 bytes for    83,130 simple-vector objects
+   9,351,520 bytes for   136,379 instance objects
+  11,063,104 bytes for   194,220 other objects
+
+  81,759,728 bytes for 3,175,914 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.054919
+Testing tuplespec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+0 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   94,105,120 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  45,477,872 bytes for 2,842,367 cons objects
+  17,307,472 bytes for    85,514 simple-vector objects
+   9,499,024 bytes for   140,036 instance objects
+  11,752,112 bytes for   202,175 other objects
+
+  84,036,480 bytes for 3,270,092 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.00263
+Testing unitmodel ...  created
+
+23 Reduce calls
+22 Effective
+0 Depth limits
+13 Cache hits
+232 Cache misses
+85 Assumes
+36 Denys
+923 Database lookups
+0 Forwards
+4 Assumptions
+56 Unconditional rewrites
+3 Conditional rewrites
+92 Match successes
+2339 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+2 Subgoal loops
+29 Subgoal failures
+19 Invoke functions
+0 Suggestion failures
+15 Case analysis
+108 Forced normalizations
+263 Apply failures 
+
+Dynamic space usage is:   101,712,448 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  50,570,192 bytes for 3,160,637 cons objects
+  17,806,784 bytes for    95,316 simple-vector objects
+  10,611,680 bytes for   153,199 instance objects
+  12,667,408 bytes for   214,742 other objects
+
+  91,656,064 bytes for 3,623,894 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.015771
+Testing unitspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+0 Match successes
+115 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   102,537,632 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  50,969,568 bytes for 3,185,598 cons objects
+  17,844,496 bytes for    95,876 simple-vector objects
+  10,656,816 bytes for   154,093 instance objects
+  13,003,824 bytes for   216,460 other objects
+
+  92,474,704 bytes for 3,652,027 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 8.84e-4
+Testing zseqmodel ...  created
+
+102 Reduce calls
+102 Effective
+0 Depth limits
+1973 Cache hits
+5009 Cache misses
+530 Assumes
+197 Denys
+15096 Database lookups
+3568 Forwards
+513 Assumptions
+650 Unconditional rewrites
+495 Conditional rewrites
+6477 Match successes
+49943 Match failures
+80 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+341 Subgoal loops
+1666 Subgoal failures
+155 Invoke functions
+0 Suggestion failures
+80 Case analysis
+1785 Forced normalizations
+3946 Apply failures 
+
+Dynamic space usage is:   132,444,144 bytes.
+Immobile space usage is:   15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:           0 bytes.
+Static space usage is:            736 bytes.
+Control stack usage is:         2,352 bytes.
+Binding stack usage is:           672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+   75,445,040 bytes for 4,715,315 cons objects
+   19,376,496 bytes for   127,457 simple-vector objects
+   13,958,752 bytes for   196,808 instance objects
+   13,082,336 bytes for   245,439 other objects
+
+  121,862,624 bytes for 5,285,019 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.259106
+Testing zseqspec ...  created
+
+0 Reduce calls
+0 Effective
+0 Depth limits
+0 Cache hits
+0 Cache misses
+0 Assumes
+0 Denys
+0 Database lookups
+0 Forwards
+0 Assumptions
+0 Unconditional rewrites
+0 Conditional rewrites
+1 Match successes
+4198 Match failures
+0 Ordering failures
+0 Instantiate failures
+0 Subgoal limits
+0 Subgoal loops
+0 Subgoal failures
+0 Invoke functions
+0 Suggestion failures
+0 Case analysis
+0 Forced normalizations
+0 Apply failures 
+
+Dynamic space usage is:   85,654,416 bytes.
+Immobile space usage is:  15,834,640 bytes (28,704 bytes overhead).
+Read-only space usage is:          0 bytes.
+Static space usage is:           736 bytes.
+Control stack usage is:        2,352 bytes.
+Binding stack usage is:          672 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.
+
+Breakdown for dynamic space:
+  39,485,344 bytes for 2,467,834 cons objects
+  16,641,056 bytes for    72,144 simple-vector objects
+   8,459,056 bytes for   127,288 instance objects
+  10,790,688 bytes for   187,594 other objects
+
+  75,376,144 bytes for 2,854,860 dynamic objects (space total)
+
+Breakdown for immobile space:
+  13,774,400 bytes for 20,449 code objects
+   1,212,832 bytes for 25,254 symbol objects
+     736,832 bytes for 20,512 other objects
+
+  15,724,064 bytes for 66,215 immobile objects (space total)
+
+Time taken in seconds: 0.02596
+Total time taken in seconds: 74.67174

@@ -1,0 +1,157 @@
+;;;
+;;; Additional facts about elementary functions
+;;;
+
+(disabled
+ (rule >=-transitive (i j k)
+  (implies (and (>= i j)
+		(>= j k))
+	   (= (>= i k) (true)))))
+
+(rule >=-self (x)
+  (= (>= x x)
+     (true)))
+
+(rule >=-succ-self (x)
+  (= (>= (succ x) x) (true)))
+
+(rule >=-succ-subgoal (x y)
+  (implies (>= x y)
+	   (= (>= (succ x) y) (true))))
+
+(axiom >=-succ-development (x y)
+  (= (>= x y)
+     (or (= x y)
+	 (>= x (succ y))))) ; i.e. (> x y)
+
+(disabled
+ (rule >=-self-pred (x)
+  (implies (= (type-of x) (int))
+	   (= (>= x (pred x))
+	      (true)))))
+
+(disabled
+ (rule >=-pred-development (x y)
+  (implies (= (type-of x) (int))
+	   (= (>= x y)
+	      (or (= x y)
+		  (>= (pred x) y))))))
+
+(disabled
+ (rule assymetry (x y)
+  (implies (= (type-of x) (int))
+	   (= (= x y)
+	      (and (>= x y) (>= y x))))))
+
+(axiom trichotomy (x y)
+  (implies (and (= (type-of x) (int))
+		(= (type-of y) (type-of x)))
+	   (or (= x y)
+	       (> x y)
+	       (< x y))))
+
+;;; max and min
+
+(grule min-type (x y)
+  (implies (= (type-of x) (type-of y))
+	   (= (type-of (min x y)) (type-of x))))
+
+(grule max-type (x y)
+  (implies (= (type-of x) (type-of y))
+	   (= (type-of (max x y)) (type-of x))))
+
+(rule >=-max-left (x y z)
+  (implies (and (= (type-of x) (int))
+		(= (type-of y) (type-of x)))
+	   (= (>= (max x y) z)
+	      (or (>= x z)
+		  (>= y z)))))
+
+(rule >=-max-right (x y z)
+  (implies (and (= (type-of x) (int))
+		(= (type-of z) (type-of x)))
+	   (= (>= x (max y z))
+	      (and (>= x y)
+		   (>= x z)))))
+
+(rule >=-min-left (x y z)
+  (implies (and (= (type-of x) (int))
+		(= (type-of y) (type-of x)))
+	   (= (>= (min x y) z)
+	      (and (>= x z)
+		   (>= y z)))))
+
+(rule >=-min-right (x y z)
+  (implies (and (= (type-of x) (int))
+		(= (type-of z) (type-of x)))
+	   (= (>= x (min y z))
+	      (or (>= x y)
+		  (>= x z)))))
+
+;;; ranges
+
+(rule null-range (x y)
+  (implies (not (<= x y))
+	   (= (range x y) (nullset))))
+
+(rule singleton-range (x)
+  (implies (= (type-of x) (int))
+	   (= (range x x) (unit x))))
+
+(disabled					; warning: loops if enabled
+ (rule range-bottom-expansion (x y)
+  (implies (<= x y)
+	   (= (range x y)
+	      (setadd x (range (succ x) y))))))
+
+(disabled					; warning: loops if enabled
+ (rule range-top-expansion (x y)
+  (implies (and (= (type-of x) (int))
+		(<= x y))
+	   (= (range x y)
+	      (setadd y (range x (pred y)))))))
+
+(rule range-subset-range (u v x y)
+  (= (subset (range u v) (range x y))
+     (implies (<= u v)
+	      (and (<= x u) (<= v y)))))
+
+(rule inter-range-range (u v x y)
+  (implies (= (type-of x) (int))
+	   (= (inter (range u v) (range x y))
+	      (if (and (= (type-of u) (type-of x))
+		       (= (type-of v)(type-of y)))
+		  (range (max u x) (min v y))
+		  (nullset)))))
+
+(rule union-range-range (u v x y)
+  (implies (and (= (type-of u) (type-of x))
+		(= (type-of v) (type-of y))
+		(= (type-of x) (int))
+		(<= (max u x) (succ (min v y))))
+	   (= (union (range u v)(range x y))
+	      (range (min u x) (max v y)))))
+
+
+;;; open ranges
+
+(function-stub below (x))
+
+(rule in-below (x y)
+  (implies (= (type-of y) (int))
+	   (= (in x (below y))
+	      (<= x y))))
+
+(function-stub above (x))
+
+(rule in-above (x y)
+  (implies (= (type-of y) (int))
+	   (= (in x (above y))
+	      (>= x y))))
+
+(disabled
+ (rule inter-above-below (x y)
+   (implies (and (= (type-of x) (int))
+		 (= (type-of y) (int)))
+	    (= (inter (above x) (below y))
+	       (range x y)))))

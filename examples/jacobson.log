@@ -1,0 +1,360 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/jacobson.ver"
+R0
+R-
+R+
+R*
+INVERSE-ZERO
+Beginning proof of INVERSE-ZERO ...
+(= (R- (R0)) (R0))
+LEFT-ZERO
+Beginning proof of LEFT-ZERO ...
+(= (R+ (R0) X) X)
+LEFT-INVERSE
+Beginning proof of LEFT-INVERSE ...
+(= (R+ (R- X) X) (R0))
+INVERSE-INVERSE
+Beginning proof of INVERSE-INVERSE ...
+(= (R- (R- X)) X)
+R+-ASSOCIATES
+Beginning proof of R+-ASSOCIATES ...
+(= (R+ (R+ X Y) Z) (R+ X (R+ Y Z)))
+INVERSE-R+
+Beginning proof of INVERSE-R+ ...
+(= (R- (R+ X Y)) (R+ (R- X) (R- Y)))
+R+-COMMUTES
+Beginning proof of R+-COMMUTES ...
+(= (R+ X Y) (R+ Y X))
+R*-ASSOCIATES
+Beginning proof of R*-ASSOCIATES ...
+(= (R* (R* X Y) Z) (R* X (R* Y Z)))
+DISTRIBUTE-LEFT
+Beginning proof of DISTRIBUTE-LEFT ...
+(= (R* X (R+ Y Z)) (R+ (R* X Y) (R* X Z)))
+DISTRIBUTE-RIGHT
+Beginning proof of DISTRIBUTE-RIGHT ...
+(= (R* (R+ X Y) Z) (R+ (R* X Z) (R* Y Z)))
+RIGHT-ZERO
+Beginning proof of RIGHT-ZERO ...
+(= (R+ X (R0)) X)
+Assuming LEFT-ZERO with the instantiations: (= X X) generates ...
+(IMPLIES (= (R+ (R0) X) X) (= (R+ X (R0)) X))
+Which simplifies
+ when rewriting with R+-COMMUTES to ...
+(TRUE)
+RIGHT-INVERSE
+Beginning proof of RIGHT-INVERSE ...
+(= (R+ X (R- X)) (R0))
+Assuming LEFT-INVERSE with the instantiations: (= X X) generates ...
+(IMPLIES (= (R+ (R- X) X) (R0)) (= (R+ X (R- X)) (R0)))
+Which simplifies
+ when rewriting with R+-COMMUTES to ...
+(TRUE)
+RIGHT-INVERSE-ASSOC
+Beginning proof of RIGHT-INVERSE-ASSOC ...
+(= (R+ X (R+ (R- X) Y)) Y)
+Assuming R+-ASSOCIATES with the
+instantiations: (= X X) (= Y (R- X)) (= Z Y) generates ...
+(IMPLIES (= (R+ (R+ X (R- X)) Y) (R+ X (R+ (R- X) Y)))
+ (= (R+ X (R+ (R- X) Y)) Y))
+Which simplifies
+ when rewriting with RIGHT-ZERO, R+-COMMUTES, RIGHT-INVERSE to ...
+(TRUE)
+LEFT-INVERSE-ASSOC
+Beginning proof of LEFT-INVERSE-ASSOC ...
+(= (R+ (R- X) (R+ X Y)) Y)
+Assuming R+-ASSOCIATES with the
+instantiations: (= X (R- X)) (= Y X) (= Z Y) generates ...
+(IMPLIES (= (R+ (R+ (R- X) X) Y) (R+ (R- X) (R+ X Y)))
+ (= (R+ (R- X) (R+ X Y)) Y))
+Which simplifies
+ when rewriting with RIGHT-ZERO, RIGHT-INVERSE, R+-COMMUTES to ...
+(TRUE)
+LEFT-CANCELLATION
+Beginning proof of LEFT-CANCELLATION ...
+(IMPLIES (= (R+ X Y) (R+ X Z)) (= Y Z))
+Assuming LEFT-INVERSE-ASSOC with the instantiations: (= X X) (= Y Y) generates
+...
+(IMPLIES (AND (= (R+ (R- X) (R+ X Y)) Y) (= (R+ X Y) (R+ X Z))) (= Y Z))
+Assuming LEFT-INVERSE-ASSOC with the instantiations: (= X X) (= Y Z) generates
+...
+(IMPLIES
+ (AND (= (R+ (R- X) (R+ X Z)) Z) (= (R+ (R- X) (R+ X Y)) Y)
+  (= (R+ X Y) (R+ X Z)))
+ (= Y Z))
+Which simplifies to ...
+(TRUE)
+DIFF-0-IMPLIES-EQUAL
+Beginning proof of DIFF-0-IMPLIES-EQUAL ...
+(IMPLIES (= (R+ X (R- Y)) (R0)) (= X Y))
+Assuming R+-ASSOCIATES with the
+instantiations: (= X X) (= Y (R- Y)) (= Z Y) generates ...
+(IMPLIES
+ (AND (= (R+ (R+ X (R- Y)) Y) (R+ X (R+ (R- Y) Y))) (= (R+ X (R- Y)) (R0)))
+ (= X Y))
+Splitting on (= (R+ X (R- Y)) (R0)) generates ...
+(IF (= (R+ X (R- Y)) (R0))
+ (IMPLIES
+  (AND (= (R+ (R+ X (R- Y)) Y) (R+ X (R+ (R- Y) Y))) (= (R+ X (R- Y)) (R0)))
+  (= X Y))
+ (IMPLIES
+  (AND (= (R+ (R+ X (R- Y)) Y) (R+ X (R+ (R- Y) Y))) (= (R+ X (R- Y)) (R0)))
+  (= X Y)))
+Which simplifies
+ when rewriting with RIGHT-INVERSE, RIGHT-ZERO, R+-COMMUTES to ...
+(TRUE)
+R*-0-LEFT
+Beginning proof of R*-0-LEFT ...
+(= (R* (R0) X) (R0))
+Assuming LEFT-CANCELLATION with the
+instantiations: (= X (R* X X)) (= Y (R* (R0) X)) (= Z (R0)) generates ...
+(IMPLIES
+ (IMPLIES (= (R+ (R* X X) (R* (R0) X)) (R+ (R* X X) (R0)))
+  (= (R* (R0) X) (R0)))
+ (= (R* (R0) X) (R0)))
+Assuming DISTRIBUTE-RIGHT with the
+instantiations: (= X X) (= Y (R0)) (= Z X) generates ...
+(IMPLIES
+ (AND (= (R* (R+ X (R0)) X) (R+ (R* X X) (R* (R0) X)))
+  (IMPLIES (= (R+ (R* X X) (R* (R0) X)) (R+ (R* X X) (R0)))
+   (= (R* (R0) X) (R0))))
+ (= (R* (R0) X) (R0)))
+Which simplifies
+ when rewriting with RIGHT-ZERO to ...
+(TRUE)
+R*-0-RIGHT
+Beginning proof of R*-0-RIGHT ...
+(= (R* X (R0)) (R0))
+Assuming LEFT-CANCELLATION with the
+instantiations: (= X (R* X X)) (= Y (R* X (R0))) (= Z (R0)) generates ...
+(IMPLIES
+ (IMPLIES (= (R+ (R* X X) (R* X (R0))) (R+ (R* X X) (R0)))
+  (= (R* X (R0)) (R0)))
+ (= (R* X (R0)) (R0)))
+Assuming DISTRIBUTE-LEFT with the
+instantiations: (= X X) (= Y X) (= Z (R0)) generates ...
+(IMPLIES
+ (AND (= (R* X (R+ X (R0))) (R+ (R* X X) (R* X (R0))))
+  (IMPLIES (= (R+ (R* X X) (R* X (R0))) (R+ (R* X X) (R0)))
+   (= (R* X (R0)) (R0))))
+ (= (R* X (R0)) (R0)))
+Which simplifies
+ when rewriting with RIGHT-ZERO to ...
+(TRUE)
+*-INVERSE-LEFT
+Beginning proof of *-INVERSE-LEFT ...
+(= (R* (R- X) Y) (R- (R* X Y)))
+Assuming LEFT-CANCELLATION with the
+instantiations: (= X (R* X Y)) (= Y (R* (R- X) Y))
+                (= Z (R- (R* X Y))) generates
+...
+(IMPLIES
+ (IMPLIES (= (R+ (R* X Y) (R* (R- X) Y)) (R+ (R* X Y) (R- (R* X Y))))
+  (= (R* (R- X) Y) (R- (R* X Y))))
+ (= (R* (R- X) Y) (R- (R* X Y))))
+Assuming DISTRIBUTE-RIGHT with the
+instantiations: (= X X) (= Y (R- X)) (= Z Y) generates ...
+(IMPLIES
+ (AND (= (R* (R+ X (R- X)) Y) (R+ (R* X Y) (R* (R- X) Y)))
+  (IMPLIES (= (R+ (R* X Y) (R* (R- X) Y)) (R+ (R* X Y) (R- (R* X Y))))
+   (= (R* (R- X) Y) (R- (R* X Y)))))
+ (= (R* (R- X) Y) (R- (R* X Y))))
+Which simplifies
+ when rewriting with R*-0-LEFT, RIGHT-INVERSE to ...
+(TRUE)
+*-INVERSE-RIGHT
+Beginning proof of *-INVERSE-RIGHT ...
+(= (R* X (R- Y)) (R- (R* X Y)))
+Assuming LEFT-CANCELLATION with the
+instantiations: (= X (R* X Y)) (= Y (R* X (R- Y)))
+                (= Z (R- (R* X Y))) generates
+...
+(IMPLIES
+ (IMPLIES (= (R+ (R* X Y) (R* X (R- Y))) (R+ (R* X Y) (R- (R* X Y))))
+  (= (R* X (R- Y)) (R- (R* X Y))))
+ (= (R* X (R- Y)) (R- (R* X Y))))
+Assuming DISTRIBUTE-LEFT with the
+instantiations: (= X X) (= Y Y) (= Z (R- Y)) generates ...
+(IMPLIES
+ (AND (= (R* X (R+ Y (R- Y))) (R+ (R* X Y) (R* X (R- Y))))
+  (IMPLIES (= (R+ (R* X Y) (R* X (R- Y))) (R+ (R* X Y) (R- (R* X Y))))
+   (= (R* X (R- Y)) (R- (R* X Y)))))
+ (= (R* X (R- Y)) (R- (R* X Y))))
+Which simplifies
+ when rewriting with R*-0-RIGHT, RIGHT-INVERSE to ...
+(TRUE)
+CUBE
+Beginning proof of CUBE ...
+(= (R* X (R* X X)) X)
+CUBE-1
+Beginning proof of CUBE-1 ...
+(= (R* X (R* X (R* X Y))) (R* X Y))
+Assuming R*-ASSOCIATES with the
+instantiations: (= X X) (= Y (R* X X)) (= Z Y) generates ...
+(IMPLIES (= (R* (R* X (R* X X)) Y) (R* X (R* (R* X X) Y)))
+ (= (R* X (R* X (R* X Y))) (R* X Y)))
+Which simplifies
+ when rewriting with R*-ASSOCIATES, CUBE to ...
+(TRUE)
+CUBE-2
+Beginning proof of CUBE-2 ...
+(= (R* X (R* Y (R* X (R* Y (R* X Y))))) (R* X Y))
+Assuming CUBE with the instantiations: (= X (R* X Y)) generates ...
+(IMPLIES (= (R* (R* X Y) (R* (R* X Y) (R* X Y))) (R* X Y))
+ (= (R* X (R* Y (R* X (R* Y (R* X Y))))) (R* X Y)))
+Which simplifies
+ when rewriting with R*-ASSOCIATES to ...
+(TRUE)
+LEMMA-A
+Beginning proof of LEMMA-A ...
+(IMPLIES (NOT (= (R* X Y) (R0))) (NOT (= X (R0))))
+Splitting on (= X (R0)) generates ...
+(IF (= X (R0)) (IMPLIES (NOT (= (R* X Y) (R0))) (NOT (= X (R0))))
+ (IMPLIES (NOT (= (R* X Y) (R0))) (NOT (= X (R0)))))
+Which simplifies
+ when rewriting with R*-0-LEFT to ...
+(TRUE)
+LEMMA-B
+Beginning proof of LEMMA-B ...
+(IMPLIES (NOT (= (R* X Y) (R0))) (NOT (= Y (R0))))
+Splitting on (= Y (R0)) generates ...
+(IF (= Y (R0)) (IMPLIES (NOT (= (R* X Y) (R0))) (NOT (= Y (R0))))
+ (IMPLIES (NOT (= (R* X Y) (R0))) (NOT (= Y (R0)))))
+Which simplifies
+ when rewriting with R*-0-RIGHT to ...
+(TRUE)
+LEMMA-1
+Beginning proof of LEMMA-1 ...
+(IMPLIES (= (R* X X) (R0)) (= X (R0)))
+Assuming LEMMA-B with the instantiations: (= X X) (= Y (R* X X)) generates ...
+(IMPLIES
+ (AND (IMPLIES (NOT (= (R* X (R* X X)) (R0))) (NOT (= (R* X X) (R0))))
+  (= (R* X X) (R0)))
+ (= X (R0)))
+Which simplifies
+ when rewriting with R*-0-RIGHT, CUBE to ...
+(TRUE)
+LEMMA-C
+Beginning proof of LEMMA-C ...
+(IMPLIES (= (R* X (R* Y Y)) (R0)) (= (R* X Y) (R0)))
+Assuming LEMMA-A with the
+instantiations: (= X (R* X (R* Y Y))) (= Y Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (NOT (= (R* (R* X (R* Y Y)) Y) (R0)))
+   (NOT (= (R* X (R* Y Y)) (R0))))
+  (= (R* X (R* Y Y)) (R0)))
+ (= (R* X Y) (R0)))
+Which simplifies
+ when rewriting with CUBE, R*-ASSOCIATES to ...
+(TRUE)
+LEMMA-2
+Beginning proof of LEMMA-2 ...
+(IMPLIES (= (R* X Y) (R0)) (= (R* Y X) (R0)))
+Assuming LEMMA-1 with the instantiations: (= X (R* Y X)) generates ...
+(IMPLIES
+ (AND (IMPLIES (= (R* (R* Y X) (R* Y X)) (R0)) (= (R* Y X) (R0)))
+  (= (R* X Y) (R0)))
+ (= (R* Y X) (R0)))
+Assuming LEMMA-A with the instantiations: (= X (R* X Y)) (= Y X) generates ...
+(IMPLIES
+ (AND (IMPLIES (NOT (= (R* (R* X Y) X) (R0))) (NOT (= (R* X Y) (R0))))
+  (IMPLIES (= (R* (R* Y X) (R* Y X)) (R0)) (= (R* Y X) (R0)))
+  (= (R* X Y) (R0)))
+ (= (R* Y X) (R0)))
+Which simplifies
+ when rewriting with R*-0-RIGHT, R*-ASSOCIATES to ...
+(TRUE)
+LEMMA-3
+Beginning proof of LEMMA-3 ...
+(= (R* X (R* X (R* Y X))) (R* Y X))
+Assuming LEMMA-2 with the
+instantiations: (= X X) (= Y (R+ Y (R- (R* X (R* X Y))))) generates ...
+(IMPLIES
+ (IMPLIES (= (R* X (R+ Y (R- (R* X (R* X Y))))) (R0))
+  (= (R* (R+ Y (R- (R* X (R* X Y)))) X) (R0)))
+ (= (R* X (R* X (R* Y X))) (R* Y X)))
+Assuming DIFF-0-IMPLIES-EQUAL with the
+instantiations: (= X (R* Y X)) (= Y (R* X (R* X (R* Y X)))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (= (R+ (R* Y X) (R- (R* X (R* X (R* Y X))))) (R0))
+   (= (R* Y X) (R* X (R* X (R* Y X)))))
+  (IMPLIES (= (R* X (R+ Y (R- (R* X (R* X Y))))) (R0))
+   (= (R* (R+ Y (R- (R* X (R* X Y)))) X) (R0))))
+ (= (R* X (R* X (R* Y X))) (R* Y X)))
+Which simplifies
+ when rewriting with R*-ASSOCIATES, *-INVERSE-LEFT, DISTRIBUTE-RIGHT,
+RIGHT-INVERSE, CUBE-1, *-INVERSE-RIGHT, DISTRIBUTE-LEFT to ...
+(TRUE)
+LEMMA-3-POST-MULTIPLIED
+Beginning proof of LEMMA-3-POST-MULTIPLIED ...
+(= (R* X (R* X (R* Y (R* X Z)))) (R* Y (R* X Z)))
+Assuming R*-ASSOCIATES with the
+instantiations: (= X X) (= Y (R* X (R* Y X))) (= Z Z) generates ...
+(IMPLIES (= (R* (R* X (R* X (R* Y X))) Z) (R* X (R* (R* X (R* Y X)) Z)))
+ (= (R* X (R* X (R* Y (R* X Z)))) (R* Y (R* X Z))))
+Which simplifies
+ when rewriting with R*-ASSOCIATES, LEMMA-3 to ...
+(TRUE)
+LEMMA-4
+Beginning proof of LEMMA-4 ...
+(= (R* (R+ (R* X Y) (R- (R* Y X))) (R* Y X)) (R0))
+Assuming LEMMA-C with the
+instantiations: (= X (R+ (R* X Y) (R- (R* Y X)))) (= Y (R* Y X)) generates ...
+(IMPLIES
+ (IMPLIES (= (R* (R+ (R* X Y) (R- (R* Y X))) (R* (R* Y X) (R* Y X))) (R0))
+  (= (R* (R+ (R* X Y) (R- (R* Y X))) (R* Y X)) (R0)))
+ (= (R* (R+ (R* X Y) (R- (R* Y X))) (R* Y X)) (R0)))
+Which simplifies
+ when rewriting with RIGHT-INVERSE, CUBE-2, *-INVERSE-LEFT, LEMMA-3,
+LEMMA-3-POST-MULTIPLIED, DISTRIBUTE-RIGHT, R*-ASSOCIATES to ...
+(TRUE)
+LEMMA-4-RULE
+Beginning proof of LEMMA-4-RULE ...
+(= (R* X (R* Y (R* Y X))) (R* Y (R* X (R* Y X))))
+Assuming DIFF-0-IMPLIES-EQUAL with the
+instantiations: (= X (R* X (R* Y (R* Y X))))
+                (= Y (R* Y (R* X (R* Y X)))) generates
+...
+(IMPLIES
+ (IMPLIES (= (R+ (R* X (R* Y (R* Y X))) (R- (R* Y (R* X (R* Y X))))) (R0))
+  (= (R* X (R* Y (R* Y X))) (R* Y (R* X (R* Y X)))))
+ (= (R* X (R* Y (R* Y X))) (R* Y (R* X (R* Y X)))))
+Assuming LEMMA-4 with the instantiations: (= X X) (= Y Y) generates ...
+(IMPLIES
+ (AND (= (R* (R+ (R* X Y) (R- (R* Y X))) (R* Y X)) (R0))
+  (IMPLIES (= (R+ (R* X (R* Y (R* Y X))) (R- (R* Y (R* X (R* Y X))))) (R0))
+   (= (R* X (R* Y (R* Y X))) (R* Y (R* X (R* Y X))))))
+ (= (R* X (R* Y (R* Y X))) (R* Y (R* X (R* Y X)))))
+Which simplifies
+ when rewriting with *-INVERSE-LEFT, R*-ASSOCIATES, DISTRIBUTE-RIGHT to ...
+(TRUE)
+COMMUTED-CANCELATION
+Beginning proof of COMMUTED-CANCELATION ...
+(= (R+ (R- X) (R+ Y X)) Y)
+Which simplifies
+ when rewriting with LEFT-INVERSE-ASSOC, R+-COMMUTES to ...
+(TRUE)
+R*-COMMUTES
+Beginning proof of R*-COMMUTES ...
+(= (R* X Y) (R* Y X))
+Assuming DIFF-0-IMPLIES-EQUAL with the
+instantiations: (= X (R* X Y)) (= Y (R* Y X)) generates ...
+(IMPLIES (IMPLIES (= (R+ (R* X Y) (R- (R* Y X))) (R0)) (= (R* X Y) (R* Y X)))
+ (= (R* X Y) (R* Y X)))
+Assuming LEMMA-1 with the
+instantiations: (= X (R+ (R* X Y) (R- (R* Y X)))) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES
+   (= (R* (R+ (R* X Y) (R- (R* Y X))) (R+ (R* X Y) (R- (R* Y X)))) (R0))
+   (= (R+ (R* X Y) (R- (R* Y X))) (R0)))
+  (IMPLIES (= (R+ (R* X Y) (R- (R* Y X))) (R0)) (= (R* X Y) (R* Y X))))
+ (= (R* X Y) (R* Y X)))
+Which simplifies
+ when rewriting with RIGHT-INVERSE, COMMUTED-CANCELATION, R+-ASSOCIATES,
+INVERSE-INVERSE, INVERSE-R+, *-INVERSE-LEFT, LEMMA-4-RULE, *-INVERSE-RIGHT,
+R*-ASSOCIATES, DISTRIBUTE-LEFT, DISTRIBUTE-RIGHT to ...
+(TRUE)
+Done.

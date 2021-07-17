@@ -1,0 +1,50 @@
+;;; -*- Mode: EVES; Syntax: Common-lisp; Package: EVES; Base: 10 -*-
+
+(function-stub g0 ())
+(function-stub g+ (x y))
+(function-stub g- (x))
+
+(rule left-zero (x)
+  (= (g+ (g0) x) x))
+
+(rule right-zero (x)
+  (= (g+ x (g0)) x))
+
+(rule left-inverse (x)
+  (= (g+ (g- x) x) (g0)))
+
+(rule right-inverse (x)
+  (= (g+ x (g- x)) (g0)))
+
+(rule associativity (x y z)
+  (= (g+ (g+ x y) z)
+     (g+ x (g+ y z))))
+
+(try (= (g- (g- x)) x))
+(use associativity (x (g- (g- x))) (y (g- x)) (z x))
+(rewrite)
+
+(try (= (g- (g+ x y)) (g+ (g- y) (g- x))))
+(USE ASSOCIATIVITY (X (G- Y)) (Y Y) (Z (G- (G+ X Y))))
+(USE ASSOCIATIVITY (X (G- X)) (Y X) (Z (G+ Y (G- (G+ X Y)))))
+(USE RIGHT-INVERSE (X (G+ X Y)))
+(REWRITE)
+
+(rule left-inverse-2 (x y)
+  (= (g+ (g- x) (g+ x y))
+     y))
+(use associativity (x (g- x)) (y x) (z y))
+(rewrite)
+
+(axiom inverse-sum-lemma-1 (x y)
+  (= (g+ x (g+ y (g- (g+ x y))))
+     (g0)))
+(use right-inverse (x (g+ x y)))
+(rewrite)
+
+(axiom inverse-sum-lemma-2 (x y)
+  (= (g+ y (g- (g+ x y)))
+     (g- x)))
+(use left-inverse-2 (x x) (y (g+ y (g- (g+ x y)))))
+(use inverse-sum-lemma-1 (x x)(y y))
+(rewrite)

@@ -1,0 +1,345 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/pairmodel.ver"
+PAIR
+FST
+FST-PAIR
+Beginning proof of FST-PAIR ...
+(= (FST (PAIR X Y)) X)
+Which simplifies
+ with invocation of FST, PAIR
+ when rewriting with SETRULES!INTER-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETADD.DEFINITION, SETRULES!SUBSET-SETADD, CAP!CAP-SETADD-NULLSET,
+CAP!CAP-SETADD-SETADD, SETRULES!UNIT-TO-SETADD
+ with the assumptions SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+SND
+SND-PAIR
+Beginning proof of SND-PAIR ...
+(= (SND (PAIR X Y)) Y)
+Splitting on (= X Y) generates ...
+(IF (= X Y) (= (SND (PAIR X Y)) Y) (= (SND (PAIR X Y)) Y))
+Which simplifies
+ with invocation of FST, SND, PAIR
+ when rewriting with SETRULES!SETADD-DIFF-LEFT-NONMEMBER,
+SETRULES!SETADD-DIFF-LEFT-MEMBER, SETRULES!SETADD-LEFT-EQUALITY-TEST,
+SETRULES!SETADD-RIGHT-EQUALITY-TEST, SETRULES!SETADD-CANCELLATION,
+NULLSET.DEFINITION, CAP!CAP-NULLSET, SETRULES!DIFF-SUPERSET,
+SETRULES!UNION-SUBSET-RIGHT, SETRULES!UNION-SUBSET-LEFT, SETRULES!CUP-NULLSET,
+SETRULES!CUP-SETADD, SETRULES!INTER-SUBSET-RIGHT, SUBSET.NULLSET.LEFT,
+SETADD.DEFINITION, SETRULES!SUBSET-SETADD, CAP!CAP-SETADD-NULLSET,
+CAP!CAP-SETADD-SETADD, SETRULES!UNIT-TO-SETADD
+ with the assumptions SETRULES!SUBSET-DIFF-RELATION,
+SETRULES!SUBSET-UNION-RELATION-1, SETRULES!SUBSET-UNION-RELATION-2,
+SETRULES!SUBSET-INTER-RELATION-1, SETRULES!SUBSET-INTER-RELATION-2,
+FST-PAIR to ...
+(IMPLIES
+ (AND (= X Y)
+  (NOT
+   (=
+    (SETADD (SETADD X (NULLSET))
+     (SETADD (SETADD X (SETADD Y (NULLSET))) (NULLSET)))
+    (SETADD (SETADD X (NULLSET)) (NULLSET)))))
+ (= (NULLSET) Y))
+Substituting (= X Y) produces ...
+(IMPLIES
+ (AND (= X Y)
+  (NOT
+   (=
+    (SETADD (SETADD Y (NULLSET))
+     (SETADD (SETADD Y (SETADD Y (NULLSET))) (NULLSET)))
+    (SETADD (SETADD Y (NULLSET)) (NULLSET)))))
+ (= (NULLSET) Y))
+Which simplifies
+ when rewriting with SETRULES!SETADD-IDEMPOTENT to ...
+(TRUE)
+IS-PAIR
+IS-PAIR-BOOL
+Beginning proof of IS-PAIR-BOOL ...
+(= (TYPE-OF (IS-PAIR X)) (BOOL))
+Which simplifies
+ with invocation of IS-PAIR
+ with the assumptions FST-PAIR, SND-PAIR to ...
+(TRUE)
+PAIR-IS-PAIR
+Beginning proof of PAIR-IS-PAIR ...
+(IS-PAIR (PAIR X Y))
+Which simplifies
+ with invocation of IS-PAIR
+ with the assumptions IS-PAIR-BOOL, FST-PAIR, SND-PAIR to ...
+(TRUE)
+PAIR-COMPOSITION
+Beginning proof of PAIR-COMPOSITION ...
+(IMPLIES (IS-PAIR X) (= (PAIR (FST X) (SND X)) X))
+Which simplifies
+ with invocation of IS-PAIR
+ with the assumptions FST-PAIR, SND-PAIR, PAIR-IS-PAIR, IS-PAIR-BOOL to ...
+(TRUE)
+CROSS
+LEMMA-1
+Beginning proof of LEMMA-1 ...
+(IMPLIES (AND (IN X A) (IN Y B))
+ (IN (PAIR X Y) (POWERSET (POWERSET (UNION A B)))))
+Which simplifies
+ with invocation of PAIR
+ when rewriting with UNION.DEFINITION, SETRULES!SUBSET-UNION-RIGHT,
+SUBSET.NULLSET.LEFT, SETRULES!SUBSET-SETADD, POWERSET.DEFINITION,
+SETRULES!UNIT-TO-SETADD
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, FST-PAIR, SND-PAIR, PAIR-IS-PAIR to ...
+(TRUE)
+IN-CROSS
+Beginning proof of IN-CROSS ...
+(= (IN A (CROSS X Y)) (AND (IS-PAIR A) (IN (FST A) X) (IN (SND A) Y)))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION, CROSS.DEFINITION
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(IMPLIES
+ (AND (NOT (SUBSET A (POWERSET (UNION X Y)))) (IS-PAIR A) (IN (FST A) X))
+ (NOT (IN (SND A) Y)))
+Invoking IS-PAIR gives ...
+(IMPLIES
+ (AND (NOT (SUBSET A (POWERSET (UNION X Y)))) (= A (PAIR (FST A) (SND A)))
+  (IN (FST A) X))
+ (NOT (IN (SND A) Y)))
+Assuming LEMMA-1 with the
+instantiations: (= X (FST A)) (= Y (SND A)) (= A X) (= B Y) generates ...
+(IMPLIES
+ (AND
+  (IMPLIES (AND (IN (FST A) X) (IN (SND A) Y))
+   (IN (PAIR (FST A) (SND A)) (POWERSET (POWERSET (UNION X Y)))))
+  (NOT (SUBSET A (POWERSET (UNION X Y)))) (= A (PAIR (FST A) (SND A)))
+  (IN (FST A) X))
+ (NOT (IN (SND A) Y)))
+Which simplifies
+ when rewriting with POWERSET.DEFINITION
+ with the assumptions SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2, FST-PAIR, SND-PAIR, PAIR-IS-PAIR to ...
+(TRUE)
+CROSS-NULLSET-LEFT
+Beginning proof of CROSS-NULLSET-LEFT ...
+(= (CROSS (NULLSET) X) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-CROSS
+ with the assumptions IS-PAIR-BOOL to ...
+(TRUE)
+CROSS-NULLSET-RIGHT
+Beginning proof of CROSS-NULLSET-RIGHT ...
+(= (CROSS X (NULLSET)) (NULLSET))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, NULLSET.DEFINITION,
+IN-CROSS
+ with the assumptions IS-PAIR-BOOL to ...
+(TRUE)
+=-CROSS-NULLSET
+Beginning proof of =-CROSS-NULLSET ...
+(= (= (CROSS X Y) (NULLSET)) (OR (= X (NULLSET)) (= Y (NULLSET))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X X) generates ...
+(IMPLIES (OR (= X (NULLSET)) (SOME (E) (IN E X)))
+ (= (= (CROSS X Y) (NULLSET)) (OR (= X (NULLSET)) (= Y (NULLSET)))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X Y) generates ...
+(IMPLIES
+ (AND (OR (= Y (NULLSET)) (SOME (E) (IN E Y)))
+  (OR (= X (NULLSET)) (SOME (E$0) (IN E$0 X))))
+ (= (= (CROSS X Y) (NULLSET)) (OR (= X (NULLSET)) (= Y (NULLSET)))))
+Which simplifies
+ when rewriting with CROSS-NULLSET-RIGHT, CROSS-NULLSET-LEFT to ...
+(IMPLIES
+ (AND (NOT (= Y (NULLSET))) (SOME (E) (IN E Y)) (NOT (= X (NULLSET)))
+  (SOME (E$0) (IN E$0 X)))
+ (= (= (CROSS X Y) (NULLSET)) (FALSE)))
+Applying SETRULES!EXTENSIONALITY to
+ (= (CROSS X Y) (NULLSET)) gives ...
+(IMPLIES
+ (AND (NOT (= Y (NULLSET))) (SOME (E) (IN E Y)) (NOT (= X (NULLSET)))
+  (SOME (E$0) (IN E$0 X)))
+ (NOT
+  (ALL (E$1)
+   (IF (IN E$1 (CROSS X Y)) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET)))))))
+Instantiating (= E$1 (PAIR E$0 E)) gives ...
+(IMPLIES (AND (NOT (= Y (NULLSET))) (IN E Y) (NOT (= X (NULLSET))) (IN E$0 X))
+ (NOT
+  (AND
+   (IF (IN (PAIR E$0 E) (CROSS X Y)) (IN (PAIR E$0 E) (NULLSET))
+    (NOT (IN (PAIR E$0 E) (NULLSET))))
+   (ALL (E$1)
+    (IF (IN E$1 (CROSS X Y)) (IN E$1 (NULLSET)) (NOT (IN E$1 (NULLSET))))))))
+Which simplifies
+ when rewriting with NULLSET.DEFINITION, IN-CROSS
+ with the assumptions IS-PAIR-BOOL, FST-PAIR, SND-PAIR, PAIR-IS-PAIR to ...
+(TRUE)
+CROSS-UNION-LEFT
+Beginning proof of CROSS-UNION-LEFT ...
+(= (CROSS (UNION X Y) Z) (UNION (CROSS X Z) (CROSS Y Z)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-CROSS
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+CROSS-UNION-RIGHT
+Beginning proof of CROSS-UNION-RIGHT ...
+(= (CROSS X (UNION Y Z)) (UNION (CROSS X Y) (CROSS X Z)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, UNION.DEFINITION,
+IN-CROSS
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-UNION-RELATION-1,
+SETRULES!SUBSET-UNION-RELATION-2 to ...
+(TRUE)
+CROSS-INTER-LEFT
+Beginning proof of CROSS-INTER-LEFT ...
+(= (CROSS (INTER X Y) Z) (INTER (CROSS X Z) (CROSS Y Z)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+IN-CROSS
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+CROSS-INTER-RIGHT
+Beginning proof of CROSS-INTER-RIGHT ...
+(= (CROSS X (INTER Y Z)) (INTER (CROSS X Y) (CROSS X Z)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, INTER.DEFINITION,
+IN-CROSS
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-INTER-RELATION-1,
+SETRULES!SUBSET-INTER-RELATION-2 to ...
+(TRUE)
+CROSS-DIFF-LEFT
+Beginning proof of CROSS-DIFF-LEFT ...
+(= (CROSS (DIFF X Y) Z) (DIFF (CROSS X Z) (CROSS Y Z)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION, IN-CROSS
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+CROSS-DIFF-RIGHT
+Beginning proof of CROSS-DIFF-RIGHT ...
+(= (CROSS X (DIFF Y Z)) (DIFF (CROSS X Y) (CROSS X Z)))
+Which simplifies
+ when rewriting with SETRULES!EXTENSIONALITY-SUBGOAL, DIFF.DEFINITION, IN-CROSS
+ with the assumptions IS-PAIR-BOOL, SETRULES!SUBSET-DIFF-RELATION to ...
+(TRUE)
+SUBSET-CROSS-CROSS
+Beginning proof of SUBSET-CROSS-CROSS ...
+(= (SUBSET (CROSS A B) (CROSS C D))
+ (OR (= A (NULLSET)) (= B (NULLSET)) (AND (SUBSET A C) (SUBSET B D))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X A) generates ...
+(IMPLIES (OR (= A (NULLSET)) (SOME (E) (IN E A)))
+ (= (SUBSET (CROSS A B) (CROSS C D))
+  (OR (= A (NULLSET)) (= B (NULLSET)) (AND (SUBSET A C) (SUBSET B D)))))
+Assuming SETRULES!SET-CASES with the instantiations: (= X B) generates ...
+(IMPLIES
+ (AND (OR (= B (NULLSET)) (SOME (E) (IN E B)))
+  (OR (= A (NULLSET)) (SOME (E$0) (IN E$0 A))))
+ (= (SUBSET (CROSS A B) (CROSS C D))
+  (OR (= A (NULLSET)) (= B (NULLSET)) (AND (SUBSET A C) (SUBSET B D)))))
+Prenexing produces ...
+(IMPLIES (AND (OR (= B (NULLSET)) (IN E B)) (OR (= A (NULLSET)) (IN E$0 A)))
+ (= (SUBSET (CROSS A B) (CROSS C D))
+  (OR (= A (NULLSET)) (= B (NULLSET)) (AND (SUBSET A C) (SUBSET B D)))))
+Which simplifies
+ when rewriting with CROSS-NULLSET-RIGHT, SUBSET.NULLSET.LEFT,
+CROSS-NULLSET-LEFT to ...
+(IMPLIES (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A))
+ (IF (SUBSET A C)
+  (IF (SUBSET B D) (= (SUBSET (CROSS A B) (CROSS C D)) (TRUE))
+   (= (SUBSET (CROSS A B) (CROSS C D)) (FALSE)))
+  (= (SUBSET (CROSS A B) (CROSS C D)) (FALSE))))
+Which simplifies
+ with invocation of SUBSET
+ when rewriting with IN-CROSS
+ with the assumptions IS-PAIR-BOOL to ...
+(IMPLIES (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A))
+ (IF (ALL (E$1) (IMPLIES (IN E$1 A) (IN E$1 C)))
+  (OR (ALL (E$2) (IMPLIES (IN E$2 B) (IN E$2 D)))
+   (NOT
+    (ALL (E$3)
+     (IMPLIES (AND (IS-PAIR E$3) (IN (FST E$3) A) (IN (SND E$3) B))
+      (IN (SND E$3) D)))))
+  (NOT
+   (ALL (E$4)
+    (IMPLIES (AND (IS-PAIR E$4) (IN (FST E$4) A) (IN (SND E$4) B))
+     (AND (IN (FST E$4) C) (IN (SND E$4) D)))))))
+Starting case 2 ...
+(IMPLIES
+ (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A)
+  (ALL (E$1) (IMPLIES (IN E$1 A) (IN E$1 C)))
+  (NOT (ALL (E$2) (IMPLIES (IN E$2 B) (IN E$2 D)))))
+ (NOT
+  (ALL (E$3)
+   (IMPLIES (AND (IS-PAIR E$3) (IN (FST E$3) A) (IN (SND E$3) B))
+    (IN (SND E$3) D)))))
+Splitting on (SUBSET B D) generates ...
+(IF (SUBSET B D)
+ (IMPLIES
+  (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A)
+   (ALL (E$1) (IMPLIES (IN E$1 A) (IN E$1 C)))
+   (NOT (ALL (E$2) (IMPLIES (IN E$2 B) (IN E$2 D)))))
+  (NOT
+   (ALL (E$3)
+    (IMPLIES (AND (IS-PAIR E$3) (IN (FST E$3) A) (IN (SND E$3) B))
+     (IN (SND E$3) D)))))
+ (IMPLIES
+  (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A)
+   (ALL (E$4) (IMPLIES (IN E$4 A) (IN E$4 C)))
+   (NOT (ALL (E$5) (IMPLIES (IN E$5 B) (IN E$5 D)))))
+  (NOT
+   (ALL (E$6)
+    (IMPLIES (AND (IS-PAIR E$6) (IN (FST E$6) A) (IN (SND E$6) B))
+     (IN (SND E$6) D))))))
+Which simplifies
+ with invocation of SUBSET
+ with the assumptions IS-PAIR-BOOL to ...
+(IMPLIES
+ (AND (NOT (ALL (E$1) (IMPLIES (IN E$1 B) (IN E$1 D)))) (NOT (= B (NULLSET)))
+  (IN E B) (NOT (= A (NULLSET))) (IN E$0 A)
+  (ALL (E$2) (IMPLIES (IN E$2 A) (IN E$2 C))))
+ (NOT
+  (ALL (E$3)
+   (IMPLIES (AND (IS-PAIR E$3) (IN (FST E$3) A) (IN (SND E$3) B))
+    (IN (SND E$3) D)))))
+Instantiating (= E$3 (PAIR E$0 E$1)) gives ...
+(IMPLIES
+ (AND (NOT (IMPLIES (IN E$1 B) (IN E$1 D))) (NOT (= B (NULLSET))) (IN E B)
+  (NOT (= A (NULLSET))) (IN E$0 A)
+  (ALL (E$2) (IMPLIES (IN E$2 A) (IN E$2 C))))
+ (NOT
+  (AND
+   (IMPLIES
+    (AND (IS-PAIR (PAIR E$0 E$1)) (IN (FST (PAIR E$0 E$1)) A)
+     (IN (SND (PAIR E$0 E$1)) B))
+    (IN (SND (PAIR E$0 E$1)) D))
+   (ALL (E$3)
+    (IMPLIES (AND (IS-PAIR E$3) (IN (FST E$3) A) (IN (SND E$3) B))
+     (IN (SND E$3) D))))))
+Which simplifies
+ with the assumptions IS-PAIR-BOOL, FST-PAIR, SND-PAIR, PAIR-IS-PAIR to ...
+(TRUE)
+Starting case 1 ...
+(IMPLIES
+ (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A)
+  (NOT (ALL (E$1) (IMPLIES (IN E$1 A) (IN E$1 C)))))
+ (NOT
+  (ALL (E$4)
+   (IMPLIES (AND (IS-PAIR E$4) (IN (FST E$4) A) (IN (SND E$4) B))
+    (AND (IN (FST E$4) C) (IN (SND E$4) D))))))
+Instantiating (= E$4 (PAIR E$1 E)) gives ...
+(IMPLIES
+ (AND (NOT (= B (NULLSET))) (IN E B) (NOT (= A (NULLSET))) (IN E$0 A)
+  (NOT (IMPLIES (IN E$1 A) (IN E$1 C))))
+ (NOT
+  (AND
+   (IMPLIES
+    (AND (IS-PAIR (PAIR E$1 E)) (IN (FST (PAIR E$1 E)) A)
+     (IN (SND (PAIR E$1 E)) B))
+    (AND (IN (FST (PAIR E$1 E)) C) (IN (SND (PAIR E$1 E)) D)))
+   (ALL (E$2)
+    (IMPLIES (AND (IS-PAIR E$2) (IN (FST E$2) A) (IN (SND E$2) B))
+     (AND (IN (FST E$2) C) (IN (SND E$2) D)))))))
+Which simplifies
+ with the assumptions IS-PAIR-BOOL, FST-PAIR, SND-PAIR, PAIR-IS-PAIR to ...
+(TRUE)
+Completing all cases produces ...
+(TRUE)
+Done.

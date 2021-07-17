@@ -1,0 +1,575 @@
+(load setrules)
+(load tr)
+(load fn)
+(load nat)
+
+;;; =========== Processes ============
+
+;;; Constructor: make-process
+;;; Accessors: process-alphabet and process-traces
+;;; Recognizer: is-process
+
+(function-stub make-process (a t))
+
+(function-stub process-alphabet (p))
+
+(function-stub process-traces (p))
+
+(disabled (function prefix-closed (traces) ()
+            (all (s t) (implies (and (tr!is-trace s)
+                                     (tr!is-trace t)
+                                     (in (tr!append s t) traces))
+                                (in s traces)))))
+
+(grule prefix-closed-bool (traces)
+  (= (type-of (prefix-closed traces)) (bool)))
+
+(function-stub is-process (p))
+
+(grule is-process-bool (p)
+  (= (type-of (is-process p)) (bool)))
+
+(grule process-alphabet-make-process (a t)
+  (= (process-alphabet (make-process a t)) a))
+
+(grule process-traces-make-process (a t)
+  (= (process-traces (make-process a t)) t))
+
+(frule process-composition (p)
+  (implies (is-process p)
+           (= (make-process (process-alphabet p)
+                            (process-traces p))
+              p)))
+
+;;; Note: make-process produces a process only if the set of traces
+;;; is a valid set of traces.
+
+(rule make-process-is-process (a t)
+  (= (is-process (make-process a t))
+     (and (subset t (tr!trace-of a))
+          (in (tr!empty) t)
+          (prefix-closed t))))
+
+(axiom in-process-traces (s p)
+  (implies (and (is-process p)
+                (in s (process-traces p)))
+           (tr!is-trace-of s (process-alphabet p))))
+
+(axiom append-in-process-traces (s1 s2 p)
+  (implies (and (is-process p)
+                (tr!is-trace s1)
+                (tr!is-trace s2)
+                (in (tr!append s1 s2) (process-traces p)))
+           (in s1 (process-traces p))))
+
+
+;;; =========== process operators STOP and RUN ============
+
+(function-stub stop (a))
+
+(function-stub run (a))
+
+(grule is-process-stop (a)
+  (is-process (stop a)))
+
+(rule process-alphabet-stop (a)
+  (= (process-alphabet (stop a)) a))
+
+(rule process-traces-stop (a)
+  (= (process-traces (stop a))
+     (unit (tr!empty))))
+
+(grule is-process-run (a)
+  (is-process (run a)))
+
+(rule process-alphabet-run (a)
+  (= (process-alphabet (run a)) a))
+
+(rule process-traces-run (a)
+  (= (process-traces (run a)) (tr!trace-of a)))
+
+
+;;; ========== process operator PREFIX ===========
+
+;;; Note: to enable heuristics for map-tack, must enable
+;;; map-tack.definition.
+
+(zf-function map-tack (x a)
+  (map (tr!tack x s) ((s) a)))
+
+(function-stub prefix (x p))
+
+(grule prefix-is-process (x p)
+  (implies (and (is-process p)
+                (in x (process-alphabet p)))
+           (is-process (prefix x p))))
+
+(rule process-alphabet-prefix (x p)
+  (implies (and (is-process p)
+                (in x (process-alphabet p)))
+           (= (process-alphabet (prefix x p))
+              (process-alphabet p))))
+
+(rule process-traces-prefix (x p)
+  (implies (and (is-process p)
+                (in x (process-alphabet p)))
+           (= (process-traces (prefix x p))
+              (union (unit (tr!empty))
+                     (map-tack x (process-traces p))))))
+
+
+;;; ============ process operator AFTER =============
+
+(function-stub after (p s))
+
+(grule after-is-process (p s)
+  (implies (and (is-process p)
+                (in s (process-traces p)))
+           (is-process (after p s))))
+
+(rule process-alphabet-after (p s)
+  (implies (and (is-process p)
+                (in s (process-traces p)))
+           (= (process-alphabet (after p s))
+              (process-alphabet p))))
+
+(rule process-traces-after (p s)
+  (implies (and (is-process p)
+                (in s (process-traces p)))
+           (= (process-traces (after p s))
+              (tr!select-after s (process-traces p)))))
+
+
+;;; =========== process operator PARALLEL ============
+
+;;; Note: to enable heuristics for select-parallel-traces, must enable
+;;; select-parallel-traces.definition.
+
+(zf-function select-parallel-traces (p q)
+  (select (s (tr!trace-of (union (process-alphabet p)
+                                 (process-alphabet q))))
+          (and (in (tr!restrict s (process-alphabet p))
+                   (process-traces p))
+               (in (tr!restrict s (process-alphabet q))
+                   (process-traces q)))))
+
+(function-stub parallel (p q))
+
+(grule parallel-is-process (p q)
+  (implies (and (is-process p) (is-process q))
+           (is-process (parallel p q))))
+
+(rule process-alphabet-parallel (p q)
+  (implies (and (is-process p) (is-process q))
+           (= (process-alphabet (parallel p q))
+              (union (process-alphabet p) (process-alphabet q)))))
+
+(rule process-traces-parallel (p q)
+  (implies (and (is-process p) (is-process q))
+           (= (process-traces (parallel p q))
+              (select-parallel-traces p q))))
+
+
+;;; ========= process operator CHOICE ==========
+
+;;; Note: to enable heuristics for map-prefix, must enable
+;;; map-prefix.definition.
+
+(zf-function map-prefix (a f)
+  (map (map-tack x (process-traces (fn!apply f x))) ((x) a)))
+
+(function-stub process-choice (a f))
+
+(disabled
+  (function good-choice (f a) ()
+    (and (not (= a (nullset)))
+         (fn!is-function f)
+         (subset a (rel!dom f))
+         (subset (rel!dom f) (process-alphabet (fn!apply f (choice a))))
+         (all (x) (implies (in x a)
+                           (and (is-process (fn!apply f x))
+                                (= (process-alphabet (fn!apply f x))
+                                   (process-alphabet
+                                    (fn!apply f (choice a))))))))))
+
+(grule choice-is-process (a f)
+  (implies (good-choice f a)
+           (is-process (process-choice a f))))
+
+(rule process-alphabet-choice (a f)
+  (implies (good-choice f a)
+           (= (process-alphabet (process-choice a f))
+              (process-alphabet (fn!apply f (choice a))))))
+
+(rule process-traces-choice (a f)
+  (implies (good-choice f a)
+           (= (process-traces (process-choice a f))
+              (union (unit (tr!empty))
+                     (cup (map-prefix a f))))))
+
+
+;;; ============ Communication ==============
+
+(function-stub is-comm (x))
+
+(function-stub make-comm (x y))
+
+(function-stub channel (x))
+
+(function-stub message (x))
+
+(grule is-comm-bool (x) (= (type-of (is-comm x)) (bool)))
+
+(grule channel-comm (x y) (= (channel (make-comm x y)) x))
+
+(grule message-comm (x y) (= (message (make-comm x y)) y))
+
+(grule make-comm-is-comm (x y) (is-comm (make-comm x y)))
+
+(frule comm-composition (x)
+  (implies (is-comm x)
+           (= (make-comm (channel x) (message x)) x)))
+
+;;; select events in alphabet of p that are communications on channel c
+;;; Note: to enable heuristics for select-comm, must enable
+;;; select-comm.definition.
+
+(zf-function select-comm (c a)
+  (select (e a) (and (is-comm e) (= (channel e) c))))
+
+;;; get all possible messages that are in the alphabet of p
+;;; Note: to enable heuristics for process-messages, must enable
+;;; process-messages.definition.  Normally, you would want to
+;;; enable select-comm.definition as well.
+
+(zf-function process-messages (c p)
+  (map (message x) ((x) (select-comm c (process-alphabet p)))))
+
+(function-stub output (c v p))
+
+(grule output-is-process (c v p)
+  (implies (and (is-process p)
+                (in v (process-messages c p)))
+           (is-process (output c v p))))
+
+(rule process-alphabet-output (c v p)
+  (implies (and (is-process p)
+                (in v (process-messages c p)))
+           (= (process-alphabet (output c v p))
+              (process-alphabet p))))
+
+(rule process-traces-output (c v p)
+  (implies (and (is-process p)
+                (in v (process-messages c p)))
+           (= (process-traces (output c v p))
+              (union (unit (tr!empty))
+                     (map-tack (make-comm c v) (process-traces p))))))
+
+(function-stub input (c f))
+
+(grule input-is-process (c f)
+  (implies (good-choice f (select-comm c (rel!dom f)))
+           (is-process (input c f))))
+
+(rule process-alphabet-input (c f)
+  (implies (good-choice f (select-comm c (rel!dom f)))
+           (= (process-alphabet (input c f))
+              (process-alphabet
+               (fn!apply f (choice (select-comm c (rel!dom f))))))))
+
+(rule process-traces-input (c f)
+  (implies (good-choice f (select-comm c (rel!dom f)))
+           (= (process-traces (input c f))
+              (union (unit (tr!empty))
+                     (cup (map-prefix (select-comm c (rel!dom f)) f))))))
+
+
+;;; ============ Sequencing ============
+
+;;; a sequential process is one where when the specified termination
+;;; event e occurs in a trace, it must be the last event
+
+(disabled
+ (function is-sequential-process (p e) ()
+   (and (is-process p)
+        (in e (process-alphabet p))
+        (all (t) (implies (and (in t (process-traces p))
+                               (tr!occurs e t))
+                          (and (not (tr!occurs e (tr!but-last t)))
+                               (= t (tr!append (tr!but-last t)
+                                               (tr!tack e (tr!empty))))))))))
+
+;;; skip takes an extra argument which specifies the termination event
+
+(function-stub skip (a e))
+
+(grule skip-is-sequential-process (a e)
+  (implies (in e a)
+           (is-sequential-process (skip a e) e)))
+
+(rule process-alphabet-skip (a e)
+  (implies (in e a)
+           (= (process-alphabet (skip a e)) a)))
+
+(rule process-traces-skip (a e)
+  (implies (in e a)
+           (= (process-traces (skip a e))
+              (make-set (tr!empty) (tr!tack e (tr!empty))))))
+
+(frule is-sequential-process-frule (p e)
+  (implies (is-sequential-process p e)
+           (is-process p)))
+
+;;; note that (is-process (skip a e)) is automatically simplified to
+;;; (true) using the above two rules
+
+;;; compose produces the sequential composition of processes
+
+;;; Note: to enable heuristics for select-terminated-traces, must enable
+;;; select-terminated-traces.definition.
+
+(zf-function select-terminated-traces (s e)
+  (select (t s) (tr!occurs e t)))
+
+;;; Note: to enable heuristics for map-strip-trailing-event, must enable
+;;; map-strip-trailing-event.definition.
+
+(zf-function map-strip-trailing-event (s)
+  (map (tr!but-last t) ((t) s)))
+
+;;; Note: to enable heuristics for map-append, must enable
+;;; map-append.definition.
+
+(zf-function map-append (s1 s2)
+  (map (tr!append t1 t2) ((t1) s1) ((t2) s2)))
+
+(function-stub compose (p1 p2 e))
+
+(grule compose-is-sequential-process (p1 p2 e)
+  (implies (and (is-sequential-process p1 e)
+                (is-sequential-process p2 e)
+                (= (process-alphabet p1) (process-alphabet p2)))
+           (is-sequential-process (compose p1 p2 e) e)))
+
+(rule process-alphabet-compose (p1 p2 e)
+  (implies (and (is-sequential-process p1 e)
+                (is-sequential-process p2 e)
+                (= (process-alphabet p1) (process-alphabet p2)))
+           (= (process-alphabet (compose p1 p2 e))
+              (process-alphabet p1))))
+
+(rule process-traces-compose (p1 p2 e)
+  (implies (and (is-sequential-process p1 e)
+                (is-sequential-process p2 e)
+                (= (process-alphabet p1) (process-alphabet p2)))
+           (= (process-traces (compose p1 p2 e))
+              (union (diff (process-traces p1)
+                           (select-terminated-traces
+                            (process-traces p1) e))
+                     (map-append
+                      (map-strip-trailing-event
+                       (select-terminated-traces
+                        (process-traces p1) e))
+                      (process-traces p2))))))
+
+
+;;; ============ RECURSION ==============
+
+(disabled
+  (function process-included (p1 p2) ()
+    (and (= (process-alphabet p1) (process-alphabet p2))
+         (subset (process-traces p1) (process-traces p2)))))
+
+(axiom process-included-reflexive (p)
+  (process-included p p))
+
+(axiom process-included-transitive (p1 p2 p3)
+  (implies (and (process-included p1 p2)
+                (process-included p2 p3))
+           (process-included p1 p3)))
+
+(axiom process-included-anti-symmetric (p1 p2)
+  (implies (and (is-process p1)
+                (is-process p2)
+                (process-included p1 p2)
+                (process-included p2 p1))
+           (= p1 p2)))
+
+(rule stop-is-least (a p)
+  (implies (and (is-process p)
+                (= (process-alphabet p) a))
+           (= (process-included (stop a) p) (true))))
+
+(disabled
+  (function is-process-chain (p) ()
+    (and (fn!is-function p)
+         (= (rel!dom p) (nat!nat))
+         (all (n) (implies (in n (nat!nat))
+                           (process-included
+                              (fn!apply p n)
+                              (fn!apply p (+ n 1))))))))
+
+;;; Note: to enable heuristics for collect-traces, must enable
+;;; collect-traces.definition.
+
+(zf-function collect-traces (p)
+  (map (process-traces x) ((x) (rel!ran p))))
+
+(disabled
+  (function process-chain-limit (p) ()
+    (make-process (process-alphabet (fn!apply p 0))
+                  (cup (collect-traces p)))))
+
+(rule alphabet-process-chain-element (pc i)
+  (implies (and (> i 0)
+                (is-process-chain pc))
+           (= (process-alphabet (fn!apply pc i))
+              (process-alphabet (fn!apply pc 0)))))
+
+(axiom element-included-in-limit (pc i)
+  (implies (and (in i (nat!nat))
+                (is-process-chain pc))
+           (process-included (fn!apply pc i)
+                             (process-chain-limit pc))))
+
+(axiom upper-bound-axiom (pc q)
+  (implies (and (is-process-chain pc)
+                (is-process q)
+                (all (i) (implies (in i (nat!nat))
+                                  (process-included (fn!apply pc i) q))))
+           (process-included (process-chain-limit pc) q)))
+
+(disabled
+  (function is-continuous (a f) ()
+    (all (p) (implies (and (is-process-chain p)
+                           (= (process-alphabet (fn!apply p 0)) a))
+                      (= (fn!apply f (process-chain-limit p))
+                         (process-chain-limit
+                            (rel!comp p f)))))))
+
+(function iterate (n f x) ((measure n))
+  (if (>= n 1)
+      (fn!apply f (iterate (- n 1) f x))
+      x))
+
+;;; Note: no need to enable collect-process-iterations.definition
+;;; since we have in-collect-process-iterations.
+
+(zf-function collect-process-iterations (a f)
+  (map (pair!pair n (iterate n f (stop a))) ((n) (nat!nat))))
+
+(rule in-collect-process-iterations (p a f)
+  (= (in p (collect-process-iterations a f))
+     (and (pair!is-pair p)
+          (in (pair!fst p) (nat!nat))
+          (= (pair!snd p) (iterate (pair!fst p) f (stop a))))))
+
+(rule dom-collect-process-iterations (a f)
+  (= (rel!dom (collect-process-iterations a f))
+     (nat!nat)))
+
+(rule collect-process-iterations-is-function (a f)
+  (= (fn!is-function (collect-process-iterations a f)) (true)))
+
+(rule apply-collect-process-iterations (x a f)
+  (implies (in x (nat!nat))
+           (= (fn!apply (collect-process-iterations a f) x)
+              (iterate x f (stop a)))))
+
+(disabled
+  (function make-recursive-process (a f) ()
+    (process-chain-limit (collect-process-iterations a f))))
+
+(disabled
+  (rule recursive-process-lemma (a f t)
+    (= (in t (process-traces (make-recursive-process a f)))
+       (some (n) (and (>= n 0)
+                      (in t (process-traces (iterate n f (stop a)))))))))
+
+;;; process-of produces the set of all processes with alphabet a
+
+;;; Note: to enable heuristics for select-good-trace-sets, must enable
+;;; select-good-trace-sets.definition.
+
+(zf-function select-good-trace-sets (s)
+  (select (t s) (and (in (tr!empty) t)
+                     (prefix-closed t))))
+
+;;; Note: to enable heuristics for process-of, must enable
+;;; process-of.definition.
+
+(zf-function process-of (a)
+  (map (make-process a t)
+    ((t) (select-good-trace-sets (powerset (tr!trace-of a))))))
+
+(rule in-process-of (a p)
+  (= (in p (process-of a))
+     (and (is-process p)
+          (= (process-alphabet p) a))))
+
+(rule stop-in-process-of (a)
+  (= (in (stop a) (process-of a)) (true)))
+
+(axiom is-process-chain-collect-process-iterations (f a)
+  (implies (and (fn!is-function f)
+                (= (rel!dom f) (process-of a))
+                (subset (rel!ran f) (process-of a))
+                (all (i) (implies (in i (nat!nat))
+                                  (process-included
+                                   (iterate i f (stop a))
+                                   (iterate (+ i 1) f (stop a))))))
+           (is-process-chain (collect-process-iterations a f))))
+
+(axiom iterate-produces-process (n f a)
+  (implies (and (fn!is-function f)
+                (>= n 0)
+                (= (rel!dom f) (process-of a))
+                (subset (rel!ran f) (process-of a)))
+           (in (iterate n f (stop a)) (process-of a))))
+
+(axiom between-iterations (n f a)
+  (implies (and (fn!is-function f)
+                (>= n 0)
+                (= (rel!dom f) (process-of a))
+                (subset (rel!ran f) (process-of a)))
+           (in (pair!pair (iterate n f (stop a))
+                          (iterate (+ n 1) f (stop a)))
+               f)))
+
+(axiom process-traces-iterate-lemma (n e f a)
+  (implies (and (>= n 0)
+                (all (i) (implies (in i (nat!nat))
+                                  (process-included
+                                   (iterate i f (stop a))
+                                   (iterate (+ i 1) f (stop a)))))
+                (in e (process-traces (iterate n f (stop a)))))
+           (in e (process-traces (iterate (+ n 1) f (stop a))))))
+
+(disabled
+ (function produces-chain (a f) ()
+   (and (fn!is-function f)
+        (= (rel!dom f) (process-of a))
+        (subset (rel!ran f) (process-of a))
+        (all (i) (implies (in i (nat!nat))
+                          (process-included
+                           (iterate i f (stop a))
+                           (iterate (+ i 1) f (stop a))))))))
+
+(rule fixed-point-theorem (a f)
+  (implies (and (produces-chain a f)
+                (is-continuous a f))
+           (= (fn!apply f (make-recursive-process a f))
+              (make-recursive-process a f))))
+
+(rule process-alphabet-make-recursive (a f)
+  (implies (produces-chain a f)
+           (= (process-alphabet (make-recursive-process a f)) a)))
+
+(rule process-traces-make-recursive (a f)
+  (implies (produces-chain a f)
+           (= (process-traces (make-recursive-process a f))
+              (cup (collect-traces (collect-process-iterations a f))))))
+
+(grule is-process-make-recursive (a f)
+  (implies (produces-chain a f)
+           (is-process (make-recursive-process a f))))

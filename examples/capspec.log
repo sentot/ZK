@@ -1,0 +1,34 @@
+
+Reading "/home/sentot/zk/version1/ZK/examples/capspec.ver"
+CAP
+IN-CAP
+Beginning proof of IN-CAP ...
+(= (IN X (CAP Y))
+ (AND (NOT (= Y (NULLSET))) (ALL (Z) (IMPLIES (IN Z Y) (IN X Z)))))
+CAP-NULLSET
+Beginning proof of CAP-NULLSET ...
+(= (CAP (NULLSET)) (NULLSET))
+CAP-UNION
+Beginning proof of CAP-UNION ...
+(IMPLIES (AND (NOT (= X (NULLSET))) (NOT (= Y (NULLSET))))
+ (= (CAP (UNION X Y)) (INTER (CAP X) (CAP Y))))
+CAP-UNIT
+Beginning proof of CAP-UNIT ...
+(= (CAP (UNIT X)) X)
+CAP-SETADD
+Beginning proof of CAP-SETADD ...
+(= (CAP (SETADD X Y)) (IF (= Y (NULLSET)) X (INTER X (CAP Y))))
+CAP-SETADD-NULLSET
+Beginning proof of CAP-SETADD-NULLSET ...
+(= (CAP (SETADD X (NULLSET))) X)
+CAP-SETADD-SETADD
+Beginning proof of CAP-SETADD-SETADD ...
+(= (CAP (SETADD X (SETADD Y Z))) (INTER X (CAP (SETADD Y Z))))
+CAP-SUBSET-MEMBER
+Beginning proof of CAP-SUBSET-MEMBER ...
+(IMPLIES (IN X Y) (= (SUBSET (CAP Y) X) (TRUE)))
+SUBSET-CAP
+Beginning proof of SUBSET-CAP ...
+(IMPLIES (NOT (= Y (NULLSET)))
+ (= (SUBSET X (CAP Y)) (ALL (Z) (IMPLIES (IN Z Y) (SUBSET X Z)))))
+Done.
