@@ -52,6 +52,8 @@
 (defvar *object-directory*
         (concatenate 'string *source-directory* *subfolder*))
 
+(ensure-directories-exist *object-directory*)
+
 (defun zk-load-file (filename)
   (load (concatenate 'string *object-directory* filename *object-extension*)))
 

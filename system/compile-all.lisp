@@ -55,6 +55,8 @@
 (defvar *salza2-object-directory*
   (concatenate 'string *salza2-directory* *subfolder*))
 
+(ensure-directories-exist *salza2-object-directory*)
+
 (defun salza2-load-file (filename)
   (load (concatenate 'string *salza2-object-directory*
                      filename *object-extension*)))
@@ -80,6 +82,8 @@
 
 (defvar *chipz-object-directory*
     (concatenate 'string *chipz-directory* *subfolder*))
+
+(ensure-directories-exist *chipz-object-directory*)
 
 (defun chipz-load-file (filename)
   (load (concatenate 'string *chipz-object-directory*
@@ -109,6 +113,8 @@
 (defvar *trivial-gray-streams-object-directory*
   (concatenate 'string *trivial-gray-streams-directory* *subfolder*))
 
+(ensure-directories-exist *trivial-gray-streams-object-directory*)
+
 (defun trivial-gray-streams-load-file (filename)
   (load (concatenate 'string *trivial-gray-streams-object-directory*
 		     filename *object-extension*)))
@@ -134,6 +140,8 @@
 
 (defvar *flexi-streams-object-directory*
   (concatenate 'string *flexi-streams-directory* *subfolder*))
+
+(ensure-directories-exist *flexi-streams-object-directory*)
 
 (defun flexi-streams-load-file (filename)
   (load (concatenate 'string *flexi-streams-object-directory*
@@ -163,6 +171,8 @@
 
 (defvar *object-directory*
         (concatenate 'string *source-directory* *subfolder*))
+
+(ensure-directories-exist *object-directory*)
 
 (defun zk-load-file (filename)
   (load (concatenate 'string *object-directory* filename *object-extension*)))
