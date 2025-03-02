@@ -576,7 +576,9 @@ previous state then")
   ((:string "Return the prover to the state prior to the proof step
 specified if the step exists."))
   (when (symbolp command-name)
-    (loop for display-list on *display-history*
+    (loop for display-list on (if *current-display*
+				  (cons *current-display* *display-history*)
+				*display-history*)
 	  when (eq (car (display-command (car display-list))) command-name)
 	  do (setq *current-display* (cadr display-list)
 		   *display-history* (cddr display-list))
@@ -591,7 +593,9 @@ specified if the step exists."))
   ((:string "Return the prover to the state after the proof step
 specified if the step exists."))
   (when (symbolp command-name)
-    (loop for display-list on *display-history*
+    (loop for display-list on (if *current-display*
+				  (cons *current-display* *display-history*)
+				*display-history*)
 	  when (eq (car (display-command (car display-list))) command-name)
 	  do (setq *current-display* (car display-list)
 		   *display-history* (cdr display-list))
@@ -2351,8 +2355,9 @@ equivalent to")
 ;;; given any two proofs return a proof containing both
 ;;; in the case of instantiations the result could be ambiguous
 (defun join-proofs (proof-1 proof-2)
-  (make-proof :names (unique (append (and proof-1 (proof-functions proof-1))
-				     (and proof-2 (proof-functions proof-2))))
+  (make-proof :functions
+	      (unique (append (and proof-1 (proof-functions proof-1))
+			      (and proof-2 (proof-functions proof-2))))
 	      :rules (unique (append (and proof-1 (proof-rules proof-1))
 				     (and proof-2 (proof-rules proof-2))))
 	      :frules (unique (append (and proof-1 (proof-frules proof-1))

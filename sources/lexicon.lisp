@@ -1296,9 +1296,9 @@
 ;;; =====================================================================
 
 
-;;; We use handler-case.
+;;; We use handler-case and handler-bind.
 
-(cl:import '(cl:handler-case))
+(cl:import '(cl:handler-case cl:handler-bind))
 
 
 ;;; =====================================================================

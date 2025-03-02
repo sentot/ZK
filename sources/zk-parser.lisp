@@ -514,11 +514,19 @@
 ;;; :OK          sexp           no errors found
 
 (defun parse-zk-sexp (&optional (stream *standard-input*))
-  ;; Ignore errors in read since it is going to be caught as syntax error below.
-  (let ((sexp (ignore-errors (read stream nil :eof))))
+  (let ((sexp (handler-case
+	       (read stream nil :eof)
+	       (error (c)
+		      (catch 'zk-syntax-error
+			(syntax-error
+			 (format nil "not a valid s-expression")))
+		      :PARSE-ERROR))))
     (cond
       ((eq sexp :EOF)
        (values :EOF nil))
+      ((eq sexp :PARSE-ERROR)
+       (setq *syntax-error-flag* t)
+       (values :PARSE-ERROR nil))
       (t
        (setq *syntax-error-flag* nil)
        (catch 'zk-syntax-error (parse-command sexp))
