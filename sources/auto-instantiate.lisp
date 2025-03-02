@@ -46,6 +46,7 @@
 ;;; Globals
 
 (proclaim '(special *true-node* *false-node* *zero-node* *enil* *cols* *rows*
+		    *simplifier-instantiates-variables-flag*
 		    *undo-stack* *instantiation-list* *inconsistent*))
 
 
@@ -57,9 +58,10 @@
 ;;; ----- Top level function to apply one-point rule.
 
 (defun apply-one-point-rule (formula index)
-  (setq *one-point-rule-success* nil)
-  (let ((result (apply-one-point-rule-aux formula index nil)))
-    (when *one-point-rule-success* result)))
+  (when *simplifier-instantiates-variables-flag*
+    (setq *one-point-rule-success* nil)
+    (let ((result (apply-one-point-rule-aux formula index nil)))
+      (when *one-point-rule-success* result))))
 
 (defun apply-one-point-rule-aux (formula index bool-p)
   (cond
